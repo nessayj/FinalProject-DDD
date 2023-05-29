@@ -29,3 +29,9 @@
   👩🏼‍💻정연우
   🧑🏻‍💻이택현
   </p>
+ <br>
+ <br>
+ <br>
+ <br>
+ <br>
+<img src="https://capsule-render.vercel.app/api?type=wave&color=gradient&height=300&section=footer&fontSize=60" />

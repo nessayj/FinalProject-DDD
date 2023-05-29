@@ -22,12 +22,12 @@
 <br>
 <br>
 
-<h3 align="center">🌼🌼 LOVELY TEAMMATES🌼🌼 </h3>
+<h3 align="center">🌼🌼TEAMMATES🌼🌼 </h3>
 <p align="center">
-  👩🏼‍💻장연주
-  👩🏼‍💻곽은지
-  👩🏼‍💻정연우
-  🧑🏻‍💻이택현
+  👩🏼‍💻장연주 <br>
+  👩🏼‍💻곽은지 <br>
+  👩🏼‍💻정연우 <br>
+  🧑🏻‍💻이택현 <br>
   </p>
  <br>
  <br>

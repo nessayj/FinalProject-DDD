@@ -24,10 +24,10 @@
 
 <h3 align="center">🌼🌼TEAMMATES🌼🌼 </h3>
 <p align="center">
-  👩🏼‍💻장연주 <br>
-  👩🏼‍💻곽은지 <br>
-  👩🏼‍💻정연우 <br>
-  🧑🏻‍💻이택현 <br>
+  👩🏼‍💻장연주 <br><br>
+  👩🏼‍💻곽은지 <br><br>
+  👩🏼‍💻정연우 <br><br>
+  🧑🏻‍💻이택현 <br><br>
   </p>
  <br>
  <br>

@@ -1,10 +1,13 @@
-import logo from './logo.svg';
+
 import './App.css';
 import LoginBG from './pages/myPage/loginBG';
 
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
+  
+=======
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -20,6 +23,7 @@ function App() {
         </a>
       </header> */}
       <LoginBG/>
+>>>>>>> dde7f31cd781210cd58b23594540b620e0855430
     </div>
   );
 }

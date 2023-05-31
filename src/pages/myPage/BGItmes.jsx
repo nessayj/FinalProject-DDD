@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import {ImageUrl1, ImageUrl2, ImageUrl3 } from "./imageURL";
-import Marquee from 'react-fast-marquee'
 
 const ItemWrap = styled.div`
     overflow: hidden;

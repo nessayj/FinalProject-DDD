@@ -107,7 +107,7 @@ const Modal = styled.div`
                 margin-bottom: .3rem;
                 font-size: .75rem;
                 text-decoration: underline;
-                cursor: pointer;
+                cursor: pointer; 
             }
         }
 `;

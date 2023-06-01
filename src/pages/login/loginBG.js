@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BGItmes from "./BGItmes";
+import BGItmes from "../../components/Login/BGItmes";
 import LoginModal from "./loginModal";
 
 const Container = styled.div`

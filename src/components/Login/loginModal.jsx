@@ -126,7 +126,7 @@ const LoginModal = () => {
                 <p className="title">안녕하세요! <br/> :DDD에 로그인해보세요</p>
                 <div className="inputBlock">
                     <p>이메일</p>
-                    <input type="text" placeholder="Email@:DDD.com"> <True>&times;</True></input>
+                    <input type="text" placeholder="Email@:DDD.com"/> 
                     <p>패스워드</p>
                     <input type="password" placeholder="Password"/>
                 </div>

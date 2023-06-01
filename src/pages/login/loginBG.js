@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import BGItmes from "../../components/Login/BGItmes";
-import LoginModal from "./loginModal";
+import LoginModal from "../../components/Login/loginModal";
 
 const Container = styled.div`
     width: 100vw;

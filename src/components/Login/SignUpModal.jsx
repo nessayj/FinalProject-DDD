@@ -43,28 +43,33 @@ const Modal = styled.div`
             padding-left: 2vw;
             p{
                 text-align: left;
-                /* margin-left: 10%; */
-                margin-bottom: .3rem;
+                /* margin-left: 7%; */
+                margin: 0 0 .3rem 0;
                 font-size: .8rem;
                 /* font-size: .8rem; */
                 font-weight: bold;
             }
             input{
                 width: calc(70% - 0.8rem);
-                background-color: #F4F8FF;
+                background-color: #F2F2F2;    
                 /* border: 1px solid #5EADF7; */
+                /* opacity: 0; */
                 border: none;
+                color: black;
                 /* margin: 0; */
-                padding-left: 0.8rem;
-                border-top-left-radius : .3rem;
-                border-bottom-left-radius : .3rem;
+                /* padding-left: 0.8rem; */
+                /* border-top-left-radius : .3rem;
+                border-bottom-left-radius : .3rem; */
+                ::placeholder{
+                color: #000;
+                }
             }
             input:focus{
                 /* background-color: #5EADF7; */
                 outline: none;
                 /* color: white; */
                 ::placeholder{
-                color: #F4F8FF;
+                color: #2B5EC2;
                 }
             }
             .regCheckBox{
@@ -76,15 +81,15 @@ const Modal = styled.div`
                 align-items: center;
                 display: flex;
             }
-            .test{
+            .textBox{
                 display: flex;
                 height: 2rem;
-                background-color: #F4F8FF;
+                background-color: #F2F2F2;
                 width: 80%;
                 justify-content: space-around;
-
-
+                border-radius: .3rem;
             }
+
 
 
         }
@@ -109,8 +114,16 @@ const Modal = styled.div`
                 display: flex;
                 justify-content:center;
                 align-items: center;
-
             }
+        }
+        .hint{
+            font-size: .3rem;
+            text-align:center;
+            display: flex;
+            width: 80%;
+            justify-content: right;
+            height: 1rem;
+
         }
 `;
 const LeftBox = styled.div`
@@ -137,32 +150,85 @@ const True = styled.div`
     justify-content: center;
     align-items : center;
     color : white;
+    padding: 0;
+    margin: 0;
+    span{
+        font-size: .4rem;
+        margin:0;
+    }
 `;
 const False = styled(True)`
     background-color: #ED4E4E;
 `;
 
 const SignUpModal = () => {
+    // 이메일 유효성 검사 useState
     const [inputEmail, setInputEmail] = useState('')
     const [emailMessage,  setEmailMessage] = useState('')
     const [isEmail, setIsEmail] =useState(false)
+    // 패스워드 유효성 검사 useState
+    const [inputPwd, setInputPwd] = useState('')
+    const [pwdMessage,  setPwdMessage] = useState('')
+    const [isPwd, setIsPwd] =useState(false)
+    // 비밀번호 확인 useState
+    const [inputConPw, setInputConPw] = useState("");
+    const [conPwMessage, setConPwMessage] = useState("");
+    const [isConPw, setIsConPw] = useState("");
+    // 닉네임 확인 useState
+    const [inputNick, setInputNick] = useState("");
+    const [conNickMessage, setNickMessage] = useState("");
+    const [isNick, setINick] = useState("");
 
 
+
+    // 이메일 유효성 검사 
     const onChangeEmail = (e) => {
-        setInputEmail(e.target.value)
+        const passwordCurrent = e.target.value ;
+        setInputEmail(passwordCurrent)
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const emailCheck = regexEmail.test(inputEmail)
         console.log(inputEmail)
         console.log(emailCheck)
-
         if (!emailCheck) {
-            setEmailMessage("5자리 이상 12자리 미만으로 입력해 주세요.");
+            setEmailMessage("이메일 형식으로 입력해주세요");
             setIsEmail(false);    
         } else {
             setEmailMessage("올바른 형식 입니다.");
             setIsEmail(true);
         }
     }
+    // 비밀번호 정규식 검사 
+    const onChangePwd = (e) => {
+        setInputPwd(e.target.value)
+        const regexPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+        const pwdCheck = regexPwd.test(e.target.value);
+        console.log(inputPwd)
+        console.log(pwdCheck)
+        if (!pwdCheck) {
+            setPwdMessage("숫자+영문자+특수문자의 8자리 이상");
+            setIsPwd(false);    
+        } else {
+            setPwdMessage("올바른 형식 입니다.");
+            setIsPwd(true);
+        }
+    }
+    // 비밀번호 확인 체크 
+    const onChangeConPw = (e) => {
+        const passwordCurrent = e.target.value ;
+        setInputConPw(passwordCurrent)
+        if (passwordCurrent !== inputPwd) {
+            setConPwMessage('비밀 번호가 일치하지 않습니다.')
+            setIsConPw(false)
+        } else {
+            setConPwMessage('비밀 번호가 일치 합니다. )')
+            setIsConPw(true);
+        }      
+    }
+
+
+
+
+
     return(
         <Container>
             <Modal>
@@ -171,30 +237,54 @@ const SignUpModal = () => {
                     <LeftBox>
                         <div className="inputBlock">
                             <p>이메일</p>
-                            <div className="test">
+                            <div className="textBox">
                                 <input type="text" placeholder="Email@:DDD.com" value={inputEmail} onChange={onChangeEmail}/>
-                                <div className="regCheckBox">{isEmail ? <True> &#10003; </True> : <False>&times;</False>}</div> 
+                                <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
                             </div>
-
-                            {/* <p>패스워드</p>
-                            <input type="password" placeholder="Password"/>
+                            <div className="hint">{emailMessage}</div>
+                            <p>패스워드</p>
+                            <div className="textBox">
+                                <input type="text" placeholder="Password" value={inputPwd} onChange={onChangePwd}/>
+                                <div className="regCheckBox">{isPwd ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{pwdMessage}</div>
                             <p>패스워드 확인</p>
-                            <input type="password" placeholder="Password"/>
+                            <div className="textBox">
+                                <input type="password" placeholder="Password" value={inputConPw} onChange={onChangeConPw}/>
+                                <div className="regCheckBox">{isConPw ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{conPwMessage}</div>
                             <p>닉네임</p>
-                            <input type="text" placeholder="사용하실 닉네임을 입력해주세요"/>  */}
+                            <div className="textBox">
+                                <input type="text" placeholder="닉네임을 입력해주세요" value={inputEmail} onChange={onChangeEmail}/>
+                                <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{emailMessage}</div>
                         </div>
 
                     </LeftBox>
-                    {/* <RightBox>
+                    <RightBox>
                         <div className="inputBlock">
                             <p>이름</p>
-                            <input type="text" placeholder="이름을 입력해주세요"/> 
+                            <div className="textBox">
+                                <input type="text" placeholder="이름을 입력해주세요" value={inputEmail} onChange={onChangeEmail}/>
+                                <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{emailMessage}</div>
                             <p>연락처</p>
-                            <input type="tel" placeholder="연락처를 입력해주세요"/> 
+                            <div className="textBox">
+                                <input type="tel" placeholder="연락처를 입력해주세요" value={inputEmail} onChange={onChangeEmail}/>
+                                <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{emailMessage}</div>
                             <p>instagram <span style={{fontWeight:'400'}}>(선택사항)</span> </p>
-                            <input type="text" placeholder="instagram ID"/> 
+                            <div className="textBox">
+                                <input type="tel" placeholder="instagram ID" value={inputEmail} onChange={onChangeEmail}/>
+                                <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                            </div>
+                            <div className="hint">{emailMessage}</div>
                         </div>
-                    </RightBox> */}
+                    </RightBox>
                 </div>
                 <div className="btnBlock">
                     <button>회원가입</button>

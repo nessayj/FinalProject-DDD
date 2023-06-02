@@ -111,12 +111,6 @@ const Modal = styled.div`
             }
         }
 `;
-const True = styled.div`
-    width: 3rem;
-    height: 3rem;
-    border: 1.5rem;
-    background-color: #2B5EC2;
-`
 
 const LoginModal = () => {
 

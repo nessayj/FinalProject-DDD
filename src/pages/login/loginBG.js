@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BGItmes from "../../components/Login/BGItmes";
 import LoginModal from "../../components/Login/loginModal";
@@ -20,15 +20,37 @@ const BlackBG = styled.div`
 `;
 
 const LoginBG = () => {
+    // showLogin이 1, 2, 3으로 변할 때 각자 modal창 보여줌
+    const [showLogin, setShowLogin] = useState(0);
+    
+    const handleLoginModal0 = () => { // 로그인 창 + 뒤로가기
+        setShowLogin(0);
+        // console.log(showLogin)
+      };
+    const handleLoginModal1 = () => { // 비밀번호 찾기 창
+        setShowLogin(1);
+        // console.log(showLogin)
+      };
+    const handleLoginModal2 = () => { // 회원가입 창
+        setShowLogin(2);
+        // console.log(showLogin)
+      };
+
     return(
         <>
             <Container>
                 <BGItmes/>
                 <BlackBG/>
             </Container>
-            <LoginModal/>
-            {/* <ForgotPwModal/> */}
-            {/* <SignUpModal/> */}
+            {
+                showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showSignUp={handleLoginModal2} />
+            }
+            {
+                showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0}/>
+            }
+            {
+                showLogin === 2 && <SignUpModal showLogin={handleLoginModal0}/>
+            }
         </>
     )
 }

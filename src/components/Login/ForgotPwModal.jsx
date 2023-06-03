@@ -1,5 +1,6 @@
 import React from "react";  
 import styled from "styled-components";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const Container = styled.div`
@@ -101,7 +102,7 @@ const Modal = styled.div`
         }
 `;
 
-const ForgotPwModal = () => {
+const ForgotPwModal = (props) => {
 
     return(
         <Container>
@@ -113,7 +114,7 @@ const ForgotPwModal = () => {
                 </div>
                 <div className="btnBlock">
                     <button>이메일 보내기</button>
-                    <button>돌아가기</button>
+                    <button onClick={props.showLogin}>돌아가기</button>
                 </div>
             </Modal>
         </Container>

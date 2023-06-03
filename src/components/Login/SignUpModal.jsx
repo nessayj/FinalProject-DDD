@@ -166,7 +166,7 @@ const False = styled(True)`
     background-color: #ED4E4E;
 `;
 
-const SignUpModal = () => {
+const SignUpModal = (props) => {
     // 이메일 유효성 검사 useState
     const [inputEmail, setInputEmail] = useState('')
     const [emailMessage,  setEmailMessage] = useState('')
@@ -377,7 +377,7 @@ const SignUpModal = () => {
                         style={isEmail && isPwd && isConPw && isName && isTel ?  null : { backgroundColor: 'grey'}  }
                         disabled={!isEmail || !isPwd || !isConPw || !isName || !isTel}
                     >회원가입</button>
-                    <button>돌아가기</button>
+                    <button onClick={props.showLogin}>돌아가기</button>
                 </div>
             </Modal>
         </Container> 

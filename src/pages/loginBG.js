@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import BGItmes from "../../components/Login/BGItmes";
-import LoginModal from "../../components/Login/loginModal";
-import SignUpModal from "../../components/Login/SignUpModal";
-import ForgotPwModal from "../../components/Login/ForgotPwModal";
+import BGItmes from "../components/Login/BGItmes";
+import LoginModal from "../components/Login/loginModal";
+import SignUpModal from "../components/Login/SignUpModal";
+import ForgotPwModal from "../components/Login/ForgotPwModal";
 
 const Container = styled.div`
     width: 100vw;

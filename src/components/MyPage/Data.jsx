@@ -5,7 +5,8 @@ const member_info =
     "name" : "짱구",
     "nickName" : "나짱구아니다",
     "tel" : "010-1234-5678",
-    "inst": "cute_Wkdrn"
+    "inst": "cute_Wkdrn",
+    "introuduce" : "안녕하세요! 만나서 반가워요!!"
 }
 
 
@@ -27,5 +28,5 @@ const diaryImage = [
 
 
 
-export  {member_info, thumbnail, profileImage, diaryImage};
+export {member_info, thumbnail, profileImage, diaryImage};
 

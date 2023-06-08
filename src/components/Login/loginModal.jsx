@@ -14,6 +14,7 @@ const Modal = styled.div`
     width: 24vw;
     min-width: 350px;
     height: 60vh;
+    min-height: 500px;
     background-color: white;
     position: absolute;
     top: 50%;
@@ -26,9 +27,11 @@ const Modal = styled.div`
         .title{
             font-size: 1.5rem;
             font-weight: bold;
-            margin-top: 3rem;
+            margin-top: 5rem;
             text-align: center;
-
+            p{
+                margin : 0;
+            }
         }
         .inputBlock{
             width: 90%;
@@ -116,7 +119,7 @@ const LoginModal = (props) => {
     return(
         <Container>
             <Modal>
-                <p className="title">안녕하세요! <br/> :DDD에 로그인해보세요</p>
+                <div className="title"> <p>안녕하세요!</p> <p style={{marginTop:'1rem'}}>:DDD에 로그인해보세요</p></div>
                 <div className="inputBlock">
                     <p>이메일</p>
                     <input type="text" placeholder="Email@:DDD.com"/> 

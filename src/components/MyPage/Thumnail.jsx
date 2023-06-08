@@ -30,11 +30,23 @@ const Container = styled.div`
         /* background-color: aqua; */
         position: relative;
         top: -10%;
-        left: 10%;
+        left: 1.5rem;
         background-size:cover;
         background-repeat: no-repeat;
     }
 `;
+
+const BlackBG = styled.div`
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .2;
+    border-top-right-radius: inherit;
+    border-top-left-radius: inherit;
+`;
+
 const thumnailStyle = () => {
     return {
       backgroundImage: `url(${thumbnail[0]})`,
@@ -51,6 +63,7 @@ const Thumnail = () => {
     return (
         <Container>
             <div className='Thumnail' style={thumnailStyle()}></div>
+            <BlackBG/>
             <div className='profileIcon' style={profileIconStyle()}></div>
         </Container>
     );

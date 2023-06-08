@@ -15,6 +15,7 @@ const Container = styled.div`
 const Modal = styled.div`
     width: 40vw;
     min-width: 600px;
+    max-width: 768px;
     height: 70vh;
     min-height: 900px;
     background-color: white;
@@ -22,10 +23,10 @@ const Modal = styled.div`
     top: 20%;
     left: 50%;
     transform: translate3d(-50%, -20%, 0);
-    border-radius: 1.4rem;
+    border-radius: 2rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     border: .5px solid #bbb;
 `;
     

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Navigator from "../../components/Header/Navigate";
 
 const HeaderStyle = styled.div`
+    margin: 0 auto;
     color: #050E3D;
     width: 100%;
     border: 1px black solid;
@@ -16,7 +17,6 @@ const NavContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 0;
     border: 1px black solid;
 
 `;

@@ -12,14 +12,10 @@ const NavStyle = styled.div`
   }
   
   .menu_list {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
     .close-icon {
-        margin: 0 2rem;
+        float: right;
+        margin: 1rem 1.5rem;
         cursor: pointer;
-        order: 2;
     }
     .menu_name {
         display: flex;
@@ -29,9 +25,15 @@ const NavStyle = styled.div`
         left: 8rem;
         flex-direction: column;
         margin-bottom: 2rem;
-        order: 1;
     }
   }
+  .menu_name a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
     .burger_menu{
       display: block;
       margin-left: 40px;

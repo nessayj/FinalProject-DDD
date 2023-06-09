@@ -18,12 +18,12 @@ const Container = styled.div`
     ${({ selectedOption }) =>
     selectedOption === "리스트" &&
     css`
-     width: 60%;
-    height: 300px;
+    width: 70%;
+    height: auto;
     background-color: beige;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     margin: 20px;
     .imgBox{
@@ -37,7 +37,12 @@ const Container = styled.div`
     &>*{
         margin: 20px;
     }
+    @media (max-width: 900px) {
+        width: 90%;
+    }
     `}
+   
+   
     
 
 `

@@ -9,7 +9,6 @@ const HeaderStyle = styled.div`
     margin: 0 auto;
     color: #050E3D;
     width: 100%;
-    border: 1px black solid;
 
 `
 
@@ -17,14 +16,13 @@ const NavContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px black solid;
-
 `;
 
 const BottomBox = styled.div`
     display: flex;
     float: right;
     align-items: center;
+    margin-right: 1rem;
 `;
 
 

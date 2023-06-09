@@ -1,23 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
+import MainBody from "../../components/MainBody/MainBody";
 
-const Title = styled.div `
-    .title {
-        font-family: 'Pretendard';
-    }
-
+const MainContainer = styled.div `
+    margin: 0 auto;
+    font-family: 'Pretendard';
 `
+const MainBodyContainer = styled.div`
+    margin: 0 auto;
+    width: 1200px;
+`;
 
 
 const Main = () => {
 
 
     return (
-        <Title>
+        <MainContainer>
             <Header/>
-
-        </Title>
+            <MainBodyContainer>
+                <MainBody/>
+            </MainBodyContainer>
+        </MainContainer>
 
     );
 }

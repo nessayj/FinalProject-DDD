@@ -28,7 +28,7 @@ const IconBox = styled.div`
 
     p {
         margin-right: 0.8rem;
-        font-size: 0.8rem;
+        font-size: 1rem;
         font-weight: 800;
         cursor: pointer;
     }

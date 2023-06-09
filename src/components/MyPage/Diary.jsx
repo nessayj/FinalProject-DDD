@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsArrowRight } from 'react-icons/bs';
+import { SlArrowRight } from 'react-icons/sl';
 import { diaryImage } from './Data.jsx';
 
 const DiaryBox =styled.div`
@@ -10,13 +10,15 @@ const DiaryBox =styled.div`
     display: flex;
     flex-direction: column;
     .title{
+        display: block;
+        align-items: left;
         margin : .5rem 0 0 2rem ;
         font-size: 1rem;
         font-weight: bold;
     }
     .imgBox{
         /* background-color: brown; */
-        width: 100%;
+        width: calc(100%);
         height: 100%;
         display: flex;
         flex-direction: row;
@@ -24,6 +26,7 @@ const DiaryBox =styled.div`
         align-items: center;
         padding-left: .5rem;
         .diaryImg{
+            overflow: hidden;
             width: 7.4rem;
             min-width: 90px;
             height: 9rem;
@@ -31,17 +34,21 @@ const DiaryBox =styled.div`
             background-position: center;
         }
         button{
-            margin : 0.6rem;
-            width: 2.2rem;
-            height: 2.2rem;
+            /* position: absolute;
+            top: 67%; */
+            right: 10%;
+            margin : 0.8rem;
+            width: 2rem;
+            height: 2rem;
             min-width: 35px;
             min-height: 35px;
             border-radius: 2rem;
             text-align: center;
-            font-size: 1rem;
+            font-size: .8rem;
             background-color: #eee;
             border: 1px solid #aaa;
             color: #444;
+            cursor: pointer;
         }
     }
     
@@ -56,7 +63,7 @@ const Diary = () => {
                 <div className="diaryImg" key={i} style={{ backgroundImage: `url(${img})` }} />
                 ))
             }
-            <button> <BsArrowRight/> </button>
+            <button> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
         </div>
       </DiaryBox>
     );

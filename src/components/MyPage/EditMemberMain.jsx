@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Thumnail from "./Thumnail";
-import Introduce from "./Introduce";
+import React from 'react';
+import styled from 'styled-components';
+import Thumnail from './Thumnail';
+import EditInfo from './EditInfo';
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -29,17 +29,20 @@ const Modal = styled.div`
     /* align-items: center; */
     border: .5px solid #bbb;
 `;
-    
-// 화면 전환 시, 해당 컴포넌트가 마이페이지 메인이 됨. 
-const MyPageBG = () => {
-    return(
+
+// 화면 전환 시, 해당 컴포넌트 가 마이페이지 메인이 됨. 
+const EditMemberMain = () => {
+    return (
+        <>
         <Container>
             <Modal>
-                <Introduce/>
+                <EditInfo/>
 
             </Modal>
         </Container>
-    )
-}
+        </>
 
-export default MyPageBG;
+    );
+};
+
+export default EditMemberMain;

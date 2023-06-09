@@ -19,7 +19,7 @@ const BlackBG = styled.div`
     opacity: .4;
 `;
 
-const LoginBG = () => {
+const Login = () => {
     // showLogin이 1, 2, 3으로 변할 때 각자 modal창 보여줌
     const [showLogin, setShowLogin] = useState(0);
     
@@ -55,4 +55,4 @@ const LoginBG = () => {
     )
 }
 
-export default LoginBG;
+export default Login;

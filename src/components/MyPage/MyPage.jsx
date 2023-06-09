@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
+import EditMemberInfo from "./EditMemberMain";
 
 const Container = styled.div`
     box-sizing: border-box;
     overflow-x: hidden;
     position: absolute;
-    top: 0;
+    top: 10%;
     width: 100vw;
     height: 100vh;
     /* background-color: aqua; */
@@ -30,16 +31,18 @@ const Modal = styled.div`
     border: .5px solid #bbb;
 `;
     
-// 화면 전환 시, 해당 컴포넌트가 마이페이지 메인이 됨. 
-const MyPageBG = () => {
+
+const MyPage = () => {
     return(
         <Container>
             <Modal>
                 <Introduce/>
+                {/* <EditMemberInfo/> */}
+                
 
             </Modal>
         </Container>
     )
 }
 
-export default MyPageBG;
+export default MyPage;

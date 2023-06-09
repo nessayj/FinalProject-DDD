@@ -4,13 +4,13 @@ import { thumbnail, profileImage } from './Data';
 
 
 const Container = styled.div`
-/* background-color: aqua; */
+    /* background-color: aqua; */
     box-sizing: border-box;
     position: relative;
-    top: 0;
+    top: 0%;
     width: 100%;
-    height: 60%;
-    /* min-height: 700px; */
+    height: 30%;
+    min-height: 270px;
     border-top-right-radius: inherit;
     border-top-left-radius: inherit;
     .Thumnail{
@@ -29,7 +29,7 @@ const Container = styled.div`
         border-radius: 3rem;
         /* background-color: aqua; */
         position: relative;
-        top: -10%;
+        top: -15%;
         left: 1.5rem;
         background-size:cover;
         background-repeat: no-repeat;

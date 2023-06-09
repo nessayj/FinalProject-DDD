@@ -69,4 +69,4 @@ const Categroy = ({onSelect,category})=> {
     );
 }
 
-export default Categroy
+export default Categroy;

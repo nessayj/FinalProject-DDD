@@ -4,18 +4,21 @@ import SelectBtn from "../components/exhibition/SelectBtn";
 import InfoBox from "../components/exhibition/InfoBox";
 import Categroy from '../components/exhibition/Category';
 import PageNation from "../util/PageNation";
+import Header from "./main/Header";
+import AreaCategroy from "../components/exhibition/AreaCategroy";
 const Container = styled.div`
 
-    .header {
-        background-color: skyblue;
+    .header { 
         width: 100%;
-        height: 250px;
-        font-size: 100px;
+        height: 170px;
     }
     .apiBox {
         width: 100%;
         height: 250px;
         background-color: pink;
+    }
+    .category{
+        margin: 10px;
     }
     .section{
         border: 2px solid black;
@@ -33,6 +36,7 @@ const Container = styled.div`
     .areaSelectBox{
         display: flex;
         flex-direction: row;
+        cursor: pointer;
         & > *{
             margin-left: 10px;
             font-size:20px;
@@ -45,34 +49,74 @@ const Container = styled.div`
         justify-content: center;
         align-items: center;
     }
+    @media (max-width: 768px) {
+    width: 768px;
+
+  }
 
 `;
 
 
 
 const ExhibitListPage = () => {
+    const imageData = [
+        { index: 1, name: '전시명1', date: '2023-01-01',lotation:"서울" },
+        { index: 2, name: '전시명2', date: '2023-02-01',lotation:"경기/인천" },
+        { index: 3, name: '전시명3', date: '2023-03-01',lotation:"충청" },
+        { index: 4, name: '전시명4', date: '2023-04-01',lotation:"강원" },
+        { index: 5, name: '전시명5', date: '2023-05-01',lotation:"경상도" },
+        { index: 6, name: '전시명6', date: '2023-06-01',lotation:"전라/제주" },
+        { index: 7, name: '전시명7', date: '2023-07-01',lotation:"서울" },
+        { index: 8, name: '전시명8', date: '2023-08-01',lotation:"경기/인천" },
+        { index: 9, name: '전시명9', date: '2023-09-01',lotation:"충청" },
+        { index: 10, name: '전시명10', date: '2023-10-01',lotation:"강원" },
+        { index: 11, name: '전시명11', date: '2023-11-01',lotation:"경상도" },
+        { index: 12, name: '전시명12', date: '2023-12-01',lotation:"전라/제주" },
+        { index: 13, name: '전시명13', date: '2023-01-01',lotation:"서울" }
+        
+      ];
 
     //셀렉트박스 상태관리
     const [selectedOption, setSelectedOption] = useState('');
+     //메뉴 바 상태 관리 
+    const [category,setCategory] = useState('menu1');
+    const onSelect = useCallback(category => {
+        setCategory(category);
+        if (category ==='menu1') {
+            //인기순 데이터 들어올 자리
+            setFilteredData(imageData);
 
-    //예시 배치 박스
-     // 이미지 박스 데이터 배열
-  const imageData = [
-    { index: 1, name: '전시명1', date: '전시날짜',lotation:"전시위치" },
-    { index: 2, name: '전시명2', date: '전시날짜',lotation:"전시위치" },
-    { index: 3, name: '전시명3', date: '전시날짜',lotation:"전시위치" },
-    { index: 4, name: '전시명4', date: '전시날짜',lotation:"전시위치" },
-    { index: 5, name: '전시명5', date: '전시날짜',lotation:"전시위치" },
-    { index: 6, name: '전시명6', date: '전시날짜',lotation:"전시위치" },
-    { index: 7, name: '전시명7', date: '전시날짜',lotation:"전시위치" },
-    { index: 8, name: '전시명8', date: '전시날짜',lotation:"전시위치" },
-    { index: 9, name: '전시명9', date: '전시날짜',lotation:"전시위치" },
-    { index: 10, name: '전시명10', date: '전시날짜',lotation:"전시위치" },
-    { index: 11, name: '전시명11', date: '전시날짜',lotation:"전시위치" },
-    { index: 12, name: '전시명12', date: '전시날짜',lotation:"전시위치" },
-    { index: 13, name: '전시명13', date: '전시날짜',lotation:"전시위치" }
-    
-  ];
+        }else if (category ==='menu2') {
+            setAreaCategory('서울');
+            const areaData = imageData.filter(item=> item.lotation.includes(areaCategory))
+            setFilteredData(areaData);
+
+        }else {
+            //최신순 데이터 들어올자리 
+            const dateData = [...imageData].sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                return dateB - dateA;
+              });
+              setFilteredData(dateData);
+        }
+    },[]);
+     //필터 데이터 
+   const [filteredData, setFilteredData] = useState(imageData);
+    //지역 메뉴바 상태관리 
+    const [areaCategory,setAreaCategory] = useState('서울');
+    const AreaOnSelect = useCallback(areaCategory =>{ 
+        setAreaCategory(areaCategory);
+        if(category === 'menu2'){
+            const areaData = imageData.filter(item=> item.lotation.includes(areaCategory))
+            setFilteredData(areaData);
+            console.log(areaData);
+        }
+      
+    },[category]);
+
+ 
+  
 
    //보여질 페이지 개수
    const ITEMS_PAGE = 12;
@@ -80,18 +124,16 @@ const ExhibitListPage = () => {
    const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-  const pageCount = Math.ceil(imageData.length / ITEMS_PAGE); // 전체 페이지 수
+  const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
 
-  const currentPageData = imageData.slice(offset, offset + ITEMS_PAGE);
+  const currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE);
 
 
-  //메뉴 바 상태 관리 
-  const [category,setCategory] = useState('menu2');
-  const onSelect = useCallback(category => setCategory(category),[]);
+ 
     return(
         <Container>
-        <div className="header">해더</div>
+        <div className="header"><Header/></div>
         <div className="apiBox">전시 공공 API 보여질 영역</div>
         <div className="category">
             <Categroy category={category} onSelect={onSelect}/>
@@ -99,12 +141,7 @@ const ExhibitListPage = () => {
         <div className="section">
             {category==='menu2' &&
             <div className="areaSelectBox">
-                <div>서울</div>
-                <div>경기/인천</div>
-                <div>충청</div>
-                <div>강원</div>
-                <div>경상도</div>
-                <div>전라/제주</div>
+            <AreaCategroy category={areaCategory} onSelect={AreaOnSelect}/>
             </div>
             }
             <div className="select">

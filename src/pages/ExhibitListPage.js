@@ -6,6 +6,8 @@ import Categroy from '../components/exhibition/Category';
 import PageNation from "../util/PageNation";
 import Header from "./main/Header";
 import AreaCategroy from "../components/exhibition/AreaCategroy";
+import Carousel from "../util/Carousel";
+import exhibitionData from "../components/exhibition/exhibitionData";
 const Container = styled.div`
 
     .header { 
@@ -13,19 +15,24 @@ const Container = styled.div`
         height: 170px;
     }
     .apiBox {
-        width: 100%;
+        //background-color: #eee;
+        width: 70%;
         height: 250px;
-        background-color: pink;
+        border: 3px solid #eee;
+        margin: 0 auto;
+        border-radius:5px;
+       
     }
     .category{
         margin: 10px;
     }
     .section{
-        border: 2px solid black;
+        border: 1px solid #050E3D;
         width: 70%;
         margin : 0 auto;
         position: relative;
         padding-top: 2em;
+        border-radius:5px;
         .select{
             position: absolute;
             right: 5px;
@@ -59,22 +66,22 @@ const Container = styled.div`
 
 
 const ExhibitListPage = () => {
-    const imageData = [
-        { index: 1, name: '전시명1', date: '2023-01-01',lotation:"서울" },
-        { index: 2, name: '전시명2', date: '2023-02-01',lotation:"경기/인천" },
-        { index: 3, name: '전시명3', date: '2023-03-01',lotation:"충청" },
-        { index: 4, name: '전시명4', date: '2023-04-01',lotation:"강원" },
-        { index: 5, name: '전시명5', date: '2023-05-01',lotation:"경상도" },
-        { index: 6, name: '전시명6', date: '2023-06-01',lotation:"전라/제주" },
-        { index: 7, name: '전시명7', date: '2023-07-01',lotation:"서울" },
-        { index: 8, name: '전시명8', date: '2023-08-01',lotation:"경기/인천" },
-        { index: 9, name: '전시명9', date: '2023-09-01',lotation:"충청" },
-        { index: 10, name: '전시명10', date: '2023-10-01',lotation:"강원" },
-        { index: 11, name: '전시명11', date: '2023-11-01',lotation:"경상도" },
-        { index: 12, name: '전시명12', date: '2023-12-01',lotation:"전라/제주" },
-        { index: 13, name: '전시명13', date: '2023-01-01',lotation:"서울" }
+    // const imageData = [
+    //     { index: 1, name: '전시명1', date: '2023-01-01',lotation:"서울",imgUrl :"https://ticketimage.interpark.com/Play/image/large/23/23004076_p.gif" },
+    //     { index: 2, name: '전시명2', date: '2023-02-01',lotation:"경기/인천" ,imgUrl :"https://artlogic-res.cloudinary.com/w_650,c_limit,f_auto,fl_lossy,q_auto/artlogicstorage/gallerybaton/images/view/693a8dc58325a35a9e263ebdb042214ej/gallerybaton-kim-bohie-towards-2023.jpg"},
+    //     { index: 3, name: '전시명3', date: '2023-03-01',lotation:"충청" },
+    //     { index: 4, name: '전시명4', date: '2023-04-01',lotation:"강원" },
+    //     { index: 5, name: '전시명5', date: '2023-05-01',lotation:"경상도" },
+    //     { index: 6, name: '전시명6', date: '2023-06-01',lotation:"전라/제주" },
+    //     { index: 7, name: '전시명7', date: '2023-07-01',lotation:"서울" },
+    //     { index: 8, name: '전시명8', date: '2023-08-01',lotation:"경기/인천" },
+    //     { index: 9, name: '전시명9', date: '2023-09-01',lotation:"충청" },
+    //     { index: 10, name: '전시명10', date: '2023-10-01',lotation:"강원" },
+    //     { index: 11, name: '전시명11', date: '2023-11-01',lotation:"경상도" },
+    //     { index: 12, name: '전시명12', date: '2023-12-01',lotation:"전라/제주" },
+    //     { index: 13, name: '전시명13', date: '2023-01-01',lotation:"서울" }
         
-      ];
+    //   ];
 
     //셀렉트박스 상태관리
     const [selectedOption, setSelectedOption] = useState('');
@@ -84,16 +91,17 @@ const ExhibitListPage = () => {
         setCategory(category);
         if (category ==='menu1') {
             //인기순 데이터 들어올 자리
-            setFilteredData(imageData);
+            setFilteredData(exhibitionData);
 
         }else if (category ==='menu2') {
             setAreaCategory('서울');
-            const areaData = imageData.filter(item=> item.lotation.includes(areaCategory))
+            const areaData = exhibitionData.filter(item=> item.lotation.includes(areaCategory))
+            
             setFilteredData(areaData);
 
         }else {
             //최신순 데이터 들어올자리 
-            const dateData = [...imageData].sort((a, b) => {
+            const dateData = [...exhibitionData].sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
                 return dateB - dateA;
@@ -102,13 +110,13 @@ const ExhibitListPage = () => {
         }
     },[]);
      //필터 데이터 
-   const [filteredData, setFilteredData] = useState(imageData);
+   const [filteredData, setFilteredData] = useState(exhibitionData);
     //지역 메뉴바 상태관리 
     const [areaCategory,setAreaCategory] = useState('서울');
     const AreaOnSelect = useCallback(areaCategory =>{ 
         setAreaCategory(areaCategory);
         if(category === 'menu2'){
-            const areaData = imageData.filter(item=> item.lotation.includes(areaCategory))
+            const areaData = exhibitionData.filter(item=> item.lotation.includes(areaCategory))
             setFilteredData(areaData);
             console.log(areaData);
         }
@@ -134,7 +142,9 @@ const ExhibitListPage = () => {
     return(
         <Container>
         <div className="header"><Header/></div>
-        <div className="apiBox">전시 공공 API 보여질 영역</div>
+        <div className="apiBox">
+            <Carousel data={exhibitionData}/>
+        </div>
         <div className="category">
             <Categroy category={category} onSelect={onSelect}/>
         </div>
@@ -149,7 +159,7 @@ const ExhibitListPage = () => {
             </div>
             <div className="imgBoxs">
             {currentPageData.map((data, index) => (
-            <InfoBox key={index} name={data.name} date={data.date} lotation={data.lotation}  selectedOption={selectedOption}/>
+            <InfoBox key={index} data={data}  selectedOption={selectedOption}/>
             ))}
             </div>
             <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>

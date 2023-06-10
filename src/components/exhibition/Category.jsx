@@ -29,7 +29,6 @@ const Category = styled.div`
     }
     ${props => 
         props.active && css`
-        border: 1px solid black;
         border-radius : 30px;
         font-weight: bold;
         background-color:#5EADF7;

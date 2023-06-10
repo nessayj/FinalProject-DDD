@@ -1,10 +1,10 @@
 import React from "react";
 import styled,{css} from "styled-components";
-import exImg from "../../resources/exImg.png"
 const Container = styled.div`
     width: 250px;
-    height: 300px;
-    background-color: beige;
+    height: 320px;
+    border: 1px solid #eee;
+    border-radius: 5px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -12,52 +12,93 @@ const Container = styled.div`
     align-items: center;
     margin: 20px;
     .imgBox{
-        width: 90%;
+        overflow: hidden;
+        width: 200px;
+        height: 300px;
+        position: relative;
+        background-image: url(${props => props.imgUrl});
+        background-repeat: no-repeat;
+        background-size:cover;
+       
+    }
+    .textBox{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .title{
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        &>*{
+            margin-bottom: 10px;
+        }
     }
 
     ${({ selectedOption }) =>
     selectedOption === "리스트" &&
     css`
-    width: 70%;
-    height: auto;
-    background-color: beige;
+    width: 800px;
+    height: 300px;
+    border: 1px solid #eee;
+    border-radius: 5px;
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
     margin: 20px;
     .imgBox{
+        overflow: hidden;
         width: 200px;
-        height: 90%;
+        height: 280px;
+        position: relative;
+        background-image: url(${props => props.imgUrl});
+        background-repeat: no-repeat;
+        background-size:cover;
+       
     }
     .textBox{
-        width:70%;
+        display: inline-block;
+        .title{
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        &>*{
+            margin-bottom: 10px;
+        }
     }
 
     &>*{
         margin: 20px;
     }
     @media (max-width: 900px) {
-        width: 90%;
+        height: 250px;
+        .imgBox{
+            height: 240px;
+        }
+        .textBox{
+            width: 60%;
+            .title{
+                font-size: 1.8rem;
+            }
+        }
+        
     }
-    `}
-   
-   
-    
-
+    `} 
 `
-
-const InfoBox = ({name,date,lotation,selectedOption}) => {
+const InfoBox = ({data,selectedOption}) => {
 
 
     return(
 
-        <Container selectedOption={selectedOption}>
-        <img className="imgBox" src={exImg} alt="전시이미지" />
+        <Container selectedOption={selectedOption} imgUrl ={data.imgUrl}>
+        <div className="imgBox" >
+        </div>
         <div className="textBox">
-            <div>{name}</div>
-            <div>{date}</div>
-            <div>{lotation}</div>
+            <div className="title">{data.name}</div>
+            <div>{data.startDate} ~ {data.endDate}</div>
+            <div>{data.place}</div>
         </div>
         </Container>
     );

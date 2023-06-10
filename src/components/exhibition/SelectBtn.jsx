@@ -23,7 +23,7 @@ const SelectBtn = ({selectedOption,setSelectedOption,options}) => {
 
         <SelectBox value={selectedOption} onChange={handleChange}>
         {options.map(e=>(
-            <option value ={e}>{e}</option>
+            <option key={e} value ={e} >{e}</option>
         ))}
         </SelectBox>
     );

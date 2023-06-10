@@ -59,7 +59,7 @@ const Categroy = ({onSelect,category})=> {
 
     return(
         <Container>
-         {categories.map(c=>(
+         {categories.map((c)=>(
             <Category key={c.name} active={category===c.name} onClick={()=>handleClick(c.name)}>
             {c.text}                
             </Category>

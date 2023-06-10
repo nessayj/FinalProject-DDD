@@ -8,6 +8,9 @@ import Header from "./main/Header";
 import AreaCategroy from "../components/exhibition/AreaCategroy";
 import Carousel from "../util/Carousel";
 import exhibitionData from "../components/exhibition/exhibitionData";
+import { useEffect } from "react";
+import InfoModal from "../components/exhibition/InfoModal";
+import ClickInfoBox from "../components/exhibition/ClickInfoBox";
 const Container = styled.div`
 
     .header { 
@@ -15,7 +18,6 @@ const Container = styled.div`
         height: 170px;
     }
     .apiBox {
-        //background-color: #eee;
         width: 70%;
         height: 250px;
         border: 3px solid #eee;
@@ -66,49 +68,44 @@ const Container = styled.div`
 
 
 const ExhibitListPage = () => {
-    // const imageData = [
-    //     { index: 1, name: '전시명1', date: '2023-01-01',lotation:"서울",imgUrl :"https://ticketimage.interpark.com/Play/image/large/23/23004076_p.gif" },
-    //     { index: 2, name: '전시명2', date: '2023-02-01',lotation:"경기/인천" ,imgUrl :"https://artlogic-res.cloudinary.com/w_650,c_limit,f_auto,fl_lossy,q_auto/artlogicstorage/gallerybaton/images/view/693a8dc58325a35a9e263ebdb042214ej/gallerybaton-kim-bohie-towards-2023.jpg"},
-    //     { index: 3, name: '전시명3', date: '2023-03-01',lotation:"충청" },
-    //     { index: 4, name: '전시명4', date: '2023-04-01',lotation:"강원" },
-    //     { index: 5, name: '전시명5', date: '2023-05-01',lotation:"경상도" },
-    //     { index: 6, name: '전시명6', date: '2023-06-01',lotation:"전라/제주" },
-    //     { index: 7, name: '전시명7', date: '2023-07-01',lotation:"서울" },
-    //     { index: 8, name: '전시명8', date: '2023-08-01',lotation:"경기/인천" },
-    //     { index: 9, name: '전시명9', date: '2023-09-01',lotation:"충청" },
-    //     { index: 10, name: '전시명10', date: '2023-10-01',lotation:"강원" },
-    //     { index: 11, name: '전시명11', date: '2023-11-01',lotation:"경상도" },
-    //     { index: 12, name: '전시명12', date: '2023-12-01',lotation:"전라/제주" },
-    //     { index: 13, name: '전시명13', date: '2023-01-01',lotation:"서울" }
-        
-    //   ];
-
     //셀렉트박스 상태관리
     const [selectedOption, setSelectedOption] = useState('');
      //메뉴 바 상태 관리 
     const [category,setCategory] = useState('menu1');
+     //보여질 페이지 개수
+   const ITEMS_PAGE = 12;
+   const [currentPage, setCurrentPage] = useState(0);
+   const handlePageClick = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
     const onSelect = useCallback(category => {
         setCategory(category);
-        if (category ==='menu1') {
-            //인기순 데이터 들어올 자리
-            setFilteredData(exhibitionData);
-
-        }else if (category ==='menu2') {
-            setAreaCategory('서울');
-            const areaData = exhibitionData.filter(item=> item.lotation.includes(areaCategory))
-            
-            setFilteredData(areaData);
-
-        }else {
-            //최신순 데이터 들어올자리 
-            const dateData = [...exhibitionData].sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                return dateB - dateA;
-              });
-              setFilteredData(dateData);
-        }
+        setCurrentPage(0);
     },[]);
+
+   
+    useEffect(() => {
+        if (category === "menu1") {
+        // 인기순 데이터로 리셋
+        setFilteredData(exhibitionData);
+              
+        } else if (category === "menu2") {
+          setAreaCategory("서울");
+          const areaData = exhibitionData.filter((item) =>
+            item.lotation.includes(areaCategory)
+          );
+          setFilteredData(areaData);
+          
+        } else {
+          // 최신순 데이터로 리셋
+          const dateData = [...exhibitionData].sort((a, b) => {
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+            return dateB - dateA;
+          });
+          setFilteredData(dateData);
+        }
+      }, [category]);
      //필터 데이터 
    const [filteredData, setFilteredData] = useState(exhibitionData);
     //지역 메뉴바 상태관리 
@@ -123,22 +120,22 @@ const ExhibitListPage = () => {
       
     },[category]);
 
- 
-  
-
-   //보여질 페이지 개수
-   const ITEMS_PAGE = 12;
-   const [currentPage, setCurrentPage] = useState(0);
-   const handlePageClick = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
-  };
   const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
-
   const currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE);
 
-
- 
+  const [modalOpen,setModalOpen] = useState(false);
+  const closeModal =() => {
+    setModalOpen(false);
+   
+  }
+  //선택한 전시 정보 상태 관리 
+  const [selectEx, setSelectEx] = useState('');
+  const exClick=(selectEx) => { 
+    setModalOpen(true);
+    setSelectEx(selectEx);
+   
+  }
     return(
         <Container>
         <div className="header"><Header/></div>
@@ -159,11 +156,12 @@ const ExhibitListPage = () => {
             </div>
             <div className="imgBoxs">
             {currentPageData.map((data, index) => (
-            <InfoBox key={index} data={data}  selectedOption={selectedOption}/>
+            <InfoBox key={index} data={data}  selectedOption={selectedOption} onClick={()=>exClick(data)}/>
             ))}
             </div>
-            <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
+            <PageNation pageCount={pageCount} onPageChange={handlePageClick} selected={currentPage+1}  />
         </div>
+        <InfoModal open={modalOpen} close={closeModal}> <ClickInfoBox data={selectEx}/></InfoModal>
         </Container>
     );
 }

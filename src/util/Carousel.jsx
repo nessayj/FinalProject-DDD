@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
-
+import Button from "./Button";
 
 const Container = styled.div`
   position: relative;
@@ -31,6 +31,13 @@ const Container = styled.div`
         top: calc(80px + 8rem);
         left: 50%;
         transform: translateX(-50%);
+    }
+    .btn{
+      width: 150px;
+      height: 40px;
+      position: absolute;
+      top: calc(80px + 7rem);
+      right: 40px;
     }
     @media (max-width: 768px) {
     .name{
@@ -90,11 +97,14 @@ const Carousel = ({data}) => {
         <div>
           <Slider {...settings}>
             {data.map((e) => (
-                <Container>
-                <ImgBox key={e.index} imgUrl ={e.imgUrl}/>
+                <Container key={e.index}>
+                <ImgBox imgUrl ={e.imgUrl}/>
                 <div className="name">{e.name}</div>
                 <div className="date">{e.startDate} ~ {e.endDate}</div>
                 <div className="lotation">{e.place}</div>
+                <div className="btn">
+                <Button onClick={()=>console.log(e.name+ "홈페이지 이동 이벤트 발생")}>HOMEPAGE</Button>
+                </div>
                 </Container>
             ))}
           </Slider>

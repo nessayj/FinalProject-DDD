@@ -87,12 +87,15 @@ const Container = styled.div`
     }
     `} 
 `
-const InfoBox = ({data,selectedOption}) => {
+const InfoBox = ({data,selectedOption,onClick}) => {
 
+    const handleClick = () => {
+        onClick();
+    }
 
     return(
 
-        <Container selectedOption={selectedOption} imgUrl ={data.imgUrl}>
+        <Container selectedOption={selectedOption} imgUrl ={data.imgUrl} onClick={handleClick}>
         <div className="imgBox" >
         </div>
         <div className="textBox">

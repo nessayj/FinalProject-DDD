@@ -4,6 +4,7 @@ import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
 import EditInfo from "./EditInfo";
 import Header from "../../pages/main/Header";
+import EditMemberMain from "./EditMemberMain";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -32,31 +33,33 @@ const Modal = styled.div`
     border: .5px solid #bbb;
 `;
     
-// 화면 전환 시, 해당 컴포넌트가 마이페이지 메인이 됨. 
 const MyPageBG = (props) => {
-    const [showPage, setShowPage] = useState(0)
+    const [showPage, setShowPage] = useState('마이페이지')
     return(
         <>
-                <div className="header"><Header/></div>
-        
+        <div className="header"><Header/></div>
         <Container>
-            
             <Modal>
                 {
-                    showPage === 0 && 
-                    < Introduce  
+                    showPage === '마이페이지' && // 마이페이지
+                    <Introduce  
                         showPage = {showPage}
                         setShowPage = {setShowPage}
                     />
 
                 }
                 {
-                    showPage === 1 && 
-                    <EditInfo                      
+                    showPage === '내정보수정' && // 내 정보 수정
+                    <EditMemberMain                      
                         showPage = {showPage}
                         setShowPage = {setShowPage}
                     />
-
+                }
+                {
+                    // 다이어리
+                }
+                {
+                    // 채팅
                 }
                 
             </Modal>

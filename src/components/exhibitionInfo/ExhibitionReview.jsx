@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-const ExhibitionReview = () => {
+const ExhibitionReview = ({data}) => {
 
 
     return(

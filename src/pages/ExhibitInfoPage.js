@@ -24,18 +24,16 @@ const Container = styled.div`
     .category{
         margin: 10px;
     }
+    .coment{
+      //background-color: #050E3D;
+      width: 70%;
+      margin : 0 auto;
+    }
     .section{
         border: 1px solid #050E3D;
-        width: 70%;
+        width: 60%;
         margin : 0 auto;
-        position: relative;
-        padding-top: 2em;
         border-radius:5px;
-        .select{
-            position: absolute;
-            right: 5px;
-            top: 5px;
-        }
 
     }
     @media (max-width: 768px) {
@@ -75,7 +73,7 @@ const ExhibitInfoPage = () => {
         <div className="category">
             <Categroy category={category} onSelect={onSelect} categories={categories}/>
         </div>
-        <div className="section"><Section category={category}/></div>
+        <div className="section"><Section category={category} data ={exData}/></div>
       </Container>
     );
   };

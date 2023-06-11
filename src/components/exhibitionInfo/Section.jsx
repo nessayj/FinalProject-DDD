@@ -2,24 +2,24 @@ import React from "react";
 import ExhibitionDetails from './ExhibitionDetails';
 import ExhibitionLocation from './ExhibitionLocation';
 import ExhibitionReview from './ExhibitionReview';
-const menuSelect = (name) => {
+const menuSelect = (name,data) => {
     switch(name){
         case "menu1" : 
-        return <ExhibitionDetails/>;
+        return <ExhibitionDetails data={data}/>;
        
         case "menu2" : 
-        return <ExhibitionLocation/>;
+        return <ExhibitionLocation data={data}/>;
        
         case "menu3" : 
-        return <ExhibitionReview/>;
+        return <ExhibitionReview data={data}/>;
         default: return'';
     }
 }
 
-const Section= ({category}) => {
+const Section= ({category,data}) => {
     return(
         <div>
-        {menuSelect(category)}
+        {menuSelect(category,data)}
         </div>
     );
 }

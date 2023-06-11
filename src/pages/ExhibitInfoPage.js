@@ -15,7 +15,7 @@ const Container = styled.div`
     }
     .InfoBox {
         width: 70%;
-        height: 250px;
+        height: 300px;
         border: 3px solid #eee;
         margin: 0 auto;
         border-radius:5px;
@@ -37,6 +37,9 @@ const Container = styled.div`
             top: 5px;
         }
 
+    }
+    @media (max-width: 768px) {
+      width: 768px;
     }
   `;
 const ExhibitInfoPage = () => {
@@ -67,7 +70,7 @@ const ExhibitInfoPage = () => {
     return(
       <Container>
       <div className="header"><Header/></div>
-       <div className="InfoBox"><DetailBox/></div>
+       <div className="InfoBox"><DetailBox data ={exData}/></div>
        <div className="coment"><ComentBox/></div>
         <div className="category">
             <Categroy category={category} onSelect={onSelect} categories={categories}/>

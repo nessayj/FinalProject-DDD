@@ -3,9 +3,11 @@ import './App.css';
 import Login from './pages/login'
 import Main from './pages/main/Main';
 import ExhibitListPage from './pages/ExhibitListPage';
+import ExhibitInfoPage from './pages/ExhibitInfoPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Card from './components/Board/Card';
 import MyPage from './pages/MyPage';
+
 function App() {
   return (
       <Router>
@@ -13,6 +15,7 @@ function App() {
         <Route path="/" element={<Main/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
+        <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/Card" element={<Card/>}/>
         <Route path="/myPage" element={<MyPage/>}/>
       </Routes>

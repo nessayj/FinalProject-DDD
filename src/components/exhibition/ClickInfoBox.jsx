@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../util/Button";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     background-color: #F4F8FF;
@@ -53,6 +54,10 @@ const Container = styled.div`
 
 `;
 const ClickInfoBox = ({data}) => {
+    const navigate = useNavigate();
+    const handleClick = (data) => {
+        navigate(`/exhibitInfo/${data.index}`)
+    }
     return(
         <Container imgUrl ={data.imgUrl}>
         <div className="imgBox" >
@@ -61,7 +66,7 @@ const ClickInfoBox = ({data}) => {
             <div className="title">{data.name}</div>
             <div>{data.startDate} ~ {data.endDate}</div>
             <div>{data.place}</div>
-            <div className="btn"><Button>상세정보</Button></div>
+            <div className="btn"><Button onClick={()=>handleClick(data)}>상세정보</Button></div>
             
         </div>
         </Container>

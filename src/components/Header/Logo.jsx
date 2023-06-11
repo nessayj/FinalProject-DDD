@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const LogoContainer = styled.div`
   margin: 1.8rem;
@@ -8,9 +9,11 @@ const LogoContainer = styled.div`
   font-weight: 900;
   position: relative;
   display: inline-flex;
+  cursor: pointer;
 `;
 
 const Logo = () => {
+  const navigation = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const text = ':Diverse Different Display';
 
@@ -24,8 +27,12 @@ const Logo = () => {
     };
   }, []);
 
+  const onClickToMain = () => {
+    navigation("/");
+  }
+
   return (
-    <LogoContainer>
+    <LogoContainer onClick={onClickToMain}>
       {!isExpanded && <span>:DDD</span>}
       <motion.span
         style={{ whiteSpace: 'nowrap' }}

@@ -2,7 +2,7 @@ const member_info =
 {
     "email" : "example@gmail.com",
     "pwd" : "Wkdrn!01",
-    "name" : "짱구",
+    "name" : "신짱구",
     "nickName" : "나짱구아니다",
     "tel" : "010-1234-5678",
     "inst": "cute_zzang9",

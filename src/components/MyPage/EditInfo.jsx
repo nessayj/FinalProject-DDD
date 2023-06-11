@@ -99,7 +99,6 @@ const EditBlock = styled.div`
     .introducBlock {
         /* background-color: aqua; */
         width: calc(100% - 1rem);
-        height: auto;
         padding-left: 1rem;
         textarea {
             width: 88%;
@@ -137,7 +136,7 @@ const EditBlock = styled.div`
                 height: 2.0rem;
                 border-radius: 3rem;
                 margin : 1rem .5rem;
-                background-color: #050E3D ;
+                background-color: #5EADF7 ;
                 border: 1px solid #F4F8FF;
                 color: white;
                 font-size: .8rem;
@@ -152,7 +151,7 @@ const EditBlock = styled.div`
 `;
 const Edit =styled.div`
     width: 100%;
-    height: 50%;
+    height: 90%;
     display: flex;
     flex-direction: row;
     p{
@@ -167,7 +166,7 @@ const Edit =styled.div`
         width: 70%;
         height: 1.5rem;
         background-color: #F4F8FF;
-                border: 1px solid #5EADF7;
+        border: 1px solid #5EADF7;
         /* border: 1px solid #5EADF7; */
         border-radius: .3rem;
         color: black;
@@ -205,8 +204,9 @@ const RightBox = styled.div`
 
 const EditInfo = (props) => {
     return (
+        <>   
+        <Thumnail/>
         <Container>
-            <Thumnail/>
                         {/* ====== 이미지 클릭 하였을 때 바뀌는 것으로 고민 해보기 =======  */}
                         {/* <EditBG> 수정 </EditBG>
                         <EditProfile> 수정 </EditProfile> */}
@@ -216,24 +216,15 @@ const EditInfo = (props) => {
                     <Menu>
                         <div onClick={() => (props.setShowPage(0))}>마이페이지</div>
                         {
-                            props.showPage === 1 ? (
-                                <div className='FocusedMenuBtn'>내 정보 수정</div>
-                            ) : (
-                                <div>내 정보 수정</div>
-                            )
+                            props.showPage === 1 ? 
+                            (<div className='FocusedMenuBtn'>내 정보 수정</div>) : 
+                            (<div>내 정보 수정</div>)
                         }
 
                         <div>내 게시물</div>
                         <div>예약관리</div>
                         <div>회원탈퇴</div>
                     </Menu>
-                    {/* <Menu>
-                        <div className='menuBtn' onClick={() => (props.setShowPage(0))}>마이페이지</div>
-                        <div className='menuBtn'>내 정보 수정</div>
-                        <div className='menuBtn'>내 게시물</div>
-                        <div className='menuBtn'>예약관리</div>
-                        <div className='menuBtn'>회원탈퇴</div>
-                    </Menu> */}
                 </MenuBlock>
                 <EditBlock>
                         <div className='title' >내 정보 수정</div>
@@ -247,6 +238,10 @@ const EditInfo = (props) => {
                             <div className="textBox">
                                 <input type="password" />
                             </div>
+                            <p>비밀번호 확인</p>
+                            <div className="textBox">
+                                <input type="password"  />
+                            </div>
                             <p>닉네임</p>
                             <div className="textBox">
                                 <input type="text" placeholder={member_info.nickName}  />
@@ -258,15 +253,16 @@ const EditInfo = (props) => {
                             <div className="textBox">
                                 <input type="text" placeholder={member_info.name} />
                             </div>
-                            <p>비밀번호 확인</p>
+                            <p>연락처</p>
                             <div className="textBox">
-                                <input type="password"  />
+                                <input type="tel" placeholder={member_info.tel}  />
                             </div>
                             <p>인스타그램(선택사항)</p>
                             <div className="textBox">
                                 <input type="text" placeholder={member_info.inst} />
                             </div>
                         </RightBox>
+                        
                     </Edit>
                     <div className="introducBlock">
                         <p>내 소개</p>
@@ -274,17 +270,14 @@ const EditInfo = (props) => {
                     </div>
                     <div className="btnBlock">
                         <button>저장</button>
-                        <button>취소</button>
+                        <button onClick={()=>{props.setShowPage(0)}}>취소</button>
                     </div>
-
-                    
-
                 </EditBlock>
+                
             </MenuSpace>
- 
-
-
         </Container>
+        </>
+       
     );
 };
 

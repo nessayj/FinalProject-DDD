@@ -72,6 +72,11 @@ const ExhibitListPage = () => {
     const [selectedOption, setSelectedOption] = useState('');
      //메뉴 바 상태 관리 
     const [category,setCategory] = useState('menu1');
+    //카테고리 배열
+    const categories = [
+      {name :'menu1',text : '인기순'},
+      {name :'menu2',text : '장소/지역'},
+      {name :'menu3',text : '최신순'}]
      //보여질 페이지 개수
    const ITEMS_PAGE = 12;
    const [currentPage, setCurrentPage] = useState(0);
@@ -92,7 +97,7 @@ const ExhibitListPage = () => {
         } else if (category === "menu2") {
           setAreaCategory("서울");
           const areaData = exhibitionData.filter((item) =>
-            item.lotation.includes(areaCategory)
+            item.location.includes(areaCategory)
           );
           setFilteredData(areaData);
           
@@ -113,7 +118,7 @@ const ExhibitListPage = () => {
     const AreaOnSelect = useCallback(areaCategory =>{ 
         setAreaCategory(areaCategory);
         if(category === 'menu2'){
-            const areaData = exhibitionData.filter(item=> item.lotation.includes(areaCategory))
+            const areaData = exhibitionData.filter(item=> item.location.includes(areaCategory))
             setFilteredData(areaData);
             console.log(areaData);
         }
@@ -143,7 +148,7 @@ const ExhibitListPage = () => {
             <Carousel data={exhibitionData}/>
         </div>
         <div className="category">
-            <Categroy category={category} onSelect={onSelect}/>
+            <Categroy category={category} onSelect={onSelect}categories={categories}/>
         </div>
         <div className="section">
             {category==='menu2' &&

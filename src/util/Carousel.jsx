@@ -25,7 +25,7 @@ const Container = styled.div`
         left: 50%;
         transform: translateX(-50%);
     }
-    .lotation{
+    .location{
         font-size: 1rem;
         position: absolute;
         top: calc(80px + 8rem);
@@ -101,7 +101,7 @@ const Carousel = ({data}) => {
                 <ImgBox imgUrl ={e.imgUrl}/>
                 <div className="name">{e.name}</div>
                 <div className="date">{e.startDate} ~ {e.endDate}</div>
-                <div className="lotation">{e.place}</div>
+                <div className="location">{e.place}</div>
                 <div className="btn">
                 <Button onClick={()=>console.log(e.name+ "홈페이지 이동 이벤트 발생")}>HOMEPAGE</Button>
                 </div>

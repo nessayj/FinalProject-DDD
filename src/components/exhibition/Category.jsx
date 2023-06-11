@@ -35,28 +35,13 @@ const Category = styled.div`
     `}
     
 `;
-const categories = [
-    {
-        name :'menu1',
-        text : '인기순'
-    },
-    {
-        name :'menu2',
-        text : '장소/지역'
-    },
-    
-    {
-        name :'menu3',
-        text : '최신순'
-    }]
-const Categroy = ({onSelect,category})=> {
+
+const Categroy = ({onSelect,category,categories})=> {
 
     const handleClick = categoryName => {
         onSelect(categoryName);
       };
     
-
-
     return(
         <Container>
          {categories.map((c)=>(

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
 import EditMemberInfo from "./EditMemberMain";
+import Header from "../../pages/main/Header";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -31,10 +32,14 @@ const Modal = styled.div`
     border: .5px solid #bbb;
 `;
     
+// ===================  삭제 할 것 ..  =====================
 
 const MyPage = () => {
     return(
-        <Container>
+        <>
+                <Container>
+        {/* <div className="header"><Header/></div> */}
+
             <Modal>
                 <Introduce/>
                 {/* <EditMemberInfo/> */}
@@ -42,6 +47,9 @@ const MyPage = () => {
 
             </Modal>
         </Container>
+        </>
+        
+
     )
 }
 

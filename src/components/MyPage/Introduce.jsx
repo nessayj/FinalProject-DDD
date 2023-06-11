@@ -64,7 +64,7 @@ const TextBox = styled.div`
 
 `;
 
-const Introduce = () => {
+const Introduce = (props) => {
     return (
         <>
             <Thumnail/>
@@ -83,9 +83,9 @@ const Introduce = () => {
             <hr/>
             <Diary/>
             <hr/>
-                <span className='text' onClick={()=>{console.log('hi')}}>채팅</span> <br/>
+                <span className='text' onClick={()=>{props.setShowPage(2)}}>채팅</span> <br/>
                 <hr/>
-                <span className='text' onClick={()=>{console.log('hi')}}>내 정보 수정</span>
+                <span className='text' onClick={()=>{props.setShowPage(1)}}>내 정보 수정</span>
             </Container>
         </>
     );

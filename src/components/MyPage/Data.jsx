@@ -5,7 +5,7 @@ const member_info =
     "name" : "짱구",
     "nickName" : "나짱구아니다",
     "tel" : "010-1234-5678",
-    "inst": "cute_Wkdrn",
+    "inst": "cute_zzang9",
     "introuduce" : "안녕하세요! 만나서 반가워요!!"
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DisplayData } from "./DisplayData";
 import WeekRanking from "./WeekRanking";
@@ -15,8 +15,8 @@ const BodyContainer = styled.div`
             margin: 2rem;
             height: 80%;
             >img {
-            width: 20rem;
-            height: 25rem;
+            width: 16rem;
+            height: 20rem;
         }
         }
 
@@ -43,12 +43,12 @@ const TodayRec = styled.div`
         margin-top: 0;
         .today-container {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
             margin-left: 0;
             width: 100%;
             height: 300px;
-            background-color: skyblue;
-            > .today-display {
+            background-color: #5EADF7;
+            .today-display {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -56,20 +56,42 @@ const TodayRec = styled.div`
                 width: 100%;
                 height: 80%;
             }
-
-            > .today-list {
+        }
+        }
+        .today-list {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                margin-left: 10rem;
+                
                 > h3 {
-                    text-align: center;
+                    cursor: pointer;
+                    &:hover {
+                        font-weight: bold;
+                        text-decoration: underline;
+                    }
                 }
             }
-        }
-        }
-        >h2 {
+        h2 {
             width: 1200px;
             margin: 1rem auto;
         }
-`
+        .today-explanation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-right: 8rem;
+            color: white;
+            font-size: larger;
+        }
+`;
+const StyledH3 = styled.h3`
 
+    color: ${({ selected }) => (selected ? 'black' : 'white')};
+    text-decoration: ${({ selected }) => (selected ? 'underline' : 'none')};
+`;
 const StyledH2 = styled.h2`
     margin: 0 2rem 0 0;
     cursor: pointer;
@@ -93,10 +115,19 @@ const MainBody = () => {
     }
 
     // 오늘의 추천 임시이미지
-    const img6 = DisplayData[5];
-    const img7 = DisplayData[6];
-    const img8 = DisplayData[7];
+    const [selelctedItemIndex, setSelectedItemIndex] = useState(0);
 
+    const handleItemClick = (name) => {
+        const index = DisplayData.findIndex((data) => data.name === name);
+        setSelectedItemIndex(index);
+    }
+
+    const selectedItem = DisplayData[selelctedItemIndex];
+    const selectedItemName = selectedItem ? selectedItem.name : ' '; 
+
+    useEffect(() => {
+        setSelectedItemIndex(5);
+    }, []);
 
     return(
         <>
@@ -104,7 +135,7 @@ const MainBody = () => {
         <div className="open-display">
             <h2>오픈 전시</h2>
             <div className="open-container">
-                <img src={img2} alt="오픈 전시 이미지" />
+                <img src={img2.imgUrl} alt="오픈 전시 이미지" />
             </div>
         </div>
         <div className="popular-display">
@@ -120,13 +151,31 @@ const MainBody = () => {
         <TodayRec>
             <h2>오늘의 추천</h2>
             <div className="today-container">
+                <div className="today-explanation">
+                    {DisplayData.map((data, index) => (
+                        <h3 key={index} style={{ display: selectedItemName === data.name ? 'block' : 'none' }}>
+                            {data.name} <br /><br />
+                            {data.date}
+                        </h3>
+                    ))}
+                </div>
                 <div className="today-display">
-                    <img src={img6} alt="전시1"/>
+                    {DisplayData.map((data, i) => (
+                        <img
+                            key={i}
+                            src={data.imgUrl}
+                            alt={`전시${i+1}`}
+                            style={{ display: selectedItemName === data.name ? 'block' : 'none' }}
+                        />
+                    ))}
                 </div>
                 <div className="today-list">
-                    <h3>MokStory</h3>
-                    <h3>LostandFound</h3>
-                    <h3>RUN HIDE TELL</h3>
+                    {DisplayData.slice(5, 8).map((data,index) => (
+                        <StyledH3 selected={selectedItemName === data.name}
+                        key={index} onClick={() => handleItemClick(data.name)}>
+                            {data.name}
+                        </StyledH3>
+                    ))}
                 </div>
             </div>
         </TodayRec>

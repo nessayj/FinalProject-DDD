@@ -52,7 +52,7 @@ const Table = styled.table`
         font-weight: 400;
         height: 1.5rem;
         line-height: .8rem;
-        color:#555;
+        color:#222;
         border-bottom : 1px solid #ccc;
         border-top: 1px solid #ccc;
 

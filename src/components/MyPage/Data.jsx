@@ -26,7 +26,50 @@ const diaryImage = [
     "https://artlogic-res.cloudinary.com/w_1000,c_limit,f_auto,fl_lossy,q_auto/artlogicstorage/gallerybaton/images/view/527c05ddd942d5ffb91ef3df0a895dfaj/gallerybaton-kim-bohie-towards-2023.jpg",
 ]
 
+const dummy_post = [
+    {
+        "no" : 221,
+        "category" : "추천수다",
+        "title" : "이번주 짱구는 못말려 넘 재밌어요",
+        "nickName" : "나짱구아니다",
+        "view" : 22,
+        "date" : "23-05-29"
+    },
+    {
+        "no" : 102,
+        "category" : "질문하기",
+        "title" : "짱구 데뷔년도가 95년임?",
+        "nickName" : "나짱구아니다",
+        "view" : 102,
+        "date" : "23-06-04"
+    },
+    {
+        "no" : 14,
+        "category" : "동행찾기",
+        "title" : "도라에몽 내 친구였는데 이번에 전시회 같이 볼 사람",
+        "nickName" : "나짱구아니다",
+        "view" : 142,
+        "date" : "23-06-12"
+    },    {
+        "no" : 221,
+        "category" : "추천수다",
+        "title" : "이번주 짱구는 못말려 넘 재밌어요",
+        "nickName" : "나짱구아니다",
+        "view" : 22,
+        "date" : "23-05-29"
+    },
+    {
+        "no" : 102,
+        "category" : "질문하기",
+        "title" : "짱구 데뷔년도가 95년임?",
+        "nickName" : "나짱구아니다",
+        "view" : 102,
+        "date" : "23-06-04"
+    },
 
+]
 
-export {member_info, thumbnail, profileImage, diaryImage};
+const dummy_reply = []
+
+export {member_info, thumbnail, profileImage, diaryImage, dummy_post, dummy_reply};
 

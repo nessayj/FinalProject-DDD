@@ -10,7 +10,7 @@ const Container = styled.div`
     box-sizing: border-box;
     /* overflow-x: hidden; */
     position: absolute;
-    top: 0%; 
+    top: 20%; 
     width: 100vw;
     height: 100vh;
     /* background-color: aqua; */
@@ -23,7 +23,7 @@ const Modal = styled.div`
     min-height: 900px;
     background-color: white;
     position: absolute;
-    top: 50%; // 헤더부분만큼 Top에서 내림
+    top: 40%; // 헤더부분만큼 Top에서 내림
     left: 50%;
     transform: translate3d(-50%, -20%, 0);
     border-radius: 2rem;

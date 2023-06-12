@@ -54,7 +54,7 @@ const TodayRec = styled.div`
                 justify-content: center;
                 > img {
                 width: 100%;
-                height: 80%;
+                height: 120%;
             }
         }
         }
@@ -62,8 +62,9 @@ const TodayRec = styled.div`
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                text-align: center;
                 flex-direction: column;
-                margin-left: 10rem;
+                margin-left: 15rem;
                 
                 > h3 {
                     cursor: pointer;
@@ -89,14 +90,18 @@ const TodayRec = styled.div`
 `;
 const StyledH3 = styled.h3`
 
-    color: ${({ selected }) => (selected ? 'black' : 'white')};
-    text-decoration: ${({ selected }) => (selected ? 'underline' : 'none')};
+    color: ${({ selected }) => (selected ? '#050E3D' : 'white')};
 `;
 const StyledH2 = styled.h2`
     margin: 0 2rem 0 0;
     cursor: pointer;
     text-decoration: ${({ selected }) => selected ? 'underline' : 'none'};
     color: ${({ selected }) => selected ? 'black' : 'gray'};
+`;
+const StyledHr = styled.hr`
+  width: 15rem;
+  height: 1px;
+  background-color: white;
 `;
 
 const MainBody = () => {
@@ -115,19 +120,27 @@ const MainBody = () => {
     }
 
     // 오늘의 추천 임시이미지
-    const [selelctedItemIndex, setSelectedItemIndex] = useState(0);
+    const [selectedItemName, setSelectedItemName] = useState("");
 
     const handleItemClick = (name) => {
-        const index = DisplayData.findIndex((data) => data.name === name);
-        setSelectedItemIndex(index);
+        setSelectedItemName(name);
     }
 
-    const selectedItem = DisplayData[selelctedItemIndex];
-    const selectedItemName = selectedItem ? selectedItem.name : ' '; 
+   
 
     useEffect(() => {
-        setSelectedItemIndex(5);
-    }, []);
+        const startIndex = 5; // 시작 인덱스(Api 가지고오면 변경해야함)
+        setSelectedItemName(DisplayData[startIndex].name);
+        let currentIndex = startIndex;
+      
+        const interval = setInterval(() => {
+        const nextIndex = (currentIndex + 1) % DisplayData.slice(5, 8).length;
+        setSelectedItemName(DisplayData.slice(5, 8)[nextIndex].name);
+        currentIndex = nextIndex;
+        }, 3000);
+      
+        return () => clearInterval(interval);
+      }, []);
 
     return(
         <>
@@ -171,9 +184,10 @@ const MainBody = () => {
                 </div>
                 <div className="today-list">
                     {DisplayData.slice(5, 8).map((data,index) => (
-                        <StyledH3 selected={selectedItemName === data.name}
+                        <StyledH3 selected={selectedItemName=== data.name}
                         key={index} onClick={() => handleItemClick(data.name)}>
                             {data.name}
+                            <StyledHr />
                         </StyledH3>
                     ))}
                 </div>

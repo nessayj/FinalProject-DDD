@@ -12,7 +12,7 @@ const DiaryBox =styled.div`
     .title{
         display: block;
         align-items: left;
-        margin : .5rem 0 0 2rem ;
+        margin : .5rem 0 0 2.5rem ;
         font-size: 1rem;
         font-weight: bold;
     }
@@ -27,10 +27,10 @@ const DiaryBox =styled.div`
         padding-left: .5rem;
         .diaryImg{
             overflow: hidden;
-            width: 7.4rem;
+            width: 8rem;
             min-width: 90px;
-            height: 9rem;
-            margin-left: .5rem;
+            height: 10rem;
+            margin-left: 1rem;
             background-position: center;
         }
         button{

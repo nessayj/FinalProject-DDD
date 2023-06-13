@@ -1,15 +1,47 @@
 import React from 'react';
 import styled from 'styled-components';
+import { member_info, diaryImage } from './Data.jsx';
+import Diary from "./Diary";
+import Thumnail from './Thumnail.jsx';
+import { SlSocialInstagram, SlPaperPlane, SlUserFollow } from 'react-icons/sl';
 import {dummy_post, dummy_reply} from './Data'
+import NaviBox from './NaviBox.jsx';
+
+
 
 const Container = styled.div`
-    width: 70%;
-    height: 100%;
+  /* background-color  : beige; */
+  width: 100%;
+  height: 100%;
+  .text{
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+  }
+  hr{
+    width: 90%;
+    border: 1px solid #eee;
+    margin: 0% 5%;
+
+  }
+`;
+
+
+
+
+const PostWrap = styled.div`
+    width: calc(100% - 2rem);
+    height: 88%;
     /* background-color: #fed081; */
+    /* position : relative;
+    top: 12%; */
+    padding-left: 2.5rem;
     p {
         text-align: left;
         margin: 0rem 0 .3rem 0;
-        font-size: .8rem;
+        font-size: 1rem;
         font-weight: bold;
     }
     .title {
@@ -18,11 +50,11 @@ const Container = styled.div`
         font-weight: bold;
     }
     .moreBox{
-        width: 88%;
+        width: 90%;
         display: flex;
         justify-content: space-between;
         margin: 1rem 0 ;
-        font-size: .6rem;
+        font-size: .8rem;
         font-weight: bold;
         color:#555;
         .seeMore{
@@ -37,16 +69,17 @@ const Container = styled.div`
     }
 `;
 const Table = styled.table`
-    width: 90%;
+    width: 92%;
     /* background-color: aqua; */
     text-align: center;
     border-collapse: collapse;
     border: none;
 
+
     th,td{
-        font-size: .6rem;
+        font-size: .8rem;
         font-weight: 600;
-        height: 1.5rem;
+        height: 2rem;
         line-height: .8rem;
         color:#000;
         border-bottom : 1px solid #ccc;
@@ -63,10 +96,14 @@ const Table = styled.table`
     }
 `;
 
-const MyPost = () => {
+
+const Introduce = (props) => {
     return (
         <>
+            <Thumnail/>
             <Container>
+            <NaviBox/>
+            <PostWrap>
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>
                     <span>내가 쓴 글</span>
@@ -136,10 +173,10 @@ const MyPost = () => {
                     </tbody>
                 </Table>
                 
+            </PostWrap>
             </Container>
-            
         </>
     );
 };
 
-export default MyPost;
+export default Introduce;

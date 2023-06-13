@@ -12,7 +12,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   .text{
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
     font-size: 1rem;
     font-weight: bold;
     display: inline-block;
@@ -49,12 +49,12 @@ const TextBox = styled.div`
     display: flex;
     flex-direction: column;
     .nickName{
-        margin : .5rem 0 0 2rem ;
+        margin : .5rem 0 0 2.5rem ;
         font-size: 1rem;
         font-weight: bold;
     }
     .desc{
-        margin : 1rem 0 0 2rem ;
+        margin : 1rem 0 0 2.5rem ;
         font-size: .9rem;
     }
     &:last-child { 	
@@ -83,7 +83,7 @@ const Introduce = (props) => {
             <hr/>
             <Diary/>
             <hr/>
-                <span className='text' onClick={()=>{props.setShowPage(0)}}>채팅</span> <br/>
+                <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>내 게시물</span> <br/>
                 <hr/>
                 <span className='text' onClick={()=>{props.setShowPage('내정보수정')}}>내 정보 수정</span>
             </Container>

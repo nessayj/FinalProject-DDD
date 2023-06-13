@@ -4,6 +4,8 @@ import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
 import EditInfo from "./EditInfo";
 import EditMemberMain from "./EditMemberMain";
+import MyPost from "./MyPost";
+import NaviBox from "./NaviBox";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -20,7 +22,7 @@ const Container = styled.div`
     display: flex;
 `;
 const Modal = styled.div`
-    width: 65vw;
+    width: 55vw;
     min-width: 600px;
     //max-width: 768px;
     height: 70vh;
@@ -50,7 +52,7 @@ const MyPageBG = (props) => {
                         setShowPage = {setShowPage}
                     />
 
-                }
+                }               
                 {
                     showPage === '내정보수정' && // 내 정보 수정
                     <EditMemberMain                      
@@ -59,7 +61,11 @@ const MyPageBG = (props) => {
                     />
                 }
                 {
-                    // 다이어리
+                    showPage === '내게시물' && // 내 게시물
+                    <MyPost                      
+                        showPage = {showPage}
+                        setShowPage = {setShowPage}
+                    />
                 }
                 {
                     // 채팅

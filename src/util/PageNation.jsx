@@ -10,12 +10,12 @@ const PageNationBlock = styled(ReactPaginate)`
   list-style: none;
   font-size: larger;
   padding: 0;
-  color: #5EADF7;
+  color: #050E3D;
     .page-item{
     margin: 5px;
     color :black;
     border-radius: 5px;
-    border : 2px solid #5EADF7;
+    border : 2px solid #050E3D;
     display: flex;
     width: 30px;
     height: 30px;
@@ -25,8 +25,9 @@ const PageNationBlock = styled(ReactPaginate)`
   }
 
   .active{
-    background-color: #5EADF7;
+    background-color: #050E3D;
     font-weight: bold;
+    color :white;
     }
  
 

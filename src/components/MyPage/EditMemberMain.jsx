@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const MenuSpace = styled.div`
     position: relative;
-    top: 8%;
+    top: 0%;
     width: 100%;
     height: 62%;
     /* background-color: aqua; */
@@ -30,7 +30,7 @@ const MenuBlock =  styled.div`
 `;
 
 const Menu =styled.div`
-    width: 100%;
+    width: 90%;
     height: auto;
     /* background-color: aqua; */
     text-align: center;
@@ -61,19 +61,19 @@ const EditMemberMain = (props) => {
     const [pageOnEdit, setPageOnEdit] = useState(0)
     return (
         <>   
-        <Thumnail/>
+        {/* <Thumnail/> */}
         <Container>
             <MenuSpace>
                 <MenuBlock>
                     <Menu>
-                        <div onClick={() => (props.setShowPage('마이페이지'))}>마이페이지</div>
                         {
                             pageOnEdit === 0 ? 
                             (<div className='FocusedMenuBtn'>내 정보 수정</div>) : 
                             (<div onClick={()=> setPageOnEdit(0)}>내 정보 수정</div>)
 
                         }
-                        {
+                        <div onClick={() => (props.setShowPage('마이페이지'))}>마이페이지</div>
+                        {/* {
                             pageOnEdit === 1 ? 
                             (<div className='FocusedMenuBtn'>내 게시물</div>) : 
                             (<div onClick={()=> setPageOnEdit(1)}>내 게시물</div>)
@@ -82,7 +82,7 @@ const EditMemberMain = (props) => {
                             pageOnEdit === 2 ? 
                             (<div className='FocusedMenuBtn'>예약관리</div>) : 
                             (<div onClick={()=> setPageOnEdit(2)}>예약관리</div>)
-                        }
+                        } */}
                         {
                             pageOnEdit === 3 ? 
                             (<div className='FocusedMenuBtn'>회원탈퇴</div>) : 
@@ -90,15 +90,13 @@ const EditMemberMain = (props) => {
                         }
                     </Menu>
                 </MenuBlock>
+                {/* state에 따라서 컴퍼넌트 출력 */}
                         {pageOnEdit === 0  && <EditInfo 
                             showPage={props.showPage} 
                             setShowPage={props.setShowPage}
                         />}
                         {
                             pageOnEdit === 1 && <MyPost/>
-                        } 
-                        {
-                            pageOnEdit === 2 && <MyReservation/>
                         } 
                         {
                             pageOnEdit === 3 && <DeleteAccount/>

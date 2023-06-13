@@ -78,7 +78,7 @@ const Table = styled.table`
 
     th,td{
         font-size: .8rem;
-        font-weight: 600;
+        font-weight: 400;
         height: 2rem;
         line-height: .8rem;
         color:#000;
@@ -100,9 +100,7 @@ const Table = styled.table`
 const Introduce = (props) => {
     return (
         <>
-            <Thumnail/>
             <Container>
-            <NaviBox/>
             <PostWrap>
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>

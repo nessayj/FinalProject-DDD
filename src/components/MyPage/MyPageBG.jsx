@@ -47,25 +47,40 @@ const MyPageBG = (props) => {
             <Modal>
                 {
                     showPage === '마이페이지' && // 마이페이지
-                    <Introduce  
-                        showPage = {showPage}
-                        setShowPage = {setShowPage}
-                    />
+                    <>
+                        <Thumnail/>
+                        {/* 소셜박스로 바꿀 것 */}
+                        <NaviBox setShowPage = {setShowPage}/> 
+                        <Introduce  
+                            showPage = {showPage}
+                            setShowPage = {setShowPage}
+                        />
+                    </>
 
                 }               
                 {
                     showPage === '내정보수정' && // 내 정보 수정
+                    <>
+                    <Thumnail/>
+                    <NaviBox setShowPage = {setShowPage}/> 
                     <EditMemberMain                      
                         showPage = {showPage}
                         setShowPage = {setShowPage}
                     />
+                    </>
+
                 }
                 {
                     showPage === '내게시물' && // 내 게시물
-                    <MyPost                      
-                        showPage = {showPage}
-                        setShowPage = {setShowPage}
-                    />
+                    <>
+                        <Thumnail/>
+                        <NaviBox setShowPage = {setShowPage}/> 
+                        <MyPost                      
+                            showPage = {showPage}
+                            setShowPage = {setShowPage}
+                        />
+                    </>
+
                 }
                 {
                     // 채팅

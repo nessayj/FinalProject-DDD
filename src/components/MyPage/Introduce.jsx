@@ -4,6 +4,7 @@ import { member_info, diaryImage } from './Data.jsx';
 import Diary from "./Diary";
 import Thumnail from './Thumnail.jsx';
 import { SlSocialInstagram, SlPaperPlane, SlUserFollow } from 'react-icons/sl';
+import NaviBox from './NaviBox.jsx';
 
 
 
@@ -67,13 +68,9 @@ const TextBox = styled.div`
 const Introduce = (props) => {
     return (
         <>
-            <Thumnail/>
+
             <Container>
-            <SocialBox> 
-                <div className='icon'> <SlPaperPlane /> </div>
-                <div className='icon'> <SlSocialInstagram /></div>
-                <div className='icon'> <SlUserFollow /></div>
-            </SocialBox>
+
 
             <TextBox>
                 <div className='nickName'> {member_info.nickName} </div>

@@ -99,7 +99,7 @@ const EditBlock = styled.div`
 `;
 const Edit =styled.div`
     width: 100%;
-    height: 82%;
+    height: 90%; // 여기서 내소개 위치 변경함 (바꿔야함...)
     display: flex;
     flex-direction: row;
     p{

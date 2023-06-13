@@ -24,7 +24,6 @@ function App() {
         <Route path="/myPage" element={<MyPage/>}/>
       </Routes>
       </Router>
-      
   );
 }
 

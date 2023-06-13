@@ -1,5 +1,4 @@
 import React ,{useState,useEffect} from "react";
-import Header from '../components/Header/Header';
 import styled from "styled-components";
 import { useParams } from "react-router";
 import exhibitionData from "../components/exhibition/exhibitionData";
@@ -94,7 +93,6 @@ const ReservationPage =  () => {
         <>
         {exData && 
         <Container  imgUrl ={exData.imgUrl}>
-        <div className="header"><Header/></div>
             <div className="reservationBox">
                <div className="infoBox">
                <div className="root">

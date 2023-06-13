@@ -4,7 +4,6 @@ import SelectBtn from "../components/exhibition/SelectBtn";
 import InfoBox from "../components/exhibition/InfoBox";
 import Categroy from '../components/exhibition/Category';
 import PageNation from "../util/PageNation";
-import Header from "../components/Header/Header";
 import AreaCategroy from "../components/exhibition/AreaCategroy";
 import Carousel from "../util/Carousel";
 import exhibitionData from "../components/exhibition/exhibitionData";
@@ -143,7 +142,6 @@ const ExhibitListPage = () => {
   }
     return(
         <Container>
-        <div className="header"><Header/></div>
         <div className="apiBox">
             <Carousel data={exhibitionData}/>
         </div>

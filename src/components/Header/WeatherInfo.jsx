@@ -8,30 +8,27 @@ import styled from "styled-components";
 const WeatherStyle = styled.div`
     
     .weather-container {
-        margin: 1.5rem;
-        border-radius: 2rem;
-        background-color: #F4F8FF;
         display: flex;
-        flex-direction: column;
+        margin-top: 0.8rem;
+        margin-right: 10rem;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         text-align: center;
         .icons{
-            margin-bottom: 0;
-            font-size: 2rem;
+            margin-right: 0.5rem;
+            font-size: 1rem;
         }
-        .weather-degree-location{
-            display: flex;
-            flex-direction: row;
-            .weather {
-                margin-right: 1rem;
-            }
-            .degree {
-                font-weight: bold;
-                margin-right: 1rem;
-            }
-            .location {
-                font-weight: bold;
-            }
+        .degree {
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
         }
+        .location {
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
 
     }
 
@@ -53,7 +50,7 @@ const weatherIcon = {
 // 날씨 보여줄 지역들
 const locations = ['Seoul', 'Gyeonggi-do', 'Busan', 'Gwangju', 'Daegu', 'Jeju'];
 // 한글로 출력 
-const locationsKorean = ['서울', '경기도', '부산', '광주', '대구', '제주'];
+const locationsKorean = ['서울', '경기', '부산', '광주', '대구', '제주'];
 
 const WeatherInfo = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -91,11 +88,8 @@ const WeatherInfo = () => {
             {weatherData.length > 0 && (
             <div className="weather-container">
                 <div className="icons">{weatherIcon[weatherData[currentIndex].weather[0].icon.substr(0, 2)]}</div>
-                <div className="weather-degree-location">
-                    {/* <div className="weather">{weatherData[currentIndex].weather[0].main}</div> */}
                     <div className="degree">{Math.floor(weatherData[currentIndex].main.temp - 273.15)}º</div>
                     <div className="location">{locationsKorean[currentIndex]}</div>
-                </div>
             </div>
             )}
         </WeatherStyle>

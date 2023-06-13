@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
 import EditInfo from "./EditInfo";
-import Header from "./../Header/Header";
 import EditMemberMain from "./EditMemberMain";
 
 const Container = styled.div`
@@ -42,7 +41,6 @@ const MyPageBG = (props) => {
     const [showPage, setShowPage] = useState('마이페이지')
     return(
         <>
-        <div className="header"><Header/></div>
         <Container>
             <Modal>
                 {

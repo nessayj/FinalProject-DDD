@@ -13,13 +13,11 @@ const Container = styled.div`
         font-weight: bold;
     }
     .title {
-        padding-left: 1rem;
         /* background-color: red; */
         height: 7%;
         font-weight: bold;
     }
     .moreBox{
-        padding-left: 1rem;
         width: 88%;
         display: flex;
         justify-content: space-between;
@@ -35,12 +33,10 @@ const Container = styled.div`
         width: 90%;
         height: 10%;
         /* background-color: aqua; */
-        margin-left: 1rem;
         border-bottom : 1px solid #ddd;
     }
 `;
 const Table = styled.table`
-    margin-left: 1rem;
     width: 90%;
     /* background-color: aqua; */
     text-align: center;
@@ -49,20 +45,21 @@ const Table = styled.table`
 
     th,td{
         font-size: .6rem;
-        font-weight: 400;
+        font-weight: 600;
         height: 1.5rem;
         line-height: .8rem;
-        color:#222;
+        color:#000;
         border-bottom : 1px solid #ccc;
         border-top: 1px solid #ccc;
 
     }
     th{
-        font-weight:bold;
-        background-color: #ddd;
+        font-weight:500;
+        background-color: #5EADF7;
+        color: white;
     }
     tr:nth-child(even) {
-        background-color: #eee;
+        background-color: #F4F8FF;
     }
 `;
 

@@ -33,14 +33,11 @@ const EditBlock = styled.div`
     /* background-color: blue; */
     p {
         text-align: left;
-        /* margin-left: 7%; */
         margin: 0rem 0 .3rem 0;
         font-size: .8rem;
-        /* font-size: .8rem; */
         font-weight: bold;
     }
     .title {
-        padding-left: 1rem;
         /* background-color: red; */
         height: 7%;
         font-weight: bold;
@@ -48,7 +45,6 @@ const EditBlock = styled.div`
     .introducBlock {
         /* background-color: aqua; */
         width: calc(100% - 1rem);
-        padding-left: 1rem;
         textarea {
             width: 88%;
             background-color: #F4F8FF;
@@ -94,7 +90,6 @@ const EditBlock = styled.div`
                 color: white;
                 font-size: .8rem;
                 cursor: pointer;
-                /* float : right; */
                 display: flex;
                 justify-content:center;
                 align-items: center;
@@ -109,10 +104,8 @@ const Edit =styled.div`
     flex-direction: row;
     p{
         text-align: left;
-        /* margin-left: 7%; */
         margin: 1.6rem 0 .3rem 0;
         font-size: .8rem;
-        /* font-size: .8rem; */
         font-weight: bold;
     }
     input{
@@ -141,18 +134,14 @@ const Edit =styled.div`
 
 `;
 const LeftBox = styled.div`
-    /* width: calc(50%-1rem); */
     width: 50%;
     height: 100%;
     /* background-color: aqua; */
-    /* padding-top: 2rem; */
-    padding-left: 1rem;
 `;
 const RightBox = styled.div`
     width: 50%;
     height: 100%;
     /* background-color: red; */
-    /* padding-top: 2rem; */
 `;
 
 

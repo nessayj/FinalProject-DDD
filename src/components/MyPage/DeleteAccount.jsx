@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    width: 70%;
+    width: 60%;
     height: 100%;
     /* background-color: #f96c6c; */
+    /* padding-left: 1rem; */
+
+
     p {
         text-align: left;
         /* margin-left: 7%; */
@@ -20,7 +23,6 @@ const Container = styled.div`
 
     }
     .title {
-        padding-left: 1rem;
         /* background-color: red; */
         height: 7%;
         font-weight: bold;
@@ -31,7 +33,7 @@ const Container = styled.div`
         justify-content: center;
         display: flex;
         flex-direction: column;
-        padding-left:1rem;
+        /* padding-left:1rem; */
         .desc{
             font-weight: 400;
             line-height: 1.5rem;
@@ -42,7 +44,7 @@ const Container = styled.div`
         /* background-color: blue; */
         width:100%;
         display: flex;
-        padding-left: 1rem;
+        /* padding-left: 1rem; */
         margin-top: 1.4rem;
 
         input{
@@ -69,7 +71,7 @@ const Container = styled.div`
     }
     .btnBlock{
         height: 6rem;
-        width: 90%;
+        width: 100%;
         display: flex;
         justify-content: center;
         /* background-color: red; */
@@ -78,7 +80,7 @@ const Container = styled.div`
             width: 26%;
             height: 2.2rem;
             border-radius: 3rem;
-            margin : 1.8rem .6rem;
+            margin : 3rem .6rem;
             background-color: #2B5EC2 ;
             border: 1px solid #F4F8FF;
             color: white;
@@ -88,14 +90,6 @@ const Container = styled.div`
             display: flex;
             justify-content:center;
             align-items: center;
-            div{
-                background-color: #6F4F28;
-                width: 10px;
-                height: 10px;
-                border-radius: 5px;
-                margin-right: 3px;
-            }
-
         }
     }
 `;

@@ -1,54 +1,40 @@
-import React,{useEffect} from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
 
 const MuseumInfo = () => {
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const url = 'http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api';
-            const serviceKey = '서비스키';
-            const queryParams = new URLSearchParams();
-            queryParams.append('serviceKey', serviceKey);
-            queryParams.append('pageNo', '1');
-            queryParams.append('numOfRows', '100');
-            queryParams.append('type', 'xml');
-            queryParams.append('fcltyNm', '');
-            queryParams.append('fcltyType', '');
-            queryParams.append('rdnmadr', '');
-            queryParams.append('lnmadr', '');
-            queryParams.append('latitude', '');
-            queryParams.append('longitude', '');
-            queryParams.append('operPhoneNumber', '');
-            queryParams.append('operInstitutionNm', '');
-            queryParams.append('homepageUrl', '');
-            queryParams.append('fcltyInfo', '');
-            queryParams.append('weekdayOperOpenHhmm', '');
-            queryParams.append('weekdayOperColseHhmm', '');
-            queryParams.append('holidayOperOpenHhmm', '');
-            queryParams.append('holidayCloseOpenHhmm', '');
-            queryParams.append('rstdeInfo', '');
-            queryParams.append('adultChrge', '');
-            queryParams.append('yngbgsChrge', '');
-            queryParams.append('childChrge', '');
-            queryParams.append('etcChrgeInfo', '');
-            queryParams.append('fcltyIntrcn', '');
-            queryParams.append('trnsportInfo', '');
-            queryParams.append('phoneNumber', '');
-            queryParams.append('institutionNm', '');
-            queryParams.append('referenceDate', '');
-            queryParams.append('instt_code', '');
-            const response = await fetch(`${url}?${queryParams.toString()}`);
-            const data = await response.text();
-            console.log(data);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
-        fetchData();
-      }, []);
-    
-      return <div>Hello React!</div>;
+  const [operInstitutionNm, setOperInstitutionNm] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = 'http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api';
+        const serviceKey = '서비스키';
+        const queryParams = new URLSearchParams();
+        queryParams.append('serviceKey', serviceKey);
+        // ...기타 쿼리 파라미터 추가...
+
+        const response = await fetch(`${url}?${queryParams.toString()}`);
+        const xmlText = await response.text();
+
+        // XML 파싱
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+        // operInstitutionNm 값 추출
+        const operInstitutionNm = xmlDoc.querySelector('operInstitutionNm').textContent;
+        setOperInstitutionNm(operInstitutionNm);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>operInstitutionNm: {operInstitutionNm}</h1>
+    </div>
+  );
 }
 
 export default MuseumInfo;

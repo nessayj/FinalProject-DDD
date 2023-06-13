@@ -51,15 +51,11 @@ const Button = styled.button`
   position: absolute;
   justify-content: center;
   border: none;
-  font-size: 12px;
-  height: 50px;
-  border-radius: 60px;
-  padding: 25px 10px;
+  height: 2rem;
+  border-radius: 10rem;
+  padding: 1.5rem 0.4rem;
   opacity: 0.5;
   z-index: 2;
-  i {
-    color: rgba(0, 0, 0, 0.5);
-  }
 `;
 
 const LeftButton = styled(Button)`

@@ -5,11 +5,17 @@ import Icons from "./IconsBox";
 import styled from "styled-components";
 import Navigator from "./Navigate";
 import WeatherInfo from "./WeatherInfo";
+import LanguagesSelect from "./LanguagesSelect";
 
 const HeaderStyle = styled.div`
     margin: 0 auto;
     color: #050E3D;
     width: 100%;
+`;
+const FirstLayer = styled.div`
+    display: flex;
+    float: right;
+    margin-right: 2rem;
 `;
 
 const LogoContainer = styled.div`
@@ -36,9 +42,12 @@ const BottomBox = styled.div`
 const Header = () => {
     return(
         <HeaderStyle>
+            <FirstLayer>
+            <WeatherInfo/>
+            <LanguagesSelect/>
+            </FirstLayer>
         <LogoContainer>
             <Logo/>
-            <WeatherInfo/>
         </LogoContainer>
         <NavContainer>
         <Navigator/>

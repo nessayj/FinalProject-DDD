@@ -5,12 +5,11 @@ import { BsCloudRainFill, BsCloudSnowFill } from "react-icons/bs";
 import { FaCloudSunRain, FaSmog } from "react-icons/fa";
 import styled from "styled-components";
 
-const WeatherStyle = styled.div`
-    
+const WeatherStyle = styled.div`    
     .weather-container {
         display: flex;
         margin-top: 0.8rem;
-        margin-right: 10rem;
+        margin-right: 2rem;
         flex-direction: row;
         justify-content: center;
         align-items: center;

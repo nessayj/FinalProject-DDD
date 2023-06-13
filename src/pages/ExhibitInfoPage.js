@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect,useState} from "react";
 import { useParams } from "react-router-dom";
 import exhibitionData from "../components/exhibition/exhibitionData";
-import Header from "../components/header/Header";
+import Header from './../components/Header/Header';
 import styled from "styled-components";
 import Categroy from "../components/exhibition/Category";
 import DetailBox from "../components/exhibitionInfo/DetailBox";

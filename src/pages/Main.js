@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../components/header/Header";
-import MainBody from "../components/mainBody/MainBody";
-import Slider from "../components/mainBody/MainBanner";
+import Header from "./../components/Header/Header";
+import MainBody from "./../components/MainBody/MainBody";
+import Slider from "./../components/MainBody/MainBanner";
 
 const MainContainer = styled.div `
     margin: 0 auto;

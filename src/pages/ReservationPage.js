@@ -1,5 +1,5 @@
 import React ,{useState,useEffect} from "react";
-import Header from './../components/Header/Header';
+import Header from '../components/header/Header';
 import styled from "styled-components";
 import { useParams } from "react-router";
 import exhibitionData from "../components/exhibition/exhibitionData";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
 import EditInfo from "./EditInfo";
-import Header from "../header/Header";
+import Header from './../Header/Header';
 import EditMemberMain from "./EditMemberMain";
 
 const Container = styled.div`

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../util/Button";
+import { useNavigate } from "react-router";
 const Container = styled.div`
   position: relative;
   .imgBox{
@@ -75,6 +76,10 @@ const ImgBox = styled.div`
 `;
 
 const DetailBox = ({data}) => {
+    const navigate = useNavigate();
+    const handleClick = (data) => {
+        navigate(`/reservation/${data.index}`)
+    }
 
     return(
         <>
@@ -86,7 +91,7 @@ const DetailBox = ({data}) => {
             <div className="date">{data.startDate} ~ {data.endDate}</div>
             <div className="location">{data.place}</div>
             <div className="btn">
-            <Button onClick={()=>console.log(data.name+ "예약하기")}>예약하기</Button>
+            <Button onClick={()=>handleClick(data)}>예약하기</Button>
             </div>
         </Container>
     }

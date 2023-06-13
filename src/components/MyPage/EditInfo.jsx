@@ -55,6 +55,9 @@ const EditBlock = styled.div`
             border: 1px solid #5EADF7;
             border-radius: .3rem;
             resize: none;
+            padding-left: .6rem;
+            font-size: .7rem;
+
         }
         textarea:focus {
             outline: none;
@@ -86,7 +89,7 @@ const EditBlock = styled.div`
                 height: 2.0rem;
                 border-radius: 3rem;
                 margin : 1rem .5rem;
-                background-color: #5EADF7 ;
+                background-color: #2B5EC2 ;
                 border: 1px solid #F4F8FF;
                 color: white;
                 font-size: .8rem;
@@ -101,13 +104,13 @@ const EditBlock = styled.div`
 `;
 const Edit =styled.div`
     width: 100%;
-    height: 90%;
+    height: 82%;
     display: flex;
     flex-direction: row;
     p{
         text-align: left;
         /* margin-left: 7%; */
-        margin: 2rem 0 .3rem 0;
+        margin: 1.6rem 0 .3rem 0;
         font-size: .8rem;
         /* font-size: .8rem; */
         font-weight: bold;
@@ -119,7 +122,9 @@ const Edit =styled.div`
         border: 1px solid #5EADF7;
         /* border: 1px solid #5EADF7; */
         border-radius: .3rem;
+        padding-left: .6rem;
         color: black;
+        font-size: .7rem;
             ::placeholder{
             color: #555;
             padding-left: .3rem;

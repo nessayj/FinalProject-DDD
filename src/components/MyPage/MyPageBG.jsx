@@ -9,11 +9,16 @@ import EditMemberMain from "./EditMemberMain";
 const Container = styled.div`
     box-sizing: border-box;
     /* overflow-x: hidden; */
-    position: absolute;
-    top: 0%; 
+    /* position: absolute;
+    top: 20%; 
     width: 100vw;
-    height: 100vh;
+    height: 100vh; */
     /* background-color: aqua; */
+    position: relative;
+    top: 0%; 
+    height: 120vh;
+    justify-content: center;
+    display: flex;
 `;
 const Modal = styled.div`
     width: 40vw;
@@ -22,10 +27,10 @@ const Modal = styled.div`
     height: 70vh;
     min-height: 900px;
     background-color: white;
-    position: absolute;
-    top: 50%; // 헤더부분만큼 Top에서 내림
+    /* position: relative;
+    top: 0%; 
     left: 50%;
-    transform: translate3d(-50%, -20%, 0);
+    transform: translate3d(-50%, -20%, 0); */
     border-radius: 2rem;
     display: flex;
     flex-direction: column;

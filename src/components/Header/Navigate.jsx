@@ -99,8 +99,8 @@ const Navigator = () => {
                     <AiOutlineClose size="30"  onClick={onCloseIcon} />
                     </div>
                     <div className="menu_name">
-                    {menu.map((data) => (
-                    <a href={data.address} key={data.address} onClick={() => setMenuToggle(false)}>
+                    {menu.map((data,index) => (
+                    <a href={data.address} key={index} onClick={() => setMenuToggle(false)}>
                         {data.name}
                     </a>
                     ))}

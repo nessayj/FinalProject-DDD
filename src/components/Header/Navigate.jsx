@@ -19,11 +19,11 @@ const NavStyle = styled.div`
     }
     .menu_name {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         position: relative;
         top: 6rem;
-        left: 8rem;
-        flex-direction: column;
+        //left: 8rem;
+        flex-direction: row;
         margin-bottom: 2rem;
     }
   }
@@ -39,17 +39,11 @@ const NavStyle = styled.div`
       margin-left: 40px;
       cursor: pointer;
     }
-  
-    .burger_menu > div{
-      width: 25px;
-      height: 3px;
-      background-color: black;
-      margin: 5px;
-      transition: all 0.3s ease;
-    }
+
     .menu_box_visible {
-      width: 20rem;
-      height: 100%;
+      font-weight: bold;
+      width: 100%;
+      height: 40vh;
       position: absolute;
       left: 0;
       top: 76px;

@@ -4,7 +4,6 @@ import { DisplayData } from "./DisplayData";
 import WeekRanking from "./WeekRanking";
 import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
-import MuseumInfo from "./MuseumInfo";
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -87,7 +86,6 @@ const MainBody = () => {
         </BodyContainer>
         <TodayRec/>
         <BodyContainer>
-        <MuseumInfo/>
         </BodyContainer>
 
         </>

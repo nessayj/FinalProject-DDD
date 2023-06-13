@@ -59,7 +59,7 @@ const Icons = () => {
         <div className="login-icon" onClick={onClickToLogin}>
         <HiOutlineUser size="27"/>
         </div>
-        <p onClick={onClickToLogin}>로그인해주세요</p>
+        <p onClick={onClickToLogin}>로그인</p>
         
         </IconBox>
 

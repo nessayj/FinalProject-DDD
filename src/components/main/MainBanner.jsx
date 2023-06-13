@@ -28,8 +28,8 @@ const Row = styled.div`
 `;
 
 const Img = styled.img`
-  width: 20rem;
-  height: 25rem;
+  width: 18rem;
+  height: 22rem;
   border-radius: 7px;
   margin: 0;
   margin: 0 12.5px;
@@ -38,8 +38,8 @@ const Img = styled.img`
   transition: all 0.5s linear;
 `;
 const PrivewImg = styled.img`
-  width: 20rem;
-  height: 25rem;
+  width: 18rem;
+  height: 22rem;
   transition: all 1s linear;
   border-radius: 7px;
 `;
@@ -221,7 +221,7 @@ const Slider = () => {
             }}
             onClick={decreaseClick}
           >
-            <i class="fas fa-chevron-left"><IoIosArrowBack size="20"/></i>
+            <div><IoIosArrowBack size="20"/></div>
           </LeftButton>
           <Row
             key={index}
@@ -333,7 +333,7 @@ const Slider = () => {
             }}
             onClick={increaseClick}
           >
-            <i class="fas fa-chevron-right"><IoIosArrowForward size="20"/></i>
+            <div><IoIosArrowForward size="20"/></div>
           </RightButton>
         </Wrapper>
       );

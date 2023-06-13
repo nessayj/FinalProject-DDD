@@ -4,13 +4,19 @@ import SearchBar from "./SearchBar";
 import Icons from "./icons";
 import styled from "styled-components";
 import Navigator from "./Navigate";
+import WeatherInfo from "../weather/weather";
 
 const HeaderStyle = styled.div`
     margin: 0 auto;
     color: #050E3D;
     width: 100%;
+`;
 
-`
+const LogoContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+
+`;
 
 const NavContainer = styled.div`
     display: flex;
@@ -30,9 +36,10 @@ const BottomBox = styled.div`
 const Header = () => {
     return(
         <HeaderStyle>
-        <div>
+        <LogoContainer>
             <Logo/>
-        </div>
+            <WeatherInfo/>
+        </LogoContainer>
         <NavContainer>
         <Navigator/>
         <BottomBox>

@@ -50,7 +50,7 @@ const NavStyle = styled.div`
     .menu_box_visible {
       width: 20rem;
       height: 100%;
-      position: fixed;
+      position: absolute;
       left: 0;
       top: 76px;
       background-color: white;

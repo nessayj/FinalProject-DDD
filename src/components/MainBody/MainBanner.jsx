@@ -242,13 +242,13 @@ const Slider = () => {
               <PrivewImg
                 style={{
                   opacity: 0.5,
-                  width: windowWidth > 1200 ? null : `50vw`,
+                  width: windowWidth > 1200 ? null : `15rem`,
                   height:
                     windowWidth > 1200
                       ? null
                       : windowWidth < 770
-                      ? "20rem"
-                      : "15rem",
+                      ? "15rem"
+                      : "18rem",
                 }}
                 src={BannerImg[morePrevImg]}
               ></PrivewImg>
@@ -257,13 +257,13 @@ const Slider = () => {
               <PrivewImg
                 style={{
                   opacity: 0.5,
-                  width: windowWidth > 1200 ? null : `50vw`,
+                  width: windowWidth > 1200 ? null : `15rem`,
                   height:
                     windowWidth > 1200
                       ? null
                       : windowWidth < 770
-                      ? "20rem"
-                      : "15rem",
+                      ? "15rem"
+                      : "18rem",
                 }}
                 src={BannerImg[PrevImg]}
               ></PrivewImg>
@@ -272,13 +272,13 @@ const Slider = () => {
               <Img
                 style={{
                   opacity: 1,
-                  width: windowWidth > 1200 ? null : `50vw`,
+                  width: windowWidth > 1200 ? null : "15rem",
                   height:
                     windowWidth > 1200
                       ? null
                       : windowWidth < 770
-                      ? "20rem"
-                      : "15rem",
+                      ? "15rem"
+                      : "18rem",
                 }}
                 src={BannerImg[index]}
               />
@@ -295,13 +295,13 @@ const Slider = () => {
               <PrivewImg
                 style={{
                   opacity: 0.5,
-                  width: windowWidth > 1200 ? null : `50vw`,
+                  width: windowWidth > 1200 ? null : `15rem`,
                   height:
                     windowWidth > 1200
                       ? null
                       : windowWidth < 770
-                      ? "20rem"
-                      : "15rem",
+                      ? "15rem"
+                      : "18rem",
                 }}
                 src={BannerImg[NextImg]}
               ></PrivewImg>
@@ -310,13 +310,13 @@ const Slider = () => {
               <PrivewImg
                 style={{
                   opacity: 0.5,
-                  width: windowWidth > 1200 ? null : `50vw`,
+                  width: windowWidth > 1200 ? null : `15rem`,
                   height:
                     windowWidth > 1200
                       ? null
                       : windowWidth < 770
-                      ? "20rem"
-                      : "15rem",
+                      ? "15rem"
+                      : "18rem",
                 }}
                 src={BannerImg[moreNextImg]}
               ></PrivewImg>

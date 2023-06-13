@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/header/Header";
 import MainBody from "../components/mainBody/MainBody";
 import Slider from "../components/mainBody/MainBanner";
+import WeatherInfo from "../components/weather/weather";
 
 const MainContainer = styled.div `
     margin: 0 auto;

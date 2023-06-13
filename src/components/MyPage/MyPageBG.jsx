@@ -20,9 +20,9 @@ const Container = styled.div`
     display: flex;
 `;
 const Modal = styled.div`
-    width: 40vw;
+    width: 65vw;
     min-width: 600px;
-    max-width: 768px;
+    //max-width: 768px;
     height: 70vh;
     min-height: 900px;
     background-color: white;

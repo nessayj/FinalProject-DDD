@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {BsTicketPerforated, BsPerson} from 'react-icons/bs';
+import {BsTicketPerforated} from 'react-icons/bs';
+import {HiOutlineUser} from 'react-icons/hi';
 import { useNavigate } from "react-router-dom";
 
 const IconBox = styled.div`
@@ -21,6 +22,7 @@ const IconBox = styled.div`
         height: 2.5rem;
         width: 2.5rem;
         margin: 0.5rem;
+        color: white;
         background-color: #5EADF7;
         border-radius: 2rem;
         cursor: pointer;
@@ -29,7 +31,7 @@ const IconBox = styled.div`
     p {
         margin-right: 0.8rem;
         font-size: 1rem;
-        font-weight: 800;
+        font-weight: 550;
         cursor: pointer;
     }
 
@@ -55,7 +57,7 @@ const Icons = () => {
         <BsTicketPerforated  size="30"/>
         </div>
         <div className="login-icon" onClick={onClickToLogin}>
-        <BsPerson size="30"/>
+        <HiOutlineUser size="27"/>
         </div>
         <p onClick={onClickToLogin}>로그인해주세요</p>
         

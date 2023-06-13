@@ -33,7 +33,6 @@ const CardContainer = styled.div`
         
         &:hover {
             transform: scale(1.1); // 호버 시 확대 효과
-            box-shadow: 0 0 15px 0px;
         }
     }
 

@@ -37,6 +37,7 @@ const Section = styled.div`
         background-color: #4555AE;
         border-bottom: solid 1px #4555AE;
         text-align: center;
+        
         tr:nth-child(2n) td {background-color: #f9f9f9;}
         th {padding: 10px; color: white;}
         td {padding: 10px; background-color: white; border-left: solid 1px #bbb; border-top: solid 1px #ddd;}

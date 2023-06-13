@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Card from '../../components/Board/Card';
+import Card from '../components/Board/Card';
 import {useState, useCallback} from 'react';
-import Categories from '../../components/Board/Category';
+import Categories from '../components/Board/Category';
 import { useNavigate } from 'react-router-dom';
-import Recommend from '../../components/Board/Recommend';
-import Question from '../../components/Board/Question';
+import Recommend from '../components/Board/Recommend';
+import Question from '../components/Board/Question';
 
 const Wrap = styled.div`
     width: 100%;

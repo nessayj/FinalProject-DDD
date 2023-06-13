@@ -7,8 +7,9 @@ import ExhibitInfoPage from './pages/ExhibitInfoPage';
 import ReservationPage from './pages/ReservationPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MyPage from './pages/MyPage';
-import BoardList from './pages/board/BoardList';
-import BoardWrite from './pages/board/BoardWrite';
+import BoardList from './pages/BoardList';
+import BoardWrite from './pages/BoardWrite';
+import Boardview from './pages/BoardView';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
         <Route path="/board_list" element={<BoardList/>}/>
+        <Route path='/board_view' element={<Boardview/>}/>
         <Route path="/board_list/write" element={<BoardWrite/>}/>
         <Route path="/myPage" element={<MyPage/>}/>
       </Routes>

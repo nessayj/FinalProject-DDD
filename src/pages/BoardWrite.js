@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import EditHeader from '../../components/Board/EditHeader';
-import TextField from '../../components/Board/TextField';
+import EditHeader from '../components/Board/EditHeader';
+import TextField from '../components/Board/TextField';
 import { Link } from 'react-router-dom';
 
 

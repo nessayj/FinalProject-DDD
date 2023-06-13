@@ -4,7 +4,7 @@ import SelectBtn from "../components/exhibition/SelectBtn";
 import InfoBox from "../components/exhibition/InfoBox";
 import Categroy from '../components/exhibition/Category';
 import PageNation from "../util/PageNation";
-import Header from "./main/Header";
+import Header from "../components/header/Header";
 import AreaCategroy from "../components/exhibition/AreaCategroy";
 import Carousel from "../util/Carousel";
 import exhibitionData from "../components/exhibition/exhibitionData";

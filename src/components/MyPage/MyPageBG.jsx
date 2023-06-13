@@ -17,7 +17,7 @@ const Container = styled.div`
     /* background-color: aqua; */
     position: relative;
     top: 0%; 
-    height: 120vh;
+    height: 140vh;
     justify-content: center;
     display: flex;
 `;
@@ -25,8 +25,9 @@ const Modal = styled.div`
     width: 55vw;
     min-width: 600px;
     //max-width: 768px;
-    height: 70vh;
-    min-height: 900px;
+    /* height: 70vh; */
+    height: auto;
+    min-height: 1024px;
     background-color: white;
     /* position: relative;
     top: 0%; 
@@ -37,6 +38,7 @@ const Modal = styled.div`
     flex-direction: column;
     /* align-items: center; */
     border: .5px solid #bbb;
+    margin-bottom: 10vh;
 `;
     
 const MyPageBG = (props) => {

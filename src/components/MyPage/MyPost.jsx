@@ -149,7 +149,7 @@ const Introduce = (props) => {
                     </thead>
                     <tbody>
                     {
-                        dummy_reply.length > 0 && dummy_post.slice(0, 5).map((post, index) => (
+                        dummy_post.length > 0 && dummy_post.slice(0, 5).map((post, index) => (
                             <tr key={index}>
                                 <td>{post.no}</td> 
                                 <td>{post.category}</td> 
@@ -161,7 +161,7 @@ const Introduce = (props) => {
                         ))
                     }
                     {
-                        dummy_reply.length === 0 && 
+                        dummy_post.length === 0 && 
                         (
                             <tr>
                                 <td colSpan={6}>작성 한 댓글이 없습니다. </td>

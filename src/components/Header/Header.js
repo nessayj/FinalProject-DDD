@@ -1,9 +1,9 @@
 import React from "react";
-import Logo from "../../components/Header/Logo";
-import SearchBar from "../../components/Header/SearchBar";
-import Icons from "../../components/Header/icons";
+import Logo from "./Logo";
+import SearchBar from "./SearchBar";
+import Icons from "./icons";
 import styled from "styled-components";
-import Navigator from "../../components/Header/Navigate";
+import Navigator from "./Navigate";
 
 const HeaderStyle = styled.div`
     margin: 0 auto;

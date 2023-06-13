@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { DisplayData } from "./DisplayData";
 import WeekRanking from "./WeekRanking";
 import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
+import MuseumInfo from "./MuseumInfo";
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -85,6 +86,9 @@ const MainBody = () => {
         </div>
         </BodyContainer>
         <TodayRec/>
+        <BodyContainer>
+        <MuseumInfo/>
+        </BodyContainer>
 
         </>
 

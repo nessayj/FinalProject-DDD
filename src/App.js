@@ -1,7 +1,7 @@
 
 import './App.css';
 import Login from './pages/login'
-import Main from './pages/main/Main';
+import Main from './pages/Main';
 import ExhibitListPage from './pages/ExhibitListPage';
 import ExhibitInfoPage from './pages/ExhibitInfoPage';
 import ReservationPage from './pages/ReservationPage';

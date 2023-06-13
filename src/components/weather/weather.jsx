@@ -4,12 +4,39 @@ import { IoMdSunny, IoIosPartlySunny, IoMdCloudy, IoIosThunderstorm } from "reac
 import { BsCloudRainFill, BsCloudSnowFill } from "react-icons/bs";
 import { FaCloudSunRain, FaSmog } from "react-icons/fa";
 import { RiSnowyFill } from "react-icons/ri";
+import styled from "styled-components";
+
+const WeatherStyle = styled.div`
+    
+    .weather-container {
+        margin: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        .icons{
+            margin-bottom: 0;
+            font-size: 2rem;
+        }
+        .weather-degree-location{
+            display: flex;
+            flex-direction: row;
+            .weather {
+                margin-right: 1rem;
+            }
+            .degree {
+                margin-right: 1rem;
+            }
+        }
+
+    }
+
+`;
 
 const weatherIcon = {
     '01' : <IoMdSunny/>,
     '02' : <IoIosPartlySunny/>,
     '03' : <IoMdCloudy/>,
-    '04' : <RiSnowyFill/>,
+    '04' : <IoMdCloudy/>,
     '09' : <FaCloudSunRain/>,
     '10' : <BsCloudRainFill/>,
     '11' : <IoIosThunderstorm/>,
@@ -19,7 +46,7 @@ const weatherIcon = {
 
 
 // 날씨 보여줄 지역들
-const locations = ['seoul', 'busan']; 
+const locations = ['Seoul', 'Gyeonggi-do', 'Busan', 'Gwangju', 'Daegu', 'Jeju']; 
 
 const WeatherInfo = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -53,16 +80,18 @@ const WeatherInfo = () => {
     }, []);
 
     return (
-        <div>
+        <WeatherStyle>
             {weatherData.length > 0 && (
-            <div>
-                {weatherIcon[weatherData[currentIndex].weather[0].icon.substr(0, 2)]}
-                <div>{weatherData[currentIndex].weather[0].main}</div>
-                <div>{Math.floor(weatherData[currentIndex].main.temp - 273.15)}º</div>
-                <div>{locations[currentIndex]}</div>
+            <div className="weather-container">
+                <div className="icons">{weatherIcon[weatherData[currentIndex].weather[0].icon.substr(0, 2)]}</div>
+                <div className="weather-degree-location">
+                    {/* <div className="weather">{weatherData[currentIndex].weather[0].main}</div> */}
+                    <div className="degree">{Math.floor(weatherData[currentIndex].main.temp - 273.15)}º</div>
+                    <div className="location">{locations[currentIndex]}</div>
+                </div>
             </div>
             )}
-        </div>
+        </WeatherStyle>
     );
 };
 

@@ -47,9 +47,9 @@ const weatherIcon = {
 
 
 // 날씨 보여줄 지역들
-const locations = ['Seoul', 'Gyeonggi-do', 'Busan', 'Gwangju', 'Daegu', 'Jeju'];
+const locations = ['Seoul', 'Gyeonggi-do', 'Busan', 'Gwangju', 'Gangwon-do', 'Daegu', 'Jeju'];
 // 한글로 출력 
-const locationsKorean = ['서울', '경기', '부산', '광주', '대구', '제주'];
+const locationsKorean = ['서울', '경기', '부산', '광주', '강원', '대구', '제주'];
 
 const WeatherInfo = () => {
     const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,10 +1,10 @@
 import React from "react";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import Icons from "./icons";
+import Icons from "./IconsBox";
 import styled from "styled-components";
 import Navigator from "./Navigate";
-import WeatherInfo from "../weather/weather";
+import WeatherInfo from "./WeatherInfo";
 
 const HeaderStyle = styled.div`
     margin: 0 auto;

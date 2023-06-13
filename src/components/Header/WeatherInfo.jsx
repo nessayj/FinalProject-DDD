@@ -3,7 +3,6 @@ import axios from "axios";
 import { IoMdSunny, IoIosPartlySunny, IoMdCloudy, IoIosThunderstorm } from "react-icons/io";
 import { BsCloudRainFill, BsCloudSnowFill } from "react-icons/bs";
 import { FaCloudSunRain, FaSmog } from "react-icons/fa";
-import { RiSnowyFill } from "react-icons/ri";
 import styled from "styled-components";
 
 const WeatherStyle = styled.div`

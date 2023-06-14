@@ -7,7 +7,7 @@ import {dummy_post, dummy_reply} from './Data'
 
 const PostWrap = styled.div`
     width: calc(100% - 2rem);
-    height: 88%;
+    height: 100%;
     /* background-color: #fed081; */
     /* position : relative;
     top: 12%; */

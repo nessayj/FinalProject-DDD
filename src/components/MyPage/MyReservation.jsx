@@ -24,7 +24,7 @@ const Container = styled.div`
     }
     .serachBox{
         padding-left: 1rem;
-        width: 90%;
+        width: 100%;
         height: 3rem;
         display: flex;
         margin: 0rem 0 ;

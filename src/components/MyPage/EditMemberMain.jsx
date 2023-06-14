@@ -74,18 +74,9 @@ const EditMemberMain = (props) => {
 
                         }
                         <div onClick={() => (props.setShowPage('마이페이지'))}>마이페이지</div>
-                        {/* {
+
+                        {
                             pageOnEdit === 1 ? 
-                            (<div className='FocusedMenuBtn'>내 게시물</div>) : 
-                            (<div onClick={()=> setPageOnEdit(1)}>내 게시물</div>)
-                        }
-                        {
-                            pageOnEdit === 2 ? 
-                            (<div className='FocusedMenuBtn'>예약관리</div>) : 
-                            (<div onClick={()=> setPageOnEdit(2)}>예약관리</div>)
-                        } */}
-                        {
-                            pageOnEdit === 3 ? 
                             (<div className='FocusedMenuBtn'>회원탈퇴</div>) : 
                             (<div onClick={()=> setPageOnEdit(3)}>회원탈퇴</div>)
                         }
@@ -97,10 +88,7 @@ const EditMemberMain = (props) => {
                             setShowPage={props.setShowPage}
                         />}
                         {
-                            pageOnEdit === 1 && <MyPost/>
-                        } 
-                        {
-                            pageOnEdit === 3 && <DeleteAccount/>
+                            pageOnEdit === 1 && <DeleteAccount/>
                         } 
             </MenuSpace>
         </Container>

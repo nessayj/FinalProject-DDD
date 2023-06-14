@@ -5,7 +5,7 @@ import exhibitionData from '../exhibition/exhibitionData';
 // ====== data 확인하기 =====
 
 const Container = styled.div`
-    width: 90%;
+    width: 100%;
     /* height: 10rem; */
     height: 10rem;
     /* min-height: 220px; */

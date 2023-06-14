@@ -64,7 +64,7 @@ const Introduce = (props) => {
             </TextBox>
 
             <hr/>
-            <Diary/>
+            <Diary setShowPage={props.setShowPage} />
             <hr/>
             <span className='text' onClick={()=>{props.setShowPage('예약관리')}}>예약 관리</span> <br/>
 

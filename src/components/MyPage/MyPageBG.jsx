@@ -8,6 +8,7 @@ import MyPost from "./MyPost";
 import NaviBox from "./NaviBox";
 import SNSBox from "./SNSBox";
 import MyReservation from "./MyReservation";
+import MyDiary from "./MyDiary";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -50,7 +51,7 @@ const MyPageBG = (props) => {
         <Container>
             <Modal>
                 {
-                    showPage === '마이페이지' && // 마이페이지
+                    showPage === '마이페이지' &&
                     <>
                         <Thumnail/>
                         <SNSBox /> 
@@ -60,21 +61,20 @@ const MyPageBG = (props) => {
                         />
                     </>
 
-                }               
-                {
-                    showPage === '내정보수정' && // 내 정보 수정
-                    <>
-                    <Thumnail/>
-                    <NaviBox setShowPage = {setShowPage}/> 
-                    <EditMemberMain                      
-                        showPage = {showPage}
-                        setShowPage = {setShowPage}
-                    />
-                    </>
-
                 }
                 {
-                    showPage === '예약관리' && // 예약 관리
+                    showPage === '다이어리' &&
+                    <>
+                        <Thumnail/>
+                        <NaviBox setShowPage = {setShowPage}/> 
+                        <MyDiary                      
+                            showPage = {showPage}
+                            setShowPage = {setShowPage}
+                        />
+                    </>
+                }               
+                {
+                    showPage === '예약관리' && 
                     <>
                         <Thumnail/>
                         <NaviBox setShowPage = {setShowPage}/> 
@@ -86,7 +86,7 @@ const MyPageBG = (props) => {
 
                 }
                 {
-                    showPage === '내게시물' && // 내 게시물
+                    showPage === '내게시물' &&
                     <>
                         <Thumnail/>
                         <NaviBox setShowPage = {setShowPage}/> 
@@ -95,6 +95,18 @@ const MyPageBG = (props) => {
                             setShowPage = {setShowPage}
                         />
                     </>
+                }
+                                {
+                    showPage === '내정보수정' && 
+                    <>
+                    <Thumnail/>
+                    <NaviBox setShowPage = {setShowPage}/> 
+                    <EditMemberMain                      
+                        showPage = {showPage}
+                        setShowPage = {setShowPage}
+                    />
+                    </>
+
                 }
                 
             </Modal>

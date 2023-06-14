@@ -15,6 +15,7 @@ const DiaryBox =styled.div`
         margin : 1.2rem 0 0 2.5rem ;
         font-size: 1rem;
         font-weight: bold;
+        cursor: pointer;
     }
     .imgBox{
         /* background-color: brown; */
@@ -53,17 +54,17 @@ const DiaryBox =styled.div`
     }
     
 `;
-const Diary = () => {
+const Diary = (props) => {
     return (
         <DiaryBox>
-        <p className='title'>다이어리</p>
+        <p className='title' onClick={()=>{props.setShowPage('다이어리')}}>다이어리</p>
         <div className='imgBox'>
             {
                 diaryImage.map((img, i) => (
                 <div className="diaryImg" key={i} style={{ backgroundImage: `url(${img})` }} />
                 ))
             }
-            <button> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
+            <button onClick={()=>{props.setShowPage('다이어리')}}> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
         </div>
       </DiaryBox>
     );

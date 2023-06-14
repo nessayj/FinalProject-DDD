@@ -6,7 +6,6 @@ import styled from "styled-components";
 import Navigator from "./Navigate";
 import WeatherInfo from "./WeatherInfo";
 import LanguagesSelect from "./LanguagesSelect";
-
 const HeaderStyle = styled.div`
     margin: 0 auto;
     color: #050E3D;

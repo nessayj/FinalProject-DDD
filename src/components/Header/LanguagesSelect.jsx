@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { US, KR } from 'country-flag-icons/react/3x2';
 
 const SelectStyle = styled.div`
     margin-top: 0.8rem;
@@ -54,8 +55,8 @@ const LanguagesSelect = () => {
         <MenuItem value="" sx={{fontSize: 10}}>
             <em>언어/Languages</em>
           </MenuItem>
-        <MenuItem value="ko-KR" sx={{fontSize: 10}}>{t('korean')}</MenuItem>
-        <MenuItem value="en-US" sx={{fontSize: 10}}>{t('english')}</MenuItem>
+        <MenuItem value="ko-KR" sx={{fontSize: 10}}><KR title="South Korea" height="0.5rem"/>{t('korean')}</MenuItem>
+        <MenuItem value="en-US" sx={{fontSize: 10}}><US title="United States" height="0.5rem"/>{t('english')}</MenuItem>
       </Select>
     </FormControl>
         </SelectStyle>

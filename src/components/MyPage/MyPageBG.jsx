@@ -6,6 +6,8 @@ import EditInfo from "./EditInfo";
 import EditMemberMain from "./EditMemberMain";
 import MyPost from "./MyPost";
 import NaviBox from "./NaviBox";
+import SNSBox from "./SNSBox";
+import MyReservation from "./MyReservation";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -51,8 +53,7 @@ const MyPageBG = (props) => {
                     showPage === '마이페이지' && // 마이페이지
                     <>
                         <Thumnail/>
-                        {/* 소셜박스로 바꿀 것 */}
-                        <NaviBox setShowPage = {setShowPage}/> 
+                        <SNSBox /> 
                         <Introduce  
                             showPage = {showPage}
                             setShowPage = {setShowPage}
@@ -73,6 +74,18 @@ const MyPageBG = (props) => {
 
                 }
                 {
+                    showPage === '예약관리' && // 예약 관리
+                    <>
+                        <Thumnail/>
+                        <NaviBox setShowPage = {setShowPage}/> 
+                        <MyReservation                      
+                            showPage = {showPage}
+                            setShowPage = {setShowPage}
+                        />
+                    </>
+
+                }
+                {
                     showPage === '내게시물' && // 내 게시물
                     <>
                         <Thumnail/>
@@ -82,10 +95,6 @@ const MyPageBG = (props) => {
                             setShowPage = {setShowPage}
                         />
                     </>
-
-                }
-                {
-                    // 채팅
                 }
                 
             </Modal>

@@ -4,8 +4,9 @@ import { SlMagnifier } from 'react-icons/sl'
 import ReservedDetail from './ReservedDetail';
 
 const Container = styled.div`
-    width: 70%;
+    width: 90%;
     height: 100%;
+    padding-left: 2.5rem;
     /* background-color: #7bc1b2; */
     p {
         text-align: left;
@@ -18,7 +19,7 @@ const Container = styled.div`
     .title {
         /* padding-left: 1rem; */
         /* background-color: red; */
-        height: 7%;
+        height: 5%;
         font-weight: bold;
     }
     .serachBox{
@@ -26,7 +27,7 @@ const Container = styled.div`
         width: 90%;
         height: 3rem;
         display: flex;
-        margin: 0.5rem 0 ;
+        margin: 0rem 0 ;
         background-color: #F4F8FF;
         align-items: center;
         input, select{

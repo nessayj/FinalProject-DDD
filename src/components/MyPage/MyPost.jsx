@@ -1,32 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { member_info, diaryImage } from './Data.jsx';
-import Diary from "./Diary";
-import Thumnail from './Thumnail.jsx';
-import { SlSocialInstagram, SlPaperPlane, SlUserFollow } from 'react-icons/sl';
 import {dummy_post, dummy_reply} from './Data'
-import NaviBox from './NaviBox.jsx';
-
-
-
-const Container = styled.div`
-  /* background-color  : beige; */
-  width: 100%;
-  height: 100%;
-  .text{
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: bold;
-    display: inline-block;
-    cursor: pointer;
-  }
-  hr{
-    width: 90%;
-    border: 1px solid #eee;
-    margin: 0% 5%;
-
-  }
-`;
 
 
 
@@ -46,7 +20,7 @@ const PostWrap = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 7%;
+        height: 5%;
         font-weight: bold;
     }
     .moreBox{
@@ -98,9 +72,11 @@ const Table = styled.table`
 
 
 const Introduce = (props) => {
+    const slicedPosts = dummy_post.slice(0, 5);
+    const slicedReplies = dummy_reply.slice(0, 5);
     return (
         <>
-            <Container>
+            {/* <Container> */}
             <PostWrap>
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>
@@ -118,7 +94,7 @@ const Introduce = (props) => {
                     </thead>
                     <tbody>
                     {
-                        dummy_post.slice(0, 5).map((post, index) => (
+                       dummy_post.length > 0 && slicedPosts.map((post, index) => (
                             <tr key={index}>
                             <td>{post.no}</td> 
                             <td>{post.category}</td> 
@@ -128,7 +104,15 @@ const Introduce = (props) => {
                             <td>{post.date}</td> 
                             </tr>
                         ))
-                        }
+                    }
+                                        {
+                        dummy_post.length === 0 && 
+                        (
+                            <tr>
+                                <td colSpan={6}>작성 한 게시글이 없습니다. </td>
+                            </tr>
+                        )
+                    }
                     </tbody>
                 </Table>
 
@@ -149,19 +133,19 @@ const Introduce = (props) => {
                     </thead>
                     <tbody>
                     {
-                        dummy_post.length > 0 && dummy_post.slice(0, 5).map((post, index) => (
+                        dummy_reply.length > 0 && slicedReplies.map((reply, index) => (
                             <tr key={index}>
-                                <td>{post.no}</td> 
-                                <td>{post.category}</td> 
-                                <td style={{textAlign:'left', paddingLeft:'.6rem'}}>{post.title}</td> 
-                                <td>{post.nickName}</td> 
-                                <td>{post.view}</td> 
-                                <td>{post.date}</td> 
+                                <td>{reply.no}</td> 
+                                <td>{reply.category}</td> 
+                                <td style={{textAlign:'left', paddingLeft:'.6rem'}}>{reply.title}</td> 
+                                <td>{reply.nickName}</td> 
+                                <td>{reply.view}</td> 
+                                <td>{reply.date}</td> 
                             </tr>
                         ))
                     }
                     {
-                        dummy_post.length === 0 && 
+                        dummy_reply.length === 0 && 
                         (
                             <tr>
                                 <td colSpan={6}>작성 한 댓글이 없습니다. </td>
@@ -172,7 +156,7 @@ const Introduce = (props) => {
                 </Table>
                 
             </PostWrap>
-            </Container>
+            {/* </Container> */}
         </>
     );
 };

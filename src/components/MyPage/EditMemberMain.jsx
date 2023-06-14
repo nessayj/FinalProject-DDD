@@ -24,9 +24,10 @@ const MenuSpace = styled.div`
 `;
 const MenuBlock =  styled.div`
     width: 24%;
+    min-width: 200px;
     height: 94%;
     /* background-color: red; */
-    padding: 6% 3% 0 3%;
+    padding: 5% 3% 0 3%;
 `;
 
 const Menu =styled.div`

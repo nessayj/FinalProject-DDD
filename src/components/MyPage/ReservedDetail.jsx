@@ -5,8 +5,10 @@ import exhibitionData from '../exhibition/exhibitionData';
 // ====== data 확인하기 =====
 
 const Container = styled.div`
-    width: 94%;
-    height: 8rem;
+    width: 90%;
+    /* height: 10rem; */
+    height: 10rem;
+    /* min-height: 220px; */
     background-color: white;
     border: 1px solid #eee;
     border-radius: .4rem;
@@ -19,19 +21,21 @@ const Container = styled.div`
 
     .showImage{
         display: flex;
-        height: 90%;
-        width: 20%;
+        height: 80%;
+        width: 10%;
         /* background-color: blue; */
         padding: auto;
-        margin-left: .3rem;
+        margin-left: 1.3rem;
+        
     }
     .showImage img{
         width: 8rem;
+        min-width: calc(60px * 1.4);
+        min-height: calc(40px * 1.4);
         object-fit: cover;
         overflow-x: hidden;
         object-position: top;
         border-radius: 0.3rem;
-
     }
     .justfyTop{
         align-items: bottom;
@@ -48,14 +52,15 @@ const Container = styled.div`
         /* background-color: blue; */
         margin: 0 .2rem;
         width: 100%;
-        font-size: .6rem;
+        font-size: .8rem;
         }
         span{
             font-weight: bold;
-            margin: 0 .6rem;
+            margin: 0 2.5rem;
             width: 3rem;
-            font-size: .6rem;
+            font-size: .8rem;
             float: left;
+            /* background-color: red; */
 
         }
 

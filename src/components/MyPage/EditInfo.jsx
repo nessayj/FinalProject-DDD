@@ -39,7 +39,7 @@ const EditBlock = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 7%;
+        height: 5%;
         font-weight: bold;
     }
     .introducBlock {
@@ -99,7 +99,7 @@ const EditBlock = styled.div`
 `;
 const Edit =styled.div`
     width: 100%;
-    height: 70%; // 여기서 내소개 위치 변경함 (바꿔야함...)
+    height: 80%; // 여기서 내소개 위치 변경함 (바꿔야함...)
     display: flex;
     flex-direction: row;
     p{
@@ -110,7 +110,7 @@ const Edit =styled.div`
     }
     input{
         width: 70%;
-        height: 1.5rem;
+        height: 1.8rem;
         background-color: #F4F8FF;
         border: 1px solid #5EADF7;
         /* border: 1px solid #5EADF7; */
@@ -135,11 +135,15 @@ const Edit =styled.div`
 `;
 const LeftBox = styled.div`
     width: 50%;
+    min-width: 200px;
+    
     height: 100%;
     /* background-color: aqua; */
 `;
 const RightBox = styled.div`
     width: 50%;
+    min-width: 200px;
+
     height: 100%;
     /* background-color: red; */
 `;

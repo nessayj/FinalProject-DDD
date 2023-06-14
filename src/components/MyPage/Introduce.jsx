@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { member_info, diaryImage } from './Data.jsx';
 import Diary from "./Diary";
 import Thumnail from './Thumnail.jsx';
-import { SlSocialInstagram, SlPaperPlane, SlUserFollow } from 'react-icons/sl';
 import NaviBox from './NaviBox.jsx';
 
 
@@ -13,7 +12,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   .text{
-    padding: 1rem 2.5rem;
+    padding: 1.2rem 2.5rem;
     font-size: 1rem;
     font-weight: bold;
     display: inline-block;
@@ -27,25 +26,11 @@ const Container = styled.div`
   }
 `;
 
-const SocialBox = styled.div`
-  width: calc(100%-1rem);
-  height: 12%;
-  text-align: right;
-  /* background-color: red; */
-  flex-direction: row;
-  padding-right: 1rem;
-  .icon{
-    display: inline-block;
-    font-size: 1.1rem;
-    padding: .6rem .6rem;
-    cursor: pointer;
-    color: #999;
-  }
-`;
+
 
 const TextBox = styled.div`
     width: 100%;
-    height: 20%;
+    height: 16%;
     /* background-color: aqua; */
     display: flex;
     flex-direction: column;
@@ -57,6 +42,7 @@ const TextBox = styled.div`
     .desc{
         margin : 1rem 0 0 2.5rem ;
         font-size: .9rem;
+        /* background-color: red; */
     }
     &:last-child { 	
         border-bottom-right-radius: 2rem;
@@ -80,9 +66,18 @@ const Introduce = (props) => {
             <hr/>
             <Diary/>
             <hr/>
-                <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>내 게시물</span> <br/>
-                <hr/>
-                <span className='text' onClick={()=>{props.setShowPage('내정보수정')}}>내 정보 수정</span>
+            <span className='text' onClick={()=>{props.setShowPage('예약관리')}}>예약 관리</span> <br/>
+
+            <hr/>
+            <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>내 게시물</span> <br/>
+            
+            <hr/>
+            <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>채팅</span> <br/>
+
+            <hr/>
+            <span className='text' onClick={()=>{props.setShowPage('내정보수정')}}>내 정보 수정</span>
+
+
             </Container>
         </>
     );

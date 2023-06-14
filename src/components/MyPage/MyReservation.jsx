@@ -4,27 +4,24 @@ import { SlMagnifier } from 'react-icons/sl'
 import ReservedDetail from './ReservedDetail';
 
 const Container = styled.div`
-    width: 90%;
+    width: calc(100% - 2.5rem);
     height: 100%;
     padding-left: 2.5rem;
-    /* background-color: #7bc1b2; */
+    background-color: #7bc1b2;
     p {
         text-align: left;
-        /* margin-left: 7%; */
         margin: 0rem 0 .3rem 0;
         font-size: .8rem;
-        /* font-size: .8rem; */
         font-weight: bold;
     }
     .title {
-        /* padding-left: 1rem; */
         /* background-color: red; */
         height: 5%;
         font-weight: bold;
     }
     .serachBox{
         padding-left: 1rem;
-        width: 100%;
+        width: calc(100% - 3.5rem);
         height: 3rem;
         display: flex;
         margin: 0rem 0 ;
@@ -74,9 +71,10 @@ const Container = styled.div`
     }
     .count{
         /* background-color: red; */
-        height: 7%;
+        height: 4rem;
         font-weight: bold;
-        margin: 1rem 0 0 0;
+        align-items: center;
+        display: flex;
 
     }
 `;

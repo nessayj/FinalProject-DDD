@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   width: calc(100%-1rem);
-  height: 12%;
+  height: 8rem;
   text-align: right;
   /* background-color: red; */
   flex-direction: row;

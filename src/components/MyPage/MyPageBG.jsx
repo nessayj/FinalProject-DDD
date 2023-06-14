@@ -9,6 +9,7 @@ import NaviBox from "./NaviBox";
 import SNSBox from "./SNSBox";
 import MyReservation from "./MyReservation";
 import MyDiary from "./MyDiary";
+import { Height } from "@mui/icons-material";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -20,7 +21,7 @@ const Container = styled.div`
     /* background-color: aqua; */
     position: relative;
     top: 0%; 
-    height: 140vh;
+    height: 100vh;
     justify-content: center;
     display: flex;
 `;
@@ -48,7 +49,7 @@ const MyPageBG = (props) => {
     const [showPage, setShowPage] = useState('마이페이지')
     return(
         <>
-        <Container>
+        <Container style={showPage === '다이어리' || showPage === '예약관리' ? { height: '200vh' } : null}>
             <Modal>
                 {
                     showPage === '마이페이지' &&

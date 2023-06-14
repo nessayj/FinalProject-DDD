@@ -5,11 +5,12 @@ import exhibitionData from '../exhibition/exhibitionData';
 // ====== data 확인하기 =====
 
 const Container = styled.div`
-    width: calc(100% - 2.5rem);
+    width: 80%;
     /* height: 10rem; */
     height: 10rem;
     /* min-height: 220px; */
-    background-color: white;
+    background-color: aqua;
+    /* background-color: white; */
     border: 1px solid #eee;
     border-radius: .4rem;
     align-items: center;
@@ -36,7 +37,6 @@ const Container = styled.div`
         overflow-x: hidden;
         object-position: top;
         border-radius: 0.3rem;
-        border: 1px solid #ddd;
     }
     .justfyTop{
         align-items: bottom;
@@ -79,7 +79,7 @@ const Container = styled.div`
     }   
 `;
 
-const ReservedDetail = () => {
+const MyDiaryModal = () => {
     return (
         <>
             <div className='count'>총 {exhibitionData.length} 건</div>
@@ -111,4 +111,4 @@ const ReservedDetail = () => {
     );
 };
 
-export default ReservedDetail;
+export default MyDiaryModal;

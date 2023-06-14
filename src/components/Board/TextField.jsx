@@ -10,7 +10,7 @@ const TextWrap = styled.div`
   margin: 0 auto;
 
   .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
-    min-height: 400px;   
+    min-height: 500px; // 텍스트 높이 조절
   }
 
   .ck-editor__main {padding: 0;}

@@ -37,7 +37,6 @@ const Section = styled.div`
         background-color: #4555AE;
         border-bottom: solid 1px #4555AE;
         text-align: center;
-        
         tr:nth-child(2n) td {background-color: #f9f9f9;}
         th {padding: 10px; color: white;}
         td {padding: 10px; background-color: white; border-left: solid 1px #bbb; border-top: solid 1px #ddd;}
@@ -63,6 +62,11 @@ const Section = styled.div`
                 font-weight: 600;
             }
         }  
+        
+        td:nth-child(3) {width: 41em; text-align: left; padding-left: 20px;
+        
+        }
+
     }
     .input_title {
         font-size: 20px;
@@ -114,6 +118,8 @@ const Section = styled.div`
                 font-family: 'Pretendard-regular';
                 float: left;
                 padding: .5em 1.3em;
+                margin-bottom: .5em;
+
                 &:hover {background-color: #5EADF7; color: #F4F8FF;}
                 }
         }
@@ -174,7 +180,7 @@ const EditHeader = () => {
                     </div>
                     <table>
                         <tr>
-                            <th colSpan={3}>게시물 작성</th>
+                            <th colSpan={4}>게시물 작성</th>
                         </tr>
                         <tr>
                             <td>
@@ -201,25 +207,24 @@ const EditHeader = () => {
                             <td>
                                 <input className="input_title" 
                                 type='text' 
-                                placeholder='제목을 입력하세요.' 
+                                placeholder='제목을 입력해주세요 :)' 
                                 value={title} 
                                 onChange={onChangeTitle} 
                                 name='title' 
                                 maxLength={40}/>
                             </td>
+                            <td>
+                                <div className="imguploaderBtn">
+                                    <button>
+                                    <input type="file" id="file-upload" onChange={previewImage} style={{display: "none"}}/>
+                                    <label htmlFor="file-upload">사진 업로드</label>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     </table> 
-
                     <div className="addBoard-wrapper">
-                        <div className="imgcontainer">
-                            {previewUrl && <img src={previewUrl}/>}
-                        </div>
-                        <div className="imguploaderBtn">
-                        <button>
-                        <input type="file" id="file-upload" onChange={previewImage} style={{display: "none"}}/>
-                        <label htmlFor="file-upload">사진 업로드</label>
-                        </button>
-                    </div>
+                        {previewUrl && <img src={previewUrl}/>}
                     </div>
                 </div>
             </Section>

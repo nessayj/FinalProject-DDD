@@ -172,6 +172,7 @@ const Contents = styled.div`
 const Boardview = () => {
 
 
+
     return(
         <ViewWrap>
             <Section className="section">
@@ -230,7 +231,7 @@ const Boardview = () => {
                         주말에 친구들과 전시회를 가려고 하는데 재밌게 즐길 수 있을 만한 전시회 있을까요?<br /> 
                         작품 구경도 하면서 사진도 자유롭게 찍을 수 있는 
                         서울에 가볼만한 전시회 추천 부탁드립니다 :D <br />
-                        감사합니다.<br />
+                        감사합니다.
                     </div>
                 </Contents>
             </div>

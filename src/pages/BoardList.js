@@ -5,7 +5,6 @@ import Categories from '../components/Board/Category';
 import { useNavigate } from 'react-router-dom';
 import Recommend from '../components/Board/Recommend';
 import Question from '../components/Board/Question';
-
 const Wrap = styled.div`
     width: 100%;
     height: 100vh;

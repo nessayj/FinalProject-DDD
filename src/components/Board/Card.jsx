@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdPin, IoMdEye } from "react-icons/io";
-import CardData from "../Board/CardData.json"
+import CardData from "./CardData.json"
 import { useState, useEffect } from "react";
 import PageNation from "../../util/PageNation";
 
@@ -13,7 +13,7 @@ const CardContainer = styled.div`
     justify-content: center;
     margin: 2rem;
     gap: 1rem;
-    transition: width 1s, height 1s, box-shadow 1s;
+    transition: width 1s, height 1s;
     cursor: pointer;
 
     * {
@@ -24,7 +24,7 @@ const CardContainer = styled.div`
     }
     .container {
         overflow: hidden; /* 영역을 벗어날 시 가려짐 */
-        box-shadow: 0 2px 8px 0;
+        box-shadow: 0 1px 2px 0px;
         background-color: #ffffff;
         text-align: center;
         border-radius: 1rem;

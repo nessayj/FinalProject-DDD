@@ -31,9 +31,15 @@ const Wrapper = styled.div`
             object-fit: cover;
         }
 
-        .author {
-            margin-left: .5em
+        .user {
+            font-size: 13px;
+            margin-left: .5em;
         }  
+        
+        .writedate {
+        font-size:1px;
+        margin-top: .2em;
+       }
 
         .input-wrapper {
             display: flex;
@@ -65,29 +71,30 @@ const Wrapper = styled.div`
       flex-direction: column;
     }
 
-    .output-wrapper {
+    .textinfo {
         display: flex;
         align-items: center;
         margin-left: auto;
-        width: 80%;
+        width: 83%;
         margin: 12px;
         border: 1px solid #ccc;
         border-radius: 10px;
         padding:7px; 
         color : #6d6767;
-
     }
+
   }
 `;
 
-const BoardComment = (props) => {
+const BoardComment = () => {
     const [input, setInput] = useState(""); // 댓글 입력값
     const [comment, setComment] = useState([]); // 댓글 입력 배열값
 
     const postEnter = (e) => { // 엔터쳤을 경우
         if(e.code === 'Enter' && input.length> 0) {
+            const currentDate = new Date();
             const enterCopy = [...comment];
-            enterCopy.unshift({ text: input, author: "댓글러" } );
+            enterCopy.unshift({ text: input, user: "댓글러", date: currentDate } ); // 날짜 추가
             setComment(enterCopy);
             setInput("");
         }
@@ -95,10 +102,12 @@ const BoardComment = (props) => {
 
     const postClick = () => { // 클릭했을 경우
         if(input.length > 0) {
+            const currentDate = new Date();
             const clickCopy = [...comment];
-            clickCopy.unshift({ text: input, author: "댓글러" });
+            clickCopy.unshift({ text: input, user: "댓글러", date: currentDate }); // 날짜 추가
             setComment(clickCopy);
             setInput("");
+            console.log(clickCopy);
         }
     }
 
@@ -108,7 +117,7 @@ const BoardComment = (props) => {
         <Wrapper>
           <div className="commentbox">
             <img src={profile} alt="프로필 이미지" />
-            <div className="author">댓글러</div>
+            <div className="user">댓글러</div>
             <div className="input-wrapper">
               <input
                 type="text"
@@ -123,12 +132,17 @@ const BoardComment = (props) => {
     
           {/* 배열의 값들을 map으로 반복하여 보여줌 */}
           {comment.map((e, index) => (
-            <div key={index}>
+          <div key={index}>
           <div className="commentbox">
             <img src={profile} alt="프로필 이미지" />
-            <div className="author">{e.author}</div>
-            <div className="output-wrapper">
-            <div className="outputtext">{e.text}</div>
+            
+            <div className="userinfo">
+                <div className="user">{e.user}</div>
+                <div className="writedate">{e.date.toLocaleDateString()}</div>
+            </div>
+            
+            <div className="textinfo">
+                <div className="outputtext" style={{fontSize:".9em"}}>{e.text}</div>
             </div>
           </div>
         </div>

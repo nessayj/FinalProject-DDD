@@ -1,0 +1,17 @@
+{
+    "languages" : "languages",
+    "korean" : "Korean",
+    "english" : "English",
+    "login" : "login",
+    "opened-display" : "Opened Display",
+    "Raking of Thisweek" : "Ranking of This Week",
+    "Ranking by Region" : "Ranking by Region",
+    "Seoul" : "Seoul",
+    "Gyunggi-do" : "Gyunggi/Incheon",
+    "ChoongChung" : "ChoongChung/GangWon",
+    "GwangJoo" : "GwangJoo/JeonLa",
+    "Busan" : "Busan/KyungNam",
+    "Daegu" : "Daegu/KyungBuk",
+    "Jeju" : "Jeju",
+    "Today's Recommend" : "Today's Recommend"
+}

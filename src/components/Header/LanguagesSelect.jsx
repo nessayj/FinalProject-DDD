@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const SelectStyle = styled.div`
     margin-top: 0.8rem;
@@ -26,10 +27,13 @@ const SelectStyle = styled.div`
 `;
 
 const LanguagesSelect = () => {
+    const { t, i18n } = useTranslation();
     const [languages, setLanguages] = useState('');
 
-    const handleChange = (event) => {
-        setLanguages(event.target.value);
+    const handleChange = (e) => {
+      const selectedLanguage = e.target.value;
+      setLanguages(selectedLanguage);
+      i18n.changeLanguage(selectedLanguage);
     };
 
 
@@ -50,8 +54,8 @@ const LanguagesSelect = () => {
         <MenuItem value="" sx={{fontSize: 10}}>
             <em>언어/Languages</em>
           </MenuItem>
-        <MenuItem value={10} sx={{fontSize: 10}}>한글</MenuItem>
-        <MenuItem value={20} sx={{fontSize: 10}}>영어</MenuItem>
+        <MenuItem value="ko-KR" sx={{fontSize: 10}}>{t('korean')}</MenuItem>
+        <MenuItem value="en-US" sx={{fontSize: 10}}>{t('english')}</MenuItem>
       </Select>
     </FormControl>
         </SelectStyle>

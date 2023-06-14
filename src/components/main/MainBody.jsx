@@ -4,6 +4,7 @@ import { DisplayData } from "./DisplayData";
 import WeekRanking from "./WeekRanking";
 import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
+import { useTranslation } from "react-i18next";
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -62,6 +63,9 @@ const MainBody = () => {
     const handleLocRanking = () => {
         setDisplayType('loc');
     }
+    
+    // 다국어
+    const {t} = useTranslation();
 
 
 
@@ -69,15 +73,15 @@ const MainBody = () => {
         <>
         <BodyContainer>
         <div className="open-display">
-            <h2>오픈 전시</h2>
+            <h2>{t('opened-display')}</h2>
             <div className="open-container">
                 <img src={img2.imgUrl} alt="오픈 전시 이미지" />
             </div>
         </div>
         <div className="popular-display">
             <div className="title-container">
-                <StyledH2 selected={displayType === 'week'} onClick={handleWeekRanking}>금주의 랭킹</StyledH2>
-                <StyledH2 selected={displayType === 'loc'} onClick={handleLocRanking}>지역별 랭킹</StyledH2>
+                <StyledH2 selected={displayType === 'week'} onClick={handleWeekRanking}>{t('Raking of Thisweek')}</StyledH2>
+                <StyledH2 selected={displayType === 'loc'} onClick={handleLocRanking}>{t('Ranking by Region')}</StyledH2>
             </div>
             <div className="popular-container">
                 {displayType === 'week' ? <WeekRanking/> : <LocRanking/>}

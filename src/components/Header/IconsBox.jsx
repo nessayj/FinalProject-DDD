@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {BsTicketPerforated} from 'react-icons/bs';
 import {HiOutlineUser} from 'react-icons/hi';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const IconBox = styled.div`
     margin: 0 auto;
@@ -48,6 +49,7 @@ const Icons = () => {
     const onClickToLogin = () => {
         navigate("/login");
     }
+    const {t} = useTranslation();
 
 
 
@@ -59,7 +61,7 @@ const Icons = () => {
         <div className="login-icon" onClick={onClickToLogin}>
         <HiOutlineUser size="27"/>
         </div>
-        <p onClick={onClickToLogin}>로그인</p>
+        <p onClick={onClickToLogin}>{t('login')}</p>
         
         </IconBox>
 

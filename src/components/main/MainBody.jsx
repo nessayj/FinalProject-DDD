@@ -6,6 +6,7 @@ import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
 import { useTranslation } from "react-i18next";
 import MuseumInfo from "./Museum";
+import Slider from "./MainBanner";
 
 const BodyContainer = styled.div`
     width: 1200px;

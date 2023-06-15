@@ -80,7 +80,7 @@ const museumDetail = [
 ]
 
 const MuseumInfo = () => {
-    const [view, setView] = useState('nationalMuseum');
+    const [view, setView] = useState('national');
     const handleMuseumClick = (name) => {
         setView(name);
     }

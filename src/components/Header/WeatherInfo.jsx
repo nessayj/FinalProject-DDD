@@ -81,7 +81,7 @@ const WeatherInfo = () => {
         return () => {
             clearInterval(timer);
         };
-    }, []);
+    }, [currentIndex]);
 
     // 다국어설정
     const {t} = useTranslation();

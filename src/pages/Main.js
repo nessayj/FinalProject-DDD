@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MainBody from "../components/main/MainBody";
 import Slider from "../components/main/MainBanner";
 import Header from "../components/header/Header";
+import Footer from "../components/main/Footer";
 
 
 const MainContainer = styled.div `
@@ -25,6 +26,7 @@ const Main = () => {
             <MainBodyContainer>
                 <MainBody/>
             </MainBodyContainer>
+            <Footer/>
         </MainContainer>
 
     );

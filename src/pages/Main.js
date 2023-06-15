@@ -24,6 +24,7 @@ const HeaderStyle = styled.div`
 const SliderContainer = styled.div`
     position: relative;
     margin-top: 200px;
+    z-index: 1;
 `;
 
 

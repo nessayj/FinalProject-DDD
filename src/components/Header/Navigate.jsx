@@ -49,7 +49,7 @@ const NavStyle = styled.div`
       top: 76px;
       background-color: white;
       box-shadow: 2px 0px 1px rgba(44, 44, 44, 0.137);
-      z-index: 9998;
+      z-index: 9999;
     }
   
     .menu_box_hidden {

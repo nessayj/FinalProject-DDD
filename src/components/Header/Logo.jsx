@@ -10,6 +10,11 @@ const LogoContainer = styled.div`
   position: relative;
   display: inline-flex;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    margin-top: 2.6rem;
+  }
 `;
 
 const Logo = () => {

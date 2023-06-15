@@ -15,6 +15,7 @@ const NavStyle = styled.div`
     .close-icon {
         float: right;
         margin: 1rem 1.5rem;
+        font-size: 1.6rem;
         cursor: pointer;
     }
     .menu_name {
@@ -37,6 +38,7 @@ const NavStyle = styled.div`
     .burger_menu{
       display: block;
       margin-left: 40px;
+      font-size: 2rem;
       cursor: pointer;
     }
 
@@ -62,16 +64,38 @@ const NavStyle = styled.div`
       margin: 15px 0;
     }  
 
+    @media (max-width: 768px) {
+    .close-icon {
+      font-size: 1rem;
+    }
+    .burger_menu {
+      font-size: 1.5rem;
+    }
+    .menu_name {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+    .menu_name a {
+      font-size: 1rem;
+    }
+    .menu_box_visible {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+
 `;
 
 
 const Navigator = () => {
     const [menuToggle, setMenuToggle] = useState(false);
     const [closeIcon, setCloseIcon] = useState(false);
+
     const menu = [
         {name : "HOME", address : "/"},
-        {name : "전시", address : "/exhibitList"},
-        {name : "게시판", address: "/"},
+        {name : "전시", address : "/exhibitList", subMenu: ["전시", "무료전시", "온라인전시"]},
+        {name : "게시판", address: "/board_list"},
         {name : "고객센터", address: "/"}
     ];
 
@@ -85,12 +109,12 @@ const Navigator = () => {
         <nav className="navigation_wrapper">
             <div className="burger_menu"
             onClick={() => menuToggle ? setMenuToggle(false) : setMenuToggle(true)}>
-                <BsList size="30"/>
+                <BsList />
             </div>
             <div className={['menu_box', !menuToggle ? "menu_box_hidden" : "menu_box_visible",].join(" ")}>
                 <div className="menu_list">
                     <div className="close-icon">
-                    <AiOutlineClose size="30"  onClick={onCloseIcon} />
+                    <AiOutlineClose  onClick={onCloseIcon} />
                     </div>
                     <div className="menu_name">
                     {menu.map((data,index) => (
@@ -98,7 +122,7 @@ const Navigator = () => {
                         {data.name}
                     </a>
                     ))}
-                    </div>    
+                    </div>
                 </div>
             </div>
         </nav>

@@ -4,9 +4,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
+import styled from "styled-components";
+
+const SearchBarContainer = styled.div`
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 
 const SearchBar = () => {
   return (
+    <SearchBarContainer>
     <div style={{ float: 'right', display: 'flex', alignItems:'center', justifyContent:'center'}}>
       <Box
         component="form"
@@ -23,6 +33,7 @@ const SearchBar = () => {
         </IconButton>
       </Box>
     </div>
+    </SearchBarContainer>
   );
 }
 

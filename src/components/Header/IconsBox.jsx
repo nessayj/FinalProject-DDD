@@ -12,7 +12,8 @@ const IconBox = styled.div`
     align-items: center;
 
     .ticket-icon {
-        margin: 0.5rem;
+        margin: 0.3rem 0.6rem 0 0.6rem;
+        font-size: 1.9rem;
     }
 
     .login-icon{
@@ -27,6 +28,7 @@ const IconBox = styled.div`
         background-color: #5EADF7;
         border-radius: 2rem;
         cursor: pointer;
+        font-size: 1.7rem;
     }
 
     p {
@@ -36,9 +38,20 @@ const IconBox = styled.div`
         cursor: pointer;
     }
 
+    @media (max-width: 768px) {
+        .ticket-icon,
+        .login-icon {
+            height: 60%;
+            width: 60%;
+            font-size: 1.6rem;
+            background-color: #fff;
+            color: #050E3D;
+        }
 
-
-
+        p {
+            display: none;
+        }
+    }
 `;
 
 
@@ -54,10 +67,10 @@ const Icons = () => {
     return (
         <IconBox>
         <div className="ticket-icon">
-        <BsTicketPerforated  size="30"/>
+        <BsTicketPerforated/>
         </div>
         <div className="login-icon" onClick={onClickToLogin}>
-        <HiOutlineUser size="27"/>
+        <HiOutlineUser/>
         </div>
         <p onClick={onClickToLogin}>{t('login')}</p>
         </IconBox>

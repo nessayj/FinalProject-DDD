@@ -24,6 +24,14 @@ const SelectStyle = styled.div`
         font-weight: bold;
     }
 
+    @media (max-width: 768px) {
+        .input-label {
+            font-size: 0.6rem;
+        }
+        .select-container {
+            font-size: 0.4rem;
+        }
+    }
 
 `;
 

@@ -29,9 +29,18 @@ const WeatherStyle = styled.div`
             font-size: 0.8rem;
         }
 
+        @media (max-width: 768px) {
+            .weather-container {
+                flex-direction: column;
+                margin-right: 0;
+                margin-bottom: 0.8rem;
+            }
 
+            .icons {
+                margin-left: 0.2rem;
+            }
+        }
     }
-
 `;
 
 const weatherIcon = {

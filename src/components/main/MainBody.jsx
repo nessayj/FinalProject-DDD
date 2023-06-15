@@ -5,6 +5,7 @@ import WeekRanking from "./WeekRanking";
 import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
 import { useTranslation } from "react-i18next";
+import MuseumInfo from "./Museum";
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -90,6 +91,7 @@ const MainBody = () => {
         </BodyContainer>
         <TodayRec/>
         <BodyContainer>
+            <MuseumInfo/>
         </BodyContainer>
 
         </>

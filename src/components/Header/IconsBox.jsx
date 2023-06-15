@@ -51,8 +51,6 @@ const Icons = () => {
     }
     const {t} = useTranslation();
 
-
-
     return (
         <IconBox>
         <div className="ticket-icon">
@@ -62,7 +60,6 @@ const Icons = () => {
         <HiOutlineUser size="27"/>
         </div>
         <p onClick={onClickToLogin}>{t('login')}</p>
-        
         </IconBox>
 
 

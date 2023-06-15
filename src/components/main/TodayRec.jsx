@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { DisplayData } from "./DisplayData";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const TodayRecStyle = styled.div`
         margin-top: 0;
@@ -62,6 +63,8 @@ const StyledH3 = styled.h3`
     color: ${({ selected }) => (selected ? '#050E3D' : 'white')};
 `;
 const TodayRec = () => {
+        // 다국어
+        const {t} = useTranslation();
         // 오늘의 추천 임시이미지
         const [selectedItemName, setSelectedItemName] = useState("");
 
@@ -88,7 +91,7 @@ const TodayRec = () => {
 
     return (
         <TodayRecStyle>
-            <h2>오늘의 추천</h2>
+            <h2>{t("Today's Recommend")}</h2>
             <div className="today-container">
                 <div className="today-explanation">
                     {DisplayData.map((data, index) => (

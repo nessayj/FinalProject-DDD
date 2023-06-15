@@ -73,8 +73,8 @@ const LocRanking = () => {
   return (
     <div>
       <LocationContainer>
-        <LocationButton selected={selectedLocation === 'seoul'} onClick={() => handleLocationClick('seoul')}>{t('Seoul')}</LocationButton>
-        <LocationButton selected={selectedLocation === 'gyg'} onClick={() => handleLocationClick('gyg')}>{t('Gyunggi')}</LocationButton>
+        <LocationButton selected={selectedLocation === 'seoul'} onClick={() => handleLocationClick('seoul')}>{t('seoul')}</LocationButton>
+        <LocationButton selected={selectedLocation === 'gyg'} onClick={() => handleLocationClick('gyg')}>{t('gyunggi')}</LocationButton>
         <LocationButton selected={selectedLocation === 'chw'} onClick={() => handleLocationClick('chw')}>{t('choongchung')}</LocationButton>
         <LocationButton selected={selectedLocation === 'gje'} onClick={() => handleLocationClick('gje')}>{t('gwangjoo')}</LocationButton>
         <LocationButton selected={selectedLocation === 'bgn'} onClick={() => handleLocationClick('bgn')}>{t('busan')}</LocationButton>

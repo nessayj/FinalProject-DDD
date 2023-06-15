@@ -71,5 +71,17 @@ const dummy_post = [
 
 const dummy_reply = []
 
-export {member_info, thumbnail, profileImage, diaryImage, dummy_post, dummy_reply};
+const commentAboutCount = {
+    10: "전시회에 오신것을 환영합니다. ",
+    20: "주말에는 전시를 보러 다니는게 어때요?",
+    30: "전시조아",
+    40: "자신만의 전시 철학이 있으시군요!",
+    50: "이 정도면 어디서 꿀리진 않을 겁니다. ",
+    60: "전시회를 기획하시나요...?",
+    70: "살아있는 전시장 지박령",
+    80: "G.O.D",
+  };
+  
+
+export {member_info, thumbnail, profileImage, diaryImage, dummy_post, dummy_reply, commentAboutCount};
 

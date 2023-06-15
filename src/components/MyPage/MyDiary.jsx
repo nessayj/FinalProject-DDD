@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MyDiaryModal from './MyDiaryModal';
 
 const Container = styled.div`
-  background-color  : beige;
+  /* background-color  : beige; */
   width: 100%;
   height: 100%;
   /* padding-left: 2.5rem; */
@@ -16,17 +16,22 @@ const Container = styled.div`
         font-size: 1rem;
         font-weight: bold;
     }
-    .title {
+    .count{
         /* background-color: red; */
-        height: 5%;
         font-weight: bold;
+        align-items: center;
+        display: flex;
+        font-size: 3rem;
+    }
+    .desc {
+        /* background-color: blue; */
+        margin: 1.0rem;
     }
 `;
 
 const MyDiary = () => {
     return (
         <Container>
-            <div className='title' >내 다이어리</div>
             <MyDiaryModal/>
 
             

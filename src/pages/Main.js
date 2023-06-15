@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import MainBody from "../components/main/MainBody";
 import Slider from "../components/main/MainBanner";
-import Header from "../components/header/Header";
+import Header from "../components/Header/Header";
 import Footer from "../components/main/Footer";
 
 

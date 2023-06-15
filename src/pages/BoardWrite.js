@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import EditHeader from '../components/Board/EditHeader';
+import WriteHeader from '../components/Board/WriteHeader';
 import TextField from '../components/Board/TextField';
 import { Link } from 'react-router-dom';
 
@@ -72,7 +72,7 @@ const BoardWrite = () => {
     
     return(
         <WriteWrap>
-            <EditHeader/>
+            <WriteHeader/>
             <TextField/>
             <div className="btn_area">
                 <button className="savebtn" onClick={onClickSave}>저장하기</button>

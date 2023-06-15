@@ -28,20 +28,6 @@ const Section = styled.div`
             color:  #7FC2EF;
             text-decoration: underline;
         }
-        button {
-            cursor: pointer;
-            font-family: 'Pretendard-regular';
-            font-weight: 400;
-            float: right;
-            font-size: 16px;
-            padding: 8px 35px;
-            border-radius: 10px;
-            background-color: #135CD2;
-            color: white;
-            border: none;
-            transition: all .1s ease-in;
-            &:hover{background-color:  #a1f7d9; color: #135CD2;}
-        }
     }
 
     table {
@@ -55,7 +41,7 @@ const Section = styled.div`
         text-align: center;
         table-layout: fixed;
        
-        th{padding: 10px 6px; color: white; background-color: #7F8EEF;}
+        th{padding: 10px 6px; color: white; background-color: #4555AE;}
         
         tr{
             background-color: white;

@@ -10,6 +10,7 @@ import MyPage from './pages/MyPage';
 import BoardList from './pages/BoardList';
 import BoardWrite from './pages/BoardWrite';
 import Boardview from './pages/BoardView';
+import BoardEdit from './pages/BoardEdit';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/board_list" element={<BoardList/>}/>
         <Route path='/board_view' element={<Boardview/>}/>
         <Route path="/board_list/write" element={<BoardWrite/>}/>
+        <Route path='/board_edit' element={<BoardEdit/>}></Route>
         <Route path="/myPage" element={<MyPage/>}/>
       </Routes>
       </Router>

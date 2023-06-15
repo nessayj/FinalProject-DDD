@@ -9,8 +9,31 @@ const DDDApi = {
             freeBoard_No: freeBoard_No 
         };
         return await axios.get(DDD_DOMAIN + "/board_list", list);
-    }
+    },
     
+    // 특정 게시판 번호의 게시물 내용 불러오기
+    boardView: async(freeBoard_No) => {
+        return await axios.get(DDD_DOMAIN + `/board_list/board_view?freeBoard_No=${freeBoard_No}`);
+    },
+
+    // 게시글 수정
+    boardEdit: async(freeBoard_No, category, region, title, image, contents) => {
+        const editObj = {
+            freeBoard_No: freeBoard_No,
+            boardCtg : category,
+            boardregion : region, 
+            title: title,
+            boardImg : image,
+            boardContents : contents
+        };
+        return await axios.post(DDD_DOMAIN + "/board_edit", editObj);
+    },
+
+    // 자유게시판 검색 목록 출력
+    searchList: async (keyword) => {
+        return await axios.get(DDD_DOMAIN + `board_list/?keyword=${keyword}`);
+    },
+
 };
 
 export default DDDApi;

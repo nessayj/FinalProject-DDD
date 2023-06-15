@@ -4,6 +4,7 @@ import { IoMdSunny, IoIosPartlySunny, IoMdCloudy, IoIosThunderstorm } from "reac
 import { BsCloudRainFill, BsCloudSnowFill } from "react-icons/bs";
 import { FaCloudSunRain, FaSmog } from "react-icons/fa";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const WeatherStyle = styled.div`    
     .weather-container {
@@ -82,13 +83,16 @@ const WeatherInfo = () => {
         };
     }, []);
 
+    // 다국어설정
+    const {t} = useTranslation();
+
     return (
         <WeatherStyle>
             {weatherData.length > 0 && (
             <div className="weather-container">
                 <div className="icons">{weatherIcon[weatherData[currentIndex].weather[0].icon.substr(0, 2)]}</div>
                     <div className="degree">{Math.floor(weatherData[currentIndex].main.temp - 273.15)}º</div>
-                    <div className="location">{locationsKorean[currentIndex]}</div>
+                    <div className="location">{t(locationsKorean[currentIndex])}</div>
             </div>
             )}
         </WeatherStyle>

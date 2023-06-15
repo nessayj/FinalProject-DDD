@@ -17,5 +17,12 @@
     "inform of museum" : "Museum",
     "nationalMuseum" : "National Museum Of Korea",
     "modernMuseum" : "National Museum of Modern Art",
-    "leeum" : "Leeum Museum of Art"
+    "leeum" : "Leeum Museum of Art",
+    "서울": "Seoul",
+    "경기": "Gyeonggi-do",
+    "부산": "Busan",
+    "광주": "Gwangju",
+    "강원": "Gangwon-do",
+    "대구": "Daegu",
+    "제주": "Jeju"
 }

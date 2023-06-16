@@ -91,8 +91,8 @@ const Recommend = () => {
     //  값을 불러오기위해 선언, 목록보기
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
 
-     // 게시물 클릭시 문의하기 글 보이기
-    const [freeBoard_No, setfreeBoard_No] = useState(); // 게시물 클릭 시 freeBoard_No 재설정
+    // // 게시물 클릭시 문의하기 글 보이기
+    const [freeBoard_No, setFreeBoard_No] = useState(); 
    
 
     
@@ -103,47 +103,34 @@ const Recommend = () => {
     const handlePageClick = (selectedPage) => {
         setCurrentPage(selectedPage.selected);
     };
-    const pageCount = Math.ceil(boardList.length / ITEMS_PAGE); // 전체 페이지 수
+
+    const filteredData = boardList.filter((item) => { 
+        return item.board_Ctg === '추천수다'; // 전체 데이터 boardList에서 카테고리: 추천수다에 해당하는 데이터만 필터링 1차
+      });
+
+
+    const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
     const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
 
-    const currentPageData = boardList.slice(offset, offset + ITEMS_PAGE);
-
+    
+    // const는 두번 변동 적용 안되므로 let으로 재선언, 1차 필터링된 데이터를 페이지네이션 개수에 맞게 슬라이싱 적용
+    let currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE); 
         
 
 
-    // 문의하기(boardList) 불러오기
+    // 자유게시판(boardList) 불러오기
     useEffect(() => {
         const boardData = async () => {
             try {
                 const boardListData = await DDDApi.boardList(freeBoard_No);
                 setBoardList(boardListData.data);
-                console.log(boardListData.data);
+                console.log(boardListData.data); // boardListData 잘 넘어오는지 재확인
             } catch (e) {
                 console.log(e);
             }
         };
         boardData();
     }, [freeBoard_No]);
-
-
-    // 카테고리(추천수다, 질문하기)
-    const [category, setCategory] = useState("");
-
-      // 카테고리 변경 이벤트 핸들러(코드 재확인)
-    const handleCategoryChange = (e) => {
-    setCategory(e.target.value);
-    };
-
-    // 카테고리별 게시물 필터링(코드 재체크 필요함)
-    const filteredBoardList = boardList.filter((item) => {
-        if (category === "추천수다") {
-            return item.category === "추천하기";
-        } else if (category === "질문하기") {
-            return item.category === "질문하기";
-        }
-        return true; // 기본적으로 모든 게시물을 반환
-  });
-
 
     return (
         <BoardContainer>

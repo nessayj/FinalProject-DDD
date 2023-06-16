@@ -85,49 +85,51 @@ const Section = styled.div`
 const Question = () => {
 
    
-    // 목록보기
-    const [boardList, setBoardList] = useState([]);
-    
-    const [freeBoard_No, setfreeBoard_No] = useState();
+    //  값을 불러오기위해 선언, 목록보기
+   const [boardList, setBoardList] = useState([]); // boardList 불러오기
+
+   // // 게시물 클릭시 문의하기 글 보이기
+   const [freeBoard_No, setfreeBoard_No] = useState(); 
+  
+
+   
+   //보여질 페이지 Item 개수(페이지네이션)
+   const ITEMS_PAGE = 13;
+   const [currentPage, setCurrentPage] = useState(0);
+
+   const handlePageClick = (selectedPage) => {
+       setCurrentPage(selectedPage.selected);
+   };
+
+   const filteredData = boardList.filter((item) => { 
+       return item.board_Ctg === '질문하기'; 
+     });
 
 
-    // 문의하기(boardList) 불러오기
-    useEffect(() => {
-        const boardData = async () => {
-            try {
-                const boardListData = await DDDApi.boardList(freeBoard_No);
-                setBoardList(boardListData.data);
-                console.log(boardListData.data);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        boardData();
-    }, [freeBoard_No]);
+   const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
+   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
 
+   let currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE); // const는 두번 변동 적용 안되므로 let으로 재선언
 
-//보여질 페이지 Item 개수(페이지네이션)
-const ITEMS_PAGE = 13;
-const [currentPage, setCurrentPage] = useState(0);
-
-const handlePageClick = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
-};
-const pageCount = Math.ceil(boardList.length / ITEMS_PAGE); // 전체 페이지 수
-const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
-
-const currentPageData = boardList.slice(offset, offset + ITEMS_PAGE);
-
-    
-
-
-    // 카테고리(추천수다, 질문하기)
-    const [category, setCategory] = useState('question');
+   // 자유게시판(boardList) 불러오기
+   useEffect(() => {
+       const boardData = async () => {
+           try {
+               const boardListData = await DDDApi.boardList(freeBoard_No);
+               console.log(boardListData.data); 
+               setBoardList(boardListData.data);
+               console.log(boardListData.data);
+           } catch (e) {
+               console.log(e);
+           }
+       };
+       boardData();
+   }, [freeBoard_No]);
 
     
     return (
         <BoardContainer>
-            <BoardSearch />
+            <BoardSearch/>
             <Section id="board" className="section">
                 <div className="board_box">
                     <table>

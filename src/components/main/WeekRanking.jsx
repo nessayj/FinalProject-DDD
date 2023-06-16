@@ -9,6 +9,9 @@ const WeekRankingContainer = styled.div`
 const WeekRankingImage = styled.img`
   width: calc(20% - 2rem);
   margin: 1rem;
+  @media (max-width: 768px) {
+    width: calc(18% - 2rem);
+  }
 `;
 
 

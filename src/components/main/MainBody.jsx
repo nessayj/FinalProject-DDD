@@ -6,7 +6,6 @@ import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
 import { useTranslation } from "react-i18next";
 import MuseumInfo from "./Museum";
-import Slider from "./MainBanner";
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -40,6 +39,33 @@ const BodyContainer = styled.div`
         }
         
     }
+
+    @media (max-width: 768px) {
+        h2{
+            font-size: 1.3rem;
+        }
+        .open-display {
+        margin: 2rem;
+        height: 30rem;
+            .open-container {
+            height: 80%;
+                >img {
+                width: 13rem;
+                height: 16rem;
+                }
+            }
+        }
+        .popular-display {
+        margin: 0 2rem 2rem 2rem;
+        height: 30rem;
+        display: flex;
+        flex-direction: column;
+        .title-container {
+            display: flex;
+        }
+        }
+    }
+    
 `;
 
 
@@ -47,7 +73,7 @@ const StyledH2 = styled.h2`
     margin: 0 2rem 0 0;
     cursor: pointer;
     text-decoration: ${({ selected }) => selected ? 'underline' : 'none'};
-    color: ${({ selected }) => selected ? 'black' : 'gray'};
+    color: ${({ selected }) => selected ? '#050E3D' : '#5EADF7'};
 `;
 
 

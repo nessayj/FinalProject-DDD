@@ -20,12 +20,18 @@ const NavStyle = styled.div`
     }
     .menu_name {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
         position: relative;
         top: 6rem;
         //left: 8rem;
         flex-direction: row;
         margin-bottom: 2rem;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          margin-left: 4rem;
+          
+        }
     }
   }
   .menu_name a {
@@ -71,11 +77,7 @@ const NavStyle = styled.div`
     .burger_menu {
       font-size: 1.5rem;
     }
-    .menu_name {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 0;
-    }
+
     .menu_name a {
       font-size: 1rem;
     }

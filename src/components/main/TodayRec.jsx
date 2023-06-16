@@ -51,12 +51,51 @@ const TodayRecStyle = styled.div`
             color: white;
             font-size: larger;
         }
+
+        @media (max-width: 768px) {
+        h2{
+            font-size: 1.3rem;
+            margin: 2rem;
+        }
+        .today-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 11rem;
+            background-color: #5EADF7;
+            .today-display {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                > img {
+                margin-left: 2rem;
+                width: 10rem;
+                height: 13rem;
+            }
+        }
+        .today-list {
+            margin: 2rem;
+            > h3 {
+                font-size: 0.8rem;
+            }
+            }
+        }
+        
+        .today-explanation {
+            display: none;
+        }
+        
+        }
+    
 `;
 
 const StyledHr = styled.hr`
-  width: 15rem;
-  height: 1px;
-  background-color: white;
+    width: 15rem;
+    height: 1px;
+    background-color: white;
+    @media (max-width: 768px){
+    width: 8rem;
+    }
 `;
 const StyledH3 = styled.h3`
 

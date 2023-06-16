@@ -9,10 +9,18 @@ const MuseumContainer = styled.div`
     align-items: center;
     .museum-title {
         margin-right: 2rem;
+        @media (max-width: 768px) {
+            font-size: 1.3rem;
+            margin: 2rem;
+        }
+        
     }
     .museum-list {
         display: flex;
         flex-direction: row;
+        @media (max-width: 768px) {
+            font-size: 0.8rem;
+        }
     }
 
     .museum-detail {
@@ -26,7 +34,7 @@ const MuseumClick = styled.h3`
     margin-right: 10px;
     cursor: pointer;
     text-decoration: ${({ selected }) => selected ? 'underline' : 'none'};
-    color: ${({ selected }) => selected ? 'black' : 'gray'};
+    color: ${({ selected }) => selected ? '#050E3D' : 'gray'};
     font-weight: ${({ selected }) => selected ? 'bold' : 'none'};
 
 `;
@@ -38,11 +46,18 @@ const DetailContainer = styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
+        
     }
 
     .info-container{
         > h3{
             margin-bottom: 5rem;
+        }
+        @media (max-width: 768px) {
+            font-size: 0.9rem;
+            p{
+                display: none;
+            }
         }
 
     }
@@ -52,6 +67,10 @@ const Image = styled.img`
     width: 50%;
     height: 100%;
     margin-right: 4rem;
+    @media (max-width: 768px) {
+        width: 20%;
+        margin: 2rem;
+    }
 
 `;
 
@@ -111,6 +130,7 @@ const MuseumInfo = () => {
                 <h3>{museum.name}</h3>
                 <p>{museum.location}</p>
                 <p>{museum.price}</p>
+                <button>바로가기</button>
                 </div>
               </div>
             ))}

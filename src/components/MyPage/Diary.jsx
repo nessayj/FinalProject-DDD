@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SlArrowRight } from 'react-icons/sl';
-import { diaryImage } from './Data.jsx';
 import exhibitionData from '../exhibition/exhibitionData';
+import { Link } from 'react-router-dom';
 
 
 const DiaryBox =styled.div`
@@ -46,15 +46,18 @@ padding: 2rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
-    img{
+    .link{
+        /* background-color: blue ; */
+        border: 1px solid #ccc;
         width: 15%;
         height: 10rem;
-        object-fit: cover;
-        object-position: top;
-        margin: .3rem;
-        cursor: pointer;
-    }
-    
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+    }   
 `;
 const Diary = (props) => {
     return (
@@ -62,12 +65,14 @@ const Diary = (props) => {
             <DiaryBox>
                 <p className='title' onClick={()=>{props.setShowPage('다이어리')}}>다이어리</p>
                 <DiaryImage>
-                    {
-                        exhibitionData.slice(0, 5).map((img, i) => (
-                            <img key={i} src={img.imgUrl} onClick={()=>{}}/>
-                        ))
+                {
+                exhibitionData.slice(0, 5).map((img, i) => (
+                    <Link to={`/exhibitInfo/${i+1}`} key={i} className='link'>
+                        <img src={img.imgUrl} className='imageLink' alt='exhibition'/>
+                    </Link>
+                ))
+                }
 
-                    }
                 <button onClick={()=>{props.setShowPage('다이어리')}}> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
                 </DiaryImage>
             </DiaryBox>

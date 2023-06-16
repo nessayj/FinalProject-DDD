@@ -156,7 +156,7 @@ const MyDiaryModal = () => {
             exhibitionData.map((ticket, index) => (
                 <CardItem key={index}>
                     <div className='exhibitionImage'>
-                        <img src={ticket.imgUrl} />
+                        <img src={ticket.imgUrl} alt='exhibition'/>
                     </div>
                     <div className='exhibitionDesc'>
                         <div className='title'>{ticket.name}</div>   

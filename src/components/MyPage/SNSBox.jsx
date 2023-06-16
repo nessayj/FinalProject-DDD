@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SlSocialInstagram, SlPaperPlane, SlUserFollow } from 'react-icons/sl';
+import { SlSocialInstagram, SlPaperPlane } from 'react-icons/sl';
+import {member_info} from './Data';
 
 
 const SocialBox = styled.div`
@@ -23,8 +24,8 @@ const SocialBox = styled.div`
 const SNSBox = (props) => {
     return (
         <SocialBox>
-           <div className="icon" onClick={()=>{}}><SlPaperPlane/></div> 
-           <div className="icon" onClick={()=>{}}><SlSocialInstagram/></div> 
+           <div className="icon" onClick={()=>{ }}><SlPaperPlane/></div> 
+           <div className="icon" onClick={()=>{ window.open('http://naver.com')}}><SlSocialInstagram/></div> 
         </SocialBox>
     );
 };

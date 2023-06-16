@@ -44,19 +44,34 @@ const Container = styled.div`
   width: 100%;
 }
 
+.icon.active::before,
+.icon.active::after {
+  width: 100%;
+}
+.fColor{
+    color: #5EADF7;
+    font-weight: bold;
+}
+
+
+
 
 
 `;
 
 
 const NaviBox = (props) => {
+
+
     return (
         <Container>
-                <div className='icon' onClick={()=>{props.setShowPage('마이페이지')}}> 마이페이지 </div>
-                <div className='icon' onClick={()=>{props.setShowPage('다이어리')}}> 다이어리</div>
-                <div className='icon' onClick={()=>{props.setShowPage('예약관리')}}> 예약관리</div>
-                <div className='icon' onClick={()=>{props.setShowPage('내게시물')}}> 내 게시물</div>
-                <div className='icon' onClick={()=>{props.setShowPage('내정보수정')}}> 내 정보 수정</div>
+            
+            <div className='icon' onClick={()=>{props.setShowPage('마이페이지')}}> 마이페이지 </div>
+            <div className={`icon ${props.showPage === '다이어리' ? 'active fColor' : ''}`} onClick={() => { props.setShowPage('다이어리') }}>다이어리</div>
+            <div className={`icon ${props.showPage === '예약관리' ? 'active fColor' : ''}`} onClick={() => { props.setShowPage('예약관리') }}>예약 관리</div>
+            <div className={`icon ${props.showPage === '내게시물' ? 'active fColor' : ''}`} onClick={()=>{props.setShowPage('내게시물')} }>내 게시물</div>
+            <div className={`icon ${props.showPage === '내정보수정' ? 'active fColor' : ''}`} onClick={() => { props.setShowPage('내정보수정') }}>내 정보 수정</div>
+
         </Container>
     );
 };

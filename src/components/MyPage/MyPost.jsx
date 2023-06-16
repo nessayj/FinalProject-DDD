@@ -85,12 +85,14 @@ const Introduce = (props) => {
                 </div>
                 <Table>
                     <thead>
-                        <th style={{width:'8%'}}>번호</th>
-                        <th style={{width:'10%'}}>카테고리</th>
-                        <th style={{width:'42%'}}>제목</th>
-                        <th style={{width:'18%'}}>작성자</th>
-                        <th style={{width:'8%'}}>조회수</th>
-                        <th style={{width:'14%'}}>작성일</th>
+                        <tr>
+                            <th style={{width:'8%'}}>번호</th>
+                            <th style={{width:'10%'}}>카테고리</th>
+                            <th style={{width:'42%'}}>제목</th>
+                            <th style={{width:'18%'}}>작성자</th>
+                            <th style={{width:'8%'}}>조회수</th>
+                            <th style={{width:'14%'}}>작성일</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {
@@ -124,12 +126,14 @@ const Introduce = (props) => {
                 </div>
                 <Table>
                     <thead>
-                        <th style={{width:'8%'}}>번호</th>
-                        <th style={{width:'10%'}}>카테고리</th>
-                        <th style={{width:'42%'}}>제목</th>
-                        <th style={{width:'18%'}}>작성자</th>
-                        <th style={{width:'8%'}}>조회수</th>
-                        <th style={{width:'14%'}}>작성일</th>
+                        <tr>
+                            <th style={{width:'8%'}}>번호</th>
+                            <th style={{width:'10%'}}>카테고리</th>
+                            <th style={{width:'42%'}}>제목</th>
+                            <th style={{width:'18%'}}>작성자</th>
+                            <th style={{width:'8%'}}>조회수</th>
+                            <th style={{width:'14%'}}>작성일</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {

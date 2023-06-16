@@ -7,12 +7,24 @@ import Stack from '@mui/material/Stack';
 import { SlPencil, SlCloudUpload } from "react-icons/sl";
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // ====== data 확인하기 =====
+const Wrap = styled.div`
+    width: 100%;
+    height: auto;
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+`
+;
+
 
 const CardItem = styled.div`
   /* background-color: aqua; */
-  width: 80%;
+  width: calc( 100% - 2.5rem);
   min-width: 550px;
   height: 12rem;
   background-color: white;
@@ -103,8 +115,9 @@ const CardItem = styled.div`
   }
 `;
 
+
 const MyDiaryModal = () => {
-    const countDiary = 60;
+    const countDiary = exhibitionData.length;
     const countCheck = () => {
       for (let key in commentAboutCount) {
         if (countDiary < key) {
@@ -127,12 +140,20 @@ const MyDiaryModal = () => {
     };
     
     return (
-      <>
+      <Wrap>
         <div className='count'>{countDiary}</div>
         <div className='desc'>{comment}</div>
+
+        <InfiniteScroll
+        dataLength={exhibitionData.length}
+        // next={exhibitionData}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+        style={{width:'100%', minWidth:'600px', margin:'0'}}
+      >
              
             {
-            exhibitionData.slice(0, 2).map((ticket, index) => (
+            exhibitionData.map((ticket, index) => (
                 <CardItem key={index}>
                     <div className='exhibitionImage'>
                         <img src={ticket.imgUrl} />
@@ -157,10 +178,10 @@ const MyDiaryModal = () => {
                 </CardItem>
                 ))
             }
-
+      </InfiniteScroll>
 
        
-      </>
+      </Wrap>
     );
   };
   

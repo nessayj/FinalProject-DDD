@@ -49,7 +49,7 @@ const MyPageBG = (props) => {
     const [showPage, setShowPage] = useState('마이페이지')
     return(
         <>
-        <Container style={showPage === '다이어리' || showPage === '예약관리' ? { height: '200vh' } : null}>
+        <Container style={showPage === '다이어리' || showPage === '예약관리' ? { height: 'auto' } : null}>
             <Modal>
                 {
                     showPage === '마이페이지' &&

@@ -114,17 +114,24 @@ const MyDiaryModal = () => {
     };
   
     const comment = countCheck();
-    const [writeState, setWriteState] = useState(true);
 
-    const handleWriteState = () => {
-      setWriteState(!writeState);
+
+    const [writeState, setWriteState] = useState(Array(exhibitionData.length).fill(true));
+
+    const handleWriteState = (index) => {
+    setWriteState((prevWriteState) => {
+        const newWriteState = [...prevWriteState];
+        newWriteState[index] = !newWriteState[index];
+        return newWriteState;
+    });
     };
     
     return (
       <>
         <div className='count'>{countDiary}</div>
         <div className='desc'>{comment}</div>
-        {
+             
+            {
             exhibitionData.slice(0, 2).map((ticket, index) => (
                 <CardItem key={index}>
                     <div className='exhibitionImage'>
@@ -134,31 +141,22 @@ const MyDiaryModal = () => {
                         <div className='title'>{ticket.name}</div>   
                         <div className='date'>{ticket.startDate}</div>   
                         <Stack spacing={1} className='rateStar'>
-                            <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+                        <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
                         </Stack>
                     </div>
                     <div className="comment">
-                        {
-                            writeState ? 
-                            <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly/> : 
-                            <textarea className='textBox' name="" id="" cols="20" rows="8"/>
-                        }
+                        <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
 
-                        {
-                            writeState ?  
-                                <Tooltip title="글쓰기" arrow className="writeBox">
-                                <Button className="buttnBox"><SlPencil className='writeBtn' onClick={()=>{handleWriteState()}}/> </Button> 
-                                </Tooltip> 
-                            :
-                                <Tooltip title="저장" arrow className="writeBox">
-                                    <Button><SlCloudUpload className='writeBtn' onClick={()=>{handleWriteState()}}/>  </Button>
-                                </Tooltip> 
-
-                        }
+                        <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
+                        <Button className="buttnBox" onClick={() => handleWriteState(index)}>
+                            {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
+                        </Button>
+                        </Tooltip>
                     </div>
+
                 </CardItem>
-            ))
-        }
+                ))
+            }
 
 
        
@@ -167,16 +165,3 @@ const MyDiaryModal = () => {
   };
   
   export default MyDiaryModal;
-  
-
-// {
-//     exhibitionData.slice(0, 5).map((ticket, index) => (
-//         <Container key={index}>
-//             <div className="showImage"><img src={ticket.imgUrl} /></div>
-//             <div className='justfyTop'>
-//                 <div className='leftBox'>
-//                    
-//             </div>
-//         </Container>
-//     ))
-// }

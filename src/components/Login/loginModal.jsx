@@ -19,6 +19,7 @@ const Modal = styled.div`
     position: absolute;
     top: 50%;
     right: 5%;
+    border: 1px solid #999;
     transform: translate3d(-50%, -50%, 0);
     border-radius: 1.4rem;
     display: flex;

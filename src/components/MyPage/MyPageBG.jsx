@@ -21,7 +21,7 @@ const Container = styled.div`
     /* background-color: aqua; */
     position: relative;
     top: 0%; 
-    height: 100vh;
+    height: auto;
     justify-content: center;
     display: flex;
 `;

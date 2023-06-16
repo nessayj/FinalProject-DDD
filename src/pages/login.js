@@ -8,7 +8,7 @@ import ForgotPwModal from "../components/Login/ForgotPwModal";
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: black;
+    background-color: white;
 `;
 const BlackBG = styled.div`
     position: absolute;
@@ -40,7 +40,7 @@ const Login = () => {
         <>
             <Container>
                 <BGItmes/>
-                <BlackBG/>
+                {/* <BlackBG/> */}
             </Container>
             {
                 showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showSignUp={handleLoginModal2} />

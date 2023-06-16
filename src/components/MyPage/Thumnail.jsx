@@ -42,7 +42,7 @@ const BlackBG = styled.div`
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: .2;
+    opacity: .1;
     border-top-right-radius: inherit;
     border-top-left-radius: inherit;
 `;

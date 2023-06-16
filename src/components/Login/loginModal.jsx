@@ -132,7 +132,7 @@ const LoginModal = (props) => {
                     <button style={{backgroundColor:'#F9E000', color:'#6F4F28'}}><div></div>카카오로그인</button>
                 </div>
                 <div className="AskBlock">
-                    <p onClick={props.showSignUp}>:DDD가 처음이신가요?</p>
+                    <p onClick={props.showAgree}>:DDD가 처음이신가요?</p>
                     <p onClick={props.showPw}>비밀번호를 잊어버리셨나요?</p>
                 </div>
             </Modal>

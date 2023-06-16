@@ -11,7 +11,7 @@ const member_info =
 
 
 const thumbnail = [
-    "http://res.heraldm.com/content/image/2015/03/06/20150306001045_0.jpg"
+    "https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
 ]
 
 const profileImage = [
@@ -73,11 +73,11 @@ const dummy_reply = []
 
 const commentAboutCount = {
     10: "전시회에 오신것을 환영합니다. ",
-    20: "주말에는 전시를 보러 다니는게 어때요?",
-    30: "전시조아",
+    20: "이번 주말에는 전시를 보러 다니시는게 어때요?",
+    30: "전시 좋아하세요?",
     40: "자신만의 전시 철학이 있으시군요!",
     50: "이 정도면 어디서 꿀리진 않을 겁니다. ",
-    60: "전시회를 기획하시나요...?",
+    60: "혹시..전시회를 기획하시나요...?",
     70: "살아있는 전시장 지박령",
     80: "G.O.D",
   };

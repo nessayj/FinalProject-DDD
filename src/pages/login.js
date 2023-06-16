@@ -4,6 +4,7 @@ import BGItmes from "../components/Login/BGItmes";
 import LoginModal from "../components/Login/loginModal";
 import SignUpModal from "../components/Login/SignUpModal";
 import ForgotPwModal from "../components/Login/ForgotPwModal";
+import Agreement from "../components/Login/Agreement";
 
 const Container = styled.div`
     width: 100vw;
@@ -31,8 +32,12 @@ const Login = () => {
         setShowLogin(1);
         // console.log(showLogin)
       };
-    const handleLoginModal2 = () => { // 회원가입 창
+    const handleLoginModal2 = () => { // 회원동의 창
         setShowLogin(2);
+        // console.log(showLogin)
+      };
+    const handleLoginModal3 = () => { // 회원가입 창
+        setShowLogin(3);
         // console.log(showLogin)
       };
 
@@ -43,13 +48,16 @@ const Login = () => {
                 {/* <BlackBG/> */}
             </Container>
             {
-                showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showSignUp={handleLoginModal2} />
+                showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showAgree={handleLoginModal2} />
             }
             {
                 showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0}/>
             }
             {
-                showLogin === 2 && <SignUpModal showLogin={handleLoginModal0}/>
+                showLogin === 2 && <Agreement showLogin={handleLoginModal0} showSignUp={handleLoginModal3}/>
+            }
+            {
+                showLogin === 3 && <SignUpModal showLogin={handleLoginModal0}/>
             }
         </>
     )

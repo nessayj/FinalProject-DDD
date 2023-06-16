@@ -71,8 +71,8 @@ const Introduce = (props) => {
             <hr/>
             <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>내 게시물</span> <br/>
             
-            <hr/>
-            <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>채팅</span> <br/>
+            {/* <hr/>
+            <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>채팅</span> <br/> */}
 
             <hr/>
             <span className='text' onClick={()=>{props.setShowPage('내정보수정')}}>내 정보 수정</span>

@@ -16,11 +16,14 @@ const SlideContainer = styled.div`
   .RollDiv > div > a {
     display: inline-flex;
     align-items: center;
-    margin-right: 10px;
   }
   .RollDiv > div > a > img {
     width: 20rem;
     height: 25rem;
+  }
+
+  .RollDiv > div > a > p {
+    font-weight: border;
   }
 
   @keyframes slideAnimation {
@@ -44,7 +47,7 @@ function RollDiv() {
         const updatedAnchors = [...prevAnchors, ...prevAnchors];
         return updatedAnchors.slice(1);
       });
-    },);
+    }, 5000);
 
     return () => {
       clearInterval(intervalRef.current);
@@ -53,15 +56,16 @@ function RollDiv() {
 
   return (
     <SlideContainer>
-      <div className="RollDiv">
+    <div className="RollDiv">
         <div>
-          {anchors.map((anchor, index) => (
+        {anchors.map((anchor, index) => (
             <a key={index} href={anchor.href}>
-              <img src={anchor.imgUrl} alt="" />
+                <img src={anchor.imgUrl} alt="" />
+                <p>{anchor.name}</p>
             </a>
-          ))}
+        ))}
         </div>
-      </div>
+    </div>
     </SlideContainer>
   );
 }

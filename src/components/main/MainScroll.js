@@ -55,7 +55,6 @@ const Mainpage = () => {
             // 스크롤 내릴 때
             if (scrollTop >= 0 && scrollTop < pageHeight) {
               //현재 1페이지
-                console.log("현재 1페이지, down");
                 outerDivRef.current.scrollTo({
                 top: pageHeight,
                 left: 0,
@@ -64,7 +63,6 @@ const Mainpage = () => {
                 setScrollIndex(2);
             } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
               //현재 2페이지
-                console.log("현재 2페이지, down");
                 outerDivRef.current.scrollTo({
                 top: pageHeight * 2,
                 left: 0,
@@ -73,7 +71,6 @@ const Mainpage = () => {
                 setScrollIndex(3);
             } else {
               // 현재 3페이지
-                console.log("현재 3페이지, down");
                 outerDivRef.current.scrollTo({
                 top: pageHeight * 2,
                 left: 0,
@@ -85,7 +82,6 @@ const Mainpage = () => {
             // 스크롤 올릴 때
             if (scrollTop >= 0 && scrollTop < pageHeight) {
               //현재 1페이지
-                console.log("현재 1페이지, up");
                 outerDivRef.current.scrollTo({
                 top: 0,
                 left: 0,
@@ -94,7 +90,6 @@ const Mainpage = () => {
                 setScrollIndex(1);
             } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
               //현재 2페이지
-                console.log("현재 2페이지, up");
                 outerDivRef.current.scrollTo({
                 top: 0,
                 left: 0,
@@ -103,7 +98,6 @@ const Mainpage = () => {
                 setScrollIndex(1);
             } else {
               // 현재 3페이지
-                console.log("현재 3페이지, up");
                 outerDivRef.current.scrollTo({
                 top: pageHeight,
                 left: 0,

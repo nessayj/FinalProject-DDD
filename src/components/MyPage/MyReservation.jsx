@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SlMagnifier } from 'react-icons/sl'
 import ReservedDetail from './ReservedDetail';
+import exhibitionData from '../exhibition/exhibitionData';
+import PageNation from '../../util/PageNation';
+
 
 const Container = styled.div`
     width: calc(100% - 2.5rem);
     height: 100%;
     padding-left: 2.5rem;
-    background-color: #7bc1b2;
+    /* background-color: #7bc1b2; */
     p {
         text-align: left;
         margin: 0rem 0 .3rem 0;
@@ -16,7 +19,7 @@ const Container = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 5%;
+        height: 2.8rem;
         font-weight: bold;
     }
     .serachBox{
@@ -67,7 +70,21 @@ const Container = styled.div`
             cursor: pointer;
 
         }
+    
 
+    }
+    .ticketBox{
+        min-height: 600px;
+        /* background-color: blue; */
+        width: 100%;
+    }
+    .pageBlock{
+        /* background-color: red; */
+        position: relative;
+        left: -1.3rem;
+        bottom: 0%;
+        margin: 0;
+        padding: 0;
     }
     .count{
         /* background-color: red; */
@@ -75,6 +92,7 @@ const Container = styled.div`
         font-weight: bold;
         align-items: center;
         display: flex;
+
 
     }
 `;
@@ -84,13 +102,26 @@ const Container = styled.div`
 
 
 
-const MyReservation = () => {
+const MyReservation = (props) => {
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedState, setSelectedState] = useState('lastest')
 
     const handleSelectChange = (event) => {
       setSelectedValue(event.target.value);
     };
+
+    //보여질 페이지 Item 개수(페이지네이션)
+    const ITEMS_PAGE = 3;
+    const [currentPage, setCurrentPage] = useState(0);
+    
+    const handlePageClick = (selectedPage) => {
+        setCurrentPage(selectedPage.selected);
+    };
+    const pageCount = Math.ceil(exhibitionData.length / ITEMS_PAGE); // 전체 페이지 수
+    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+
+    const currentPageData = exhibitionData.slice(offset, offset + ITEMS_PAGE);
+
 
     return (
         <>
@@ -120,7 +151,13 @@ const MyReservation = () => {
                         )
                     }
                 </div>
-                    <ReservedDetail/>
+                <div className='ticketBox'>
+                    <ReservedDetail exhibitionData={exhibitionData} currentPageData={currentPageData}/>
+                </div>
+                    
+                <div className="pageBlock">
+                    <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
+                </div>
 
             </Container>
             

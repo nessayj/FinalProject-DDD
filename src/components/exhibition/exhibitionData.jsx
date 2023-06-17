@@ -6,7 +6,7 @@ const exhibitionData = [
 
     { index: 1, name: '에드워드 호퍼:길위에서', startDate: '2023-01-01',endDate:'2023-01-07',location:"서울",place : "서울 시립미술관 서소문본관 전층",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23004076-08.jpg" },
     { index: 2, name: '거장의시선, 사람을 향하다', startDate: '2023-02-01',endDate:'2023-02-07',location:"경기/인천", place :"국립 중앙 박물관 기획전시실",imgUrl : "https://ticketimage.interpark.com/Play/image/etc/23/23006752-01.jpg"},
-    { index: 3, name: '헤더윅 스튜디오 : 감서을 빚다', startDate: '2023-03-01',endDate:'2023-03-07',location:"충청", place:"문화역 서울 284",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23007505-04.jpg" },
+    { index: 3, name: '헤더윅 스튜디오 : 감성을 빚다', startDate: '2023-03-01',endDate:'2023-03-07',location:"충청", place:"문화역 서울 284",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23007505-04.jpg" },
     { index: 4, name: '라울 뒤피', startDate: '2023-04-01',endDate:'2023-04-07',location:"강원", place:"더현대 서울 6층",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23006569-05.jpg"  },
     { index: 5, name: '63아트 맥스 달튼 전시', startDate: '2023-04-01',endDate:'2023-04-07',location:"강원", place:"아쿠아플라넷 63",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23002018-01.jpg"  },
     { index: 6, name: '문도 멘도 :판타스틱 시티 라이프', startDate: '2023-06-01',endDate:'2023-06-07',location:"전라/제주", place:"그라운드시소 서촌",imgUrl :"https://ticketimage.interpark.com/Play/image/etc/23/23006683-01.jpg"  },

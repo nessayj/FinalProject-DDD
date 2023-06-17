@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import exhibitionData from '../exhibition/exhibitionData';
+import ReactPaginate from "react-paginate";
+
 
 // ====== data 확인하기 =====
 
@@ -78,16 +79,17 @@ const Container = styled.div`
         }
     }   
 `;
+const ReservedDetail = ({exhibitionData, currentPageData}) => {
+    const totalRecords = exhibitionData.length;
 
-const ReservedDetail = () => {
     return (
         <>
-            <div className='count'>총 {exhibitionData.length} 건</div>
+            <div className='count'>총 {totalRecords} 건</div>
 
                 {
-                    exhibitionData.slice(0, 3).map((ticket, index) => (
+                    currentPageData.map((ticket, index) => (
                         <Container key={index}>
-                            <div className="showImage"><img src={ticket.imgUrl} /></div>
+                            <div className="showImage"><img src={ticket.imgUrl} alt='exhibition' /></div>
                             <div className='justfyTop'>
                                 <div className='leftBox'>
                                     <div><span>전시명</span> {ticket.name}</div>

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
+import {SlArrowLeft, SlArrowRight} from 'react-icons/sl'
 
 const PageNationBlock = styled(ReactPaginate)`
   display: flex;
@@ -8,25 +9,26 @@ const PageNationBlock = styled(ReactPaginate)`
   justify-content: center;
   align-items: center;
   list-style: none;
-  font-size: larger;
+  font-size: .8rem;
   padding: 0;
-  color: #050E3D;
+
+
+
     .page-item{
-    margin: 5px;
     color :black;
-    border-radius: 5px;
-    border : 2px solid #050E3D;
+    margin: 0rem .6rem;
+    border-radius: 1rem;
+    border : 1px solid #aaa;
     display: flex;
-    width: 30px;
-    height: 30px;
+    width: 1.8rem;
+    height: 1.8rem;
     justify-content: center;
     align-items: center;
     cursor: pointer;
   }
 
   .active{
-    background-color: #050E3D;
-    font-weight: bold;
+    background-color: #5EADF7;
     color :white;
     }
  
@@ -38,8 +40,8 @@ const PageNation = ({pageCount,onPageChange}) => {
   
     return(
         <PageNationBlock
-        previousLabel={'◀'}
-        nextLabel={'▶'}
+        previousLabel={<SlArrowLeft style={{margin:'0 .5rem', paddingTop:'3px', cursor:'pointer'}}/>}
+        nextLabel={<SlArrowRight style={{margin:'0 .5rem',paddingTop:'3px', cursor:'pointer' }}/>}
         breakLabel={'...'}
         pageCount={pageCount}
         marginPagesDisplayed={2}

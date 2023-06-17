@@ -39,7 +39,7 @@ const EditBlock = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 5%;
+        height: 2.8rem;
         font-weight: bold;
     }
     .introducBlock {

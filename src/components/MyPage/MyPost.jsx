@@ -20,7 +20,7 @@ const PostWrap = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 5%;
+        height: 2.8rem;
         font-weight: bold;
     }
     .moreBox{
@@ -76,7 +76,6 @@ const Introduce = (props) => {
     const slicedReplies = dummy_reply.slice(0, 5);
     return (
         <>
-            {/* <Container> */}
             <PostWrap>
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>
@@ -160,7 +159,6 @@ const Introduce = (props) => {
                 </Table>
                 
             </PostWrap>
-            {/* </Container> */}
         </>
     );
 };

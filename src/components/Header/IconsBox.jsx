@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import {BsTicketPerforated} from 'react-icons/bs';
-import {HiOutlineUser} from 'react-icons/hi';
+import {HiOutlineTicket} from 'react-icons/hi';
+import { BsPersonCircle } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const IconBox = styled.div`
-    margin: 0 auto;
+    
     display: flex;
-    justify-content: center;
     align-items: center;
+    height: 5vh;
 
     .ticket-icon {
         margin: 0.3rem 0.6rem 0 0.6rem;
-        font-size: 1.9rem;
+        font-size: 1.5rem;
     }
 
     .login-icon{
@@ -21,14 +21,12 @@ const IconBox = styled.div`
         text-align: center;
         align-items: center;
         justify-content: center;
-        height: 2.5rem;
-        width: 2.5rem;
+        height: 2rem;
+        width: 2rem;
         margin: 0.5rem;
-        color: white;
-        background-color: #5EADF7;
         border-radius: 2rem;
         cursor: pointer;
-        font-size: 1.7rem;
+        font-size: 1.4rem;
     }
 
     p {
@@ -67,12 +65,11 @@ const Icons = () => {
     return (
         <IconBox>
         <div className="ticket-icon">
-        <BsTicketPerforated/>
+        <HiOutlineTicket/>
         </div>
         <div className="login-icon" onClick={onClickToLogin}>
-        <HiOutlineUser/>
+        <BsPersonCircle/>
         </div>
-        <p onClick={onClickToLogin}>{t('login')}</p>
         </IconBox>
 
 

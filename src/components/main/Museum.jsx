@@ -61,6 +61,21 @@ const DetailContainer = styled.div`
         }
 
     }
+
+    button{
+        width: 6rem;
+        height: 2rem;
+        background-color: #050E3D;
+        color: white;
+        border-radius: 0.4rem;
+        font-size: 0.8rem;
+        @media (max-width: 768px) {
+            width: 4rem;
+            height: 1.5rem;
+            font-size: 0.5rem;
+           
+        }
+    }
 `;
 
 const Image = styled.img`

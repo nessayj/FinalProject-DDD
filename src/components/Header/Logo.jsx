@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const LogoContainer = styled.div`
-  margin: 1.8rem;
   font-size: 2.3rem;
   font-weight: 900;
   position: relative;

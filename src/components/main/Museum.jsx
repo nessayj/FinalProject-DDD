@@ -7,11 +7,11 @@ const MuseumContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-left: 2rem;
     .museum-title {
         margin-right: 2rem;
         @media (max-width: 768px) {
-            font-size: 1.3rem;
-            margin: 2rem;
+            font-size: 1rem;
         }
         
     }
@@ -19,6 +19,7 @@ const MuseumContainer = styled.div`
         display: flex;
         flex-direction: row;
         @media (max-width: 768px) {
+            justify-content: center;
             font-size: 0.8rem;
         }
     }
@@ -41,12 +42,16 @@ const MuseumClick = styled.h3`
 
 const DetailContainer = styled.div`
     display: flex;
-    margin: 1rem -1rem;
     .sub-detail-container{
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+        justify-content: center;
+        margin-left: 8rem;
+        @media (max-width: 768px) {
+            flex-direction: column;
+            margin-left: 0;
+        }
     }
 
     .info-container{
@@ -73,7 +78,6 @@ const DetailContainer = styled.div`
             width: 4rem;
             height: 1.5rem;
             font-size: 0.5rem;
-           
         }
     }
 `;
@@ -83,7 +87,7 @@ const Image = styled.img`
     height: 100%;
     margin-right: 4rem;
     @media (max-width: 768px) {
-        width: 20%;
+        width: 50%;
         margin: 2rem;
     }
 

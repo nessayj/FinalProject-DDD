@@ -3,6 +3,7 @@ import styled from "styled-components";
 import MainBody from "../components/main/MainBody";
 import Header from "../components/header/Header";
 import Footer from "../components/main/Footer";
+import Mainpage from "../components/main/MainScroll";
 
 
 const MainContainer = styled.div `
@@ -34,10 +35,13 @@ const Main = () => {
             <HeaderStyle>
                 <Header/>
             </HeaderStyle>
-            <MainBodyContainer>
+            {/* <MainBodyContainer>
                 <MainBody/>
-            </MainBodyContainer>
+            </MainBodyContainer> */}
+            <Mainpage/>
+
             <Footer/>
+
         </MainContainer>
 
     );

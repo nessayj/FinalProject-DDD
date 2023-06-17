@@ -1,41 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import {BsTicketPerforated} from 'react-icons/bs';
-import {HiOutlineUser} from 'react-icons/hi';
+import {HiOutlineTicket} from 'react-icons/hi';
+import { BsPersonCircle } from 'react-icons/bs';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import NavigateBar from "./Navigate";
 
 const IconBox = styled.div`
-    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .ticket-icon {
         margin: 0.3rem 0.6rem 0 0.6rem;
-        font-size: 1.9rem;
+        font-size: 1.5rem;
     }
 
     .login-icon{
         display: flex;
-        text-align: center;
         align-items: center;
-        justify-content: center;
-        height: 2.5rem;
-        width: 2.5rem;
+        height: 2rem;
+        width: 2rem;
         margin: 0.5rem;
-        color: white;
-        background-color: #5EADF7;
-        border-radius: 2rem;
         cursor: pointer;
-        font-size: 1.7rem;
-    }
-
-    p {
-        margin-right: 0.8rem;
-        font-size: 1rem;
-        font-weight: 550;
-        cursor: pointer;
+        font-size: 1.4rem;
     }
 
     @media (max-width: 768px) {
@@ -43,13 +31,7 @@ const IconBox = styled.div`
         .login-icon {
             height: 60%;
             width: 60%;
-            font-size: 1.6rem;
-            background-color: #fff;
-            color: #050E3D;
-        }
-
-        p {
-            display: none;
+            font-size: 1.4rem;
         }
     }
 `;
@@ -67,12 +49,14 @@ const Icons = () => {
     return (
         <IconBox>
         <div className="ticket-icon">
-        <BsTicketPerforated/>
+        <HiOutlineTicket/>
         </div>
         <div className="login-icon" onClick={onClickToLogin}>
-        <HiOutlineUser/>
+        <BsPersonCircle/>
         </div>
-        <p onClick={onClickToLogin}>{t('login')}</p>
+        <div className="navi">
+        <NavigateBar/>
+        </div>
         </IconBox>
 
 

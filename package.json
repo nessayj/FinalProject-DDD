@@ -17,6 +17,7 @@
     "country-flag-icons": "^1.5.7",
     "framer-motion": "^10.12.16",
     "i18next": "^22.5.1",
+    "infinite-scroll-component": "^0.0.4",
     "react": "^18.2.0",
     "react-calendar": "^4.2.1",
     "react-dom": "^18.2.0",

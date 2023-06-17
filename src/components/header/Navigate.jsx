@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {BsList} from "react-icons/bs";
-import {AiOutlineClose} from "react-icons/ai"
 import styled from "styled-components";
 
 const NavStyle = styled.div`
@@ -12,6 +11,7 @@ const NavStyle = styled.div`
   }
   
   .menu_list {
+    float: right;
     .close-icon {
         float: right;
         margin: 1rem 1.5rem;
@@ -23,15 +23,9 @@ const NavStyle = styled.div`
         justify-content: space-evenly;
         position: relative;
         top: 6rem;
-        //left: 8rem;
-        flex-direction: row;
+        float: right;
+        flex-direction: column;
         margin-bottom: 2rem;
-
-        @media (max-width: 768px) {
-          flex-direction: column;
-          margin-left: 4rem;
-          
-        }
     }
   }
   .menu_name a {
@@ -43,20 +37,18 @@ const NavStyle = styled.div`
 
     .burger_menu{
       display: block;
-      margin-left: 40px;
-      font-size: 2rem;
+      margin-top: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bolder;
       cursor: pointer;
     }
 
     .menu_box_visible {
       font-weight: bold;
-      width: 100%;
-      height: 40vh;
       position: absolute;
-      left: 0;
-      top: 76px;
-      background-color: white;
-      box-shadow: 2px 0px 1px rgba(44, 44, 44, 0.137);
+      right: 2.2rem;
+      top: 2rem;
+      color: white;
       z-index: 9999;
     }
   
@@ -70,29 +62,27 @@ const NavStyle = styled.div`
       margin: 15px 0;
     }  
 
-    @media (max-width: 768px) {
-    .close-icon {
-      font-size: 1rem;
-    }
+    @media (max-width: 1000px) {
     .burger_menu {
       font-size: 1.5rem;
+      margin-left: 0.3rem;
     }
 
     .menu_name a {
-      font-size: 1rem;
+      font-size: 1.5rem;
     }
     .menu_box_visible {
-      width: 100vw;
-      height: 100vh;
+      margin-top: 1rem;
+      color: #050E3D;
+      font-weight: bolder;
     }
   }
 
 `;
 
 
-const Navigator = () => {
+const NavigateBar = () => {
     const [menuToggle, setMenuToggle] = useState(false);
-    const [closeIcon, setCloseIcon] = useState(false);
 
     const menu = [
         {name : "HOME", address : "/"},
@@ -101,23 +91,14 @@ const Navigator = () => {
         {name : "고객센터", address: "/"}
     ];
 
-    const onCloseIcon = () => {
-        setCloseIcon(!closeIcon);
-        setMenuToggle(false);
-    }
-
     return (
         <NavStyle>
         <nav className="navigation_wrapper">
-            <div className="burger_menu"
-            onClick={() => menuToggle ? setMenuToggle(false) : setMenuToggle(true)}>
-                <BsList />
+            <div className="burger_menu" onMouseEnter={() => setMenuToggle(true)}>
+                <BsList/> 
             </div>
             <div className={['menu_box', !menuToggle ? "menu_box_hidden" : "menu_box_visible",].join(" ")}>
-                <div className="menu_list">
-                    <div className="close-icon">
-                    <AiOutlineClose  onClick={onCloseIcon} />
-                    </div>
+                <div className="menu_list" onMouseLeave={() => setMenuToggle(false)}>
                     <div className="menu_name">
                     {menu.map((data,index) => (
                     <a href={data.address} key={index} onClick={() => setMenuToggle(false)}>
@@ -132,4 +113,4 @@ const Navigator = () => {
     );
 }
 
-export default Navigator;
+export default NavigateBar;

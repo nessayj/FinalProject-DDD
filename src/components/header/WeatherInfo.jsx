@@ -6,11 +6,11 @@ import { FaCloudSunRain, FaSmog } from "react-icons/fa";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-const WeatherStyle = styled.div`    
+const WeatherStyle = styled.div`
     .weather-container {
         display: flex;
         margin-top: 0.8rem;
-        margin-right: 2rem;
+        margin-right: 1rem;
         flex-direction: row;
         justify-content: center;
         align-items: center;
@@ -27,18 +27,7 @@ const WeatherStyle = styled.div`
         .location {
             font-weight: bold;
             font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .weather-container {
-                flex-direction: column;
-                margin-right: 0;
-                margin-bottom: 0.8rem;
-            }
-
-            .icons {
-                margin-left: 0.2rem;
-            }
+            width: 2rem;
         }
     }
 `;

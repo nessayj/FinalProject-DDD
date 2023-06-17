@@ -6,6 +6,7 @@ import LocRanking from "./LocRanking";
 import TodayRec from "./TodayRec";
 import { useTranslation } from "react-i18next";
 import MuseumInfo from "./Museum";
+import BG from "../../resources/BGimg1.jpg"
 
 const BodyContainer = styled.div`
     width: 1200px;
@@ -68,6 +69,12 @@ const BodyContainer = styled.div`
     
 `;
 
+const FirstBodyLayer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background-image: url(${BG});
+    background-size: cover;
+`
 
 const StyledH2 = styled.h2`
     margin: 0 2rem 0 0;
@@ -99,6 +106,8 @@ const MainBody = () => {
 
     return(
         <>
+        <FirstBodyLayer>
+        </FirstBodyLayer>
         <BodyContainer>
         <div className="open-display">
             <h2>{t('opened-display')}</h2>

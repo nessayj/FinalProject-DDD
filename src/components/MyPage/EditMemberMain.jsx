@@ -78,7 +78,7 @@ const EditMemberMain = (props) => {
                         {
                             pageOnEdit === 1 ? 
                             (<div className='FocusedMenuBtn'>회원탈퇴</div>) : 
-                            (<div onClick={()=> setPageOnEdit(3)}>회원탈퇴</div>)
+                            (<div onClick={()=> setPageOnEdit(1)}>회원탈퇴</div>)
                         }
                     </Menu>
                 </MenuBlock>

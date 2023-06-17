@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { IoSearch} from "react-icons/io5";
 import DDDApi from "../../api/DDDApi";
@@ -48,24 +48,25 @@ const BoardSearch = () => {
 
 
     // 엔터를 눌렀을 때도 검색 되게
-    const onKeyPressSearch = async(e) => {
+    const onKeyEnterSearch = async(e) => {
         if(e.key === 'Enter'){
             onClickSearch();
             setSearchKeyword(''); // 검색 후 검색창 빈칸으로 만들기
+            console.log(e);
         }
     }
 
-    // useEffect (() => {
-    //     const boardData = async () => {
-    //         try {
-    //             const boardListData = await DDDApi.boardList();
-    //             setBoardList(boardListData.data);
-    //         } catch (e) {
-    //             console.log(e);
-    //         }
-    //     };
-    //     boardData();
-    // },[]);
+    useEffect (() => {
+        const boardData = async () => {
+            try {
+                const boardListData = await DDDApi.boardList();
+                setBoardList(boardListData.data);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        boardData();
+    },[]);
 
  
 
@@ -75,10 +76,11 @@ const BoardSearch = () => {
             title="검색" 
             placeholder="검색어를 입력하세요" 
             onChange={onChangeSearchKeyword} 
-            onKeyDown={onKeyPressSearch}
+            onKeyDown={onKeyEnterSearch}
             value={searchKeyword}/>
             <div className="icon_container">
-                <IoSearch type="submit" className="searchicon" onClick={() => {}}/>
+                {/* <IoSearch className="searchicon" onClick={() => {}}/> */}
+                <IoSearch className="searchicon" onClick={onClickSearch}/>
             </div>
         </SearchWrap> 
     )

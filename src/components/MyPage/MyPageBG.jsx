@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
-import EditInfo from "./EditInfo";
 import EditMemberMain from "./EditMemberMain";
 import MyPost from "./MyPost";
 import NaviBox from "./NaviBox";
 import SNSBox from "./SNSBox";
 import MyReservation from "./MyReservation";
 import MyDiary from "./MyDiary";
-import { Height } from "@mui/icons-material";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -21,7 +19,7 @@ const Container = styled.div`
     /* background-color: aqua; */
     position: relative;
     top: 0%; 
-    height: 100vh;
+    height: auto;
     justify-content: center;
     display: flex;
 `;
@@ -49,7 +47,7 @@ const MyPageBG = (props) => {
     const [showPage, setShowPage] = useState('마이페이지')
     return(
         <>
-        <Container style={showPage === '다이어리' || showPage === '예약관리' ? { height: '200vh' } : null}>
+        <Container style={showPage === '다이어리'  ? { height: 'auto' } : null}>
             <Modal>
                 {
                     showPage === '마이페이지' &&
@@ -67,7 +65,7 @@ const MyPageBG = (props) => {
                     showPage === '다이어리' &&
                     <>
                         <Thumnail/>
-                        <NaviBox setShowPage = {setShowPage}/> 
+                        <NaviBox setShowPage = {setShowPage} showPage = {showPage}/> 
                         <MyDiary                      
                             showPage = {showPage}
                             setShowPage = {setShowPage}
@@ -78,7 +76,7 @@ const MyPageBG = (props) => {
                     showPage === '예약관리' && 
                     <>
                         <Thumnail/>
-                        <NaviBox setShowPage = {setShowPage}/> 
+                        <NaviBox setShowPage = {setShowPage} showPage = {showPage}/> 
                         <MyReservation                      
                             showPage = {showPage}
                             setShowPage = {setShowPage}
@@ -90,7 +88,7 @@ const MyPageBG = (props) => {
                     showPage === '내게시물' &&
                     <>
                         <Thumnail/>
-                        <NaviBox setShowPage = {setShowPage}/> 
+                        <NaviBox setShowPage = {setShowPage} showPage = {showPage}/> 
                         <MyPost                      
                             showPage = {showPage}
                             setShowPage = {setShowPage}
@@ -101,7 +99,7 @@ const MyPageBG = (props) => {
                     showPage === '내정보수정' && 
                     <>
                     <Thumnail/>
-                    <NaviBox setShowPage = {setShowPage}/> 
+                    <NaviBox setShowPage = {setShowPage} showPage = {showPage}/> 
                     <EditMemberMain                      
                         showPage = {showPage}
                         setShowPage = {setShowPage}

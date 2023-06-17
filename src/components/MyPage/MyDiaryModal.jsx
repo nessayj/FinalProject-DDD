@@ -1,63 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import exhibitionData from '../exhibition/exhibitionData';
 import { commentAboutCount } from './Data'
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { SlPencil } from "react-icons/sl";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import { SlPencil, SlCloudUpload } from "react-icons/sl";
 import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // ====== data 확인하기 =====
+const Wrap = styled.div`
+    width: 100%;
+    height: auto;
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+`
+;
 
-const RatingTitle = styled.div`
-    line-height: 2.5rem;
 
+const CardItem = styled.div`
+  /* background-color: aqua; */
+  width: calc( 100% - 2.5rem);
+  min-width: 550px;
+  height: 12rem;
+  background-color: white;
+  border-radius: 1rem;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 10px -5px #ccc;
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  
+  .exhibitionImage {
+    /* background-color: red; */
+    width: 24%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 80%;
+        min-width: 100px;
+        height: 85%;
+        object-fit: cover;
+        object-position: top;
+        border: 1px solid #bbb;
+
+    }
+  }
+
+  .exhibitionDesc {
+    /* background-color: blue; */
+    width: 30%;
+    min-width: 200px;
+    height: 100%;
+    flex-shrink: 1;
+    display: flex;
+    padding-left: 1rem;
+    flex-direction: column;
+    justify-content: center;
         .title{
-        font-weight: bold;
-        font-size: 1.2rem;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-top: 0rem;
         }
         .date{
-            font-size: 1rem;
+            font-size: .8rem;
+            margin: 1rem 0;
+
         }
         .rateStar{
             padding: 1rem 0;
-        }
-`;
 
-const 대표이미지 = {
-    width: '8rem',
-    height:'10rem',
-    minWidth: 'calc(60px * 1.4)',
-    minHeight: 'calc(40px * 1.4)',
-    objectFit: 'cover',
-    overflowX: 'hidden',
-    objectPosition: 'top',
-    borderRadius: '0.3rem',
-    border : '1px solid #ddd'
-}
-const TestIcon = styled.div`
-    background-color: #eee;
+        }
+  }
+
+  .comment {
+    /* background-color: brown; */
+    width: 50%;
+    min-width: 200px;
+
+    height: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: center;
-    width: 8%;
-    margin: 0 1%;
-    font-size: 1.2rem;
-    border-radius: 5rem;
-`
+    align-items: center;
+
+    .textBox{
+        /* background-color: orange; */
+        width: 80%;
+        height: 70%;
+        border-radius: 1rem;
+        padding: 1rem;
+        font-size: .8rem;
+        resize: none;
+        border: 1px solid #eee;
+        outline: none;
+        margin: auto 0;
+
+    }
+    .writeBox{
+        /* background-color: aliceblue; */
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+        height: 2rem;
+
+        
+    }
+  }
+`;
 
 
 const MyDiaryModal = () => {
-    const countDiary = 60;
+    const countDiary = exhibitionData.length;
     const countCheck = () => {
       for (let key in commentAboutCount) {
         if (countDiary < key) {
@@ -67,81 +127,62 @@ const MyDiaryModal = () => {
     };
   
     const comment = countCheck();
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleChange = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
+
+
+    const [writeState, setWriteState] = useState(Array(exhibitionData.length).fill(true));
+
+    const handleWriteState = (index) => {
+    setWriteState((prevWriteState) => {
+        const newWriteState = [...prevWriteState];
+        newWriteState[index] = !newWriteState[index];
+        return newWriteState;
+    });
     };
-  
-    const da = {
-      index: 1,
-      name: '에드워드 호퍼:길위에서',
-      startDate: '2023-01-01',
-      endDate: '2023-01-07',
-      location: '서울',
-      place: '서울 시립미술관 서소문본관 전층',
-      imgUrl: 'https://ticketimage.interpark.com/Play/image/etc/23/23004076-08.jpg'
-    };
-  
+    
     return (
-      <>
+      <Wrap>
         <div className='count'>{countDiary}</div>
         <div className='desc'>{comment}</div>
 
+        <InfiniteScroll
+        dataLength={exhibitionData.length}
+        // next={exhibitionData}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+        style={{width:'100%', minWidth:'600px', margin:'0'}}
+      >
+             
+            {
+            exhibitionData.map((ticket, index) => (
+                <CardItem key={index}>
+                    <div className='exhibitionImage'>
+                        <img src={ticket.imgUrl} alt='exhibition'/>
+                    </div>
+                    <div className='exhibitionDesc'>
+                        <div className='title'>{ticket.name}</div>   
+                        <div className='date'>{ticket.startDate}</div>   
+                        <Stack spacing={1} className='rateStar'>
+                        <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+                        </Stack>
+                    </div>
+                    <div className="comment">
+                        <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
 
-     {           
-        exhibitionData.slice(0, 5).map((ticket, index) => (
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
-        sx={{width:'85%'}}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography sx={{ width: '24%',minWidth:'150px', height:'10rem'}}>
-              <img src={ticket.imgUrl} alt="Exhibition" style={대표이미지} />
-            </Typography>
-            <Typography >
-                <RatingTitle>
-                    <div className='title'>{ticket.name}</div>
-                    <div className='date'>{ticket.startDate}</div>
-                    <Rating name="half-rating" defaultValue={0} precision={0.5} size="large" className='rateStar' />
-                </RatingTitle>
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-                <Box sx={{ width: '100%', maxWidth: '100%', display:'flex' }}>
-                    <TextField fullWidth label="한 줄 평을 남겨주세요! &emsp; " id="fullWidth" />
-                    <TestIcon>
-                    <Tooltip title="저장">
-                        <IconButton>
-                            <SlPencil />
-                        </IconButton>
+                        <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
+                        <Button className="buttnBox" onClick={() => handleWriteState(index)}>
+                            {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
+                        </Button>
                         </Tooltip>
-                    </TestIcon>
-                </Box>
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        ))
- }
-      </>
+                    </div>
+
+                </CardItem>
+                ))
+            }
+      </InfiniteScroll>
+
+       
+      </Wrap>
     );
   };
   
   export default MyDiaryModal;
-  
-
-// {
-//     exhibitionData.slice(0, 5).map((ticket, index) => (
-//         <Container key={index}>
-//             <div className="showImage"><img src={ticket.imgUrl} /></div>
-//             <div className='justfyTop'>
-//                 <div className='leftBox'>
-//                    
-//             </div>
-//         </Container>
-//     ))
-// }
-// 

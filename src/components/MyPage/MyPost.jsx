@@ -20,7 +20,7 @@ const PostWrap = styled.div`
     }
     .title {
         /* background-color: red; */
-        height: 5%;
+        height: 2.8rem;
         font-weight: bold;
     }
     .moreBox{
@@ -76,7 +76,6 @@ const Introduce = (props) => {
     const slicedReplies = dummy_reply.slice(0, 5);
     return (
         <>
-            {/* <Container> */}
             <PostWrap>
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>
@@ -85,12 +84,14 @@ const Introduce = (props) => {
                 </div>
                 <Table>
                     <thead>
-                        <th style={{width:'8%'}}>번호</th>
-                        <th style={{width:'10%'}}>카테고리</th>
-                        <th style={{width:'42%'}}>제목</th>
-                        <th style={{width:'18%'}}>작성자</th>
-                        <th style={{width:'8%'}}>조회수</th>
-                        <th style={{width:'14%'}}>작성일</th>
+                        <tr>
+                            <th style={{width:'8%'}}>번호</th>
+                            <th style={{width:'10%'}}>카테고리</th>
+                            <th style={{width:'42%'}}>제목</th>
+                            <th style={{width:'18%'}}>작성자</th>
+                            <th style={{width:'8%'}}>조회수</th>
+                            <th style={{width:'14%'}}>작성일</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {
@@ -124,12 +125,14 @@ const Introduce = (props) => {
                 </div>
                 <Table>
                     <thead>
-                        <th style={{width:'8%'}}>번호</th>
-                        <th style={{width:'10%'}}>카테고리</th>
-                        <th style={{width:'42%'}}>제목</th>
-                        <th style={{width:'18%'}}>작성자</th>
-                        <th style={{width:'8%'}}>조회수</th>
-                        <th style={{width:'14%'}}>작성일</th>
+                        <tr>
+                            <th style={{width:'8%'}}>번호</th>
+                            <th style={{width:'10%'}}>카테고리</th>
+                            <th style={{width:'42%'}}>제목</th>
+                            <th style={{width:'18%'}}>작성자</th>
+                            <th style={{width:'8%'}}>조회수</th>
+                            <th style={{width:'14%'}}>작성일</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {
@@ -156,7 +159,6 @@ const Introduce = (props) => {
                 </Table>
                 
             </PostWrap>
-            {/* </Container> */}
         </>
     );
 };

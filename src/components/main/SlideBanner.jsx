@@ -2,7 +2,17 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { DisplayData } from './DisplayData';
 
+
 const SlideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  .title{
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #050E3D;
+  }
+
   .RollDiv {
     margin: 0 auto;
     width: 100vw;
@@ -11,19 +21,23 @@ const SlideContainer = styled.div`
   }
   .RollDiv > div {
     display: flex;
-    animation: slideAnimation 15s linear infinite;
+    animation: slideAnimation 20s linear infinite;
   }
   .RollDiv > div > a {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
   .RollDiv > div > a > img {
-    width: 20rem;
-    height: 25rem;
+    margin-left: 1rem;
+    width: 15rem;
+    height: 20rem;
   }
 
   .RollDiv > div > a > p {
-    font-weight: border;
+    font-weight: bold;
+    font-size: 1rem;
   }
 
   @keyframes slideAnimation {
@@ -45,7 +59,7 @@ function RollDiv() {
     intervalRef.current = setInterval(() => {
       setAnchors((prevAnchors) => {
         const updatedAnchors = [...prevAnchors, ...prevAnchors];
-        return updatedAnchors.slice(1);
+        return updatedAnchors;
       });
     }, 5000);
 
@@ -55,8 +69,12 @@ function RollDiv() {
   }, []);
 
   return (
+    
     <SlideContainer>
-    <div className="RollDiv">
+      <div className='title'>
+        <h2>추천 전시</h2>
+      </div>
+      <div className="RollDiv">
         <div>
         {anchors.map((anchor, index) => (
             <a key={index} href={anchor.href}>
@@ -65,8 +83,9 @@ function RollDiv() {
             </a>
         ))}
         </div>
-    </div>
+      </div>
     </SlideContainer>
+    
   );
 }
 

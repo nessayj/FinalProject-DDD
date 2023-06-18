@@ -3,11 +3,13 @@ import styled from "styled-components";
 import BG from "../../resources/BGimg1.jpg"
 import MuseumInfo from "./Museum";
 import RollDiv from "./SlideBanner";
+import GridComponent from "./GridLayout";
 
 const ScrollStyle = styled.div`
-    body {
+  body {
   margin: 0;
   overflow-y: hidden;
+  color: #050E3D;
 }
 
 .outer {
@@ -36,6 +38,10 @@ const ScrollStyle = styled.div`
 }
 
 .third-layer{
+  justify-content: center;
+}
+
+.fourth-layer{
   flex-direction: column;
   justify-content: center;
 }
@@ -69,14 +75,22 @@ const Mainpage = () => {
                 behavior: "smooth",
                 });
                 setScrollIndex(3);
-            } else {
-              // 현재 3페이지
+            } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
+              //현재 3페이지
                 outerDivRef.current.scrollTo({
-                top: pageHeight * 2,
+                top: pageHeight * 3,
                 left: 0,
                 behavior: "smooth",
                 });
-                setScrollIndex(3);
+                setScrollIndex(4);
+            } else {
+              // 현재 4페이지
+                outerDivRef.current.scrollTo({
+                top: pageHeight * 4,
+                left: 0,
+                behavior: "smooth",
+                });
+                setScrollIndex(4);
             }
             } else {
             // 스크롤 올릴 때
@@ -96,14 +110,22 @@ const Mainpage = () => {
                 behavior: "smooth",
                 });
                 setScrollIndex(1);
-            } else {
-              // 현재 3페이지
+            } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
+              //현재 3페이지
                 outerDivRef.current.scrollTo({
                 top: pageHeight,
                 left: 0,
                 behavior: "smooth",
+                });
+                setScrollIndex(2);
+            } else {
+              // 현재 4페이지
+                outerDivRef.current.scrollTo({
+                top: pageHeight*2,
+                left: 0,
+                behavior: "smooth",
             });
-            setScrollIndex(2);
+            setScrollIndex(3);
             }
         }
         };
@@ -119,7 +141,8 @@ const Mainpage = () => {
         <div ref={outerDivRef} className="outer">
             <div className="inner first-layer"></div>
             <div className="inner second-layer"><RollDiv/></div>
-            <div className="inner third-layer"><MuseumInfo/></div>
+            <div className="inner third-layer"><GridComponent/></div>
+            <div className="inner fourth-layer"><MuseumInfo/></div>
         </div>
         </ScrollStyle>   
     );

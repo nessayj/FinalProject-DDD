@@ -48,7 +48,7 @@ const NavStyle = styled.div`
       position: absolute;
       right: 2.2rem;
       top: 2rem;
-      color: white;
+      color: #050E3D;
       z-index: 9999;
     }
   

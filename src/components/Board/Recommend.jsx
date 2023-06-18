@@ -11,7 +11,6 @@ const BoardContainer = styled.div`
     background-color: white;
     margin: 0 auto;
     border-radius: 10px;
-    font-family: 'Pretendard-regular';
 
 `;
 

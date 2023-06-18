@@ -34,7 +34,6 @@ const Category = styled.div`
     text-decoration: none;
     color: inherit; // 부모의 컬러값을 그대로 가져옴
     padding-bottom: .25rem; // 밑줄 효과
-    font-family: 'Pretendard-regular';
     cursor: pointer;
 
     &:hover {

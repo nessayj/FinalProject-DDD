@@ -28,7 +28,6 @@ const Section = styled.div`
             font-size: 1.8em;
             margin-top: 30px;
             font-weight: 900;
-            font-family: 'Pretendard-regular';
         }
     }
 

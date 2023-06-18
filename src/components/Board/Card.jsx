@@ -47,7 +47,6 @@ const CardContainer = styled.div`
         margin: .4rem;
         font-size: 1em;
         font-weight: bold;
-        font-family: 'Pretendard-regular';
     }
     
     .viewarea, .replyarea {

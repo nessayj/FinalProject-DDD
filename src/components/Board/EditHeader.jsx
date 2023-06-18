@@ -27,7 +27,6 @@ const Section = styled.div`
             font-size: 1.8em;
             margin-top: 30px;
             font-weight: 900;
-            font-family: 'Pretendard-regular';
         }
     }
 
@@ -115,7 +114,6 @@ const Section = styled.div`
                 background-color: #050E3D;
                 transition: all .1s ease-in;
                 font-weight: bold;
-                font-family: 'Pretendard-regular';
                 float: left;
                 padding: .5em 1.3em;
                 margin-bottom: .5em;

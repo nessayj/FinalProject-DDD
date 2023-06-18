@@ -23,13 +23,11 @@ const Wrap = styled.div`
             font-size: 1em;
             margin-top: 35px;  
             color:black; 
-            font-family: 'Pretendard-regular';
         }
 
     }  
     
     button {
-            font-family: 'Pretendard-regular';
             float: right;
             margin: -1.5em 13em ;
 

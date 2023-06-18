@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import BoardSearch from "./BoardSearch";
 import PageNation from "../../util/PageNation";
@@ -28,6 +29,20 @@ const Section = styled.div`
             color:  #7FC2EF;
             text-decoration: underline;
         }
+        button {
+            font-size: 16px;
+            font-weight: 400;
+            float: right;
+            padding: 8px 35px;
+            border-radius: 10px;
+            background-color: #135CD2;
+            color: white;
+            border: none;
+            transition: all .1s ease-in;
+            cursor: pointer;
+
+            &:hover{background-color:  #a1f7d9; color: #135CD2;}
+        }
     }
 
     table {
@@ -35,13 +50,13 @@ const Section = styled.div`
         font-size: 16px;
         font-weight: lighter;
         border-collapse: collapse; 
-        width:100%;
+        width: 100%;
         background-color: #4555AE;
         border-bottom: solid 1px #4555AE;
         text-align: center;
         table-layout: fixed;
        
-        th{padding: 10px 6px; color: white; background-color: #4555AE;}
+        th{padding: 10px 6px; color: white; background-color: #050E3D;} 
         
         tr{
             background-color: white;
@@ -60,13 +75,13 @@ const Section = styled.div`
             text-overflow: ellipsis; 
             white-space: nowrap;
         }
-        th:first-child, td:first-child {border-left: none; width: 70px;}
+        th:first-child, td:first-child {border-left: none; width: 70px;} // 글번호(열)
         td:first-child, td:nth-child(5), td:last-child { letter-spacing: -1px;}
-        th:nth-child(2), td:nth-child(2) {width: 70px; letter-spacing: -.4px;} 
-        td:nth-child(3) {text-align: center;} 
-        th:nth-child(4), td:nth-child(4){width: 120px;}
-        th:nth-child(5), td:nth-child(5){width: 60px;}
-        th:last-child, td:last-child{width: 100px;}
+        th:nth-child(2), td:nth-child(2) {width: 70px; letter-spacing: -.4px;} // 카테고리(열)
+        td:nth-child(3) {text-align: center;} // 제목(열)
+        th:nth-child(4), td:nth-child(4){width: 120px;} // 작성자(열) 크기 조절
+        th:nth-child(5), td:nth-child(5){width: 60px;} // 조회수(열)
+        th:last-child, td:last-child{width: 100px;} // 작성일(열)
         
         tr:hover, tr:hover td, tr:hover a {
             
@@ -79,6 +94,26 @@ const Section = styled.div`
             color:#FC5C7D;
         }
     }
+    .writebtn {
+        display: flex;
+        margin-bottom: 1em 0em ;
+    
+        button {
+            margin: -1em 1em ;
+            margin-left: auto;
+            font-size: .9em;
+            padding: .5em 2em;
+            border-radius: 10px;
+            background-color: #050E3D;
+            color: white;
+            border: none;
+            transition: all .1s ease-in;
+            cursor: pointer;
+            font-weight: bold;
+            
+            &:hover{background-color: #5EADF7; color: #F4F8FF; transform: scale(1);} 
+        }
+    }
 
 `;
 
@@ -86,7 +121,7 @@ const Section = styled.div`
 
 const Recommend = () => {
 
-
+    const navigate = useNavigate();
     //  값을 불러오기위해 선언, 목록보기
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
 
@@ -114,6 +149,7 @@ const Recommend = () => {
     
     // const는 두번 변동 적용 안되므로 let으로 재선언, 1차 필터링된 데이터를 페이지네이션 개수에 맞게 슬라이싱 적용
     let currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE); 
+    // currentPageData = filteredData.filter(e => e.board_Ctg === '추천수다')
         
 
 
@@ -122,6 +158,7 @@ const Recommend = () => {
         const boardData = async () => {
             try {
                 const boardListData = await DDDApi.boardList(freeBoard_No);
+                // let tmp = boardListData.filter(e => e.board_Ctg === '추천수다') 
                 setBoardList(boardListData.data);
                 console.log(boardListData.data); // boardListData 잘 넘어오는지 재확인
             } catch (e) {
@@ -130,6 +167,13 @@ const Recommend = () => {
         };
         boardData();
     }, [freeBoard_No]);
+
+        
+    // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
+    const onClickToWrite = () => {
+        const link = "write/"
+        navigate(link);
+    }
 
     return (
         <BoardContainer>
@@ -158,6 +202,9 @@ const Recommend = () => {
                     </table>
                 </div>
                 <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>
+                <div className="writebtn">
+                    <button onClick={onClickToWrite}>글쓰기</button>
+                </div>
             </Section>
         </BoardContainer>
     );

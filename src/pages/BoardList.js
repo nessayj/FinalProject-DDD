@@ -62,7 +62,6 @@ const Wrap = styled.div`
   
 
 const BoardList = () => {
-    const navigate = useNavigate();
     const [category, setCategory] = useState('menu1');
     const onSelect = useCallback(category => setCategory(category), []);
 
@@ -71,25 +70,6 @@ const BoardList = () => {
         onSelect(categoryName);
       };
 
-    // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
-    const onClickToWrite = () => {
-        const link = "write/"
-        navigate(link);
-    }
-
-    const [boardList, setBoardList] = useState([]); // boardList 불러오기
-
-    const filteredBoardList = boardList.filter((item) => {
-        if (category === "추천수다") {
-          return item.category === "추천";
-        } else if (category === "질문하기") {
-          return item.category === "질문";
-        }
-        return true; // 기본적으로 모든 게시물을 반환(코드 체크 재확인)
-      });
-
-
-    
 
     return(
         <Wrap>
@@ -102,7 +82,6 @@ const BoardList = () => {
                 {category === 'menu2' && <Question />}
                 {category === 'menu3' && <Card />}
             </div>
-            <button onClick={onClickToWrite}>글쓰기</button>
         </Wrap>
     )
 };

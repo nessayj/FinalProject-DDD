@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom';
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdPin, IoMdEye } from "react-icons/io";
 import CardData from "./CardData.json"
@@ -67,6 +68,26 @@ const CardContainer = styled.div`
         font-size: 1.6rem;   
         }
     }
+    .writebtn {
+        display: flex;
+        margin-bottom: 1em 0em ;
+    
+        button {
+            margin: -1em 1em ;
+            margin-left: auto;
+            font-size: .9em;
+            padding: .5em 2em;
+            border-radius: 10px;
+            background-color: #050E3D;
+            color: white;
+            border: none;
+            transition: all .1s ease-in;
+            cursor: pointer;
+            font-weight: bold;
+            
+            &:hover{background-color: #5EADF7; color: #F4F8FF; transform: scale(1);} 
+        }
+    }
 `;
 
 const SelectBox = styled.select`
@@ -89,7 +110,7 @@ const SelectBox = styled.select`
 
 const Card = () => {    
 
-
+    const navigate = useNavigate();
     const [selectedRegion, setSelectedRegion] = useState("");
     const [filterRegion, setFilterRegion] = useState([]);
 
@@ -125,6 +146,13 @@ const Card = () => {
     const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
 
     const currentPageData = CardData.slice(offset, offset + ITEMS_PAGE);
+
+    // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
+    const onClickToWrite = () => {
+        const link = "write/"
+        navigate(link);
+    }
+
 
     return(
         <>
@@ -165,6 +193,9 @@ const Card = () => {
         ))}
       </CardContainer> 
        <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
+       <div className="writebtn">
+            <button onClick={onClickToWrite}>글쓰기</button>
+        </div>
       </>
     )
 };

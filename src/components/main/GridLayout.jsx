@@ -14,7 +14,7 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-rows: repeat(7, 1fr);
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  gap: 0.2rem;
   width: 100vw;
   height: 80vh;
   background-color: #050E3D;
@@ -40,8 +40,8 @@ const GridItem = styled.div`
   }
 
   & > img {
-    width: 80%;
-    height: 80%;
+    width: 70%;
+    height: 70%;
     object-fit: contain;
   }
 

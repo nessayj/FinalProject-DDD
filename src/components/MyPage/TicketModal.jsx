@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CancelTicket from './CancelTicket';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import MobileTicket from './MobileTicket';
 
 
 const Modal = styled.div`
@@ -93,31 +94,46 @@ const Modal = styled.div`
         }
 `;
 
+const BlackBG = styled.div`
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.6;
+    top: 0%;
+    left: 0%;
+    
+`;
 
-const MobileTicket = ({ resevationData, closeModal, openCancel }) => {
+const TicketModal = ({ resevationData, closeModal }) => {
+    const [cancelPage, setCancelPage] = useState(true);
+
+    const openCancel = () => {
+        setCancelPage(!openCancel);
+        console.log('캔슬페이지' + cancelPage);
+        
+    }
+
+    useEffect(() => {
+    }, [cancelPage]);
+
 
     return (
-        <Modal>
-            <div className='closeBtn' onClick={closeModal}>&times;</div>
-
-            <div className='title'>TICKET</div>
-            <div className='exhImg'>
-                <img src={resevationData.imgUrl} alt='exhibition' />
-            </div>
-            <div className="desc">
-                <span style={{ fontWeight: 'bold' }}> {resevationData.name}</span><br />
-                <span> {resevationData.place}</span><br />
-                <span> {resevationData.startDate}</span><br />
-                <span> {(resevationData.imgUrl).slice(52, 62)}</span><br />
-            </div>
-            <div className='btnBlock'>
-                <button>
-                    <Link to={`/exhibitInfo/${resevationData.index}`} className='link'>상세정보</Link></button>
-                <button onClick={openCancel}>예매취소</button>
-            </div>
-        </Modal>
-
+        <>
+            <BlackBG />
+            <Modal>
+                {cancelPage ? 
+                (
+                    <MobileTicket openCancel={openCancel} closeModal={closeModal} resevationData={resevationData}/>
+                ) 
+                : 
+                (
+                    <CancelTicket closeModal={closeModal}/>
+                )
+                }
+            </Modal>
+        </>
     );
 };
 
-export default MobileTicket;
+export default TicketModal;

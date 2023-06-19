@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MobileTicket from './MobileTicket';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import TicketModal from './TicketModal';
 
 
 // ====== data 확인하기 =====
@@ -104,7 +105,7 @@ const ReservedDetail = ({exhibitionData, currentPageData}) => {
     };
   
     const openMobileTicket = () => {
-        return resevationData && openModal &&  <MobileTicket resevationData={resevationData} closeModal={closeModal} />;
+        return resevationData && openModal &&  <TicketModal resevationData={resevationData} closeModal={closeModal} />;
 
 
     }

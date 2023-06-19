@@ -60,16 +60,16 @@ const Modal = styled.div`
 `;
 
 
-const CancelTicket = ({closeModal, resevationData}) => {
+const CancelTicket = ({ closeModal }) => {
     return (
         <>
-                <Modal>
+            <Modal>
                 <div className='closeBtn' onClick={closeModal}>&times;</div>
 
                 <div className='title'> 취소페이지입니다.</div>
 
                 <div className='btnBlock'>
-                    <button onClick={()=>{ }}>예매취소</button>
+                    <button onClick={()=>{ }}>취소 신청</button>
                     <button onClick={closeModal}>돌아가기</button>
                 </div>
             </Modal>

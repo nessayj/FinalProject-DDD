@@ -10,9 +10,7 @@ const DashboardContainer = styled.div`
         text-decoration: underline;
     }
     .charts{
-        width: 100%;
-        height: 100%;
-        overflow: auto;
+        margin-left: 1rem;
 
     }
 

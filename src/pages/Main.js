@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import Footer from "../components/main/Footer";
 import Mainpage from "../components/main/MainScroll";
 

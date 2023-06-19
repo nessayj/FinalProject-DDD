@@ -1,10 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import Chart from "./Charts";
 
 const DashboardContainer = styled.div`
-    background-color: yellow;
     width: 80vw;
     height: 100vh;
+    .dash-title{
+        margin-left: 1rem;
+        text-decoration: underline;
+    }
+    .charts{
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+
+    }
 
 
 
@@ -17,12 +27,16 @@ const DashboardContainer = styled.div`
 const DashBoard = () => {
 
 
+  return(
+      <DashboardContainer>
+        <h3 className="dash-title">Dash Board</h3>
+        <div className="charts">
+            <Chart/>
+        </div>
+          
 
-    return(
-        <DashboardContainer>
-        대쉬보드입니다.
-        </DashboardContainer>
-    )
+      </DashboardContainer>
+  )
 }
 
 export default DashBoard;

@@ -40,7 +40,7 @@ const Navcontainer = styled.div`
         flex-direction: column;
         text-align: center;
         cursor: pointer;
-        >h2 {
+        >h3 {
             width: 100%;
             padding: 1.5rem;
             margin: 0;
@@ -51,7 +51,7 @@ const Navcontainer = styled.div`
             }
         }
 
-        h2:hover {
+        h3:hover {
         background-color: white;
         color: #050e3d; 
         }
@@ -88,30 +88,30 @@ const AdminNav = ({activeMenuItem, setCurrentMenuItem}) => {
             </div>
             <div className="menu">
             <div className="list-container">
-            <h2
+            <h3
                 className={activeMenuItem === "dashboard" ? "active" : ""}
                 onClick={() => handleMenuItem("dashboard")}
-            >대시보드</h2>
-            <h2
+            >대시보드</h3>
+            <h3
                 className={activeMenuItem === "members" ? "active" : ""}
                 onClick={() => handleMenuItem("members")}
-            >회원관리</h2>
-            <h2
+            >회원관리</h3>
+            <h3
                 className={activeMenuItem === "reservation" ? "active" : ""}
                 onClick={() => handleMenuItem("reservation")}
-            >예매관리</h2>
-            <h2
+            >예매관리</h3>
+            <h3
                 className={activeMenuItem === "boards" ? "active" : ""}
                 onClick={() => handleMenuItem("boards")}
-            >게시판관리</h2>
-            <h2
+            >게시판관리</h3>
+            <h3
                 className={activeMenuItem === "exhibitions" ? "active" : ""}
                 onClick={() => handleMenuItem("exhibitions")}
-            >전시관리</h2>
-            <h2
+            >전시관리</h3>
+            <h3
                 className={activeMenuItem === "ads" ? "active" : ""}
                 onClick={() => handleMenuItem("ads")}
-            >광고관리</h2>
+            >광고관리</h3>
             </div>
             </div>
         </Navcontainer>

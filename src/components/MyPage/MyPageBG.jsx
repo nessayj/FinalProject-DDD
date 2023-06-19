@@ -11,23 +11,17 @@ import MyDiary from "./MyDiary";
 
 const Container = styled.div`
     box-sizing: border-box;
-    /* overflow-x: hidden; */
-    /* position: absolute;
-    top: 20%; 
-    width: 100vw;
-    height: 100vh; */
     /* background-color: aqua; */
     position: relative;
     top: 0%; 
-    height: auto;
+    height: 100%;
     justify-content: center;
     display: flex;
 `;
 const Modal = styled.div`
     width: 55vw;
     min-width: 600px;
-    //max-width: 768px;
-    /* height: 70vh; */
+    max-width: 900px;
     height: auto;
     min-height: 1024px;
     background-color: white;

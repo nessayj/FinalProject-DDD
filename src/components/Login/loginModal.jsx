@@ -6,14 +6,15 @@ const Container = styled.div`
     top: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     /* background-color: aqua; */
     
 
 `;
 const Modal = styled.div`
-    width: 24vw;
-    min-width: 350px;
-    height: 60vh;
+    width: 20vw;
+    min-width: 400px;
+    height: 50vh;
     min-height: 500px;
     background-color: white;
     position: absolute;

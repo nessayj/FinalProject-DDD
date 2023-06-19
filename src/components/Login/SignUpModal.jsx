@@ -21,6 +21,7 @@ const Modal = styled.div`
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     border-radius: 1.4rem;
+    border: 1px solid #999;
     display: flex;
     flex-direction: column;
     align-items: center;

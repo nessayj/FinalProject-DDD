@@ -78,14 +78,7 @@ const Container = styled.div`
         /* background-color: blue; */
         width: 100%;
     }
-    .pageBlock{
-        /* background-color: red; */
-        position: relative;
-        left: -1.3rem;
-        bottom: 0%;
-        margin: 0;
-        padding: 0;
-    }
+
     .count{
         /* background-color: red; */
         height: 4rem;
@@ -155,9 +148,10 @@ const MyReservation = (props) => {
                     <ReservedDetail exhibitionData={exhibitionData} currentPageData={currentPageData}/>
                 </div>
                     
-                <div className="pageBlock">
-                    <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
-                </div>
+            <div className="pageBlock">
+                <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
+            </div>
+
 
             </Container>
             

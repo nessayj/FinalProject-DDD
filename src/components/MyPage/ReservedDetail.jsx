@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import ReactPaginate from "react-paginate";
+import MobileTicket from './MobileTicket';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import TicketModal from './TicketModal';
 
 
 // ====== data 확인하기 =====
@@ -79,8 +82,48 @@ const Container = styled.div`
         }
     }   
 `;
+
+
+
 const ReservedDetail = ({exhibitionData, currentPageData}) => {
+
+    // 예약 총 개수
     const totalRecords = exhibitionData.length;
+
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+      setShowModal(true);
+      console.log(showModal)
+
+    };
+  
+    const closeModal = () => {
+
+      setShowModal(false);
+      console.log(showModal)
+    };
+  
+    const openMobileTicket = () => {
+        return resevationData && openModal &&  <TicketModal resevationData={resevationData} closeModal={closeModal} />;
+
+
+    }
+    
+    // 모바일티켓으로 데이터 전송하기 
+    const [resevationData, setResevationData] = useState('');
+
+    const handleData = (index) => {
+        const selectedData = exhibitionData.find((data) => data.index === index);
+        setResevationData(selectedData)
+        openModal();
+
+        console.log(resevationData);
+
+    }; 
+    useEffect(()=>{
+        openMobileTicket();
+    }, [resevationData]);
 
     return (
         <>
@@ -88,7 +131,13 @@ const ReservedDetail = ({exhibitionData, currentPageData}) => {
 
                 {
                     currentPageData.map((ticket, index) => (
-                        <Container key={index}>
+                        <Container 
+                            key={index}
+                            onClick={ () => {
+                                handleData(ticket.index)
+                            }}
+                        
+                        >
                             <div className="showImage"><img src={ticket.imgUrl} alt='exhibition' /></div>
                             <div className='justfyTop'>
                                 <div className='leftBox'>
@@ -107,10 +156,14 @@ const ReservedDetail = ({exhibitionData, currentPageData}) => {
                         </Container>
                     ))
                 }
+                {
+                     showModal && openMobileTicket()
+                }
 
 
         </>
     );
 };
+
 
 export default ReservedDetail;

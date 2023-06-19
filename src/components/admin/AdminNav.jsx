@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {CiLogin} from "react-icons/ci";
 import {BiKey} from "react-icons/bi";
+import AdminImg from "../../resources/프로필.png";
 
 const Navcontainer = styled.div`
     width: 20vw;
@@ -14,7 +15,7 @@ const Navcontainer = styled.div`
     flex-direction: column;
 
     .admin-login{
-        margin-bottom: 4rem;
+        margin-bottom: 1.5rem;
         >h2{
         text-align: center;
         }
@@ -24,7 +25,11 @@ const Navcontainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
+        gap: 1.5rem;
+        }
+        .photo-container > img{
+            width: 5.5rem;
+            border-radius: 50%;
         }
     }
 
@@ -72,6 +77,9 @@ const AdminNav = ({activeMenuItem, setCurrentMenuItem}) => {
     return(
         <Navcontainer>
             <div className="admin-login">
+                <div className="photo-container">
+                    <img src={AdminImg} alt="관리자프로필" />
+                </div>
                 <h2>ADMIN</h2>
                 <div>
                 <CiLogin/>
@@ -85,13 +93,25 @@ const AdminNav = ({activeMenuItem, setCurrentMenuItem}) => {
                 onClick={() => handleMenuItem("dashboard")}
             >대시보드</h2>
             <h2
-            className={activeMenuItem === "members" ? "active" : ""}
-            onClick={() => handleMenuItem("members")}
+                className={activeMenuItem === "members" ? "active" : ""}
+                onClick={() => handleMenuItem("members")}
             >회원관리</h2>
-            <h2>예매관리</h2>
-            <h2>게시판관리</h2>
-            <h2>전시관리</h2>
-            <h2>광고관리</h2>
+            <h2
+                className={activeMenuItem === "reservation" ? "active" : ""}
+                onClick={() => handleMenuItem("reservation")}
+            >예매관리</h2>
+            <h2
+                className={activeMenuItem === "boards" ? "active" : ""}
+                onClick={() => handleMenuItem("boards")}
+            >게시판관리</h2>
+            <h2
+                className={activeMenuItem === "exhibitions" ? "active" : ""}
+                onClick={() => handleMenuItem("exhibitions")}
+            >전시관리</h2>
+            <h2
+                className={activeMenuItem === "ads" ? "active" : ""}
+                onClick={() => handleMenuItem("ads")}
+            >광고관리</h2>
             </div>
             </div>
         </Navcontainer>

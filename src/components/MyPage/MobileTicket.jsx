@@ -27,13 +27,13 @@ const Modal = styled.div`
         /* color: white; */
         border-radius: 1rem;
         width: 2rem;
-        height: 1.8rem;
+        height: 4rem;
         padding-bottom: .2rem;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        left: 44%;
+        /* left: 44%; */
         top: 2%;
         cursor: pointer;
     }

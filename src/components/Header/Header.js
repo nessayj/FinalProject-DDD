@@ -7,30 +7,36 @@ import LanguagesSelect from "./LanguagesSelect";
 
 const HeaderStyle = styled.div`
     margin: 0;
-    color: #050E3D;
     width: 100%;
     height: 10vh;
     display: flex;
     flex-direction: column;
-    /* background: linear-gradient(180deg, 
-    rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 65%, rgba(255, 255, 255, 0.7) 75%,  rgba(255, 255, 255, 0.6) 80%, rgba(255, 255, 255, 0.5) 85%, rgba(255, 255, 255, 0.3) 90%, rgba(255, 255, 255, 0.1) 95%, rgba(255, 255, 255, 0) 100%); */
     background: linear-gradient(
-  180deg,
-  rgba(255, 255, 255, 1) 0%,
-  rgba(255, 255, 255, 0.9) 50%,
-  rgba(255, 255, 255, 0.6) 70%,
-  rgba(255, 255, 255, 0.3) 80%,
-  rgba(255, 255, 255, 0) 100%
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 35%,
+    rgba(255, 255, 255, 0.9) 40%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.8) 60%,
+    rgba(255, 255, 255, 0.75) 65%,
+    rgba(255, 255, 255, 0.7) 70%,
+    rgba(255, 255, 255, 0.65) 75%,
+    rgba(255, 255, 255, 0.6) 80%,
+    rgba(255, 255, 255, 0.55) 85%,
+    rgba(255, 255, 255, 0.4) 90%,
+    rgba(255, 255, 255, 0.2) 95%,
+    rgba(255, 255, 255, 0) 100%
+
 );
 
-`; 
+`;
 const FirstLayer = styled.div`
     margin-bottom: 0.6rem;
-    display: flex;
-    align-items: center;
-    float: right;
-    margin-left: 80rem;
-    width: 15vw;
+    .first-container{
+        display: flex;
+        align-items: center;
+        float: right;
+    }
 `;
 
 const LogoContainer = styled.div`
@@ -40,11 +46,20 @@ const LogoContainer = styled.div`
     flex-direction: row;
     .icons{
         float: right;
+        margin-top: 0.5rem;
         margin-right: 2rem;
     }
     .logo {
         float: left;
         margin-left: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        justify-content: space-between;
+        .icons{
+            margin-right: 0;
+        }
+
     }
 
 `;
@@ -59,8 +74,11 @@ const Header = () => {
     return(
         <HeaderStyle>
             <FirstLayer>
-                <WeatherInfo/>
-                <LanguagesSelect/>
+                <div className="first-container">
+                    <WeatherInfo className="weahter"/>
+                    <LanguagesSelect className="language"/>
+                </div>
+            
             </FirstLayer>
         <LogoContainer>
             <div className="logo"><Logo/></div>

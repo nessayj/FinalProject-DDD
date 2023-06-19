@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import CancelTicket from './CancelTicket';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Modal = styled.div`
     width: 20vw;
-    height: 60vh;
+    height: 64vh;
     min-width: 500px;
-    min-height: 650px;
+    min-height: 700px;
     /* height: 70vh; */
     background-color: white;
     position: absolute;
@@ -82,36 +85,69 @@ const Modal = styled.div`
                 display: flex;
                 justify-content:center;
                 align-items: center;
+                .link{
+                    text-decoration: none;
+                    color: inherit;
+                }
             }
         }
 `;
 
+const BlackBG = styled.div`
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.6;
+    top: 0%;
+    left: 0%;
+    
+`;
 
-const MobileTicket = ({resevationData, closeModal}) => {
+const MobileTicket = ({ resevationData, closeModal }) => {
+    const [cancelPage, setCancelPage] = useState(true);
+
+
+
+    const openCancel = () => {
+        setCancelPage(!openCancel);
+        console.log('캔슬페이지' + cancelPage);
+        
+    }
+
+    useEffect(() => {
+    }, [cancelPage]);
+
+
     return (
         <>
+            <BlackBG />
             <Modal>
-                <div className='closeBtn' onClick={closeModal}>&times;</div>
+                {cancelPage ? (
+                    <>
+                        <div className='closeBtn' onClick={closeModal}>&times;</div>
 
-                <div className='title'>TICKET</div>
-                <div className='exhImg'>
-                    <img src={resevationData.imgUrl} alt='exhibition'/>
-                </div>
-                <div className="desc">
-                    <span style={{fontWeight:'bold'}}> {resevationData.name}</span><br/>
-                    <span> {resevationData.place}</span><br/>
-                    <span> {resevationData.startDate}</span><br/>
-                    <span> {(resevationData.imgUrl).slice(52,62)}</span><br/>
-                </div>
-                <div className='btnBlock'>
-                    <button>예매취소</button>
-                    <button onClick={closeModal}>돌아가기</button>
-                </div>
-
+                        <div className='title'>TICKET</div>
+                        <div className='exhImg'>
+                            <img src={resevationData.imgUrl} alt='exhibition' />
+                        </div>
+                        <div className="desc">
+                            <span style={{ fontWeight: 'bold' }}> {resevationData.name}</span><br />
+                            <span> {resevationData.place}</span><br />
+                            <span> {resevationData.startDate}</span><br />
+                            <span> {(resevationData.imgUrl).slice(52, 62)}</span><br />
+                        </div>
+                        <div className='btnBlock'>
+                            <button>
+                                <Link to={`/exhibitInfo/${resevationData.index}`} className='link'>상세정보</Link></button>
+                            <button onClick={openCancel}>예매취소</button>
+                        </div>
+                    </>
+                ) : (
+                    <CancelTicket closeModal={closeModal} resevationData={resevationData}/>
+                )}
             </Modal>
-    
         </>
-
     );
 };
 

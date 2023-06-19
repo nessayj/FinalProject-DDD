@@ -11,6 +11,7 @@ import BoardList from './pages/BoardList';
 import BoardWrite from './pages/BoardWrite';
 import Boardview from './pages/BoardView';
 import BoardEdit from './pages/BoardEdit';
+import AdminMain from './components/admin/AdminMain';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/board_list/write" element={<BoardWrite/>}/>
         <Route path='/board_edit' element={<BoardEdit/>}></Route>
         <Route path="/myPage" element={<MyPage/>}/>
+        <Route path="/admin" element={<AdminMain/>}/>
       </Routes>
       </Router>
   );

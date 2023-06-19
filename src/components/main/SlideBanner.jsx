@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { DisplayData } from './DisplayData';
+import { useTranslation } from 'react-i18next';
 
 
 const SlideContainer = styled.div`
@@ -50,7 +51,8 @@ const SlideContainer = styled.div`
   }
 `;
 
-function RollDiv() {
+const RollDiv = () => {
+  const {t} = useTranslation();
   const [anchors, setAnchors] = useState(DisplayData);
 
   const intervalRef = useRef(null);
@@ -61,7 +63,7 @@ function RollDiv() {
         const updatedAnchors = [...prevAnchors, ...prevAnchors];
         return updatedAnchors;
       });
-    }, 5000);
+    }, 10000);
 
     return () => {
       clearInterval(intervalRef.current);
@@ -72,7 +74,7 @@ function RollDiv() {
     
     <SlideContainer>
       <div className='title'>
-        <h2>추천 전시</h2>
+        <h2>{t('추천전시')}</h2>
       </div>
       <div className="RollDiv">
         <div>

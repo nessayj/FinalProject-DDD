@@ -110,7 +110,7 @@ const Mainpage = () => {
                 behavior: "smooth",
                 });
                 setScrollIndex(1);
-            } else if (scrollTop >= pageHeight * 2 && scrollTop < pageHeight * 3) {
+            } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
               //현재 3페이지
                 outerDivRef.current.scrollTo({
                 top: pageHeight,

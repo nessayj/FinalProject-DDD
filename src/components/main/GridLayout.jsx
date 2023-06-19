@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DisplayData } from './DisplayData';
+import { useTranslation } from 'react-i18next';
 
 const Container = styled.div`
   display: flex;
@@ -8,6 +9,9 @@ const Container = styled.div`
   font-weight: bold;
   margin-top: 5.2rem;
   text-align: center;
+  >h2{
+    font-size: 1.3rem;
+  }
 `;
 
 const GridContainer = styled.div`
@@ -41,7 +45,7 @@ const GridItem = styled.div`
 
   & > img {
     width: 70%;
-    height: 70%;
+    height: 80%;
     object-fit: contain;
   }
 
@@ -75,22 +79,23 @@ const GridItem = styled.div`
 `;
 
 const GridComponent = () => {
-  // Like가 높은 순서로 DisplayData를 정렬합니다.
+    const {t} = useTranslation();
+  // Like가 높은 순서로 DisplayData를 정렬
   const sortedData = [...DisplayData].sort((a, b) => b.like - a.like);
 
-  // 상위 4개의 데이터를 선택합니다.
+  // 상위 4개의 데이터를 선택
   const topFourData = sortedData.slice(0, 4);
 
   return (
     <Container>
-      <h2>오늘의 랭킹</h2>
+      <h2>{t('오늘의랭킹')}</h2>
       <GridContainer>
         {topFourData.map((data, index) => (
           <GridItem
             key={index}
             className={index === 0 || index === 2 ? 'large' : 'medium'}
           >
-            <h2>{index+1}위</h2>
+            <h4>{index+1}{t('위')}</h4>
             <img src={data.imgUrl} alt={data.name} />
             <div className="overlay">
               <div className="name">{data.name}</div>

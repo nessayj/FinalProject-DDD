@@ -44,16 +44,7 @@ const Wrap = styled.div`
             transition: all .1s ease-in;
             cursor: pointer;
             font-weight: bold;
-            
-            &:hover{background-color: #5EADF7; color: #F4F8FF; transform: scale(1);} 
         }
-
-
-        button {
-                
-                
-                &:hover {background-color: #5EADF7; color: #F4F8FF;}
-                }
 
 `;
 

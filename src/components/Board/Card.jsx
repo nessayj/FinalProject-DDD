@@ -8,14 +8,14 @@ import { useState, useEffect } from "react";
 import PageNation from "../../util/PageNation";
 
 const CardContainer = styled.div`
-    max-width: 100em;
+    max-width: 100vw;
     display: grid;
-    grid-template-columns: repeat(auto-fit, 18em); // 반복(자동맞춤, 1fr 크기)
+    grid-template-columns: repeat(auto-fit, 22.2em); // 반복(자동맞춤, 1fr 크기)  카드 이미지 추후 변경 예정
     justify-content: center;
     margin: 2rem;
     gap: 1rem;
     transition: width 1s, height 1s;
-    cursor: pointer;
+    
 
     * {
         margin: 2rem;
@@ -31,16 +31,15 @@ const CardContainer = styled.div`
         border-radius: 1rem;
         position: relative;
         margin: 0.8rem;
-        
-        &:hover {
-            transform: scale(1.1); // 호버 시 확대 효과
-        }
+        cursor: pointer;
     }
 
+    .img_area {
     .cardimage {
         width: 100%; 
         height: 11rem; 
     }
+}
 
     .region, .cardtitle, .cardnickname, .datearea {
         text-align: left;
@@ -84,8 +83,6 @@ const CardContainer = styled.div`
             transition: all .1s ease-in;
             cursor: pointer;
             font-weight: bold;
-            
-            &:hover{background-color: #5EADF7; color: #F4F8FF; transform: scale(1);} 
         }
     }
 `;
@@ -169,9 +166,10 @@ const Card = () => {
             {currentPageData.map((data, index) => (
             <div className="container" key={index}>
                 
-                <div className="img_area"></div>
+                <div className="img_area">
                     {/* <img src={data.imageUrl} alt="CardImage" className="cardimage" /> */}
                     <img src={data.imageUrl} alt="CardImage" className="cardimage" />
+                </div>
                 
                 <div className="region">
                     <IoMdPin style={{fontSize:'1.2em', color:'#528BF9'}}/>{data.region}

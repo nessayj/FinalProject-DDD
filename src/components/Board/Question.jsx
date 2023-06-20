@@ -102,7 +102,7 @@ const Section = styled.div`
             margin-left: auto;
             font-size: .9em;
             padding: .5em 2em;
-            border-radius: 10px;
+            border-radius: 20px;
             background-color: #050E3D;
             color: white;
             border: none;

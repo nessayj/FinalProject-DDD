@@ -92,7 +92,7 @@ const SelectBox = styled.select`
     height: 30px;
     float: right;
     display: flex;
-    margin-right: 12.4em;
+    margin-right: 17em;
     option{
         font-size: 20px;
     }

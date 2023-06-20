@@ -30,7 +30,7 @@ const Chart = () => {
   const maxValue = Math.max(...data.map((item) => item.count));
   const countRange = maxValue - minValue;
 
-  const graphWidth = 300; // 그래프 너비
+  const graphWidth = 400; // 그래프 너비
   const graphHeight = 200; // 그래프 높이
   const scaleX = graphWidth / (Math.min(data.length, 10)); // x축
   const scaleY = graphHeight / (countRange + 5); // y축
@@ -86,7 +86,7 @@ const Chart = () => {
             <React.Fragment key={item.date}>
               <line x1={x} y1={graphHeight} x2={x} y2={graphHeight + 5} stroke="gray" strokeWidth={1} />
               <span
-                style={{ position: "absolute", left: x+20, top: "100%", transform: "translateX(-50%)", fontSize: "12px", color: "black" }}
+                style={{ position: "absolute", left: x+30, top: "100%", transform: "translateX(-50%)", fontSize: "12px", color: "black" }}
               >
                 {item.date.slice(-2)}일
               </span>

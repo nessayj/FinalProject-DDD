@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import Chart from "./Charts";
+import {DisplayData} from "../../components/main/DisplayData";
 
 const DashboardContainer = styled.div`
     width: 80vw;
     height: 100vh;
+    p {
+        font-size: 0.8em;
+        font-weight: bolder;
+    }
     .dash-title{
         margin-left: 1rem;
         text-decoration: underline;
@@ -37,13 +42,14 @@ const DashboardContainer = styled.div`
     }
     .second-row{
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex-direction: row;
-        flex-wrap: wrap;
     }
     .charts{
+        width: 30rem;
         margin-left: 1rem;
         margin-top: 1rem;
-        width: 23em;
         height: 20em;
         text-align: center;
         background-color: #e3e3e3;
@@ -51,9 +57,8 @@ const DashboardContainer = styled.div`
 
     }
     .dailyData{
-
-        width: 23em;
-        height: 20em;
+        width: 30rem;
+        height: 20rem;
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -62,9 +67,9 @@ const DashboardContainer = styled.div`
         margin-left: 1rem;
         margin-top: 1rem;
         table{
-            width: 20rem;
+            width: 25rem;
             height: 100%;
-            font-size: 0.7em;
+            font-size: 0.8em;
             text-align: center;
             border-collapse: collapse;
             border-spacing:0;
@@ -80,6 +85,49 @@ const DashboardContainer = styled.div`
         }
 
     }
+    }
+    .exhibit-container{
+        margin-top: 1rem;
+        border-radius: 2rem;
+        background-color: #e3e3e3;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        
+        >h4{
+            margin-top: .5rem;
+            margin-bottom: 0;
+            text-align: center;
+        }
+        
+    }
+    .exhibit-status{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .exhibits > img{
+                width: 5rem;
+                height: 7rem;
+                margin-bottom: 0.5rem;
+            }
+
+    .exhibits {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 2rem;
+        gap: 1rem;
+        >p{ 
+            font-size: 1rem;
+        }
+    }
+    .exhibit-list{
+        display: flex;
+        flex-direction: column;
+        >p{
+            font-size: 1rem;
+        }
     }
 
 
@@ -115,6 +163,19 @@ const DashBoard = () => {
     
       const recentData = data.slice(-10).reverse(); // 최신순으로 정렬된 최근 10개 데이터 추출
     
+      // 전시현황
+const todayDate = "2023-06-11";
+const finishDate = "2023-06-10";
+
+const todayStartExhibit = DisplayData.filter(
+  (exhibit) => exhibit.date === todayDate
+);
+
+const todayFinishExhibit = DisplayData.filter(
+  (exhibit) => exhibit.date === finishDate
+);
+
+const popularExhibit = [...DisplayData].sort((a, b) => b.like - a.like);
 
 
   return(
@@ -168,10 +229,45 @@ const DashBoard = () => {
 
         </div>
         </div>
-        </div>
+        <div className="exhibit-container">
+        <h4>전시 현황</h4>
+            <hr/>
+        <div className="exhibit-status">
+            
+            <div className="exhibit-list">
+            <p>금일 시작하는 전시</p>
+            {todayStartExhibit.map((exhibit, index) => (
+                <div className="exhibits" key={index}>
+                    <img src={exhibit.imgUrl} alt={exhibit.name} />
+                    <p>{exhibit.name}</p>
+                </div>
+            ))}
+            </div>
+            <div className="exhibit-list">
+                <p>금일 끝나는 전시</p>
+                {todayFinishExhibit.map((exhibit, index) => (
+                <div className="exhibits" key={index}>
+                    <img src={exhibit.imgUrl} alt={exhibit.name} />
+                    <p>{exhibit.name}</p>
+                </div>
+                ))}
+            </div>
+            <div className="exhibit-list">
+                <p>예매가 많은 순</p>
+                <div className="exhibits">
+                <img
+                    src={popularExhibit[0].imgUrl}
+                    alt={popularExhibit[0].name}
+                />
+                <p>{popularExhibit[0].name}</p>
+                </div>
+            </div>
+    </div>
+    </div>
+    </div>
 
-      </DashboardContainer>
-  )
+        </DashboardContainer>
+    )
 }
 
 export default DashBoard;

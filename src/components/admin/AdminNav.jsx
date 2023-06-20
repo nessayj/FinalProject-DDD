@@ -13,6 +13,7 @@ const Navcontainer = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    z-index: 9999;
 
     .admin-login{
         margin-bottom: 1.5rem;
@@ -53,13 +54,13 @@ const Navcontainer = styled.div`
 
         h3:hover {
         background-color: white;
-        color: #050e3d; 
+        color: #050e3d;
         }
         
     }
 
     .menu {
-        width: 100%;
+        width: 84%;
         
     }
 `;

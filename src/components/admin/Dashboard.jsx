@@ -21,7 +21,7 @@ const DashboardContainer = styled.div`
     }
     .today-noti{
         background-color: #e3e3e3;
-        width: 80%;
+        width: 60em;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -45,9 +45,10 @@ const DashboardContainer = styled.div`
         align-items: center;
         justify-content: center;
         flex-direction: row;
+        gap: 2em;
     }
     .charts{
-        width: 30rem;
+        width: 29rem;
         margin-left: 1rem;
         margin-top: 1rem;
         height: 20em;
@@ -57,7 +58,7 @@ const DashboardContainer = styled.div`
 
     }
     .dailyData{
-        width: 30rem;
+        width: 28rem;
         height: 20rem;
         display: flex;
         align-items: center;
@@ -90,7 +91,7 @@ const DashboardContainer = styled.div`
         margin-top: 1rem;
         border-radius: 2rem;
         background-color: #e3e3e3;
-        width: 80%;
+        width: 60em;
         display: flex;
         flex-direction: column;
         

@@ -5,7 +5,7 @@ import {BiKey} from "react-icons/bi";
 import AdminImg from "../../resources/프로필.png";
 
 const Navcontainer = styled.div`
-    width: 20vw;
+    width: 18rem;
     height: 100vh;
     background-color: #050E3D;
     color: white;
@@ -60,7 +60,7 @@ const Navcontainer = styled.div`
     }
 
     .menu {
-        width: 84%;
+        width: 84.5%;
         
     }
 `;

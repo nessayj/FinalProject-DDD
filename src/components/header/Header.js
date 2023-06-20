@@ -6,7 +6,7 @@ import WeatherInfo from "./WeatherInfo";
 import LanguagesSelect from "./LanguagesSelect";
 
 const HeaderStyle = styled.div`
-    margin: 0;
+    margin-bottom: 1rem;
     width: 100%;
     height: 10vh;
     display: flex;

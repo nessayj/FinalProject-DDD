@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import InfoModal from "../exhibition/InfoModal";
+import PageNation from "../../util/PageNation";
 
 const MembersContainer = styled.div`
     width: 80vw;
@@ -74,7 +75,7 @@ const ModalContainer = styled.div`
 
 const Members = () => {
     const [selectedRows, setSelectedRows] = useState([]);
-    const [data, setData] = useState(generateFakeData(10)); //가짜데이터 생성
+    const [data, setData] = useState(generateFakeData(22)); //가짜데이터 생성
     const [selectedMember, setSelectedMember] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -137,6 +138,18 @@ const handleSelectRow = (id) => {
     setIsModalOpen(false);
     };
 
+      // 페이지네이션
+    //보여질 페이지 개수
+    const ITEMS_PAGE = 10;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = (selectedPage) => {
+        setCurrentPage(selectedPage.selected);
+    };
+
+    const pageCount = Math.ceil(data.length / ITEMS_PAGE); // 전체 페이지 수
+    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+    const currentPageData = data.slice(offset, offset + ITEMS_PAGE);
+
 
 
 return (
@@ -184,7 +197,7 @@ return (
                 </TableRow>
             </thead>
             <tbody>
-                {data.map((item) => (
+                {currentPageData.map((item) => (
                 <TableRow key={item.id} >
                     <td>
                     <input
@@ -205,6 +218,7 @@ return (
             </table>
         </div>
         </div>
+            <PageNation pageCount={pageCount} onPageChange={handlePageClick} selected={currentPage+1}  />
         </MembersContainer>
     );
     };

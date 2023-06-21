@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import styled from "styled-components";
 import InfoModal from "../exhibition/InfoModal";
 import exhibitionData from "../exhibition/exhibitionData";
+import PageNation from "../../util/PageNation";
 
 const ReservContainer = styled.div`
     width: 80vw;
@@ -83,7 +84,7 @@ const ReservationManage = () => {
     const [selectedRows, setSelectedRows] = useState([]); //가짜데이터 생성
     const [selectedMember, setSelectedMember] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [data, setData] = useState(generateFakeData(10).map(item => ({ ...item, exhibitionIndex: Math.floor(Math.random() * exhibitionData.length) + 1 })));
+    const [data, setData] = useState(generateFakeData(20).map(item => ({ ...item, exhibitionIndex: Math.floor(Math.random() * exhibitionData.length) + 1 })));
 
 
        // 가짜 데이터 생성 함수
@@ -136,6 +137,18 @@ const handleSelectRow = (id) => {
     const closeModal = () => {
     setIsModalOpen(false);
     };
+  // 페이지네이션
+    //보여질 페이지 개수
+    const ITEMS_PAGE = 10;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = (selectedPage) => {
+        setCurrentPage(selectedPage.selected);
+    };
+
+    const pageCount = Math.ceil(data.length / ITEMS_PAGE); // 전체 페이지 수
+    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+    const currentPageData = data.slice(offset, offset + ITEMS_PAGE);
+    
 
 
 
@@ -184,7 +197,7 @@ const handleSelectRow = (id) => {
                     </TableRow>
                 </thead>
                 <tbody>
-                    {data.map((item) => (
+                    {currentPageData.map((item) => (
                     <TableRow key={item.id} >
                         <td>
                         <input
@@ -204,6 +217,7 @@ const handleSelectRow = (id) => {
                 </table>
             </div>
             </div>
+            <PageNation pageCount={pageCount} onPageChange={handlePageClick} selected={currentPage+1}  />
         </ReservContainer>
     )
 }

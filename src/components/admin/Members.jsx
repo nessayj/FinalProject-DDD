@@ -40,7 +40,7 @@ const MembersContainer = styled.div`
         }
         &:hover {
         background-color: #f4f8ff;
-    }
+        }
 
     `;
 
@@ -74,7 +74,7 @@ const ModalContainer = styled.div`
 `;
 
 const Members = () => {
-    const [selectedRows, setSelectedRows] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]); // 체크박스
     const [data, setData] = useState(generateFakeData(22)); //가짜데이터 생성
     const [selectedMember, setSelectedMember] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);

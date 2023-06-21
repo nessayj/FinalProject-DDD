@@ -11,7 +11,7 @@ const DashboardContainer = styled.div`
         font-weight: bolder;
     }
     .dash-title{
-        margin-left: 1rem;
+        margin-left: 3rem;
         text-decoration: underline;
     }
     .container{

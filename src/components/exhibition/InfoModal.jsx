@@ -74,7 +74,7 @@ const ModalStyle = styled.div`
 `;
 
 const InfoModal = (props) => {
-    const { open,close,children } = props;
+    const { open,close,children} = props;
 
     return (
         <ModalStyle>

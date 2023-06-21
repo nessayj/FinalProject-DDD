@@ -35,11 +35,10 @@ const TableContainer = styled.div`
   .select {
     width: 90%;
     margin-left: 3rem;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
     float: right;
     select {
         float: left;
-        margin-bottom: 1rem;
     }
   }
 `;
@@ -83,6 +82,7 @@ const ButtonWrapper = styled.div`
     }
 `;
 
+
 const BoardsManage = () => {
     const boardData = [
         {
@@ -100,14 +100,14 @@ const BoardsManage = () => {
                   postId: 1,
                   id: 1,
                   author: "댓글 작성자1",
-                  content: "댓글 내용1",
+                  content: "댓글 내용123423423",
                   timestamp: "2023-06-13 12:34:00",
                 },
                 {
                   postId: 1,
                   id: 2,
                   author: "댓글 작성자2",
-                  content: "댓글 내용2",
+                  content: "댓글 내용22423423423",
                   timestamp: "2023-06-13 12:35:00",
                 },
               ],
@@ -124,7 +124,7 @@ const BoardsManage = () => {
                   postId: 6,
                   id: 3,
                   author: "댓글 작성자2",
-                  content: "댓글 내용2",
+                  content: "댓글 내용32423232",
                   timestamp: "2023-06-13 12:35:00",
                 }
               ],
@@ -146,7 +146,7 @@ const BoardsManage = () => {
                 postId: 3,
                 id: 4,
                 author: "댓글 작성자2",
-                content: "댓글 내용2",
+                content: "댓글 내용22342311321",
                 timestamp: "2023-06-13 12:35:00",
               }
               ],
@@ -168,7 +168,7 @@ const BoardsManage = () => {
                 postId: 4,
                 id: 5,
                 author: "댓글 작성자2",
-                content: "댓글 내용2",
+                content: "댓글 내용244444444444",
                 timestamp: "2023-06-13 12:35:00",
               }
               ],
@@ -185,7 +185,7 @@ const BoardsManage = () => {
                     postId: 5,
                     id: 6,
                     author: "댓글 작성자2",
-                    content: "댓글 내용2",
+                    content: "댓글 내용2223333232322",
                     timestamp: "2023-06-13 12:35:00",
                   }
               ],
@@ -248,8 +248,8 @@ const BoardsManage = () => {
           ))}
         </select>
         <ButtonWrapper>
-            <button>수정</button>
             <button>삭제</button>
+            <button>수정</button>
         </ButtonWrapper>
         </div>
         <table>
@@ -284,7 +284,7 @@ const BoardsManage = () => {
                 <td>{post.author}</td>
                 <td>{post.title}</td>
                 <td>{post.views}</td>
-                <td>{post.comments}</td>
+                <td>{post.comments.length}</td>
                 </TableRow>
             ))}
         </tbody>
@@ -295,18 +295,22 @@ const BoardsManage = () => {
       <h3>댓글 관리</h3>
       <TableContainer>
         <div className="select">
-          <label htmlFor="category">카테고리:</label>
-          <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
-            {boardData.map((board) => (
-              <option key={board.category} value={board.category}>
-                {board.category}
-              </option>
-            ))}
-          </select>
+        <ButtonWrapper>
+            <button>삭제</button>
+            <button>수정</button>
+        </ButtonWrapper>
         </div>
         <table>
           <thead>
             <TableRow>
+            <TableHeader>
+            <input
+                type="checkbox"
+                checked={selectedRows.length === selectedBoard.posts.length}
+                onChange={handleSelectAllRows}
+            />
+            </TableHeader>
+              <TableHeader>카테고리</TableHeader>
               <TableHeader>글 제목</TableHeader>
               <TableHeader>댓글 작성자</TableHeader>
               <TableHeader>댓글 내용</TableHeader>
@@ -314,6 +318,27 @@ const BoardsManage = () => {
             </TableRow>
           </thead>
           <tbody>
+  {boardData.map((category) =>
+    category.posts.map((post) =>
+      post.comments.map((comment) => (
+        <TableRow key={comment.id}>
+            <td>
+                <input
+                    type="checkbox"
+                    checked={selectedRows.includes(post.id)}
+                    onChange={() => handleSelectRow(post.id)}
+                />
+            </td>
+            <td>{category.category}</td>
+            <td>{post.title}</td>
+            <td>{comment.author}</td>
+            <td>{renderContent(comment.content)}</td>
+            <td>{comment.timestamp}</td>
+        </TableRow>
+      ))
+    )
+  )}
+
 
 
           </tbody>

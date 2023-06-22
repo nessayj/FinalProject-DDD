@@ -1,4 +1,4 @@
-import React,{ useState} from "react";
+import React,{ useState, useEffect } from "react";
 import styled from "styled-components";
 import exhibitionData from "../exhibition/exhibitionData";
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from "@mui/material/TextField";
+import dayjs from 'dayjs';
 
 const ExhibitContainer = styled.div`
     width: 80vw;
@@ -24,6 +25,23 @@ const ExhibitContainer = styled.div`
         justify-content: center;
         align-items: center;
     }
+
+    .select {
+    width: 90%;
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+    float: right;
+    select {
+        float: left;
+    }
+  }
+
+  .date-container{
+    float: right;
+    margin-right: 5rem;
+    gap: 1rem;
+  }
+
 `;
 const TableHeader = styled.th`
 background-color: #050E3D;
@@ -50,6 +68,7 @@ const ExhibitManage = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [filteredExhibitions, setFilteredExhibitions] = useState([]);
 
   const handleLocationChange = (event) => {
     setSelectedLocation(event.target.value);
@@ -63,29 +82,37 @@ const ExhibitManage = () => {
     setSelectedEndDate(date);
   };
 
+  useEffect(() => {
+
   const filteredExhibitions = exhibitionData.filter((exhibition) => {
     const isLocationMatched =
       selectedLocation === "" || exhibition.location === selectedLocation;
   
-    const isStartDateMatched =
-      selectedStartDate === null ||
-      new Date(exhibition.startDate) >= selectedStartDate;
-  
-    const isEndDateMatched =
-      selectedEndDate === null || new Date(exhibition.endDate) <= selectedEndDate;
+      
+const isStartDateMatched =
+selectedStartDate === null ||
+(exhibition.startDate && dayjs(exhibition.startDate).isSame(selectedStartDate, 'day'));
+
+const isEndDateMatched =
+selectedEndDate === null ||
+(exhibition.endDate && dayjs(exhibition.endDate).isSame(selectedEndDate, 'day'));
+
   
     if (selectedStartDate && !selectedEndDate) {
-      // 시작일만 선택된 경우, 마감일은 상관없이 해당 시작일 이후의 전시 표시
+      // 시작일만 선택된 경우, 마감일은 상관없이 해당 시작일의 전시 표시
       return isLocationMatched && isStartDateMatched;
     }
   
     if (!selectedStartDate && selectedEndDate) {
-      // 마감일만 선택된 경우, 시작일은 상관없이 해당 마감일 이전의 전시 표시
+      // 마감일만 선택된 경우, 시작일은 상관없이 해당 마감일의 전시 표시
       return isLocationMatched && isEndDateMatched;
     }
   
-    return isLocationMatched && isStartDateMatched && isEndDateMatched;
+    return isLocationMatched || isStartDateMatched || isEndDateMatched ;
   });
+
+  setFilteredExhibitions(filteredExhibitions);
+}, [selectedLocation, selectedStartDate, selectedEndDate]);
 
 
   return(
@@ -106,20 +133,32 @@ const ExhibitManage = () => {
             <option value="전라/제주">전라/제주</option>
             <option value="경상도">경상도</option>
           </select>
+          <div className="date-container">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="전시 시작일"
             value={selectedStartDate}
             onChange={handleStartDateChange}
             renderInput={(params) => <TextField {...params} />}
+            slotProps={{ textField: { size: 'small'},actionBar: {
+                actions: [ 'clear','cancel'],
+              }}}
+            sx={{ width: "10rem" }}
+            
           />
+          
           <DatePicker
             label="전시 마감일"
             value={selectedEndDate}
             onChange={handleEndDateChange}
             renderInput={(params) => <TextField {...params} />}
+            slotProps={{ textField: { size: 'small' }, actionBar: {
+                actions: [ 'clear','cancel'],
+              }}}
+            sx={{ width: "10rem"}}
           />
         </LocalizationProvider>
+        </div>
 
             </div>
             <table>

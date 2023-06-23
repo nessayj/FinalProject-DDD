@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import DDDApi from "../../api/DDDApi";
 
 const Container = styled.div`
     position: absolute;
@@ -117,19 +118,57 @@ const Modal = styled.div`
         }
 `;
 
+
+
 const LoginModal = (props) => {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onChangeloginId = (e) => {
+        setEmail(e.target.value);
+    }
+
+    const onChangeloginPwd = (e) => {
+        setPassword(e.target.value);
+    }
+
+
+    const onClickLogin = async () => {
+        try {
+          const response = await DDDApi.login(email, password);
+          console.log('로그인 성공');
+          setEmail(response.data.email);
+          setPassword(response.data.password);
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
+
+
     return(
         <Container>
             <Modal>
                 <div className="title"> <p>안녕하세요!</p> <p style={{marginTop:'1rem'}}>:DDD에 로그인해보세요</p></div>
                 <div className="inputBlock">
                     <p>이메일</p>
-                    <input type="text" placeholder="Email@:DDD.com"/> 
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={onChangeloginId}
+                        placeholder="Email@:DDD.com"
+                    />
                     <p>패스워드</p>
-                    <input type="password" placeholder="Password"/>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={onChangeloginPwd}
+                        placeholder="Password"
+                    />
                 </div>
                 <div className="btnBlock">
-                    <button>로그인</button>
+                    <button onClick={onClickLogin}>로그인</button>
                     <button style={{backgroundColor:'#F9E000', color:'#6F4F28'}}><div></div>카카오로그인</button>
                 </div>
                 <div className="AskBlock">

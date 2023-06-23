@@ -5,6 +5,7 @@ import styled from "styled-components";
 import WeatherInfo from "./WeatherInfo";
 import LanguagesSelect from "./LanguagesSelect";
 
+// header
 const HeaderStyle = styled.div`
     margin-bottom: 1rem;
     width: 100%;

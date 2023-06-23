@@ -17,7 +17,7 @@ const BlackBG = styled.div`
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: .4;
+    opacity: .6;
 `;
 
 const Login = () => {
@@ -45,7 +45,7 @@ const Login = () => {
         <>
             <Container>
                 <BGItmes/>
-                {/* <BlackBG/> */}
+                <BlackBG/>
             </Container>
             {
                 showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showAgree={handleLoginModal2} />

@@ -34,7 +34,6 @@ const Modal = styled.div`
     flex-direction: column;
     /* align-items: center; */
     border: .5px solid #bbb;
-    margin-bottom: 10vh;
 `;
     
 const MyPageBG = (props) => {

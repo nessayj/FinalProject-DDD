@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DDDApi from "../../api/DDDApi";
 
@@ -133,17 +133,28 @@ const LoginModal = (props) => {
         setPassword(e.target.value);
     }
 
+    const onClickLogin = () => {
+        const loginFetchDate = async () => {
+            console.log('클릭됨')
+         try {
 
-    const onClickLogin = async () => {
-        try {
-          const response = await DDDApi.login(email, password);
-          console.log('로그인 성공');
-          setEmail(response.data.email);
-          setPassword(response.data.password);
-        } catch (e) {
-          console.log(e);
+           const response = await DDDApi.login(email, password);
+
+           console.log('리스폰 데이터' + response)
+
+           if(response.status === 200) {
+            console.log('로그인되었습니다. ')
+           } else {
+            console.log("아이디와 비밀번호가 일치하지 않습니다.")
+           }
+         }catch (e) {
+           console.log(e)
+         }
         }
-      };
+        loginFetchDate();
+     }
+
+   
 
 
 

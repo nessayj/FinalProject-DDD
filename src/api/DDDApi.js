@@ -1,5 +1,6 @@
 import axios from "axios";
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
+const HEADER = {"Content-type" : "application/json"}
 
 const DDDApi = {
 
@@ -36,12 +37,14 @@ const DDDApi = {
 
     // 로그인
     login : async(email, password) => {
+        console.log('입력받은 이메일' + email)
+        console.log('입력받은 패스워드' + password)
         const loginCheck = {
             email : email,
             password : password
         };
-        return await axios.post(DDD_DOMAIN + "/login/login", loginCheck);
-    } 
+        return await axios.post(DDD_DOMAIN + "/login/login", loginCheck, HEADER);
+    }   
 
 };
 

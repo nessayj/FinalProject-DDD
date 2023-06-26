@@ -31,9 +31,9 @@ const ExhibitionDetails = ({data}) => {
         <Container>
         <div className="textBox">
         <div className="title">전시 상세 설명</div>
-        <div>전시 상세설명 : </div>
+        <div>전시장: {data.exhibitLocation} </div>
         <div>전시 기간 : {data.startDate} ~ {data.endDate}</div>
-        <div>가격 정보 : </div>
+        <div>가격 정보 : {data.exhibitPrice} </div>
         </div>
         <img src={data.imgUrl} alt="상세정보" />
         </Container>

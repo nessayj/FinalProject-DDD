@@ -124,10 +124,10 @@ const ExhibitListPage = () => {
           });
           setFilteredData(dateData);
         }
-      }, [category]);
+      }, [category, exhibitionList]);
 
      //필터 데이터 
-   const [filteredData, setFilteredData] = useState(exhibitionList);
+   const [filteredData, setFilteredData] = useState([]);
     //지역 메뉴바 상태관리 
     const [areaCategory,setAreaCategory] = useState('서울');
     const AreaOnSelect = useCallback(areaCategory =>{ 
@@ -185,4 +185,4 @@ const ExhibitListPage = () => {
     );
 }
 
-export default ExhibitListPage
+export default ExhibitListPage;

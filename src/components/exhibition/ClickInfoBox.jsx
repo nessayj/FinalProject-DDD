@@ -56,7 +56,7 @@ const Container = styled.div`
 const ClickInfoBox = ({data}) => {
     const navigate = useNavigate();
     const handleClick = (data) => {
-        navigate(`/exhibitInfo/${data.index}`)
+        navigate(`/exhibitInfo/${data.exhibitNo}`)
     }
     return(
         <Container imgUrl ={data.imgUrl}>

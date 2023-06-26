@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
 import Button from "./Button";
+import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 
 const Container = styled.div`
   position: relative;
@@ -55,8 +56,7 @@ const ImgBox = styled.div`
     position: relative;
     background-image: url(${props => props.imgUrl});
     background-repeat: no-repeat;
-    background-size:cover;
-    opacity: 0.3;
+    background-size: contain;
    
 
 
@@ -90,8 +90,8 @@ const Carousel = ({data}) => {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: true,
-        prevArrow: <PrevArrow>{'◀'}</PrevArrow>,
-        nextArrow: <NextArrow>{'▶'}</NextArrow>
+        prevArrow: <PrevArrow><MdKeyboardArrowLeft/></PrevArrow>,
+        nextArrow: <NextArrow><MdKeyboardArrowRight/></NextArrow>
       };
       return (
         <div>
@@ -99,9 +99,9 @@ const Carousel = ({data}) => {
             {data.map((e) => (
                 <Container key={e.index}>
                 <ImgBox imgUrl ={e.imgUrl}/>
-                <div className="name">{e.name}</div>
+                <div className="name">{e.exhibitName}</div>
                 <div className="date">{e.startDate} ~ {e.endDate}</div>
-                <div className="location">{e.place}</div>
+                <div className="location">{e.exhibitLoacation}</div>
                 <div className="btn">
                 <Button onClick={()=>console.log(e.name+ "홈페이지 이동 이벤트 발생")}>HOMEPAGE</Button>
                 </div>

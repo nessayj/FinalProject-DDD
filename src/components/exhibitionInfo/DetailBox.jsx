@@ -78,7 +78,7 @@ const ImgBox = styled.div`
 const DetailBox = ({data}) => {
     const navigate = useNavigate();
     const handleClick = (data) => {
-        navigate(`/reservation/${data.index}`)
+        navigate(`/reservation/${data.exhibitNo}`)
     }
 
     return(

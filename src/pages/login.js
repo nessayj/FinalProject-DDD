@@ -7,6 +7,8 @@ import ForgotPwModal from "../components/Login/ForgotPwModal";
 import Agreement from "../components/Login/Agreement";
 import PopupModal from "../components/Login/PopupModal";
 import MyPageBG from "../components/MyPage/MyPageBG";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Container = styled.div`
     width: 100vw;
@@ -50,11 +52,20 @@ const Login = () => {
         // console.log(showLogin)
       };
 
+      const navigate = useNavigate();
+
+      useEffect(() => {
+        if (isLogin) {
+          navigate('/myPage');
+        }
+      }, [isLogin, navigate]);
+    
+
 
     return(
         <>
 
-            {!isLogin ? (
+            {!isLogin && (
                 <div>
                     <Container>
                         <BGItmes/>
@@ -66,9 +77,8 @@ const Login = () => {
                     {showLogin === 3 && <SignUpModal showLogin={handleLoginModal0} showPopup={handleLoginModal4} />}
                     {showLogin === 4 && <PopupModal showLogin={handleLoginModal0} />}
                 </div>
-            ) : (
-                <MyPageBG />
-            )}
+            )
+            }
 
         </>
     )

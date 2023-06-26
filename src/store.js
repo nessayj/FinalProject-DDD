@@ -1,8 +1,6 @@
 import create from 'zustand';
 
 const useStore = create(set => ({ 
-    //  로그인 정보
-    isLogin : false,
     // 로그인 상태변경 함수
     setLoginStatus: (status) => set({ isLogin: status }),
 

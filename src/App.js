@@ -24,10 +24,10 @@ function App() {
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
-        <Route path="/board_list" element={<BoardList/>}/>
-        <Route path='/board_view' element={<Boardview/>}/>
-        <Route path="/board_list/write" element={<BoardWrite/>}/>
-        <Route path='/board_edit' element={<BoardEdit/>}></Route>
+        <Route path="/boardList" element={<BoardList/>}/>
+        <Route path='/boardView' element={<Boardview/>}/>
+        <Route path="/boardList/write" element={<BoardWrite/>}/>
+        <Route path='/boardEdit' element={<BoardEdit/>}></Route>
         <Route path="/myPage" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
       </Routes>

@@ -4,13 +4,11 @@ const HEADER = {"Content-type" : "application/json"}
 
 const DDDApi = {
 
-    // 자유게시판 목록 조회
-    boardList: async(freeBoard_No) => { 
-        const list = {
-            freeBoard_No: freeBoard_No 
-        };
-        return await axios.get(DDD_DOMAIN + "/board_list", list);
+    // 자유게시판 카테고리별 리스트 조회 
+    getFreeBoardsByCategory : async (category) => {
+        return await axios.get(`${DDD_DOMAIN}/boardList/${category}`, HEADER);
     },
+
     
     // 특정 게시판 번호의 게시물 내용 불러오기
     boardView: async(freeBoard_No) => {

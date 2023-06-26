@@ -120,14 +120,11 @@ const Section = styled.div`
 const Recommend = () => {
 
     const navigate = useNavigate();
+
     //  값을 불러오기위해 선언, 목록보기
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
-
-    // // 게시물 클릭시 문의하기 글 보이기
-    const [freeBoard_No, setFreeBoard_No] = useState(); 
    
 
-    
     //보여질 페이지 Item 개수(페이지네이션)
     const ITEMS_PAGE = 13;
     const [currentPage, setCurrentPage] = useState(0);
@@ -136,36 +133,29 @@ const Recommend = () => {
         setCurrentPage(selectedPage.selected);
     };
 
-    const filteredData = boardList.filter((item) => { 
-        return item.board_Ctg === '추천수다'; // 전체 데이터 boardList에서 카테고리: 추천수다에 해당하는 데이터만 필터링 1차
-      });
-
-
-    const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
     const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+    const currentPageData = boardList.slice(offset, offset + ITEMS_PAGE);
+    const pageCount = Math.ceil(boardList.length / ITEMS_PAGE); // 전체 페이지수
+      
+
+    // 자유게시판(boardList) 추천수다 목록 불러오기
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const category = '추천수다'; // 조회할 카테고리 이름 지정
+            const response = await DDDApi.getFreeBoardsByCategory(category);
+            setBoardList(response.data);
+            console.log(response.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+
 
     
-    // const는 두번 변동 적용 안되므로 let으로 재선언, 1차 필터링된 데이터를 페이지네이션 개수에 맞게 슬라이싱 적용
-    let currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE); 
-    // currentPageData = filteredData.filter(e => e.board_Ctg === '추천수다')
-        
-
-
-    // 자유게시판(boardList) 불러오기
-    useEffect(() => {
-        const boardData = async () => {
-            try {
-                const boardListData = await DDDApi.boardList(freeBoard_No);
-                // let tmp = boardListData.filter(e => e.board_Ctg === '추천수다') 
-                setBoardList(boardListData.data);
-                console.log(boardListData.data); // boardListData 잘 넘어오는지 재확인
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        boardData();
-    }, [freeBoard_No]);
-
         
     // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
     const onClickToWrite = () => {
@@ -187,14 +177,14 @@ const Recommend = () => {
                                 <th>조회수</th>
                                 <th>작성일</th>
                             </tr>
-                            {currentPageData.map((e) => (
-                            <tr key={e.freeBoard_No}>
-                                <td>{e.freeBoard_No}</td>
-                                <td>{e.board_Ctg}</td>
-                                <td>{e.board_Title}</td>
-                                <td>{e.user_Id}</td>
-                                <td>{e.views}</td>
-                                <td>{e.write_Date}</td>
+                            {currentPageData.map((boardList) => (
+                            <tr key={boardList.boardNo}>
+                                <td>{boardList.boardNo}</td>
+                                <td>{boardList.category}</td>
+                                <td>{boardList.title}</td>
+                                <td>{boardList.author}</td>
+                                <td>{boardList.views}</td>
+                                <td>{boardList.writeDate}</td>
                             </tr>
                              ))}
                     </table>

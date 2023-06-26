@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoMdPin, IoMdEye } from "react-icons/io";
-import CardData from "./CardData.json"
 import { useState, useEffect } from "react";
 import PageNation from "../../util/PageNation";
+import DDDApi from "../../api/DDDApi";
+
 
 const CardContainer = styled.div`
     max-width: 100vw;
@@ -109,40 +110,64 @@ const Card = () => {
 
     const navigate = useNavigate();
     const [selectedRegion, setSelectedRegion] = useState("");
-    const [filterRegion, setFilterRegion] = useState([]);
+//   const [filterRegion, setFilterRegion] = useState([]);
 
-    useEffect(() => {
-        setFilterRegion(CardData);
-      }, []);
-        
-        
-      const handleRegionChange = (event) => {
-        const selectedRegion = event.target.value;
-        setSelectedRegion(selectedRegion);
-    
-        console.log(selectedRegion);
-
-        // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
-        const filteredData = CardData.filter((item) =>  
-        selectedRegion ? item.region === selectedRegion : true
-    );
-        setFilterRegion(filteredData);
-    };
-
-
+    const [boardList, setBoardList] = useState([]); // boardList 불러오기
 
 
     //보여질 페이지 Item 개수(페이지네이션)
     const ITEMS_PAGE = 8;
     const [currentPage, setCurrentPage] = useState(0);
-    
+
     const handlePageClick = (selectedPage) => {
         setCurrentPage(selectedPage.selected);
     };
-    const pageCount = Math.ceil(CardData.length / ITEMS_PAGE); // 전체 페이지 수
-    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
 
-    const currentPageData = CardData.slice(offset, offset + ITEMS_PAGE);
+    const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
+    const currentPageData = boardList.slice(offset, offset + ITEMS_PAGE);
+    const pageCount = Math.ceil(boardList.length / ITEMS_PAGE); // 전체 페이지수
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const category = '동행찾기'; // 조회할 카테고리 이름 지정
+            const response = await DDDApi.getFreeBoardsByCategory(category);
+            setBoardList(response.data);
+            console.log(response.data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
+    
+    
+    
+    //   const handleRegionChange = (event) => {
+    //     const selectedRegion = event.target.value;
+    //     setSelectedRegion(selectedRegion);
+      
+    //     console.log(selectedRegion);
+      
+    //     // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
+    //     const filteredData = boardList.filter((item) => {
+    //       return selectedRegion ? item.region === selectedRegion : true;
+    //     });
+      
+    //     setFilterRegion(filteredData);
+    //   };
+       
+
+
+
+
+    
+    
+    
 
     // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
     const onClickToWrite = () => {
@@ -153,7 +178,8 @@ const Card = () => {
 
     return(
         <>
-        <SelectBox value={selectedRegion} onChange={handleRegionChange}>
+        {/* <SelectBox value={selectedRegion} onChange={handleRegionChange}> */}
+        <SelectBox value={selectedRegion}>
             <option value="">전체</option>
             <option value="서울">서울</option>
             <option value="경기/인천">경기/인천</option>
@@ -167,8 +193,7 @@ const Card = () => {
             <div className="container" key={index}>
                 
                 <div className="img_area">
-                    {/* <img src={data.imageUrl} alt="CardImage" className="cardimage" /> */}
-                    <img src={data.imageUrl} alt="CardImage" className="cardimage" />
+                    <img src={data.image} alt="CardImage" className="cardimage" />
                 </div>
                 
                 <div className="region">
@@ -177,13 +202,13 @@ const Card = () => {
                 
                 <h3 className="cardtitle">{data.title}</h3>
                 
-                <div className="cardnickname">{data.nickname}</div>
+                <div className="cardnickname">{data.author}</div>
                 
-                {data.date && <div className="datearea">{data.date}</div>}
+                {data.writeDate && <div className="datearea">{data.writeDate.substring(0, 10)}</div>}
                 
                 <div className="icon-container">
                     <IoMdEye className="icon" style={{color:'#686565'}} /> 
-                    {data.view && <div className="viewarea">{data.view}</div>}
+                    {data.views && <div className="viewarea">{data.views}</div>}
                     <IoChatbubbleEllipses className="icon" style={{color:'#2468ee'}} />
                     {data.reply && <div className="replyarea">{data.reply}</div>} 
                 </div>

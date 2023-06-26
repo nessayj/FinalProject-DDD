@@ -42,7 +42,7 @@ const Container = styled.div`
   `;
 const ExhibitInfoPage = () => {
 
-   //클릭한 정보id가져오기 
+   //클릭한 정보id가져오기 (전시번호 가지고오기)
     const { id } = useParams();
     //데이터 상태관리 
     const [exData, setExData] = useState({});
@@ -57,22 +57,10 @@ const ExhibitInfoPage = () => {
         },[]);
 
     useEffect(() => {
-      // const dataInfo = () => {
-      //   const foundData = exhibitionData.find((item) => item.index === parseInt(id));
-      //   setExData(foundData);
-      // };
-  
-      // dataInfo();
-
       const exhibitionDetail = async () => {
         try {
           const exhibitionView = await DDDApi.exhibitDetail(id);
           setExData(exhibitionView.data);
-          console.log("아이디값 : " + id);
-          console.log("데이터확인 : ", exhibitionView.data);
-          console.log("전시회 이름: " + exData[0].exhibitName);
-          console.log("전시회 시작일 : " + exData[0].startDate);
-
         } catch (e) {
           console.log(e);
         }

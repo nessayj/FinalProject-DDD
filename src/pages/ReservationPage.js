@@ -5,6 +5,8 @@ import exhibitionData from "../components/exhibition/exhibitionData";
 import ReservationCalendar from "../util/Calendar";
 import Button from '../util/Button';
 import { ImHome } from 'react-icons/im';
+import DDDApi from "../api/DDDApi";
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -80,19 +82,22 @@ const ReservationPage =  () => {
      //클릭한 정보id가져오기 
      const { id } = useParams();
      //데이터 상태관리 
-     const [exData, setExData] = useState(null);
+     const [exData, setExData] = useState([0]);
      useEffect(() => {
-        const dataInfo = () => {
-          const foundData = exhibitionData.find((item) => item.index === parseInt(id));
-          setExData(foundData);
-        };
-    
-        dataInfo();
+        const exhibitionDetail = async () => {
+          try {
+            const exhibitionView = await DDDApi.exhibitDetail(id);
+            setExData(exhibitionView.data);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+        exhibitionDetail();
       }, [id]);
     return(
         <>
-        {exData && 
-        <Container  imgUrl ={exData.imgUrl}>
+        {exData[0] && 
+        <Container  imgUrl ={exData[0].imgUrl}>
             <div className="reservationBox">
                <div className="infoBox">
                <div className="root">
@@ -101,9 +106,9 @@ const ReservationPage =  () => {
                 </div>
                <div className="imgBox"/>
                 <div className="textBox">
-                    <div className="title">{exData.name}</div>
-                    <div>{exData.startDate} ~ {exData.endDate}</div>
-                    <div>{exData.place}</div>
+                    <div className="title">{exData[0].exhibitName}</div>
+                    <div>{exData[0].startDate} ~ {exData[0].endDate}</div>
+                    <div>{exData[0].exhibitLocation}</div>
                 </div>
                </div>
                <div className="rightBox">

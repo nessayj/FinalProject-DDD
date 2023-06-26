@@ -25,9 +25,22 @@ const LoginApi = {
         }
         
         return await axios.post(DDD_DOMAIN + "/login/signup", signupCheck, HEADER);
+    },
+    
+    emaildup :async(inputEmail) => {
+        const emaildupCheck = {
+            email: inputEmail
+        }
+        return await axios.post(DDD_DOMAIN + "/login/emaildup", emaildupCheck, HEADER);
+    },
 
-
+    nicknamedup :async(inputNick) => {
+        const nicknamedupCheck = {
+            nickname: inputNick, 
+        }
+        return await axios.post(DDD_DOMAIN + "/login/nicknamedup", nicknamedupCheck, HEADER);
     }
+
 
     
 

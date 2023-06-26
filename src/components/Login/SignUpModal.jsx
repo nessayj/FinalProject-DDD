@@ -200,21 +200,65 @@ const SignUpModal = (props) => {
 
     // 이메일 유효성 검사 
     const onChangeEmail = (e) => {
-        const passwordCurrent = e.target.value ;
-        setInputEmail(passwordCurrent)
+        const emailCurrent = e.target.value ;
+        setInputEmail(emailCurrent);
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const emailCheck = regexEmail.test(inputEmail)
-        // console.log(inputEmail)
-        // console.log(emailCheck)
+        const emailCheck = regexEmail.test(emailCurrent);
+    
         if (!emailCheck) {
             setEmailMessage("이메일 형식으로 입력해주세요");
             setIsEmail(false);    
         } else {
-            setEmailMessage("올바른 형식 입니다.");
-            setIsEmail(true);
-            console.log(`isemail값 : ${isEmail} `)
+            // 이메일 형식이 올바르면 중복 검사를 수행합니다.
+            checkEmailDuplication(emailCurrent);
+        }
+    };
+
+    const checkEmailDuplication = async (email) => {
+        try {
+            const response = await LoginApi.emaildup(email);
+            if (response.status === 200) {
+                // console.log('이메일 중복 체크 중');
+                // console.log(response.data)
+                if(!response.data) {
+                    setEmailMessage("해당 이메일은 이미 사용 중입니다.");
+                    setIsEmail(false);
+                } else {
+                    setEmailMessage("사용하실 수 있는 이메일 입니다.");
+                    setIsEmail(true);
+                }
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
+
+    // 닉네임 체크 
+    const onChangeNick = (e) => {
+        const nickCurrent = e.target.value;
+        setInputNick(nickCurrent);
+        nickDuplication(nickCurrent);
+    }
+
+    const nickDuplication = async (nickname) => {
+        try {
+            const response = await LoginApi.nicknamedup(nickname);
+            if (response.status === 200) {
+                console.log('닉네임 중복 체크 중');
+                console.log(response.data)
+                if(!response.data) {
+                    setNickMessage("해당 닉네임은 이미 사용 중입니다.");
+                    setIsNick(false);
+                } else {
+                    setNickMessage("사용가능한 닉네입입니다. ");
+                    setIsNick(true);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
     // 비밀번호 정규식 검사 
     const onChangePwd = (e) => {
         setInputPwd(e.target.value)
@@ -251,13 +295,7 @@ const SignUpModal = (props) => {
         }
       };
       
-    // 닉네임 체크 
-    const onChangeNick = (e) => {
-        const nickCurrent = e.target.value;
-        setInputNick(nickCurrent);
-        // if()
-        // DB 생기면 추가 할 것
-    }
+
 
     const onChangeTel = (e) => {
         const telCurrent = e.target.value;
@@ -336,6 +374,7 @@ const onClickSignup = () => {
       
     signupFetchDate();
   };
+
 
 
     return(

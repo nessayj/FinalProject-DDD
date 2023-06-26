@@ -69,34 +69,49 @@ const Container = styled.div`
         background: #050E3D;
         color: white;
         }
+        .printDate {
+            margin-top: 0.5rem;
+            color: #050E3D;
+            font-size: 1.2em;
+            font-weight: bolder;
+        }
 
 `;
 const ReservationCalendar = () => {
-     //현재날짜 기준 
-     const [selectedDate, setSelectedDate] = useState(new Date());
-     const handleDateChange = (date) => {
-        setSelectedDate(date);
-     }
-    return(
-        <Container>
-        <Calendar
-            value={selectedDate}
-            onChange={handleDateChange}
-            formatDay={(locale, date) => {
-            const day = date.toLocaleString("en", {day: "numeric"});
-            const isSunday = date.getDay() === 0; // 일요일인지 확인
-            const isSaturday = date.getDay() === 6; // 토요일인지 확인
-            const style = {
-                            color: isSunday ? "red" : isSaturday ? "blue" : "inherit",
-                            };
-            return <span style={style}>{day}</span>;
-            }}
-            calendarType="US"
-            />
-        
-        </Container>
-    );
-}
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const formatDate = (date) => {
+       const year = date.getFullYear();
+       const month = String(date.getMonth() + 1).padStart(2, "0");
+       const day = String(date.getDate()).padStart(2, "0");
+       return `선택한 날짜: ${year}년 ${month}월 ${day}일`;
+    };
+
+    const handleDateChange = (date) => {
+       setSelectedDate(date);
+    };
+
+   return (
+       <Container>
+           <Calendar
+               value={selectedDate}
+               onChange={handleDateChange}
+               formatDay={(locale, date) => {
+                   const day = date.toLocaleString("en", { day: "numeric" });
+                   const isSunday = date.getDay() === 0;
+                   const isSaturday = date.getDay() === 6;
+                   const style = {
+                       color: isSunday ? "red" : isSaturday ? "blue" : "inherit",
+                   };
+                   return <span style={style}>{day}</span>;
+               }}
+               calendarType="US"
+           />
+           <div className="printDate">{formatDate(selectedDate)}</div>
+       </Container>
+   );
+};
+
 
 
 export default ReservationCalendar;

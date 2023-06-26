@@ -1,11 +1,12 @@
 import React ,{useState,useEffect} from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
-import exhibitionData from "../components/exhibition/exhibitionData";
+import { useNavigate } from "react-router-dom";
 import ReservationCalendar from "../util/Calendar";
 import Button from '../util/Button';
 import { ImHome } from 'react-icons/im';
 import DDDApi from "../api/DDDApi";
+import BasicDateCalendar from "../util/MuiCalandar";
 
 const Container = styled.div`
     display: flex;
@@ -26,6 +27,7 @@ const Container = styled.div`
         justify-content: center;
         align-items: center;
         padding: 20px;
+        gap: 1rem;
         border-radius: 10px;
        
        
@@ -72,11 +74,20 @@ const Container = styled.div`
             height: 50px;
             margin: 10px 0;
         }
+        .btnContainer{
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+        .calendar-container{
+            width: 20rem;
+        }
     }
     
 `;
 
 const ReservationPage =  () => {
+    const navigate = useNavigate();
     const rootData = ['>일정선택','>예매하기','>결제하기','>예매완료'];
 
      //클릭한 정보id가져오기 
@@ -94,6 +105,10 @@ const ReservationPage =  () => {
         }
         exhibitionDetail();
       }, [id]);
+
+      const handleCancle = () =>{
+        navigate(-1);
+      }
     return(
         <>
         {exData[0] && 
@@ -112,8 +127,13 @@ const ReservationPage =  () => {
                 </div>
                </div>
                <div className="rightBox">
-               <ReservationCalendar/>
+                <div className="calendar-container">
+               <BasicDateCalendar/>
+               </div>
+               <div className="btnContainer">
+               <Button onClick={handleCancle}>돌아가기</Button>
                <Button>다음 단계</Button>
+               </div>
                </div>
             </div>        
         </Container>

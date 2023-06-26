@@ -53,7 +53,6 @@ const DDDApi = {
     
     // 전시 상세정보
     exhibitDetail : async(exhibitNo) => {
-        console.log("엑시오스 전시회번호 : " + exhibitNo);
         return await axios.get(DDD_DOMAIN + `/exhibitions/${exhibitNo}`);
     },
 

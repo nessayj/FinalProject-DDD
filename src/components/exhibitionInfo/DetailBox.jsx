@@ -87,9 +87,9 @@ const DetailBox = ({data}) => {
         <Container imgUrl ={data.imgUrl}>
             <ImgBox imgUrl ={data.imgUrl}/>
             <div className="imgBox" />
-            <div className="name">{data.name}</div>
+            <div className="name">{data.exhibitName}</div>
             <div className="date">{data.startDate} ~ {data.endDate}</div>
-            <div className="location">{data.place}</div>
+            <div className="location">{data.exhibitLocation}</div>
             <div className="btn">
             <Button onClick={()=>handleClick(data)}>예약하기</Button>
             </div>

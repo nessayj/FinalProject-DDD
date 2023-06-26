@@ -63,9 +63,9 @@ const ClickInfoBox = ({data}) => {
         <div className="imgBox" >
         </div>
         <div className="textBox">
-            <div className="title">{data.name}</div>
+            <div className="title">{data.exhibitName}</div>
             <div>{data.startDate} ~ {data.endDate}</div>
-            <div>{data.place}</div>
+            <div>{data.exhibitLocation}</div>
             <div className="btn"><Button onClick={()=>handleClick(data)}>상세정보</Button></div>
             
         </div>

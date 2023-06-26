@@ -99,9 +99,9 @@ const InfoBox = ({data,selectedOption,onClick}) => {
         <div className="imgBox" >
         </div>
         <div className="textBox">
-            <div className="title">{data.name}</div>
+            <div className="title">{data.exhibitName}</div>
             <div>{data.startDate} ~ {data.endDate}</div>
-            <div>{data.place}</div>
+            <div>{data.exhibitLocation}</div>
         </div>
         </Container>
     );

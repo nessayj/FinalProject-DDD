@@ -30,7 +30,7 @@ const Category = styled.div`
     `}
     
 `;
-const categories = ['서울','경기/인천','충청','강원','경상도','전라/제주']
+const categories = ['서울','경기','인천','충청','강원','전북', '전남', '광주', '경북','경남','부산','제주']
 const AreaCategroy = ({onSelect,category})=> {
 
     const handleClick = categoryName => {

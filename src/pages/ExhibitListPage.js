@@ -6,7 +6,6 @@ import Categroy from '../components/exhibition/Category';
 import PageNation from "../util/PageNation";
 import AreaCategroy from "../components/exhibition/AreaCategroy";
 import Carousel from "../util/Carousel";
-import exhibitionData from "../components/exhibition/exhibitionData";
 import { useEffect } from "react";
 import InfoModal from "../components/exhibition/InfoModal";
 import ClickInfoBox from "../components/exhibition/ClickInfoBox";
@@ -104,46 +103,46 @@ const ExhibitListPage = () => {
     }, []);
 
    
-    // useEffect(() => {
-    //     if (category === "menu1") {
-    //     // 인기순 데이터로 리셋
-    //     setFilteredData(exhibitionData);
+    useEffect(() => {
+        if (category === "menu1") {
+        // 인기순 데이터로 리셋
+        setFilteredData(exhibitionList);
               
-    //     } else if (category === "menu2") {
-    //       setAreaCategory("서울");
-    //       const areaData = exhibitionData.filter((item) =>
-    //         item.location.includes(areaCategory)
-    //       );
-    //       setFilteredData(areaData);
+        } else if (category === "menu2") {
+          setAreaCategory("서울");
+          const areaData = exhibitionList.filter((item) =>
+            item.region.includes(areaCategory)
+          );
+          setFilteredData(areaData);
           
-    //     } else {
-    //       // 최신순 데이터로 리셋
-    //       const dateData = [...exhibitionData].sort((a, b) => {
-    //         const dateA = new Date(a.startDate);
-    //         const dateB = new Date(b.startDate);
-    //         return dateB - dateA;
-    //       });
-    //       setFilteredData(dateData);
-    //     }
-    //   }, [category]);
+        } else {
+          // 최신순 데이터로 리셋
+          const dateData = [...exhibitionList].sort((a, b) => {
+            const dateA = new Date(a.startDate);
+            const dateB = new Date(b.startDate);
+            return dateB - dateA;
+          });
+          setFilteredData(dateData);
+        }
+      }, [category]);
 
      //필터 데이터 
-  //  const [filteredData, setFilteredData] = useState(exhibitionList);
+   const [filteredData, setFilteredData] = useState(exhibitionList);
     //지역 메뉴바 상태관리 
     const [areaCategory,setAreaCategory] = useState('서울');
     const AreaOnSelect = useCallback(areaCategory =>{ 
         setAreaCategory(areaCategory);
         if(category === 'menu2'){
-            const areaData = exhibitionList.filter(item=> item.location.includes(areaCategory))
-            setExhibitionList(areaData);
+            const areaData = exhibitionList.filter(item=> item.region.includes(areaCategory))
+            setFilteredData(areaData);
             console.log(areaData);
         }
       
     },[category]);
 
-  const pageCount = Math.ceil(exhibitionList.length / ITEMS_PAGE); // 전체 페이지 수
+  const pageCount = Math.ceil(filteredData.length / ITEMS_PAGE); // 전체 페이지 수
   const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
-  const currentPageData = exhibitionList.slice(offset, offset + ITEMS_PAGE);
+  const currentPageData = filteredData.slice(offset, offset + ITEMS_PAGE);
 
   const [modalOpen,setModalOpen] = useState(false);
   const closeModal =() => {

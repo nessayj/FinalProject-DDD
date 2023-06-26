@@ -5,6 +5,7 @@ import LoginModal from "../components/Login/loginModal";
 import SignUpModal from "../components/Login/SignUpModal";
 import ForgotPwModal from "../components/Login/ForgotPwModal";
 import Agreement from "../components/Login/Agreement";
+import PopupModal from "../components/Login/PopupModal";
 
 const Container = styled.div`
     width: 100vw;
@@ -40,6 +41,10 @@ const Login = () => {
         setShowLogin(3);
         // console.log(showLogin)
       };
+    const handleLoginModal4 = () => { // 회원가입 완료 팝업
+        setShowLogin(4);
+        // console.log(showLogin)
+      };
 
     return(
         <>
@@ -57,8 +62,12 @@ const Login = () => {
                 showLogin === 2 && <Agreement showLogin={handleLoginModal0} showSignUp={handleLoginModal3}/>
             }
             {
-                showLogin === 3 && <SignUpModal showLogin={handleLoginModal0}/>
+                showLogin === 3 && <SignUpModal showLogin={handleLoginModal0} showPopup={handleLoginModal4}/>
             }
+            {
+                showLogin === 4 && <PopupModal showLogin={handleLoginModal0}/>
+            }
+
         </>
     )
 }

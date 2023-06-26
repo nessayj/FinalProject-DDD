@@ -365,7 +365,7 @@ const onClickSignup = () => {
           console.log('리스폰 데이터', response);
           if (response.status === 200) {
             console.log('회원가입이 되었습니다.');
-            props.showLogin(0)
+            props.showPopup()
           }
         } catch (e) {
           console.log(e);

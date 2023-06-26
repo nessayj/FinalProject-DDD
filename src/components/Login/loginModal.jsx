@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import DDDApi from "../../api/DDDApi";
+import LoginApi from "../../api/LoginApi";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     position: absolute;
@@ -102,6 +103,13 @@ const Modal = styled.div`
 
             }
         }
+        .loginMsg{
+            width: 70%;
+            height: 2rem;
+            /* background-color: red; */
+            font-size: .6rem;
+            padding-top: .4rem;
+        }
         .AskBlock{
             width: 70%;
             height: 4rem;
@@ -121,9 +129,11 @@ const Modal = styled.div`
 
 
 const LoginModal = (props) => {
+    const naviagte = useNavigate('')
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     const onChangeloginId = (e) => {
         setEmail(e.target.value);
@@ -133,27 +143,36 @@ const LoginModal = (props) => {
         setPassword(e.target.value);
     }
 
-    const onClickLogin = () => {
-        const loginFetchDate = async () => {
-            console.log('클릭됨')
-         try {
-
-           const response = await DDDApi.login(email, password);
-
-           console.log('리스폰 데이터' + response)
-
-           if(response.status === 200) {
-            console.log('로그인되었습니다. ')
-           } else {
-            console.log("아이디와 비밀번호가 일치하지 않습니다.")
-           }
-         }catch (e) {
-           console.log(e)
-         }
+    const getErrorMessage = (status) => {
+        if (status === 401) {
+          return "가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.";
+        } else {
+          return "오류가 발생했습니다. 다시 시도해주세요.";
         }
-        loginFetchDate();
-     }
+      };
 
+const onClickLogin = () => {
+  const loginFetchDate = async () => {
+    console.log('클릭됨');
+    try {
+      const response = await LoginApi.login(email, password);
+      console.log('리스폰 데이터' + response);
+      if (response.status === 200) {
+        naviagte('/')
+        console.log('로그인되었습니다.');
+      } else {
+        const errorMessage = getErrorMessage(response.status);
+        setErrorMsg(errorMessage);
+      }
+    } catch (e) {
+      console.log(e);
+      // 일반적으로, 네트워크 요청에 실패했을 때 HTTP 상태 코드는 사용할 수 없습니다.
+      // 이 경우에는 일반적인 에러 메시지를 설정합니다.
+      setErrorMsg('가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.');
+    }
+  };
+  loginFetchDate();
+};
    
 
 
@@ -177,6 +196,9 @@ const LoginModal = (props) => {
                         onChange={onChangeloginPwd}
                         placeholder="Password"
                     />
+                </div>
+                <div className="loginMsg">
+                    {errorMsg}
                 </div>
                 <div className="btnBlock">
                     <button onClick={onClickLogin}>로그인</button>

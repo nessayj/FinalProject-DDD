@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import LoginApi from "../../api/LoginApi";
 
 const Container = styled.div`
     position: absolute;
@@ -310,6 +311,32 @@ const SignUpModal = (props) => {
     //     return false;
     // };
 
+    
+const onClickSignup = () => {
+    const signupFetchDate = async () => {
+        console.log('클릭됨');
+        try {
+          const response = await LoginApi.signup(
+            inputEmail,
+            inputPwd,
+            inputNick,
+            inputName,
+            inputTel,
+            inputIns
+          );
+          console.log('리스폰 데이터', response);
+          if (response.status === 200) {
+            console.log('회원가입이 되었습니다.');
+            props.showLogin(0)
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      
+    signupFetchDate();
+  };
+
 
     return(
         <Container>
@@ -372,9 +399,9 @@ const SignUpModal = (props) => {
                 </div>
                 <div className="btnBlock">
                     <button 
-                        style={isEmail && isPwd && isConPw && isName && isTel ?  null : { backgroundColor: 'grey'}  }
+                        style={isEmail && isPwd && isConPw && isName && isTel ?  null : { backgroundColor: '#ddd'}  }
                         disabled={!isEmail || !isPwd || !isConPw || !isName || !isTel}
-                    >회원가입</button>
+                    onClick={onClickSignup}>회원가입</button>
                     <button onClick={props.showLogin}>돌아가기</button>
                 </div>
             </Modal>

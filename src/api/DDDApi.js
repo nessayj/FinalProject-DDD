@@ -35,17 +35,6 @@ const DDDApi = {
         return await axios.get(DDD_DOMAIN + `board_list/?keyword=${keyword}`);
     },
 
-    // 로그인
-    login : async(email, password) => {
-        console.log('입력받은 이메일' + email)
-        console.log('입력받은 패스워드' + password)
-        const loginCheck = {
-            email : email,
-            password : password
-        };
-        return await axios.post(DDD_DOMAIN + "/login/login", loginCheck, HEADER);
-    }   
-
 };
 
 export default DDDApi;

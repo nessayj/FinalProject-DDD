@@ -1,18 +1,36 @@
 import axios from "axios";
+import { getToken } from "../store"; // token값 받아오기 
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const HEADER = {"Content-type" : "application/json"}
 
-const LoginApi = {
 
+const LoginApi = {
     login : async(email, password) => {
-        console.log('입력받은 이메일' + email)
-        console.log('입력받은 패스워드' + password)
+
+        // token 값 설정
+        const token = getToken();
+        // header 추가
+        const config = {
+            headers : {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
         const loginCheck = {
             email : email,
             password : password
         };
-        return await axios.post(DDD_DOMAIN + "/login", loginCheck, HEADER);
+        return await axios.post(DDD_DOMAIN + "/login", loginCheck, config); // config 부분 같이 날리기
     },
+
+    // login : async(email, password) => {
+
+    //     const loginCheck = {
+    //         email : email,
+    //         password : password
+    //     };
+    //     return await axios.post(DDD_DOMAIN + "/login", loginCheck, HEADER);
+    // },
     
     signup : async(inputEmail, inputPwd, inputNick, inputName, inputTel, inputIns) => {
         const signupCheck = {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import LoginApi from "../../api/LoginApi";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../store.js"
 
 const Container = styled.div`
     position: absolute;
@@ -129,6 +130,11 @@ const Modal = styled.div`
 
 
 const LoginModal = (props) => {
+    // state 전역관리를 위한 useState
+    const setLoginStatus = useStore((state) => state.setLoginStatus);
+    const setToken = useStore((state) => state.setToken);
+
+
     const naviagte = useNavigate('')
 
     const [email, setEmail] = useState('')
@@ -153,17 +159,20 @@ const LoginModal = (props) => {
 
 const onClickLogin = () => {
   const loginFetchDate = async () => {
+    
     console.log('클릭됨');
     try {
-      const response = await LoginApi.login(email, password);
-      console.log('리스폰 데이터' + response);
-      if (response.status === 200) {
+        const response = await LoginApi.login(email, password);
+        const tokenDto = response.data; 
+        const accessToken = tokenDto.accessToken;
+    if (response.status === 200) {
+        setLoginStatus(true)
+        setToken(accessToken)
         naviagte('/')
-        console.log('로그인되었습니다.');
-      } else {
+    } else {
         const errorMessage = getErrorMessage(response.status);
         setErrorMsg(errorMessage);
-      }
+    }
     } catch (e) {
       console.log(e);
       // 일반적으로, 네트워크 요청에 실패했을 때 HTTP 상태 코드는 사용할 수 없습니다.

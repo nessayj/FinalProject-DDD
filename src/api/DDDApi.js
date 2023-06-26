@@ -44,12 +44,12 @@ const DDDApi = {
             password : password
         };
         return await axios.post(DDD_DOMAIN + "/login/login", loginCheck, HEADER);
-    },   
-
+    },
+    
     // 전시 리스트 출력
     exhibitionList : async() => {
         return await axios.get(DDD_DOMAIN + "/exhibitions/dbList");
-    },
+    },   
 
 };
 

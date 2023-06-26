@@ -16,8 +16,7 @@ const SelectedDateText = styled.div`
   font-weight: bold;
 `;
 
-export default function DateCalendarValue() {
-  const [value, setValue] = useState();
+const DateCalendarValue = ({ onDateChange, selectedDate }) => {
 
   const formatSelectedDate = (date) => {
     if (date) {
@@ -31,11 +30,13 @@ export default function DateCalendarValue() {
       <CalendarContainer>
         <DemoContainer components={['DateCalendar', 'DateCalendar']}>
           <DemoItem>
-            <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
+            <DateCalendar value={selectedDate} onChange={onDateChange} />
           </DemoItem>
         </DemoContainer>
-        <SelectedDateText>선택 날짜: {formatSelectedDate(value)}</SelectedDateText>
+        <SelectedDateText>선택 날짜: {formatSelectedDate(selectedDate)}</SelectedDateText>
       </CalendarContainer>
     </LocalizationProvider>
   );
 }
+
+export default DateCalendarValue;

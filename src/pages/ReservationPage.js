@@ -1,12 +1,12 @@
 import React ,{useState,useEffect} from "react";
-import styled from "styled-components";
-import { useParams } from "react-router";
-import { useNavigate } from "react-router-dom";
-import ReservationCalendar from "../util/Calendar";
-import Button from '../util/Button';
-import { ImHome } from 'react-icons/im';
-import DDDApi from "../api/DDDApi";
-import BasicDateCalendar from "../util/MuiCalandar";
+ import styled from "styled-components";
+// import { useParams } from "react-router";
+// import { useNavigate } from "react-router-dom";
+// import Button from '../util/Button';
+// import { ImHome } from 'react-icons/im';
+// import DDDApi from "../api/DDDApi";
+// import BasicDateCalendar from "../util/MuiCalandar";
+ import SelectDate from "../components/reservation/SelectDate";
 
 const Container = styled.div`
     display: flex;
@@ -40,13 +40,21 @@ const Container = styled.div`
     
     margin: 20px;
     .root{
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        flex-direction: row;
         text-align: left;
         width: 100%;
+        p{
+            cursor: pointer;
+        }
     }
     .imgBox{
+        margin-top: 1rem;
         overflow: hidden;
-        width: 400px;
-        height: 450px;
+        width: 100%;
+        height: 20rem;
         position: relative;
         background-image: url(${props => props.imgUrl});
         background-repeat: no-repeat;
@@ -90,57 +98,31 @@ const Container = styled.div`
 
 
 const ReservationPage =  () => {
-    const navigate = useNavigate();
-    const rootData = [' > 일정선택',' > 예매하기',' > 결제하기',' > 예매완료'];
+    // const navigate = useNavigate();
+    // const rootData = [' > 일정선택',' > 예매하기',' > 결제하기',' > 예매완료'];
 
-     //클릭한 정보id가져오기 
-     const { id } = useParams();
-     //데이터 상태관리 
-     const [exData, setExData] = useState([0]);
-     useEffect(() => {
-        const exhibitionDetail = async () => {
-          try {
-            const exhibitionView = await DDDApi.exhibitDetail(id);
-            setExData(exhibitionView.data);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        exhibitionDetail();
-      }, [id]);
+    //  //클릭한 정보id가져오기 
+    //  const { id } = useParams();
+    //  //데이터 상태관리 
+    //  const [exData, setExData] = useState([0]);
+    //  useEffect(() => {
+    //     const exhibitionDetail = async () => {
+    //       try {
+    //         const exhibitionView = await DDDApi.exhibitDetail(id);
+    //         setExData(exhibitionView.data);
+    //       } catch (e) {
+    //         console.log(e);
+    //       }
+    //     }
+    //     exhibitionDetail();
+    //   }, [id]);
 
-      const handleCancle = () =>{
-        navigate(-1);
-      }
+    //   const handleCancle = () =>{
+    //     navigate(-1);
+      //}
     return(
         <>
-        {exData[0] && 
-        <Container  imgUrl ={exData[0].imgUrl}>
-            <div className="reservationBox">
-               <div className="infoBox">
-               <div className="root">
-                <ImHome/>전시 상세정보 페이지
-                {rootData[0]}
-                </div>
-               <div className="imgBox"/>
-                <div className="textBox">
-                    <div className="title">{exData[0].exhibitName}</div>
-                    <div>{exData[0].startDate} ~ {exData[0].endDate}</div>
-                    <div>{exData[0].exhibitLocation}</div>
-                </div>
-               </div>
-               <div className="rightBox">
-                <div className="calendar-container">
-               <BasicDateCalendar/>
-               </div>
-               <div className="btnContainer">
-               <Button onClick={handleCancle}>돌아가기</Button>
-               <Button>다음 단계</Button>
-               </div>
-               </div>
-            </div>        
-        </Container>
-        }
+        <SelectDate/>
         </>
     );
 }

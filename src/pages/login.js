@@ -6,6 +6,7 @@ import SignUpModal from "../components/Login/SignUpModal";
 import ForgotPwModal from "../components/Login/ForgotPwModal";
 import Agreement from "../components/Login/Agreement";
 import PopupModal from "../components/Login/PopupModal";
+import MyPageBG from "../components/MyPage/MyPageBG";
 
 const Container = styled.div`
     width: 100vw;
@@ -22,6 +23,9 @@ const BlackBG = styled.div`
 `;
 
 const Login = () => {
+    // isLogin 상태 가져오기
+    const isLogin = window.localStorage.getItem('isLogin')
+
     // showLogin이 1, 2, 3으로 변할 때 각자 modal창 보여줌
     const [showLogin, setShowLogin] = useState(0);
     
@@ -46,27 +50,25 @@ const Login = () => {
         // console.log(showLogin)
       };
 
+
     return(
         <>
-            <Container>
-                <BGItmes/>
-                <BlackBG/>
-            </Container>
-            {
-                showLogin === 0 && <LoginModal showPw={ handleLoginModal1} showAgree={handleLoginModal2} />
-            }
-            {
-                showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0}/>
-            }
-            {
-                showLogin === 2 && <Agreement showLogin={handleLoginModal0} showSignUp={handleLoginModal3}/>
-            }
-            {
-                showLogin === 3 && <SignUpModal showLogin={handleLoginModal0} showPopup={handleLoginModal4}/>
-            }
-            {
-                showLogin === 4 && <PopupModal showLogin={handleLoginModal0}/>
-            }
+
+            {!isLogin ? (
+                <div>
+                    <Container>
+                        <BGItmes/>
+                        <BlackBG/>
+                    </Container>
+                    {showLogin === 0 && <LoginModal showPw={handleLoginModal1} showAgree={handleLoginModal2} />}
+                    {showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0} />}
+                    {showLogin === 2 && <Agreement showLogin={handleLoginModal0} showSignUp={handleLoginModal3} />}
+                    {showLogin === 3 && <SignUpModal showLogin={handleLoginModal0} showPopup={handleLoginModal4} />}
+                    {showLogin === 4 && <PopupModal showLogin={handleLoginModal0} />}
+                </div>
+            ) : (
+                <MyPageBG />
+            )}
 
         </>
     )

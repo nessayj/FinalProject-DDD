@@ -137,6 +137,7 @@ const LoginModal = (props) => {
 
     const naviagte = useNavigate('')
 
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
@@ -165,10 +166,16 @@ const onClickLogin = () => {
         const response = await LoginApi.login(email, password);
         const tokenDto = response.data; 
         const accessToken = tokenDto.accessToken;
+
     if (response.status === 200) {
         setLoginStatus(true)
         setToken(accessToken)
         naviagte('/')
+
+        window.localStorage.setItem('storageEmail', email)
+        window.localStorage.setItem('isLogin', true)
+        window.localStorage.setItem('accessToken', accessToken)
+
     } else {
         const errorMessage = getErrorMessage(response.status);
         setErrorMsg(errorMessage);

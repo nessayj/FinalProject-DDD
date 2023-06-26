@@ -69,14 +69,16 @@ const Container = styled.div`
     }
 }
 .rightBox{
-    
-        button {
-            height: 50px;
-            margin: 10px 0;
-        }
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
         .btnContainer{
+            width: 15rem;
+            height: 2rem;
             display: flex;
             flex-direction: row;
+            margin-top: 1rem;
             gap: 1rem;
         }
         .calendar-container{
@@ -86,9 +88,10 @@ const Container = styled.div`
     
 `;
 
+
 const ReservationPage =  () => {
     const navigate = useNavigate();
-    const rootData = ['>일정선택','>예매하기','>결제하기','>예매완료'];
+    const rootData = [' > 일정선택',' > 예매하기',' > 결제하기',' > 예매완료'];
 
      //클릭한 정보id가져오기 
      const { id } = useParams();

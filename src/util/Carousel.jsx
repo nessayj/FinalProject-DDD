@@ -7,6 +7,18 @@ import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
 
 const Container = styled.div`
   position: relative;
+  img{
+      overflow: hidden;
+        width: 12rem;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 120px;
+        transform: translateX(-50%);
+        background-image: url(${props => props.imgUrl});
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
  .name {
         color : black;
         font-weight: bolder;
@@ -40,6 +52,7 @@ const Container = styled.div`
       top: calc(80px + 7rem);
       right: 40px;
     }
+
     @media (max-width: 768px) {
     .name{
       font-size: 1.5rem;
@@ -56,7 +69,8 @@ const ImgBox = styled.div`
     position: relative;
     background-image: url(${props => props.imgUrl});
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    opacity: 0.3;
    
 
 
@@ -82,6 +96,12 @@ cursor: pointer;
 
 `;
 
+const SliderContainer = styled.div`
+  background-image: url(${props => props.imgUrl});
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.3;
+`
 
 const Carousel = ({data}) => {
     const settings = {
@@ -97,14 +117,15 @@ const Carousel = ({data}) => {
         <div>
           <Slider {...settings}>
             {data.map((e) => (
-                <Container key={e.index}>
+                <Container key={e.index} >
                 <ImgBox imgUrl ={e.imgUrl}/>
+                <img src={e.imgUrl}></img>
                 <div className="name">{e.exhibitName}</div>
                 <div className="date">{e.startDate} ~ {e.endDate}</div>
-                <div className="location">{e.exhibitLoacation}</div>
+                <div className="location">{e.exhibitLocation}</div>
                 <div className="btn">
                 <Button onClick={()=>console.log(e.name+ "홈페이지 이동 이벤트 발생")}>HOMEPAGE</Button>
-                </div>
+                  </div>
                 </Container>
             ))}
           </Slider>

@@ -166,7 +166,7 @@ const Card = () => {
 
 
     
-    
+
     
 
     // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
@@ -199,16 +199,13 @@ const Card = () => {
                 <div className="region">
                     <IoMdPin style={{fontSize:'1.2em', color:'#528BF9'}}/>{data.region}
                 </div>
-                
                 <h3 className="cardtitle">{data.title}</h3>
-                
                 <div className="cardnickname">{data.author}</div>
-                
-                {data.writeDate && <div className="datearea">{data.writeDate.substring(0, 10)}</div>}
+                <div className="datearea">{data.writeDate.substring(0, 10)}</div>
                 
                 <div className="icon-container">
                     <IoMdEye className="icon" style={{color:'#686565'}} /> 
-                    {data.views && <div className="viewarea">{data.views}</div>}
+                    <div className="viewarea">{data.views}</div>
                     <IoChatbubbleEllipses className="icon" style={{color:'#2468ee'}} />
                     {data.reply && <div className="replyarea">{data.reply}</div>} 
                 </div>

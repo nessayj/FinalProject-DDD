@@ -152,129 +152,189 @@ const RightBox = styled.div`
     /* background-color: red; */
 `;
 
-
-
 const EditInfo = (props) => {
     const storageEmail = window.localStorage.getItem("storageEmail")
-    const accessToken = window.localStorage.getItem('accessToken')
-
-
-    // console.log(storageEmail)
-    // console.log(accessToken)
-
-    const naviagte = useNavigate('')
-
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errorMsg, setErrorMsg] = useState('')
-
-    const onChangeloginId = (e) => {
-        setEmail(e.target.value);
-    }
-
-    const onChangeloginPwd = (e) => {
-        setPassword(e.target.value);
-    }
-
-
-    const getErrorMessage = (status) => {
-        if (status === 401) {
-            return "가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.";
-        } else {
-            return "오류가 발생했습니다. 다시 시도해주세요.";
-        }
+  
+    const [responseData, setResponseData] = useState(null);
+  
+    useEffect(() => {
+        const infoFetchDate = async () => {
+            const response = await MyPageApi.info(storageEmail);
+            // console.log(response.data[0]);
+            setResponseData(response.data[0]);
+            console.log(responseData)
         };
-
-    const onClickEdit = () => {
-      const infoFetchDate = async () => {
-        
-        console.log('클릭됨');
-        try {
-            const response = await MyPageApi.info(storageEmail, accessToken);
-            console.log(response.data)
-
-        
-            if (response.status === 200) {
-                console.log('리스폰')
-        
-        
-            } else {
-                const errorMessage = getErrorMessage(response.status);
-                setErrorMsg(errorMessage);
-                console.log('인증 오류 ')
-            }
-
-        } catch (e) {
-            console.log(e);
-            // 일반적으로, 네트워크 요청에 실패했을 때 HTTP 상태 코드는 사용할 수 없습니다.
-            // 이 경우에는 일반적인 에러 메시지를 설정합니다.
-            setErrorMsg('가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.');
-        }
-      };
-      infoFetchDate();
-    };
-
-    // useEffect(() => {
-    //     // console.log('useeEffect 실행')
-    //     onClickEdit();
-    //   }, []);
-       
-
+        infoFetchDate();
+    }, []);
+    
 
     return (
-        <>   
-        <button onClick={onClickEdit}>data가져오기</button>
+      <> 
+      { responseData && ( 
             <EditBlock>
                 <div className='title' >내 정보 수정</div>
                 <Edit>
                     <LeftBox>
                         <p>이메일</p>
                         <div className="textBox">
-                            <input type="text" style={{backgroundColor:'#eee', border:'1px solid #888'}} defaultValue={member_info.email} disabled/>
+                            <input type="text" style={{backgroundColor:'#eee', border:'1px solid #888'}} 
+                            defaultValue={responseData.email} 
+                            disabled/>
                         </div>
                         <p>비밀번호</p>
                         <div className="textBox">
-                            <input type="password" defaultValue={member_info.pwd} />
+                            <input type="password"  />
                         </div>
                         <p>비밀번호 확인</p>
                         <div className="textBox">
-                            <input type="password"  defaultValue={member_info.pwd}/>
+                            <input type="password"  />
                         </div>
                         <p>닉네임</p>
                         <div className="textBox">
-                            <input type="text" defaultValue={member_info.nickName}  />
+                            <input type="text" 
+                            defaultValue={responseData.nickname}
+                            />
                         </div>
 
                     </LeftBox>
                     <RightBox>
                         <p>이름</p>
                         <div className="textBox">
-                            <input type="text" defaultValue={member_info.name} />
+                            <input type="text" 
+                            defaultValue={responseData.name} 
+                            />
                         </div>
                         <p>연락처</p>
-                        <div className="textBox">
-                            <input type="tel" defaultValue={member_info.tel}  />
+                        <div className="textBox">   
+                            <input type="tel" 
+                            defaultValue={responseData.tel}  
+                            />
                         </div>
                         <p>인스타그램(선택사항)</p>
                         <div className="textBox">
-                            <input type="text" defaultValue={member_info.inst} />
+                            <input type="text" 
+                            defaultValue={responseData.inst} 
+                            />
                         </div>
                     </RightBox>
                     
                 </Edit>
                 <div className="introducBlock">
                     <p>내 소개</p>
-                    <textarea className='introarea' name="" id="" cols="20" rows="5" style={{width:'88%'}} defaultValue={member_info.introuduce}></textarea>
+                    <textarea className='introarea' name="" id="" cols="20" rows="5" style={{width:'88%'}} 
+                    defaultValue={responseData.introuduce}
+                    />
                 </div>
                 <div className="btnBlock">
                     <button>저장</button>
                     <button onClick={()=>{props.setShowPage('마이페이지')}}>취소</button>
                 </div>
-            </EditBlock>
-        </>
-       
+            </EditBlock>)
+            }
+      </>
     );
-};
+  };
+  
+  export default EditInfo;
+  
 
-export default EditInfo;
+// const EditInfo = (props) => {
+//     const storageEmail = window.localStorage.getItem("storageEmail")
+  
+//     const [loading, setLoading] = useState(false);
+//     const [responseData, setResponseData] = useState(null);
+  
+//     const infoFetchDate = async () => {
+//       setLoading(true);
+//       try {
+//         const response = await MyPageApi.info(storageEmail);
+//         if (response.status === 200) {
+//           setResponseData(response.data);
+//           console.log(responseData)
+//         } else {
+//           console.log('인증 오류');
+//         }
+//       } catch (e) {
+//         console.log(e);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+  
+//     useEffect(() => {
+//       infoFetchDate();
+//     }, []);
+  
+//     if (loading) {
+//       return <div>Loading...</div>;
+//     }
+
+//     return (
+//         <> 
+//         { responseData && ( 
+//             <EditBlock>
+//                 <div className='title' >내 정보 수정</div>
+//                 <Edit>
+//                     <LeftBox>
+//                         <p>이메일</p>
+//                         <div className="textBox">
+//                             <input type="text" style={{backgroundColor:'#eee', border:'1px solid #888'}} 
+//                             defaultValue={responseData.email} 
+//                             disabled/>
+//                         </div>
+//                         <p>비밀번호</p>
+//                         <div className="textBox">
+//                             <input type="password"  />
+//                         </div>
+//                         <p>비밀번호 확인</p>
+//                         <div className="textBox">
+//                             <input type="password"  />
+//                         </div>
+//                         <p>닉네임</p>
+//                         <div className="textBox">
+//                             <input type="text" 
+//                             defaultValue={responseData.nickName}
+//                             />
+//                         </div>
+
+//                     </LeftBox>
+//                     <RightBox>
+//                         <p>이름</p>
+//                         <div className="textBox">
+//                             <input type="text" 
+//                             defaultValue={responseData.name} 
+//                             />
+//                         </div>
+//                         <p>연락처</p>
+//                         <div className="textBox">   
+//                             <input type="tel" 
+//                             defaultValue={responseData.tel}  
+//                             />
+//                         </div>
+//                         <p>인스타그램(선택사항)</p>
+//                         <div className="textBox">
+//                             <input type="text" 
+//                             defaultValue={responseData.inst} 
+//                             />
+//                         </div>
+//                     </RightBox>
+                    
+//                 </Edit>
+//                 <div className="introducBlock">
+//                     <p>내 소개</p>
+//                     <textarea className='introarea' name="" id="" cols="20" rows="5" style={{width:'88%'}} 
+//                     defaultValue={responseData.introuduce}
+//                     />
+//                 </div>
+//                 <div className="btnBlock">
+//                     <button>저장</button>
+//                     <button onClick={()=>{props.setShowPage('마이페이지')}}>취소</button>
+//                 </div>
+//             </EditBlock>)
+//             }
+//         </>
+       
+//     );
+// };
+
+// export default EditInfo;

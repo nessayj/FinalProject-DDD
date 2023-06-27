@@ -87,7 +87,7 @@ const NavigateBar = () => {
     const menu = [
         {name : "HOME", address : "/"},
         {name : "전시", address : "/exhibitList", subMenu: ["전시", "무료전시", "온라인전시"]},
-        {name : "게시판", address: "/board_list"},
+        {name : "게시판", address: "/boardList"},
         {name : "고객센터", address: "/"}
     ];
 

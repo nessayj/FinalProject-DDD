@@ -6,8 +6,9 @@ import Button from "../../util/Button";
 import { ImHome } from 'react-icons/im';
 import DDDApi from "../../api/DDDApi";
 import BasicDateCalendar from "../../util/MuiCalandar";
+import InputInfo from "./InputInfo";
 
-const Container = styled.div`
+export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,23 +22,18 @@ const Container = styled.div`
     .reservationBox{
         background-color: #F4F8FF;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         padding: 20px;
         gap: 1rem;
         border-radius: 10px;
-       
-       
     }
-    .infoBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    margin: 20px;
+    .bodyContainer{
+        display: flex;
+        flex-direction: row;
+    }
     .root{
         display: flex;
         align-items: center;
@@ -49,6 +45,14 @@ const Container = styled.div`
             cursor: pointer;
         }
     }
+    .infoBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    margin: 20px;
+   
     .imgBox{
         margin-top: 1rem;
         overflow: hidden;
@@ -114,6 +118,7 @@ const SelectDate =  () => {
           try {
             const exhibitionView = await DDDApi.exhibitDetail(id);
             setExData(exhibitionView.data);
+            console.log(exData[0].exhibitPrice)
           } catch (e) {
             console.log(e);
           }
@@ -131,16 +136,26 @@ const SelectDate =  () => {
         setSelectedDate(date);
       };
 
+      // 결제정보(예매정보)입력창으로 이동
+      const [goToReservation, setGoToReservation] = useState(false);
+      const handleNextStep = () => {
+            setGoToReservation(true);
+      };
+      
+
+
     return(
         <>
         {exData[0] && 
         <Container  imgUrl ={exData[0].imgUrl}>
+            {goToReservation ? (<InputInfo rootData={rootData} reservationData={exData[0]} id={id}/>) :(
             <div className="reservationBox">
-               <div className="infoBox">
-               <div className="root">
+                <div className="root">
                 <ImHome/><p onClick={handleCancle}>전시 상세정보 페이지</p>
                 <p>{rootData[0]}</p>
                 </div>
+                <div className="bodyContainer">
+               <div className="infoBox">
                <div className="imgBox"/>
                 <div className="textBox">
                     <div className="title">{exData[0].exhibitName}</div>
@@ -150,14 +165,16 @@ const SelectDate =  () => {
                </div>
                <div className="rightBox">
                 <div className="calendar-container">
-               <BasicDateCalendar onDateChange={handleDateChange} selectedDate={selectedDate}/>
+               <BasicDateCalendar onDateChange={(date) => handleDateChange(date || null)} selectedDate={selectedDate}/>
                </div>
                <div className="btnContainer">
-               <Button onClick={handleCancle}>돌아가기</Button>
-               <Button>다음 단계</Button>
+               <Button onClick={handleCancle}>이전 단계</Button>
+               <Button onClick={handleNextStep} disabled={selectedDate===null}>다음 단계</Button>
                </div>
                </div>
-            </div>        
+               </div>
+            </div>
+            )}        
         </Container>
         }
         </>

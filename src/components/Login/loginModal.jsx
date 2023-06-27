@@ -164,17 +164,23 @@ const onClickLogin = () => {
     console.log('클릭됨');
     try {
         const response = await LoginApi.login(email, password);
-        const tokenDto = response.data; 
-        const accessToken = tokenDto.accessToken;
+        const tokenDto = response.data.accessToken; 
+        // const accessToken = tokenDto.accessToken;
 
     if (response.status === 200) {
-        setLoginStatus(true)
-        setToken(accessToken)
+        // setLoginStatus(true)
+        // setToken(accessToken)
         naviagte('/')
 
         window.localStorage.setItem('storageEmail', email)
         window.localStorage.setItem('isLogin', true)
-        window.localStorage.setItem('accessToken', accessToken)
+        window.localStorage.setItem('accessToken', tokenDto)
+
+        const storageEmail = window.localStorage.getItem('storageEmail')
+        const accessToken = window.localStorage.getItem('accessToken')
+
+        console.log(storageEmail)
+        console.log(accessToken)
 
     } else {
         const errorMessage = getErrorMessage(response.status);

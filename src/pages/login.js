@@ -52,14 +52,14 @@ const Login = () => {
         // console.log(showLogin)
       };
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
 
-      useEffect(() => {
-        if (isLogin) {
-          navigate('/myPage');
-        }
-      }, [isLogin, navigate]);
-    
+    useEffect(() => {
+    if (isLogin) {
+        navigate('/myPage');
+    }
+    }, [isLogin, navigate]);
+
 
 
     return(

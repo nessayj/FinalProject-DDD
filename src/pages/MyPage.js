@@ -4,6 +4,8 @@ import MyPageBG from "../components/MyPage/MyPageBG";
 const MyPage = () => {
     const removeLocalstorage = () =>{
         localStorage.removeItem("isLogin");
+        localStorage.removeItem("storageEmail");
+        // localStorage.removeItem("accessToken");
     }
 
     return(

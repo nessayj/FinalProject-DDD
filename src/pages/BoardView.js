@@ -1,10 +1,14 @@
 import styled from "styled-components";
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import profile from "./../resources/프로필.png";
+import postimage from "./../resources/게시판기본이미지.gif";
 import BoardComment from "../components/Board/BoardComment";
+import DDDApi from "../api/DDDApi";
 
 
 const ViewWrap = styled.div`
@@ -133,7 +137,7 @@ const TitleView = styled.h3`
     width: 93%;
     margin-left: 4px;
     padding: 12px;
-    font-size: 1.3em;
+    font-size: 1.1em;
     border: 1px solid #ccc;
     border-radius: 12px;
 `;
@@ -157,7 +161,7 @@ const Contents = styled.div`
     }
 
     img {
-        width: 50%; /* 이미지의 최대 가로 너비를 설정 */
+        width: 60%; /* 이미지의 최대 가로 너비를 설정 */
         height: 50%; 
         border-radius: 12px;
         align-items: center;
@@ -168,7 +172,70 @@ const Contents = styled.div`
     }
 `;
 
+
+
 const Boardview = () => {
+    const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴
+    let params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
+    let boardNo = params.no;
+
+
+     // 게시물 삭제, 수정 팝업
+    //  const [modalOpen, setModalOpen] = useState(false); // 모달에 띄워줄 메세지 문구
+    //  const [modalOption, setModalOption] = useState('');
+    const [comment, setComment] = useState(""); // 모달창 안내 문구
+
+    //  const closeModal = () => {
+    //     setModalOpen(false);
+    // };
+
+
+    const onClickEdit = () => {
+        // setModalOpen(true);
+        // setModalOption('수정');
+        setComment("수정하시겠습니까?");
+    }
+    const onClickDelete = () => {
+        // setModalOpen(true);
+        // setModalOption('삭제');
+        setComment("삭제하시겠습니까?");
+    }
+
+    // const [commentList, setCommentList] = useState([]); // 댓글
+
+    // 작성일자(연도-월-일)로 추출
+    const formattedDate = boardView?.writeDate.substring(0, 10);
+
+       // 본문 불러오기
+       useEffect(() => {
+        const boardViewLoad = async () => {
+            try {
+                // 게시물 내용 불러오기
+                const response = await DDDApi.getBoard(boardNo);
+                const data = response.data;
+                setBoardView(data);
+            } catch (e) {
+                console.log(e);
+            } 
+        };
+        boardViewLoad();
+    }, [boardNo]);
+
+    // 수정, 삭제는 본인만 가능하도록 노출
+    const isLogin = window.localStorage.getItem("isLogin");
+    const getId = window.localStorage.getItem("Id");
+
+
+    const showEditBtn = () => {
+        return isLogin === true && boardView?.author === getId;
+    }
+
+    // 로그인 상태 확인
+    console.log(isLogin);
+
+    //작성자와 id 일치 여부 확인
+    console.log("boardView?.author:", boardView?.author);
+    console.log("getId:", getId);
 
 
 
@@ -184,11 +251,11 @@ const Boardview = () => {
                     <Select
                     labelId="demo-simple-select-readonly-label"
                     id="demo-simple-select-readonly"
-                    value="추천수다"
+                    value={boardView?.category || ''}
                     label="카테고리"
                     inputProps={{ readOnly: true }}
                     sx={{ height: '2.5em' }}>
-                    <MenuItem value="추천수다">추천수다</MenuItem>
+                    <MenuItem value={boardView?.category }>{boardView?.category}</MenuItem>
                     </Select>
                 </FormControl>
 
@@ -197,41 +264,42 @@ const Boardview = () => {
                     <Select
                     labelId="demo-simple-select-readonly-label"
                     id="demo-simple-select-readonly"
-                    value="서울"
+                    value={boardView?.region || ''}
                     label="지역선택"
                     inputProps={{ readOnly: true }}
                     sx={{ height: '2.5em' }}>
-                    <MenuItem value="서울">서울</MenuItem>
+                    <MenuItem value={boardView?.region}>{boardView?.region}</MenuItem>
                     </Select>
                 </FormControl>
+                {showEditBtn() ? (
                 <div className="editBtn">
-                    <button className="upBtn">수정하기</button>
-                    <button className="delBtn">삭제하기</button>
+                    <button className="upBtn" onClick={onClickEdit}>수정하기</button>
+                    <button className="delBtn" onClick={onClickDelete}>삭제하기</button>
                 </div>
+                ) : null}
+
                 </div>
-                <TitleView>게시글 제목</TitleView>
+                <TitleView>{boardView?.title}</TitleView> 
                 
                 <div className="authorinfo">
                     <img src={profile} alt="프로필 이미지" />
-                    <div className="author">작성자</div>
+                    <div className="author">{boardView?.author}</div>
                 </div>
                 
                 <div className="dateview">
-                    <div className="write_date">작성일 :</div>
-                    <div className="views">조회수 :</div>
+                    <div className="write_date">작성일 : {formattedDate}</div>
+                    <div className="views">조회수 : {boardView?.views}</div>
                 </div>
-                
+            
                 <Contents>
                     <div className="image_area">
-                        <img src={profile} alt="프로필 이미지" />
-                    </div>
-                    <div className="text_area"> 
-                        안녕하세요~<br /> 
-                        주말에 친구들과 전시회를 가려고 하는데 재밌게 즐길 수 있을 만한 전시회 있을까요?<br /> 
-                        작품 구경도 하면서 사진도 자유롭게 찍을 수 있는 
-                        서울에 가볼만한 전시회 추천 부탁드립니다 :D <br />
-                        감사합니다.
-                    </div>
+                    {boardView?.image ? (
+                    <img src={boardView.image} alt="업로드 이미지" />
+                    ) : (
+                    <img src={postimage} alt="기본 이미지" />
+                    )}
+                </div>
+                    <div className="text_area">{boardView?.contents}</div>
                 </Contents>
             </div>
 

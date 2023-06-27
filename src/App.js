@@ -27,9 +27,9 @@ function App() {
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
         <Route path="/payment" element={<PayTicket/>}/>
         <Route path="/boardList" element={<BoardList/>}/>
-        <Route path='/boardView' element={<Boardview/>}/>
+        <Route path="/boardView/:no" element={<Boardview/>}/>
         <Route path="/boardList/write" element={<BoardWrite/>}/>
-        <Route path='/boardEdit' element={<BoardEdit/>}></Route>
+        <Route path="/boardEdit" element={<BoardEdit/>}></Route>
         <Route path="/myPage" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
       </Routes>

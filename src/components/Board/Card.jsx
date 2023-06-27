@@ -6,6 +6,7 @@ import { IoMdPin, IoMdEye } from "react-icons/io";
 import { useState, useEffect } from "react";
 import PageNation from "../../util/PageNation";
 import DDDApi from "../../api/DDDApi";
+import { Link } from "react-router-dom";
 
 
 const CardContainer = styled.div`
@@ -190,8 +191,8 @@ const Card = () => {
         </SelectBox>
         <CardContainer> 
             {currentPageData.map((data, index) => (
-            <div className="container" key={index}>
-                
+                <div className="container" key={index}>
+                <Link to={`/boardView/${data.boardNo}`} className="boardView_link" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="img_area">
                     <img src={data.image} alt="CardImage" className="cardimage" />
                 </div>
@@ -209,7 +210,9 @@ const Card = () => {
                     <IoChatbubbleEllipses className="icon" style={{color:'#2468ee'}} />
                     {data.reply && <div className="replyarea">{data.reply}</div>} 
                 </div>
+                </Link>
             </div>
+            
         ))}
       </CardContainer> 
        <PageNation pageCount={pageCount} onPageChange={handlePageClick} />

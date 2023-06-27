@@ -13,6 +13,7 @@ import Boardview from './pages/BoardView';
 import BoardEdit from './pages/BoardEdit';
 import AdminMain from './components/admin/AdminMain';
 import PopupModal from './components/Login/PopupModal';
+import PayTicket from './components/reservation/PayTicket';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
+        <Route path="/payment" element={<PayTicket/>}/>
         <Route path="/boardList" element={<BoardList/>}/>
         <Route path='/boardView' element={<Boardview/>}/>
         <Route path="/boardList/write" element={<BoardWrite/>}/>

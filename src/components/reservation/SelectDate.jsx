@@ -33,6 +33,7 @@ export const Container = styled.div`
     .bodyContainer{
         display: flex;
         flex-direction: row;
+        align-items: center;
     }
     .root{
         display: flex;

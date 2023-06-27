@@ -5,15 +5,7 @@ import {ImHome} from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import SelectDate from "./SelectDate";
 import { Container } from "./SelectDate";
-import Input  from "./Input";
-
-const ReservationWrapper = styled.div`
-  // 스타일링 설정
-`;
-
-const InfoWrapper = styled.div`
-  // 스타일링 설정
-`;
+import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 
 const PriceQuantityWrapper = styled.div`
   font-size: 1rem;
@@ -27,12 +19,21 @@ const PriceQuantityWrapper = styled.div`
     border: none;
     margin: 1rem;
   }
+  .wrapperHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
   h4{
-    margin: 0 0 1rem 0;
+    margin: 0;
   }
   .container{
-    display: flex;
+    display: ${props => (props.isExpanded ? 'flex' : 'none')}; /* 수정: container의 표시 상태를 조건부로 설정 */
     flex-direction: column;
+    margin: 1rem 0;
   }
 `;
 
@@ -40,6 +41,7 @@ const BuyerInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 20rem;
+  margin-bottom: 1rem;
   span{
     display: flex;
     flex-direction: row;
@@ -65,13 +67,21 @@ input:focus{
 p{
   width: 20%;
 }
-h4{
+.wrapperHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+  h4{
     margin: 0;
   }
   .container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: ${props => (props.isExpanded ? 'flex' : 'none')}; /* 수정: container의 표시 상태를 조건부로 설정 */
+    flex-direction: column;
+    margin: 1rem 0;
   }
 `;
 
@@ -80,14 +90,23 @@ width: 100%;
   flex-direction: column;
   display: flex;
   gap: 0.2rem;
-  h4{
-    margin: 0;
-    border: 1px solid black;
-  }
-  .container{
+  margin-bottom: 1rem;
+  .wrapperHeader{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
+  h4{
+    margin: 0;
+  }
+  .container{
+    display: ${props => (props.isExpanded ? 'flex' : 'none')}; /* 수정: container의 표시 상태를 조건부로 설정 */
+    flex-direction: row;
+    align-items: center;
+    margin: 1rem 0;
   }
 `;
 
@@ -97,13 +116,23 @@ const PaymentMethodWrapper = styled.div`
   flex-direction: column;
   display: flex;
   gap: 0.2rem;
+  margin-bottom: 1rem;
+  .wrapperHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.3rem;
+  }
   h4{
     margin: 0;
   }
   .container{
-    display: flex;
+    display: ${props => (props.isExpanded ? 'flex' : 'none')}; /* 수정: container의 표시 상태를 조건부로 설정 */
     flex-direction: row;
     align-items: center;
+    margin: 1rem 0;
   }
 `;
 
@@ -113,6 +142,7 @@ const ReservationButtonWrapper = styled.div`
   gap: 1rem;
   width: 100%;
   height: 2rem;
+  margin-top: 2rem;
 `;
 const RightContainer =styled.div`
     display: flex;
@@ -126,9 +156,7 @@ const DeliveryMethodRadio = styled.input`
   
 `;
 
-const DeliveryMethodLabel = styled.label`
-  /* 스타일링 설정 */
-`;
+
 const InputInfo = ({rootData, reservationData}) => {
   // 예매 관련 상태 및 함수
   const navigate = useNavigate();
@@ -188,8 +216,30 @@ const InputInfo = ({rootData, reservationData}) => {
 
   // 예매하기 버튼 클릭 핸들러
   const handleReservation = () => {
-    // 예매 처리 로직
+    navigate("/payment");
   };
+
+  // 전체 Wrapper 열리고 닫히게 
+  const [isExpandedDeliever, setIsExpandedDeliever] = useState(false);
+  const [isExpandedPayment, setIsExpandedPayment] = useState(false);
+  const [isExpandedInputInfo, setIsExpandedInputInfo] = useState(false);
+  const [isExpandedPrice, setIsExpandedPrice] = useState(false);
+  
+
+
+  const handleHeaderClick = () => {
+    setIsExpandedDeliever(!isExpandedDeliever);
+  };
+  const handleHeaderClickPay = () => {
+    setIsExpandedPayment(!isExpandedPayment);
+  };
+  const handleHeaderClickInput = () => {
+    setIsExpandedInputInfo(!isExpandedInputInfo);
+  };
+  const handleHeaderClickPrice = () => {
+    setIsExpandedPrice(!isExpandedPrice);
+  };
+
 
   // 전시상세정보페이지로 다시 이동
   const handleGoToHome = () => {
@@ -221,8 +271,12 @@ const InputInfo = ({rootData, reservationData}) => {
         <div className="rightBox">
         <RightContainer>
          
-      <BuyerInfoWrapper>
-      <h4>예매 정보</h4>
+      <BuyerInfoWrapper isExpanded={isExpandedInputInfo} >
+        <div className="wrapperHeader">
+        <h4 onClick={handleHeaderClickInput}>예매정보입력</h4>
+        <MdOutlineKeyboardArrowDown style={{ transform: isExpandedInputInfo ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+        </div>
+        <div className="container">
         <span><p>예매자</p><input 
               type="text"
               name="name"
@@ -238,9 +292,13 @@ const InputInfo = ({rootData, reservationData}) => {
               name="email"
               value={buyerInfo.email}
               onChange={handleBuyerInfoChange} /></span>
+              </div>
       </BuyerInfoWrapper>
-      <PriceQuantityWrapper>
-      <h4>가격 정보</h4>
+      <PriceQuantityWrapper isExpanded={isExpandedPrice} >
+      <div className="wrapperHeader">
+        <h4 onClick={handleHeaderClickPrice}>가격 정보</h4>
+        <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPrice? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+        </div>
       <div className="container">
         <div>
         가격 : {reservationData.exhibitPrice}
@@ -256,8 +314,11 @@ const InputInfo = ({rootData, reservationData}) => {
         </div>
         </div>
         </PriceQuantityWrapper>  
-      <DeliveryMethodWrapper>
+      <DeliveryMethodWrapper isExpanded={isExpandedPayment} onClick={handleHeaderClickPay}>
+        <div className="wrapperHeader">
         <h4>수령 방법</h4>
+        <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPayment ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+        </div>
         <div className="container">
       <DeliveryMethodRadio
         type="radio"
@@ -267,7 +328,7 @@ const InputInfo = ({rootData, reservationData}) => {
         checked={deliveryMethod === 'onSite'}
         onChange={handleDeliveryMethodChange}
       />
-      <DeliveryMethodLabel htmlFor="onSite">현장수령</DeliveryMethodLabel>
+      <label htmlFor="onSite">현장수령</label>
       <DeliveryMethodRadio
         type="radio"
         id="mobileTicket"
@@ -276,11 +337,14 @@ const InputInfo = ({rootData, reservationData}) => {
         checked={deliveryMethod === 'mobileTicket'}
         onChange={handleDeliveryMethodChange}
       />
-      <DeliveryMethodLabel htmlFor="mobileTicket">모바일티켓</DeliveryMethodLabel>
+      <label htmlFor="mobileTicket">모바일티켓</label>
       </div>
       </DeliveryMethodWrapper>
-      <PaymentMethodWrapper>
-      <h4>결제정보</h4>
+      <PaymentMethodWrapper isExpanded={isExpandedDeliever} onClick={handleHeaderClick}>
+      <div className="wrapperHeader">
+        <h4>가격 정보</h4>
+        <MdOutlineKeyboardArrowDown style={{ transform: isExpandedDeliever ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+        </div>
         <div className="container">
       <DeliveryMethodRadio
         type="radio"
@@ -290,7 +354,7 @@ const InputInfo = ({rootData, reservationData}) => {
         checked={paymentMethod === 'banking'}
         onChange={handlePaymentMethodChange}
       />
-      <DeliveryMethodLabel htmlFor="banking">무통장입금</DeliveryMethodLabel>
+      <label htmlFor="banking">무통장입금</label>
       <DeliveryMethodRadio
         type="radio"
         id="kakaoPay"
@@ -299,12 +363,12 @@ const InputInfo = ({rootData, reservationData}) => {
         checked={paymentMethod === 'kakaoPay'}
         onChange={handlePaymentMethodChange}
       />
-      <DeliveryMethodLabel htmlFor="kakaoPay">카카오페이</DeliveryMethodLabel>
+      <label htmlFor="kakaoPay">카카오페이</label>
       </div>
       </PaymentMethodWrapper>
       <ReservationButtonWrapper>
         <Button>이전 단계</Button>
-        <Button>결제 하기</Button>
+        <Button onClick={handleReservation}>결제 하기</Button>
       </ReservationButtonWrapper>
       </RightContainer>
       </div>   

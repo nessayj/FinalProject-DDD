@@ -239,6 +239,14 @@ const InputInfo = ({rootData, reservationData}) => {
   const handleHeaderClickPrice = () => {
     setIsExpandedPrice(!isExpandedPrice);
   };
+  
+  // 모든입력이 완료되어야만 결제하기 버튼활성화
+  const isPaymentButtonDisabled =
+  !buyerInfo.name ||
+  !buyerInfo.contact ||
+  !buyerInfo.email ||
+  !deliveryMethod ||
+  !paymentMethod;
 
 
   // 전시상세정보페이지로 다시 이동
@@ -272,8 +280,8 @@ const InputInfo = ({rootData, reservationData}) => {
         <RightContainer>
          
       <BuyerInfoWrapper isExpanded={isExpandedInputInfo} >
-        <div className="wrapperHeader">
-        <h4 onClick={handleHeaderClickInput}>예매정보입력</h4>
+        <div className="wrapperHeader" onClick={handleHeaderClickInput}>
+        <h4>예매정보입력</h4>
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedInputInfo ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
         <div className="container">
@@ -295,8 +303,8 @@ const InputInfo = ({rootData, reservationData}) => {
               </div>
       </BuyerInfoWrapper>
       <PriceQuantityWrapper isExpanded={isExpandedPrice} >
-      <div className="wrapperHeader">
-        <h4 onClick={handleHeaderClickPrice}>가격 정보</h4>
+      <div className="wrapperHeader" onClick={handleHeaderClickPrice}>
+        <h4>가격 정보</h4>
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPrice? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
       <div className="container">
@@ -314,8 +322,8 @@ const InputInfo = ({rootData, reservationData}) => {
         </div>
         </div>
         </PriceQuantityWrapper>  
-      <DeliveryMethodWrapper isExpanded={isExpandedPayment} onClick={handleHeaderClickPay}>
-        <div className="wrapperHeader">
+      <DeliveryMethodWrapper isExpanded={isExpandedPayment} >
+        <div className="wrapperHeader" onClick={handleHeaderClickPay}>
         <h4>수령 방법</h4>
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPayment ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
@@ -340,8 +348,8 @@ const InputInfo = ({rootData, reservationData}) => {
       <label htmlFor="mobileTicket">모바일티켓</label>
       </div>
       </DeliveryMethodWrapper>
-      <PaymentMethodWrapper isExpanded={isExpandedDeliever} onClick={handleHeaderClick}>
-      <div className="wrapperHeader">
+      <PaymentMethodWrapper isExpanded={isExpandedDeliever} >
+      <div className="wrapperHeader" onClick={handleHeaderClick}>
         <h4>가격 정보</h4>
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedDeliever ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
@@ -368,7 +376,7 @@ const InputInfo = ({rootData, reservationData}) => {
       </PaymentMethodWrapper>
       <ReservationButtonWrapper>
         <Button>이전 단계</Button>
-        <Button onClick={handleReservation}>결제 하기</Button>
+        <Button onClick={handleReservation} disabled={isPaymentButtonDisabled}>결제 하기</Button>
       </ReservationButtonWrapper>
       </RightContainer>
       </div>   

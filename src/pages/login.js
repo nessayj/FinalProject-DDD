@@ -27,6 +27,7 @@ const BlackBG = styled.div`
 const Login = () => {
     // isLogin 상태 가져오기
     const isLogin = window.localStorage.getItem('isLogin')
+    const memberId = window.localStorage.getItem('memberId')
 
     // showLogin이 1, 2, 3으로 변할 때 각자 modal창 보여줌
     const [showLogin, setShowLogin] = useState(0);
@@ -56,7 +57,7 @@ const Login = () => {
 
     useEffect(() => {
     if (isLogin) {
-        navigate('/myPage');
+        navigate(`/mypage/${memberId}`);
     }
     }, [isLogin, navigate]);
 

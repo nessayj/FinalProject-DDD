@@ -8,13 +8,20 @@ border: none;
 border-radius : 5px;
 width: 100%;
 height: 100%;
+font-weight: bold;
 cursor: pointer;
+
+&.kakaoBtn {
+    width: 100%;
+    background-color: yellow;
+    color: #050E3D;
+}
 `;
-const Button =  ({onClick, children, disabled}) => {
+const Button =  ({onClick, children, disabled, className}) => {
 
     return(
         <>
-        <Btn onClick={onClick} disabled={disabled}>{children}</Btn>
+        <Btn onClick={onClick} disabled={disabled} className={className}>{children}</Btn>
         </>
     ); 
 

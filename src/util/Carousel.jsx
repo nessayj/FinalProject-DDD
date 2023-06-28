@@ -117,7 +117,7 @@ const Carousel = ({data}) => {
         <div>
           <Slider {...settings}>
             {data.map((e) => (
-                <Container key={e.index} >
+                <Container key={e.exhibitNo} >
                 <ImgBox imgUrl ={e.imgUrl}/>
                 <img src={e.imgUrl}></img>
                 <div className="name">{e.exhibitName}</div>

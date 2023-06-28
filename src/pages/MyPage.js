@@ -5,7 +5,8 @@ const MyPage = () => {
     const removeLocalstorage = () =>{
         localStorage.removeItem("isLogin");
         localStorage.removeItem("storageEmail");
-        // localStorage.removeItem("accessToken");
+        localStorage.removeItem("memberId");
+        localStorage.removeItem("accessToken");
     }
 
     return(

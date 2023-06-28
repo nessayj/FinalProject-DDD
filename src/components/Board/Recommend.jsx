@@ -4,6 +4,7 @@ import styled from "styled-components";
 import BoardSearch from "./BoardSearch";
 import PageNation from "../../util/PageNation";
 import DDDApi from "../../api/DDDApi";
+import { Link } from "react-router-dom";
 
 
 const BoardContainer = styled.div`
@@ -25,10 +26,10 @@ const Section = styled.div`
         margin: 1rem;
 
         a {
-            font-size: 1.2rem;
-            color:  #7FC2EF;
-            text-decoration: underline;
-        }
+            font-size: 1.1rem;
+            color: inherit;
+            text-decoration: none; // 제목 링크 시 밑줄 제거
+         }
         button {
             font-size: 16px;
             font-weight: 400;
@@ -181,10 +182,17 @@ const Recommend = () => {
                             <tr key={boardList.boardNo}>
                                 <td>{boardList.boardNo}</td>
                                 <td>{boardList.category}</td>
-                                <td>{boardList.title}</td>
+                                {/* <td>{boardList.title}</td> */}
+                                <td>
+                                    <Link to={`/boardView/${boardList.boardNo}`} // 게시판 상새조회로 이동
+                                    className="boardView_link">{boardList.title}
+                                    </Link>
+                                </td>
                                 <td>{boardList.author}</td>
                                 <td>{boardList.views}</td>
-                                <td>{boardList.writeDate}</td>
+                                
+                                {/* 작성일자 "yyyy-mm-dd" 형식으로 문자열 반환 */}
+                                <td>{new Date(boardList.writeDate).toISOString().split("T")[0]}</td>
                             </tr>
                              ))}
                     </table>

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import LoginApi from "../../api/LoginApi";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../store.js"
 
 const Container = styled.div`
     position: absolute;
@@ -130,13 +129,9 @@ const Modal = styled.div`
 
 
 const LoginModal = (props) => {
-    // state 전역관리를 위한 useState
-    const setLoginStatus = useStore((state) => state.setLoginStatus);
-    const setToken = useStore((state) => state.setToken);
-
+    window.localStorage.setItem("accessToken", '');
 
     const naviagte = useNavigate('')
-
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -158,44 +153,39 @@ const LoginModal = (props) => {
         }
       };
 
-const onClickLogin = () => {
-  const loginFetchDate = async () => {
-    
+
+    const loginFetchDate = async () => {
     console.log('클릭됨');
     try {
         const response = await LoginApi.login(email, password);
-        const tokenDto = response.data.accessToken; 
-        // const accessToken = tokenDto.accessToken;
+        const accessToken = response.data.accessToken;
 
-    if (response.status === 200) {
-        // setLoginStatus(true)
-        // setToken(accessToken)
-        naviagte('/')
 
+        // localStorage에 email, token 저장
         window.localStorage.setItem('storageEmail', email)
-        window.localStorage.setItem('isLogin', true)
-        window.localStorage.setItem('accessToken', tokenDto)
+        window.localStorage.setItem('accessToken', accessToken);
+        // console.log(window.localStorage.getItem('accessToken'));
+        
 
-        const storageEmail = window.localStorage.getItem('storageEmail')
-        const accessToken = window.localStorage.getItem('accessToken')
-
-        console.log(storageEmail)
-        console.log(accessToken)
-
-    } else {
-        const errorMessage = getErrorMessage(response.status);
-        setErrorMsg(errorMessage);
-    }
+        if (response.status === 200) {
+            naviagte('/');
+            // 로그인 시, isLogin true 반환
+            window.localStorage.setItem('isLogin', true)
+            
+        } else {
+            const errorMessage = getErrorMessage(response.status);
+            setErrorMsg(errorMessage);
+        }
     } catch (e) {
-      console.log(e);
-      // 일반적으로, 네트워크 요청에 실패했을 때 HTTP 상태 코드는 사용할 수 없습니다.
-      // 이 경우에는 일반적인 에러 메시지를 설정합니다.
-      setErrorMsg('가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.');
+        console.log(e);
+        setErrorMsg('가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.');
     }
-  };
-  loginFetchDate();
-};
-   
+    };
+
+    const onClickLogin = () => {
+    loginFetchDate();
+    };
+    
 
 
 

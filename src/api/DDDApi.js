@@ -9,11 +9,14 @@ const DDDApi = {
         return await axios.get(`${DDD_DOMAIN}/boardList/${category}`, HEADER);
     },
 
-    
-    // 특정 게시판 번호의 게시물 내용 불러오기
-    boardView: async(freeBoard_No) => {
-        return await axios.get(DDD_DOMAIN + `/board_list/board_view?freeBoard_No=${freeBoard_No}`);
+    // 특정 게시판 번호의 게시물 상세 조회
+    getBoard: async(boardNo) => {
+        return await axios.get(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`);
     },
+
+
+
+
 
     // 게시글 수정
     boardEdit: async(freeBoard_No, category, region, title, image, contents) => {

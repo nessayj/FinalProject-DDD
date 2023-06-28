@@ -1,30 +1,28 @@
 import axios from "axios";
+import Functions from "../util/Functions";
+
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const HEADER = {"Content-type" : "application/json"}
 
 
-
-
-
 const MyPageApi = {
-    info : async(storageEmail) => {
-
-        // token 값 설정
-        const accessToken = window.localStorage.getItem('accessToken')
-        // header 추가
-        const config = {
-            headers : {
-                Authorization: `Bearer ${accessToken}`,
-                ...HEADER, 
-            },
-            params : {
-                email : storageEmail,
-            },
-        };
-
-        return await axios.get(DDD_DOMAIN + "/mypage/info",  config); // config 부분 같이 날리기
-    },
     
-}
+
+    info : async(storageEmail) => {
+        try {
+            Functions.setAuthorizationHeader(); // 헤더에 토큰을 넣는 함수
+            return await axios.get(DDD_DOMAIN + `/mypage/info?email=${storageEmail}`); // 요청 리턴
+  
+          } catch(error){
+            console.log('error입니다. ')
+            //   await Functions.handleApiError(error);  // api 에러 401을 받으면 로컬에 저장된 리프레쉬 토큰을 보내 액세스 토큰을 재발급 받는 axios 요청을 보내는 함수(await 필수)
+            //   return await axios.get(DDD_DOMAIN + `/mypage/info?email=${storageEmail}`); // 요청 재실행
+          }
+        }
+
+    }
+
+  
+    
 
 export default MyPageApi;

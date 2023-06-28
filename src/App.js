@@ -30,7 +30,7 @@ function App() {
         <Route path="/boardView/:no" element={<Boardview/>}/>
         <Route path="/boardList/write" element={<BoardWrite/>}/>
         <Route path="/boardEdit" element={<BoardEdit/>}></Route>
-        <Route path="/myPage" element={<MyPage/>}/>
+        <Route path="/mypage/:memberId" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
       </Routes>
       </Router>

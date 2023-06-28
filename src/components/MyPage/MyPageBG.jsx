@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
@@ -8,6 +8,8 @@ import NaviBox from "./NaviBox";
 import SNSBox from "./SNSBox";
 import MyReservation from "./MyReservation";
 import MyDiary from "./MyDiary";
+import { useParams } from "react-router-dom";
+import MyPageApi from "../../api/MyPageApi";
 
 const Container = styled.div`
     box-sizing: border-box;
@@ -37,7 +39,21 @@ const Modal = styled.div`
 `;
     
 const MyPageBG = (props) => {
+
+    const { memberId } = useParams();
+    const [responseData, setResponseData] = useState(null);
     const [showPage, setShowPage] = useState('마이페이지')
+  
+    useEffect(() => {
+        const infoFetchDate = async () => {
+            const response = await MyPageApi.info(memberId);
+            console.log(response);
+            // setResponseData(response.data[0]);
+            // console.log(responseData)
+        };
+        infoFetchDate();
+    }, []);
+    
     return(
         <>
         <Container style={showPage === '다이어리'  ? { height: 'auto' } : null}>

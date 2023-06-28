@@ -6,6 +6,7 @@ import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import Button from "../../util/Button";
 import InputInfo from "./InputInfo";
 import {RiKakaoTalkFill} from "react-icons/ri";
+import { Payment, ProvideAgreement } from "./Agreement";
 
 const PayContainer = styled.div`
     display: flex;
@@ -29,7 +30,7 @@ const PayContainer = styled.div`
         gap: 1rem;
         border-radius: 10px;
     }
-    .bodyContainer{
+    .body-container{
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -197,9 +198,7 @@ const PolicyWrapper = styled.div`
   width: 20rem;
   margin-bottom: 1rem;
     .agreePersonal{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        float: left;
     }
     .agreeAll{
         display: flex;
@@ -207,23 +206,29 @@ const PolicyWrapper = styled.div`
         align-items: center;
     }
     .agreeCancle{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        float: left;
     }
     .agreeProvideInfo{
+        float: left;
+    }
+.container{
+        width: 100%;
         display: flex;
         flex-direction: row;
         align-items: center;
-        
     }
-    .container{
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-        }
+
+    .titleContainer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .agreement{
+        width: 100%;
+        height: 20rem;
+        font-size: 0.6rem;
+    }
+
 
     
 `;
@@ -243,6 +248,21 @@ const ReservationButtonWrapper = styled.div`
   }
 
 `;
+
+const Table = styled.table`
+    margin: 0 auto;
+    text-align: center;
+    th{
+        width: 50%;
+        background-color: #5EADF7;
+        color: white;
+        font-size: 1rem;
+    }
+    td{
+        font-size: 0.8rem;
+    }
+`
+
 
 // 이용약관동의
 const PolicyCheckbox = ({ label, checked, onChange }) => {
@@ -328,6 +348,10 @@ const PayTicket = ({data}) => {
         const handleOpenProvide= () => {
             setIsOpenProvide(!isOpenProvide);
         };
+      
+      // 약관동의 불러오기
+      const paymentAgreementContent = Payment.contents;
+      const provideAgreementContent = ProvideAgreement.contents;
 
     return(
         <>
@@ -352,7 +376,7 @@ const PayTicket = ({data}) => {
         <p onClick={goToInputInfo}>{data.rootData[1]}</p>
         <p>{data.rootData[2]}</p>
     </div>
-    <div className="bodyContainer">
+    <div className="body-container">
     <div className="infoBox">
                <div className="imgBox"/>
                 <div className="textBox">
@@ -425,39 +449,70 @@ const PayTicket = ({data}) => {
             <p>전체 동의</p>
         </div>
         <div className="agreeCancle">
+            <div className="titleContainer">
+            <div className="container" >
             <PolicyCheckbox
             checked={agreeCancel}
             onChange={handleAgreeCancelChange}
             />
-            <div className="container" onClick={handleOpenCancle}>
             <p>취소기한 확인 및 동의(필수)</p>
-            <MdOutlineKeyboardArrowDown style={{ transform: isOpenCancle ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+            </div>
+            <MdOutlineKeyboardArrowDown onClick={handleOpenCancle} style={{ transform: isOpenCancle ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
             </div>
             {isOpenCancle &&  
-            <div className="agreement">
-                예매일: 수수료 0%
-            </div>}
-           
+            <Table>
+                <thead>
+                    <tr>
+                    <th>취소일</th>
+                    <th>취소수수료</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>관람 7일 전</td>
+                    <td>없음</td>
+                    </tr>
+                    <tr>
+                    <td>관람 7일 후 ~ 관람 하루 전</td>
+                    <td>티켓금액의 10%</td>
+                    </tr>
+                    <tr>
+                    <td>관람 당일</td>
+                    <td>취소불가</td>
+                    </tr>
+                </tbody>
+            </Table>
+            }
         </div>
         <div className="agreePersonal">
+        <div className="titleContainer">
+        <div className="container">
             <PolicyCheckbox
             checked={agreePersonal}
             onChange={handleAgreePersonalChange}
             /> 
-            <div className="container" onClick={handleOpenPersonal}>
             <p>개인정보 수집 및 이용동의(필수)</p>
-            <MdOutlineKeyboardArrowDown style={{ transform: isOpenPersonal? 'rotate(180deg)' : 'rotate(0deg)' }}/>
             </div>
+            <MdOutlineKeyboardArrowDown onClick={handleOpenPersonal} style={{ transform: isOpenPersonal? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+            </div>
+            {isOpenPersonal && <div className="agreement">
+            {paymentAgreementContent}
+            </div>}
         </div>
         <div className="agreeProvideInfo">
+        <div className="titleContainer">
+        <div className="container" >
             <PolicyCheckbox
             checked={agreeProvideInfo}
             onChange={handleAgreeProvideInfoChange}
             />
-            <div className="container" onClick={handleOpenProvide}>
             <p>제 3자 정보 제공동의(선택)</p>
-            <MdOutlineKeyboardArrowDown style={{ transform: isOpenProvide? 'rotate(180deg)' : 'rotate(0deg)' }}/>
             </div>
+            <MdOutlineKeyboardArrowDown onClick={handleOpenProvide} style={{ transform: isOpenProvide? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+            </div>
+            {isOpenProvide && <div className="agreement">
+            {provideAgreementContent}
+            </div>}
         </div>
       </PolicyWrapper>
       <ReservationButtonWrapper>

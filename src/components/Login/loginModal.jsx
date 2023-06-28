@@ -159,12 +159,16 @@ const LoginModal = (props) => {
     try {
         const response = await LoginApi.login(email, password);
         const accessToken = response.data.accessToken;
+        const memberId = response.data.memberId;
 
 
         // localStorage에 email, token 저장
         window.localStorage.setItem('storageEmail', email)
         window.localStorage.setItem('accessToken', accessToken);
+        window.localStorage.setItem('memberId', memberId);
         // console.log(window.localStorage.getItem('accessToken'));
+        // console.log('데이터로 받은 멤버아이디' + memberId)
+        console.log('getitem으로 받은 멤버아이디' + window.localStorage.getItem('memberId'))
         
 
         if (response.status === 200) {

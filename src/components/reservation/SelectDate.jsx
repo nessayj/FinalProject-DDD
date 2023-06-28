@@ -57,7 +57,7 @@ export const Container = styled.div`
     .imgBox{
         margin-top: 1rem;
         overflow: hidden;
-        width: 100%;
+        width: 13rem;
         height: 20rem;
         position: relative;
         background-image: url(${props => props.imgUrl});
@@ -119,7 +119,6 @@ const SelectDate =  () => {
           try {
             const exhibitionView = await DDDApi.exhibitDetail(id);
             setExData(exhibitionView.data);
-            console.log(exData[0].exhibitPrice)
           } catch (e) {
             console.log(e);
           }
@@ -142,8 +141,6 @@ const SelectDate =  () => {
       const handleNextStep = () => {
             setGoToReservation(true);
       };
-      
-
 
     return(
         <>

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Button from "../../util/Button";
 import {ImHome} from "react-icons/im";
 import { useNavigate } from "react-router-dom";
-import SelectDate from "./SelectDate";
 import { Container } from "./SelectDate";
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
+import PayTicket from "./PayTicket";
 
 const PriceQuantityWrapper = styled.div`
   font-size: 1rem;
@@ -157,7 +157,7 @@ const DeliveryMethodRadio = styled.input`
 `;
 
 
-const InputInfo = ({rootData, reservationData}) => {
+const InputInfo = ({rootData, reservationData, id}) => {
   // 예매 관련 상태 및 함수
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
@@ -214,16 +214,12 @@ const InputInfo = ({rootData, reservationData}) => {
     }));
   };
 
-  // 예매하기 버튼 클릭 핸들러
-  const handleReservation = () => {
-    navigate("/payment");
-  };
-
   // 전체 Wrapper 열리고 닫히게 
   const [isExpandedDeliever, setIsExpandedDeliever] = useState(false);
   const [isExpandedPayment, setIsExpandedPayment] = useState(false);
   const [isExpandedInputInfo, setIsExpandedInputInfo] = useState(false);
   const [isExpandedPrice, setIsExpandedPrice] = useState(false);
+  
   
 
 
@@ -255,10 +251,38 @@ const InputInfo = ({rootData, reservationData}) => {
   }
   //이전단계이동
   const handleGoBack = () => {
-    navigate(<SelectDate/>)
+    navigate(0);
   }
 
+  // 결제정보에 데이터 넘겨줌
+  const data = 
+  {reservationData: reservationData, 
+    rootData: rootData, 
+    id: id, 
+    price: price, 
+    totalPrice: totalPrice, 
+    quantity: quantity,
+    buyerInfo: buyerInfo,
+    deliveryMethod: deliveryMethod,
+    paymentMethod: paymentMethod 
+}
+
+//   // 예매하기 버튼 클릭 핸들러
+//   const handleReservation = () => {
+//     navigate("/payment", {state: data});
+//   };
+
+
+// 컴포넌트 이동을 위한 변수설정
+const [toPayment, setToPayment] = useState(false);
+const handleReservation = () =>{
+    setToPayment(true);
+
+}
+
   return (
+    <>
+    {toPayment ? (<PayTicket data={data}/>) : (
     <Container imgUrl ={reservationData.imgUrl}>
     <div className="reservationBox">
     <div className="root">
@@ -375,14 +399,15 @@ const InputInfo = ({rootData, reservationData}) => {
       </div>
       </PaymentMethodWrapper>
       <ReservationButtonWrapper>
-        <Button>이전 단계</Button>
+        <Button onClick={handleGoBack}>이전 단계</Button>
         <Button onClick={handleReservation} disabled={isPaymentButtonDisabled}>결제 하기</Button>
       </ReservationButtonWrapper>
       </RightContainer>
       </div>   
       </div>
       </div>
-    </Container>
+    </Container>)}
+    </>
   );
 };
 

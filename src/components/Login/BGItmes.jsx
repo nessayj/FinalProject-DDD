@@ -30,7 +30,7 @@ const ItemWrap = styled.div`
 
     }
     .marqueeStyle {
-        top: 20%;
+        top: 40%;
         left: -34%;
     }
     .marqueeStyle2 {

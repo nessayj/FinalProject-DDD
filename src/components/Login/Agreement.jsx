@@ -32,13 +32,13 @@ const Modal = styled.div`
         font-weight: bold;
         text-align: center;
         /* background-color: red; */
-        padding : 2%;
+        /* padding : 1%; */
 
     }
     .agreeCheck{
         width: 80%;
         /* background-color: red; */
-        padding: .5rem 0;
+        padding: .8rem 0;
         border-bottom: 1px solid #ddd;
         font-size: .7rem;
         font-weight: bold;
@@ -60,6 +60,7 @@ const Modal = styled.div`
         height: 30%;
         font-size: .8rem;
         margin-top: 1rem;
+        /* background-color: red; */
 
     }
     .btnBlock{
@@ -358,7 +359,6 @@ const Agreement = (props) => {
 
             </div>
             <div className='agreeCheck'> <span>이용약관 동의<span style={{color:'red'}}>(필수)</span></span>  <input type="checkbox" checked={check1} onClick={handleCheck1}/> </div>
-            <div className='agreeCheck' ><span>개인 정보 수집 및 이용 동의<span style={{color:'red'}}>(필수)</span> </span> <input type="checkbox" checked={check2}   onClick={handleCheck2}/></div>
             <div className='agreeText'>
                 <div className="title"> <p>개인정보처리방침 </p> </div>
                 <p>
@@ -499,6 +499,8 @@ const Agreement = (props) => {
 2&#41; 시행일자 : 2023년 07월 01일
                 </p>
             </div> 
+            <div className='agreeCheck' ><span>개인 정보 수집 및 이용 동의<span style={{color:'red'}}>(필수)</span> </span> <input type="checkbox" checked={check2}   onClick={handleCheck2}/></div>
+
 
             <div className="btnBlock">
                 {

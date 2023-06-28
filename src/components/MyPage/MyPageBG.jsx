@@ -39,20 +39,9 @@ const Modal = styled.div`
 `;
     
 const MyPageBG = (props) => {
-
-    const { memberId } = useParams();
-    const [responseData, setResponseData] = useState(null);
     const [showPage, setShowPage] = useState('마이페이지')
-  
-    useEffect(() => {
-        const infoFetchDate = async () => {
-            const response = await MyPageApi.info(memberId);
-            console.log(response);
-            // setResponseData(response.data[0]);
-            // console.log(responseData)
-        };
-        infoFetchDate();
-    }, []);
+
+
     
     return(
         <>

@@ -6,7 +6,7 @@ import {member_info} from './Data';
 import { useNavigate } from 'react-router-dom';
 import MyPageApi from '../../api/MyPageApi';
 import { useEffect } from 'react';
-
+import { useParams } from 'react-router-dom';
 
 
 // ====== 이미지 클릭 하였을 때 바뀌는 것으로 고민 해보기 =======
@@ -153,20 +153,22 @@ const RightBox = styled.div`
 `;
 
 const EditInfo = (props) => {
-    const storageEmail = window.localStorage.getItem("storageEmail")
   
     const [responseData, setResponseData] = useState(null);
+
+    const { memberId } = useParams();
   
     useEffect(() => {
         const infoFetchDate = async () => {
-            const response = await MyPageApi.info(storageEmail);
-            // console.log(response.data[0]);
-            setResponseData(response.data[0]);
-            console.log(responseData)
+            const response = await MyPageApi.info(memberId);
+            console.log(response);
+            setResponseData(response.data);
+            // console.log(responseData)
         };
         infoFetchDate();
-    }, []);
-    
+    }, [memberId]);
+
+
 
     return (
       <> 
@@ -213,7 +215,7 @@ const EditInfo = (props) => {
                         <p>인스타그램(선택사항)</p>
                         <div className="textBox">
                             <input type="text" 
-                            defaultValue={responseData.inst} 
+                            defaultValue={responseData.instagram} 
                             />
                         </div>
                     </RightBox>

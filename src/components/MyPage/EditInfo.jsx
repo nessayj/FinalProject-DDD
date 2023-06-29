@@ -157,76 +157,85 @@ const RightBox = styled.div`
 `;
 
 const EditInfo = (props) => {
-  const [inputNick, setInputNick] = useState();
-  const [inputName, setInputName] = useState();
-  const [inputTel, setInputTel] = useState();
-  const [inputInst, setInputinst] = useState();
-  const [inputIntro, setInputintro] = useState();
+    const [inputNick, setInputNick] = useState();
+    const [inputName, setInputName] = useState();
+    const [inputTel, setInputTel] = useState();
+    const [inputInst, setInputinst] = useState();
+    const [inputIntro, setInputintro] = useState();
 
-  const [responseData, setResponseData] = useState(null);
+    const [responseData, setResponseData] = useState(null);
 
-  const { memberId } = useParams();
+    const { memberId } = useParams();
 
-  const [nickMessage, setNickMessage] = useState("");
-  const [isNick, setIsNick] = useState("");
+    const [nickMessage, setNickMessage] = useState("");
+    const [isNick, setIsNick] = useState("");
 
-  // 회원 정보 모두 가져오기
-  useEffect(() => {
-    const infoFetchDate = async () => {
-      const response = await MyPageApi.info(memberId);
-      //   console.log(response);
-      setResponseData(response.data);
-      //   console.log(responseData.nickname);
+    // 회원 정보 모두 가져오기
+    useEffect(() => {
+        const infoFetchDate = async () => {
+        const response = await MyPageApi.info(memberId);
+        //   console.log(response);
+        setResponseData(response.data);
+        //   console.log(responseData.nickname);
+        };
+        infoFetchDate();
+    }, [memberId]);
+
+    // onChangeHandling
+    const onChangeName = (e) => {
+        const nameCurrent = e.target.value;
+        setInputName(nameCurrent);
     };
-    infoFetchDate();
-  }, [memberId]);
 
-  // onChangeHandling
-  const onChangeName = (e) => {
-    const nameCurrent = e.target.value;
-    setInputName(nameCurrent);
-  };
+    const onChangeTel = (e) => {
+        const telCurrent = e.target.value;
+        setInputTel(telCurrent);
+    };
 
-  const onChangeTel = (e) => {
-    const telCurrent = e.target.value;
-    setInputTel(telCurrent);
-  };
+    const onChangeInst = (e) => {
+        const instCurrent = e.target.value;
+        setInputinst(instCurrent);
+    };
 
-  const onChangeInst = (e) => {
-    const instCurrent = e.target.value;
-    setInputinst(instCurrent);
-  };
+    const onChangeIntro = (e) => {
+        const introCurrent = e.target.value;
+        setInputintro(introCurrent);
+    };
 
-  const onChangeIntro = (e) => {
-    const introCurrent = e.target.value;
-    setInputintro(introCurrent);
-  };
-
-  const onChangeNick = (e) => {
+    // 디바운싱 :  타이핑을 멈추고 일정 시간 동안 아무런 입력도 없을 때에만 이벤트를 처리
+    let debounceTimeout;
+    const onChangeNick = (e) => {
     const nickCurrent = e.target.value;
     setInputNick(nickCurrent);
-    nickDuplication(memberId, inputNick);
-  };
 
-  // 닉네임 중복 체크
-  const nickDuplication = async (memberId, nickname) => {
-    try {
-      const response = await MyPageApi.nicknamedup(memberId, nickname);
-      if (response.status === 200) {
-        console.log("닉네임 중복 체크 중");
-        console.log(response.data);
-        if (!response.data) {
-          setNickMessage("해당 닉네임은 이미 사용 중입니다.");
-          setIsNick(false);
-        } else {
-          setNickMessage("사용가능한 닉네입입니다. ");
-          setIsNick(true);
+
+    // 닉네임 중복 체크
+    const nickDuplication = async (memberId, nickname) => {
+        try {
+        const response = await MyPageApi.nicknamedup(memberId, nickname);
+        if (response.status === 200) {
+            console.log("닉네임 중복 체크 중");
+            console.log(response.data);
+            if (!response.data) {
+            setNickMessage("해당 닉네임은 이미 사용 중입니다.");
+            setIsNick(false);
+            } else {
+            setNickMessage("사용가능한 닉네입입니다. ");
+            setIsNick(true);
+            }
         }
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+        } catch (e) {
+        console.log(e);
+        }
+    };
+
+  
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+        nickDuplication(memberId, nickCurrent);
+    }, 300); // 300ms 동안 아무런 입력이 없으면 nickDuplication 호출
+    };
+
 
   // 변경 사항 저장하는 함수
   const handleSave = async (apiMethod, memberId, inputValue) => {
@@ -234,27 +243,26 @@ const EditInfo = (props) => {
       const response = await apiMethod(memberId, inputValue);
       console.log(inputValue);
       if (response.data === true) {
-        console.log(`${apiMethod}변경 완료`);
+        console.log(`${apiMethod} 변경 완료`);
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleOnclick = () => {
-    handleSave(MyPageApi.nickname, memberId, inputNick);
-    handleSave(MyPageApi.name, memberId, inputName);
-    handleSave(MyPageApi.tel, memberId, inputTel);
-    handleSave(MyPageApi.instagram, memberId, inputInst);
-    handleSave(MyPageApi.introduce, memberId, inputIntro);
+  // 함수가 전부다 불러올때까지 await
+  const handleOnclick = async() => {
+    await handleSave(MyPageApi.nickname, memberId, inputNick);
+    await handleSave(MyPageApi.name, memberId, inputName);
+    await handleSave(MyPageApi.tel, memberId, inputTel);
+    await handleSave(MyPageApi.instagram, memberId, inputInst);
+    await handleSave(MyPageApi.introduce, memberId, inputIntro);
   };
 
   return (
     <>
       {responseData && (
         <EditBlock>
-          <div>{memberId}</div>
-          <button onClick={handleOnclick}>Save</button>
           <div className="title">내 정보 수정</div>
           <Edit>
             <LeftBox>
@@ -331,7 +339,7 @@ const EditInfo = (props) => {
             />
           </div>
           <div className="btnBlock">
-            <button>저장</button>
+            <button onClick={handleOnclick}>저장</button>
             <button
               onClick={() => {
                 props.setShowPage("마이페이지");
@@ -347,104 +355,3 @@ const EditInfo = (props) => {
 };
 
 export default EditInfo;
-
-// const EditInfo = (props) => {
-//     const storageEmail = window.localStorage.getItem("storageEmail")
-
-//     const [loading, setLoading] = useState(false);
-//     const [responseData, setResponseData] = useState(null);
-
-//     const infoFetchDate = async () => {
-//       setLoading(true);
-//       try {
-//         const response = await MyPageApi.info(storageEmail);
-//         if (response.status === 200) {
-//           setResponseData(response.data);
-//           console.log(responseData)
-//         } else {
-//           console.log('인증 오류');
-//         }
-//       } catch (e) {
-//         console.log(e);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     useEffect(() => {
-//       infoFetchDate();
-//     }, []);
-
-//     if (loading) {
-//       return <div>Loading...</div>;
-//     }
-
-//     return (
-//         <>
-//         { responseData && (
-//             <EditBlock>
-//                 <div className='title' >내 정보 수정</div>
-//                 <Edit>
-//                     <LeftBox>
-//                         <p>이메일</p>
-//                         <div className="textBox">
-//                             <input type="text" style={{backgroundColor:'#eee', border:'1px solid #888'}}
-//                             defaultValue={responseData.email}
-//                             disabled/>
-//                         </div>
-//                         <p>비밀번호</p>
-//                         <div className="textBox">
-//                             <input type="password"  />
-//                         </div>
-//                         <p>비밀번호 확인</p>
-//                         <div className="textBox">
-//                             <input type="password"  />
-//                         </div>
-//                         <p>닉네임</p>
-//                         <div className="textBox">
-//                             <input type="text"
-//                             defaultValue={responseData.nickName}
-//                             />
-//                         </div>
-
-//                     </LeftBox>
-//                     <RightBox>
-//                         <p>이름</p>
-//                         <div className="textBox">
-//                             <input type="text"
-//                             defaultValue={responseData.name}
-//                             />
-//                         </div>
-//                         <p>연락처</p>
-//                         <div className="textBox">
-//                             <input type="tel"
-//                             defaultValue={responseData.tel}
-//                             />
-//                         </div>
-//                         <p>인스타그램(선택사항)</p>
-//                         <div className="textBox">
-//                             <input type="text"
-//                             defaultValue={responseData.inst}
-//                             />
-//                         </div>
-//                     </RightBox>
-
-//                 </Edit>
-//                 <div className="introducBlock">
-//                     <p>내 소개</p>
-//                     <textarea className='introarea' name="" id="" cols="20" rows="5" style={{width:'88%'}}
-//                     defaultValue={responseData.introuduce}
-//                     />
-//                 </div>
-//                 <div className="btnBlock">
-//                     <button>저장</button>
-//                     <button onClick={()=>{props.setShowPage('마이페이지')}}>취소</button>
-//                 </div>
-//             </EditBlock>)
-//             }
-//         </>
-
-//     );
-// };
-
-// export default EditInfo;

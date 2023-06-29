@@ -129,11 +129,11 @@ const Section = styled.div`
 `;
 
 const TextWrap = styled.div`
-  width: 98%;
+  width: 40%;
   margin: 0 auto;
 
   .ck.ck-editor__editable:not(.ck-editor__nested-editable) {min-height: 500px;} // 텍스트 높이 조절
-  .ck-editor__main {padding: 0;}
+  .ck-editor__main {padding: 0px;}
 `;
 
 const WriteWrap = styled.div`
@@ -197,20 +197,25 @@ const WriteHeader = () => {
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [region, setRegion] = useState(null);
-    const [image, setImage] = useState(null);
-    const [previewUrl, setPreviewUrl] = useState("");
+    
+     
+    // 이미지 업로드 초기값 설정
+    const [image, setImage] = useState({ // 이미지 추가부분
+      image_file: null,
+      image_url: null
+    });
+    const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
     const [contents, setContents] = useState("");
 
-    
-    useEffect(() => {
+
+      useEffect(() => {
         console.log("입력값:", {
           category: category,
           region: region,
           title: title,
-          image: image,
           contents: contents  
         });
-      }, [category, region, title, image, contents]);
+      }, [category, region, title, contents]);
 
 
   
@@ -246,38 +251,53 @@ const WriteHeader = () => {
       };
     };
 
-    const handleUploadClick = () => {
-        const storageRef = storage.ref();
-        const fileRef = storageRef.child(image.image_file.name);
-        fileRef.put(image.image_file).then(() => {
-          console.log('File uploaded successfully!');
-          fileRef.getDownloadURL().then((url) => {
-            console.log("저장경로 확인 : " + url);
-            setImage(prevState => ({ ...prevState, image_url: url }));
-          });
-        });
-      };
+    /* 이미지 업로드 1차 작업 건 */
+    // const handleUploadClick = () => {
+      
+    //     const storageRef = storage.ref();
+    //     const fileRef = storageRef.child(image.image_file.name);
+    //     fileRef.put(image.image_file).then(() => {
+    //       console.log('File uploaded successfully!');
+    //       fileRef.getDownloadURL().then((url) => {
+    //         console.log("저장경로 확인 : " + url);
+    //         setImage(prevState => ({ ...prevState, image_url: url }));
+    //       });
+    //     });
+    //   };
 
-      const onClickSave = async () => {
-        if (title.length === 0 || category.length === 0 || contents === 0) {
-            alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
-            return;
+    // 이미지 업로드 및 내용 입력값 등록 함수
+    const onClickSave = async () => {
+      if (title.length === 0 || category.length === 0 || contents === 0) {
+        alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+      return;
     }
-        const resultNo = await DDDApi.boardWrite(getId, category, region, title, image, contents);
-        const linkNo = resultNo.data;
-        console.log("Result Number:", linkNo);
-        if (linkNo) {
-            alert("문의글 작성이 완료되었습니다.");
-        }
-    };
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(image.image_file.name);
 
+      try {
+        // 이미지 업로드
+      await fileRef.put(image.image_file);
+      const imageUrl = await fileRef.getDownloadURL();
 
-      const onClickUpload = () => {
-        handleUploadClick();
-      };
+      const resultNo = await DDDApi.boardWrite(
+        getId,
+        category,
+        region,
+        title,
+        imageUrl, // 업로드된 이미지의 다운로드 URL을 전달
+        contents
+      );
+      const linkNo = resultNo.data;
+      console.log("Result Number:", linkNo);
+      if (linkNo) {
+        alert("문의글 작성이 완료되었습니다.");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("문의글 작성 중 오류가 발생했습니다.");
+    }
+  };
 
-    
-    
     return (
     <>
       <Wrap>
@@ -343,11 +363,14 @@ const WriteHeader = () => {
                   </td>
                 </tr>
               </table>
+
+              {/* 이미지 미리보기 및 업로드 */}
               <div className="addBoard-wrapper">
                 {previewUrl && <img src={previewUrl} alt="Preview" />}
-                {/* {image.image_url && <img src={image.image_url} alt="Uploaded" />} */}
+                {image.image_url && <img src={image.image_url} alt="Uploaded" />} 
                 </div>
           </div>
+          
           <TextWrap>
             <CKEditor
             editor={ClassicEditor}
@@ -362,6 +385,7 @@ const WriteHeader = () => {
             />
           </TextWrap>
         </Section>
+
         <WriteWrap>
         <div className="btn_area">
             <button className="savebtn" onClick={onClickSave}>등록하기</button>
@@ -370,6 +394,7 @@ const WriteHeader = () => {
             </Link>
         </div>
         </WriteWrap>
+
       </Wrap>
     </>
   );

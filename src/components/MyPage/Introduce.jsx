@@ -1,12 +1,11 @@
 import {React, useEffect, useState} from 'react';
 import styled from 'styled-components';
-import { member_info, diaryImage } from './Data.jsx';
 import Diary from "./Diary";
 import Thumnail from './Thumnail.jsx';
 import NaviBox from './NaviBox.jsx';
 import { useParams } from 'react-router-dom';
 import MyPageApi from '../../api/MyPageApi.js';
-
+import useStore from '../../store';
 
 const Container = styled.div`
   /* background-color  : beige; */
@@ -52,7 +51,9 @@ const TextBox = styled.div`
 
 `;
 
-const Introduce = (props) => {
+const Introduce = () => {
+    const { setShowPage } = useStore();
+
     const { memberId } = useParams();
     const [responseData, setResponseData] = useState(null);
     const storageMemberId =window.localStorage.getItem('memberId')
@@ -83,20 +84,20 @@ const Introduce = (props) => {
                 </TextBox>
 
                 <hr/>
-                <Diary setShowPage={props.setShowPage} />
+                <Diary />
 
                 <hr/>
-                <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>게시물</span> <br/>
+                <span className='text' onClick={()=>{setShowPage('내게시물')}}>게시물</span> <br/>
                 
                 {/* <hr/>
                 <span className='text' onClick={()=>{props.setShowPage('내게시물')}}>채팅</span> <br/> */}
                 { storageMemberId === memberId &&  
                     <>
                         <hr/>
-                        <span className='text' onClick={()=>{props.setShowPage('예약관리')}}>예약 관리</span> <br/>
+                        <span className='text' onClick={()=>{setShowPage('예약관리')}}>예약 관리</span> <br/>
 
                         <hr/>
-                        <span className='text' onClick={()=>{props.setShowPage('내정보수정')}}>내 정보 수정</span>
+                        <span className='text' onClick={()=>{setShowPage('내정보수정')}}>내 정보 수정</span>
                         
                     </>
 

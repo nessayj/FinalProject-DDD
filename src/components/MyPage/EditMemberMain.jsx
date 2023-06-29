@@ -6,6 +6,7 @@ import MyPost from './MyPost';
 import { member_info } from './Data';
 import MyReservation from './MyReservation';
 import DeleteAccount from './DeleteAccount';
+import useStore from '../../store';
 
 const Container = styled.div`
   /* background-color  : beige; */
@@ -58,8 +59,10 @@ const Menu =styled.div`
 `;
 
 
-const EditMemberMain = (props) => {
+const EditMemberMain = () => {
     const [pageOnEdit, setPageOnEdit] = useState(0)
+    const { setShowPage } = useStore();
+
     return (
         <>   
         {/* <Thumnail/> */}
@@ -73,7 +76,7 @@ const EditMemberMain = (props) => {
                             (<div onClick={()=> setPageOnEdit(0)}>내 정보 수정</div>)
 
                         }
-                        <div onClick={() => (props.setShowPage('마이페이지'))}>마이페이지</div>
+                        <div onClick={() => (setShowPage('마이페이지'))}>마이페이지</div>
 
                         {
                             pageOnEdit === 1 ? 
@@ -83,10 +86,7 @@ const EditMemberMain = (props) => {
                     </Menu>
                 </MenuBlock>
                 {/* state에 따라서 컴퍼넌트 출력 */}
-                        {pageOnEdit === 0  && <EditInfo 
-                            showPage={props.showPage} 
-                            setShowPage={props.setShowPage}
-                        />}
+                        {pageOnEdit === 0  && <EditInfo />}
                         {
                             pageOnEdit === 1 && <DeleteAccount/>
                         } 

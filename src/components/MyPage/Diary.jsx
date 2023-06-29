@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { SlArrowRight } from 'react-icons/sl';
 import exhibitionData from '../exhibition/exhibitionData';
 import { Link } from 'react-router-dom';
+import useStore from '../../store';
 
 
 const DiaryBox =styled.div`
@@ -59,11 +60,13 @@ align-items: center;
         }
     }   
 `;
-const Diary = (props) => {
+const Diary = () => {
+    const { setShowPage } = useStore();
+
     return (
         <>
             <DiaryBox>
-                <p className='title' onClick={()=>{props.setShowPage('다이어리')}}>다이어리</p>
+                <p className='title' onClick={()=>{setShowPage('다이어리')}}>다이어리</p>
                 <DiaryImage>
                 {
                 exhibitionData.slice(0, 5).map((img, i) => (
@@ -73,7 +76,7 @@ const Diary = (props) => {
                 ))
                 }
 
-                <button onClick={()=>{props.setShowPage('다이어리')}}> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
+                <button onClick={()=>{setShowPage('다이어리')}}> <SlArrowRight style={{padding:'0', margin:'0'}}/> </button>
                 </DiaryImage>
             </DiaryBox>
         </>

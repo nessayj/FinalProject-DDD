@@ -6,20 +6,13 @@ const HEADER = {"Content-type" : "application/json"}
 const LoginApi = {
     login : async(email, password) => {
 
-        // token 값 설정
-        const token = getToken(); 
-        // header 추가
-        const config = {
-            headers : {
-                Authorization: `Bearer ${token}`,
-            },
-        };
+
 
         const loginCheck = {
             email : email,
             password : password
         };
-        return await axios.post(DDD_DOMAIN + "/login", loginCheck, config); // config 부분 같이 날리기
+        return await axios.post(DDD_DOMAIN + "/login", loginCheck); // config 부분 같이 날리기
     },
 
     // login : async(email, password) => {

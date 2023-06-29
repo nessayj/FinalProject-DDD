@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import MyPageApi from "../../api/MyPageApi";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useStore from "../../store";
 
 
 const EditBlock = styled.div`
@@ -234,6 +235,7 @@ const EditInfo = (props) => {
       console.log(e);
     }
   };
+  const [popupOpen, setPopupOpen] = useState(false)
 
   // 함수가 전부다 불러올때까지 await
   const handleOnclick = async() => {
@@ -242,7 +244,10 @@ const EditInfo = (props) => {
     await handleSave(MyPageApi.tel, memberId, inputTel);
     await handleSave(MyPageApi.instagram, memberId, inputInst);
     await handleSave(MyPageApi.introduce, memberId, inputIntro);
+    setPopupOpen(true)
   };
+
+  const { setShowPage } = useStore();
 
   return (
     <>
@@ -320,15 +325,8 @@ const EditInfo = (props) => {
           </div>
           <div className="btnBlock">
           <button onClick={handleOnclick} disabled={!isNick}
-            style={isNick ?  null : { backgroundColor: '#ddd'}  }
-          >저장</button>
-            <button
-              onClick={() => {
-                props.setShowPage("마이페이지");
-              }}
-            >
-              취소
-            </button>
+            style={isNick ?  null : { backgroundColor: '#ddd'}}>저장</button>
+            <button onClick={() => {setShowPage("마이페이지")}}>취소</button>
           </div>
         </EditBlock>
       )}

@@ -2,34 +2,12 @@ import { React, useState } from "react";
 import Thumnail from "./Thumnail";
 import styled from "styled-components";
 import { SlPencil, SlCloudUpload } from "react-icons/sl";
-import { member_info } from "./Data";
 import { useNavigate } from "react-router-dom";
 import MyPageApi from "../../api/MyPageApi";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-// ====== 이미지 클릭 하였을 때 바뀌는 것으로 고민 해보기 =======
-// const EditBG = styled.button`
-// position: relative;
-// top: -5%;
-// left: 90%;
-// width: 3rem;
-// height: 2rem;
-// border-radius: 1.5rem;
-// border: 1px solid #aaa;
-// font-size: .7rem;
-// cursor: pointer;
-// /* background-color: #ccc; */
-// /* color: white; */
-// :hover{
-//     background-color: black;
-//     color: white;
-// }
-// `;
-// const EditProfile = styled(EditBG)`
-//     top: -0%;
-//     left: 15%;
-// `;
+
 const EditBlock = styled.div`
   width: 70%;
   height: 100%;
@@ -157,6 +135,8 @@ const RightBox = styled.div`
 `;
 
 const EditInfo = (props) => {
+    const { memberId } = useParams();
+
     const [inputNick, setInputNick] = useState();
     const [inputName, setInputName] = useState();
     const [inputTel, setInputTel] = useState();
@@ -165,21 +145,26 @@ const EditInfo = (props) => {
 
     const [responseData, setResponseData] = useState(null);
 
-    const { memberId } = useParams();
 
     const [nickMessage, setNickMessage] = useState("");
-    const [isNick, setIsNick] = useState("");
+    const [isNick, setIsNick] = useState(true);
 
     // 회원 정보 모두 가져오기
     useEffect(() => {
         const infoFetchDate = async () => {
-        const response = await MyPageApi.info(memberId);
-        //   console.log(response);
-        setResponseData(response.data);
-        //   console.log(responseData.nickname);
+            const response = await MyPageApi.info(memberId);
+            if (response.data) {
+                setResponseData(response.data);
+                setInputNick(response.data.nickname ? response.data.nickname : inputNick);
+                setInputName(response.data.name ? response.data.name : inputName);
+                setInputTel(response.data.tel ? response.data.tel : inputTel);
+                setInputinst(response.data.instagram ? response.data.instagram : inputInst);
+                setInputintro(response.data.introduce ? response.data.introduce : inputIntro);
+            }
         };
         infoFetchDate();
     }, [memberId]);
+    
 
     // onChangeHandling
     const onChangeName = (e) => {
@@ -261,7 +246,7 @@ const EditInfo = (props) => {
 
   return (
     <>
-      {responseData && (
+      { responseData && (
         <EditBlock>
           <div className="title">내 정보 수정</div>
           <Edit>
@@ -287,7 +272,6 @@ const EditInfo = (props) => {
               <div className="textBox">
                 <input
                   type="text"
-                  defaultValue={responseData.nickname}
                   onChange={onChangeNick}
                   value={inputNick}
                 />
@@ -297,7 +281,6 @@ const EditInfo = (props) => {
               <div className="textBox">
                 <input
                   type="text"
-                  defaultValue={responseData.instagram}
                   onChange={onChangeInst}
                   value={inputInst}
                 />
@@ -308,7 +291,6 @@ const EditInfo = (props) => {
               <div className="textBox">
                 <input
                   type="text"
-                  defaultValue={responseData.name}
                   onChange={onChangeName}
                   value={inputName}
                 />
@@ -317,7 +299,6 @@ const EditInfo = (props) => {
               <div className="textBox">
                 <input
                   type="tel"
-                  defaultValue={responseData.tel}
                   onChange={onChangeTel}
                   value={inputTel}
                 />
@@ -333,13 +314,14 @@ const EditInfo = (props) => {
               cols="20"
               rows="5"
               style={{ width: "88%" }}
-              defaultValue={responseData.introuduce}
               onChange={onChangeIntro}
               value={inputIntro}
             />
           </div>
           <div className="btnBlock">
-            <button onClick={handleOnclick}>저장</button>
+          <button onClick={handleOnclick} disabled={!isNick}
+            style={isNick ?  null : { backgroundColor: '#ddd'}  }
+          >저장</button>
             <button
               onClick={() => {
                 props.setShowPage("마이페이지");

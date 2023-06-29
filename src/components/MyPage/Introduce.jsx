@@ -77,7 +77,7 @@ const Introduce = (props) => {
                     { responseData && 
                         <>
                             <div className='nickName'> {responseData.nickname} </div>
-                            <div className='desc'> {responseData.introuduce} </div>
+                            <div className='desc'> {responseData.introduce} </div>
                         </>     
                     }
                 </TextBox>

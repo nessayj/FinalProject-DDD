@@ -217,22 +217,25 @@ const InputInfo = ({rootData, reservationData, id}) => {
   // 전체 Wrapper 열리고 닫히게 
   const [isExpandedDeliever, setIsExpandedDeliever] = useState(false);
   const [isExpandedPayment, setIsExpandedPayment] = useState(false);
-  const [isExpandedInputInfo, setIsExpandedInputInfo] = useState(false);
+  const [isExpandedInputInfo, setIsExpandedInputInfo] = useState(true);
   const [isExpandedPrice, setIsExpandedPrice] = useState(false);
   
   
 
 
   const handleHeaderClick = () => {
+    setIsExpandedPayment(false);
     setIsExpandedDeliever(!isExpandedDeliever);
   };
   const handleHeaderClickPay = () => {
+    setIsExpandedPrice(false);
     setIsExpandedPayment(!isExpandedPayment);
   };
   const handleHeaderClickInput = () => {
     setIsExpandedInputInfo(!isExpandedInputInfo);
   };
   const handleHeaderClickPrice = () => {
+    setIsExpandedInputInfo(false);
     setIsExpandedPrice(!isExpandedPrice);
   };
   
@@ -321,7 +324,7 @@ const InputInfo = ({rootData, reservationData, id}) => {
       </BuyerInfoWrapper>
       <PriceQuantityWrapper isExpanded={isExpandedPrice} >
       <div className="wrapperHeader" onClick={handleHeaderClickPrice}>
-        <h4>가격 정보</h4>
+        <h4>수량 및 가격</h4>
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPrice? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
       <div className="container">
@@ -367,7 +370,7 @@ const InputInfo = ({rootData, reservationData, id}) => {
       </DeliveryMethodWrapper>
       <PaymentMethodWrapper isExpanded={isExpandedDeliever} >
       <div className="wrapperHeader" onClick={handleHeaderClick}>
-        <h4>가격 정보</h4>
+        <h4>결제수단</h4>
           <MdOutlineKeyboardArrowDown style={{ transform: isExpandedDeliever ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
         <div className="container">

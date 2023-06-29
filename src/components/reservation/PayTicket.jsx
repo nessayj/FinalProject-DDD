@@ -526,8 +526,8 @@ const PayTicket = ({data}) => {
       </PolicyWrapper>
       <ReservationButtonWrapper>
        <Button onClick={goToInputInfo}>이전 단계</Button>
-        {data.paymentMethod === 'kakaoPay' && <Button className="kakaoBtn"><RiKakaoTalkFill/><p>카카오페이</p></Button>}
-        {data.paymentMethod === 'banking' && <Button className="bankingBtn" onClick={handleOpenModal}>무통장입금</Button>}
+        {data.paymentMethod === 'kakaoPay' && <Button className="kakaoBtn" disabled={!agreeCancel || !agreePersonal}><RiKakaoTalkFill/><p>카카오페이</p></Button>}
+        {data.paymentMethod === 'banking' && <Button className="bankingBtn" onClick={handleOpenModal} disabled={!agreeCancel || !agreePersonal}>무통장입금</Button>}
       </ReservationButtonWrapper>
       </RightContainer>
       </div>   

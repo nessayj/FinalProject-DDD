@@ -102,6 +102,7 @@ const Modal = styled.div`
     /* background-color: red; */
     font-size: 0.6rem;
     padding-top: 0.4rem;
+    color: red;
   }
   .AskBlock {
     width: 70%;
@@ -153,7 +154,9 @@ const LoginModal = (props) => {
         window.localStorage.setItem("accessToken", accessToken);
         window.localStorage.setItem("memberId", memberId);
         // console.log(window.localStorage.getItem('accessToken'));
-        // console.log('데이터로 받은 멤버아이디' + memberId)
+        window.localStorage.getItem('storageEmail')
+        console.log('데이터로 받은 멤버아이디' + window.localStorage.getItem('storageEmail'))
+        console.log('데이터로 받은 멤버아이디' + memberId)
         //console.log("getitem으로 받은 멤버아이디" + window.localStorage.getItem("memberId"));
 
         if (response.status === 200) {
@@ -202,7 +205,7 @@ const LoginModal = (props) => {
             type="password"
             value={password}
             onChange={onChangeloginPwd}
-            onKeyUp={handleOnKeyPress}
+            onKeyDown={handleOnKeyPress}
             placeholder="Password"
           />
         </div>

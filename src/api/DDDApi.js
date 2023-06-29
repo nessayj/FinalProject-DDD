@@ -15,14 +15,14 @@ const DDDApi = {
     },
 
     // 게시글 작성
-    boardWrite: async (getId, category, region, title, image, contents ) => {
-        console.log("getId : "+ getId, "category : " + category, "region: " + region, "title: " + title, "image: " + image, "contents: " + contents )
+    boardWrite: async (getId, category, region, title, imageUrl, contents ) => {
+        console.log("getId : "+ getId, "category : " + category, "region: " + region, "title: " + title, "image: " + imageUrl, "contents: " + contents )
         const postObj = {
             id: getId,
             category: category,
             region: region,
             title: title,
-            image: image,
+            image: imageUrl,
             contents: contents
         };
         return await axios.post(DDD_DOMAIN + "/boardList/write", postObj, HEADER);

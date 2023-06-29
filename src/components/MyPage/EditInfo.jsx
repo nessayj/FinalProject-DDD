@@ -153,10 +153,15 @@ const RightBox = styled.div`
 `;
 
 const EditInfo = (props) => {
+    const [newNickname, setNewNickname] =useState('');
   
     const [responseData, setResponseData] = useState(null);
 
     const { memberId } = useParams();
+
+    const onChangeNickname = (e) => {
+        setNewNickname(e.target.value);
+      };
   
     useEffect(() => {
         const infoFetchDate = async () => {
@@ -167,6 +172,36 @@ const EditInfo = (props) => {
         };
         infoFetchDate();
     }, [memberId]);
+
+    // const checkEmailDuplication = async (email) => {
+    //     try {
+    //         const response = await LoginApi.emaildup(email);
+    //         if (response.status === 200) {
+    //             // console.log('이메일 중복 체크 중');
+    //             // console.log(response.data)
+    //             if(!response.data) {
+    //                 setEmailMessage("해당 이메일은 이미 사용 중입니다.");
+    //                 setIsEmail(false);
+    //             } else {
+    //                 setEmailMessage("사용하실 수 있는 이메일 입니다.");
+    //                 setIsEmail(true);
+    //             }
+    //         }
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+
+    // const nicknameData = async (memberId, newNickname) => {
+    //     const response = await MyPageApi.nickname(memberId, newNickname)
+    //     try{
+    //         if(response.data === true){
+    //             setNewNickname(newNickname)
+    //         }
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
 
 
 
@@ -195,6 +230,8 @@ const EditInfo = (props) => {
                         <div className="textBox">
                             <input type="text" 
                             defaultValue={responseData.nickname}
+                            onChange={onChangeNickname}
+                            value={newNickname}
                             />
                         </div>
 

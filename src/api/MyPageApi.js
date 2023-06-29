@@ -51,7 +51,7 @@ const MyPageApi = {
     instagram: (memberId, inputInst) => updateProfileField(memberId, 'instagram', inputInst),
 
     // 소개글 변경
-    instroduce: (memberId, inputIntro) => updateProfileField(memberId, 'introduce', inputIntro),
+    introduce: (memberId, inputIntro) => updateProfileField(memberId, 'introduce', inputIntro),
 
 
         // // 닉네임 변경

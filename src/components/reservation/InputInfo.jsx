@@ -267,12 +267,11 @@ const InputInfo = ({rootData, reservationData, id}) => {
     paymentMethod: paymentMethod 
 }
 
-// 컴포넌트 이동을 위한 변수설정
-const [toPayment, setToPayment] = useState(false);
-const handleReservation = () =>{
-    setToPayment(true);
-
-}
+    // 컴포넌트 이동을 위한 변수설정
+    const [toPayment, setToPayment] = useState(false);
+    const handleReservation = () =>{
+        setToPayment(true);
+    }
 
   return (
     <>

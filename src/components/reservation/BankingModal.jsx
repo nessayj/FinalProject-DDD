@@ -46,6 +46,7 @@ const ModalStyle = styled.div`
         top: 2px;
         right: 15px;
         width: 30px;
+        float: left;
         font-size: 30px;
         font-weight: 900;
         text-align: center;
@@ -70,6 +71,7 @@ const ModalStyle = styled.div`
         display: flex;
         flex-direction: row;
         gap: 1rem;
+        margin-left: 2rem;
     }
     .pContainer{
         margin-right: 1rem;
@@ -79,12 +81,10 @@ const ModalStyle = styled.div`
         }
     }
     .p1{
-        width: 50%;
-        margin-left: 1rem;
+        margin-left: 3rem;
     }
     h3{
-        width: 50%;
-        margin-left: 1rem;
+        margin-left: 2rem;
     }
 `;
 
@@ -174,8 +174,8 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
                 </FormControl>
                 {selectedBank && (
                 <div className='pContainer'>
-                <p>선택한 은행 계좌번호: {accountNumber}</p>
-                <p className='p2'>입금 기한: {paymentDeadline}까지 입금해주세요.</p>
+                <p>계좌번호: {accountNumber}</p>
+                <p className='p2'>입금 기한: 위 계좌번호로 {paymentDeadline}까지 입금해주세요.</p>
                 </div>)}
                 </div>
                 <FormControlLabel
@@ -185,7 +185,7 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
                 />
                 <div className="btnContainer">
                 <Button onClick={close}>취소</Button>
-                <Button onClick={close}>확인</Button>
+                <Button onClick={close} disabled={!agreed}>확인</Button>
                 </div>
             </main>
           </section>

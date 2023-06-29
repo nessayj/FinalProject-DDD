@@ -8,6 +8,7 @@ import InputInfo from "./InputInfo";
 import {RiKakaoTalkFill} from "react-icons/ri";
 import { Payment, ProvideAgreement } from "./Agreement";
 import ModalBankingPayment from "./BankingModal";
+import FinalReservation from './FinalReservation';
 
 const PayContainer = styled.div`
     display: flex;
@@ -284,6 +285,7 @@ const PayTicket = ({data}) => {
     const [showInputInfo, setShowInputInfo] = useState(false);
     const goToInputInfo = () => {
         setShowInputInfo(true);
+        setOpenBooked(false);
     }
 
     const goToSelectDate = () => {
@@ -360,11 +362,32 @@ const PayTicket = ({data}) => {
       const handleOpenModal = () => {
         setModalOpen(true);
       }
+      // 확인버튼을 누르면 예매페이지로이동
+      const [openBooked, setOpenBooked] = useState(false);
+      const handleToComplete = () => {
+        setModalOpen(false);
+        setShowInputInfo(false);
+        setOpenBooked(true);
+      }
+
+      // 결제 모달창과 예매완료페이지에 값 전달
+      const dataForPayReserv = {
+        imgUrl: data.reservationData.imgUrl,
+        exhibitName: data.reservationData.exhibitName,
+        exhibitLocation: data.reservationData.exhibitLocation,
+        totalPrice: data.totalPrice,
+        rootData: data.rootData,
+        open: modalOpen,
+        close: closeModal,
+        handleToComplete: handleToComplete, 
+      }
+
+   
 
 
     return(
         <>
-       {showInputInfo ? (
+       {showInputInfo && !openBooked ? (
         <InputInfo
           reservationData={data.reservationData}
           rootData={data.rootData}
@@ -533,11 +556,8 @@ const PayTicket = ({data}) => {
       </div>   
       </div>
       </div>
-      <ModalBankingPayment 
-      exhibitName={data.reservationData.exhibitName}
-      totalPrice={data.totalPrice}
-      open={modalOpen}
-      close={closeModal} />
+      <ModalBankingPayment props = {dataForPayReserv}/>
+      {openBooked && <FinalReservation props = {dataForPayReserv}/>}
     </PayContainer>)}
     </>
     );

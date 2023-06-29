@@ -27,7 +27,7 @@ const ModalStyle = styled.div`
   }
     section {
         width: 80%;
-        height: 20rem;
+        height: 26rem;
         box-sizing: border-box;
         margin: 0 auto;
         border-radius: 0.5rem;
@@ -36,25 +36,25 @@ const ModalStyle = styled.div`
         animation: modal-show 0.3s;
         overflow: hidden;
     }
-    section > header {
-        position: relative;
-        padding: 16px 64px 16px 16px;
+    .headerContainer{
         font-weight: 700;
-    }
-    section > header button {
-        position: absolute;
-        top: 2px;
-        right: 15px;
-        width: 30px;
-        float: left;
+        display: flex;
+        justify-content: space-between;
+
+        > button {
+        padding: 0 15px 50px;
         font-size: 30px;
         font-weight: 900;
-        text-align: center;
         color: #999;
         background-color: transparent;
         outline: none;
         cursor: pointer;
         border: 0;
+        }
+
+        >h2{
+        padding: 16px 15px 16px 16px;
+        }
     }
 
     .btnContainer{
@@ -89,18 +89,20 @@ const ModalStyle = styled.div`
 `;
 
 
-const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
+const ModalBankingPayment = ({ props }) => {
+  // 은행선택
   const [selectedBank, setSelectedBank] = useState('');
   const [agreed, setAgreed] = useState(false);
   const [accountNumber, setAccountNumber] = useState('');
   const [paymentDeadline, setPaymentDeadline] = useState('');
+  console.log("모달프롭 ㅣ ", props)
 
   // 은행 선택 핸들러
   const handleBankChange = (e) => {
     setSelectedBank(e.target.value);
 
-    // 선택한 은행에 따라 계좌번호 설정
-    let generatedAccountNumber = '';
+  // 선택한 은행에 따라 계좌번호 설정
+  let generatedAccountNumber = '';
     if (e.target.value === '국민은행') {
       generatedAccountNumber = '국민-11111-11111 (주)DDD';
     } else if (e.target.value === '우리은행') {
@@ -116,19 +118,19 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
   };
 
   // 동의 체크박스 핸들러
-  const handleAgreementChange = (event) => {
-    setAgreed(event.target.checked);
+  const handleAgreementChange = (e) => {
+    setAgreed(e.target.checked);
   };
 
   // 입금기한 출력
   useEffect(() => {
-    if (open) {
-      // 오늘 날짜로부터 +2일 뒤의 날짜와 시간을 계산
+    if (props.open) {
+  // 오늘 날짜로부터 +2일 뒤의 날짜와 시간을 계산
       const deadline = new Date();
       deadline.setDate(deadline.getDate() + 2);
       deadline.setHours(23, 59, 0, 0);
 
-      // 날짜와 시간을 원하는 형식으로 변환
+  // 날짜와 시간을 원하는 형식으로 변환
       const formattedDeadline = deadline.toLocaleString('ko-KR', {
         year: 'numeric',
         month: 'long',
@@ -139,19 +141,23 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
 
       setPaymentDeadline(formattedDeadline);
     }
-  }, [open]);
+  }, [props.open]);
+
 
   return (
     <ModalStyle>
-      <div className={open ? 'openModal modal' : 'modal'}>
-        {open && (
+      <div className={props.open ? 'openModal modal' : 'modal'}>
+        {props.open && (
           <section>
             <header>
-              <button onClick={close}>&times;</button>
+            <div className='headerContainer'>
+              <h2>무통장입금</h2>
+              <button onClick={props.close}>&times;</button>
+            </div>
             </header>
             <main>
-                <h3>{exhibitName}</h3>
-                <p className='p1'>결제할 금액 : {totalPrice}</p>
+                <h3>{props.exhibitName}</h3>
+                <p className='p1'>입금액 : {props.totalPrice}</p>
                 <div className='bankingInfo'>
                 <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
                 <InputLabel id="demo-select-small-label">계좌번호</InputLabel>
@@ -174,8 +180,9 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
                 </FormControl>
                 {selectedBank && (
                 <div className='pContainer'>
-                <p>계좌번호: {accountNumber}</p>
-                <p className='p2'>입금 기한: 위 계좌번호로 {paymentDeadline}까지 입금해주세요.</p>
+                <p>입금하실계좌번호: {accountNumber}</p>
+                <p className='p2'>입금기한: 위 계좌번호로 {paymentDeadline}까지 입금해주세요.</p>
+                <p className='p2'>은행에 따라 밤 11시 30분 이후로는 온라인 입금이 제한 될 수 있습니다.</p>
                 </div>)}
                 </div>
                 <FormControlLabel
@@ -184,8 +191,9 @@ const ModalBankingPayment = ({ totalPrice, close, open, exhibitName }) => {
                 label="결제에 동의합니다."
                 />
                 <div className="btnContainer">
-                <Button onClick={close}>취소</Button>
-                <Button onClick={close} disabled={!agreed}>확인</Button>
+                <Button onClick={props.close}>취소</Button>
+                <Button onClick={props.handleToComplete} disabled={!agreed}>확인</Button>
+                
                 </div>
             </main>
           </section>

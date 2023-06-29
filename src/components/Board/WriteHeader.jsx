@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { storage } from "../../util/FireBase";
+
 
 
 const Wrap = styled.div`
@@ -124,108 +126,151 @@ const Section = styled.div`
 
 
 const WriteHeader = () => {
+    // const token = localStorage.getItem("accessToken");
+
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [region, setRegion] = useState("");
     const [image, setImage] = useState(null);
-    const [previewUrl, setPreviewUrl] =useState("");
+    const [previewUrl, setPreviewUrl] = useState("");
+
+    // const getId = window.localStorage.getItem("Id");
+
+    useEffect(() => {
+        console.log("입력값:", {
+          category: category,
+          region: region,
+          title: title,
+        });
+      }, [category, region, title]);
 
 
-    // 게시판 카테고리 선택 
+  
+    // 게시판 카테고리 선택
     const onChangerCtg = (e) => {
-        setCategory(e.target.value)
-    }
-
-    // 지역 선택 
-    const onChangeregion = (e) => {
-        setRegion(e.target.value)
-    }
-
+      setCategory(e.target.value);
+    };
+  
+    // 지역 선택
+    const onChangerRegion = (e) => {
+      setRegion(e.target.value);
+    };
+  
     // 게시글 제목 변경
     const onChangeTitle = (e) => {
-        setTitle(e.target.value);
-    }
-
+      setTitle(e.target.value);
+    };
+  
     // 이미지 미리보기
     const previewImage = (e) => {
-        e.preventDefault();
-    
-    
-    const fileReader = new FileReader();
-    if (e.target.files[0]) {
+      e.preventDefault();
+  
+      const fileReader = new FileReader();
+      if (e.target.files[0]) {
         fileReader.readAsDataURL(e.target.files[0]);
-    }
-        fileReader.onload = () => {
-            setPreviewUrl(fileReader.result);
-            setImage({
-                image_file: e.target.files[0],
-                previewUrl: fileReader.result,
-            });
-        };
+      }
+      fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+        setImage({
+          image_file: e.target.files[0],
+          previewUrl: fileReader.result,
+        });
+      };
     };
 
+    const handleUploadClick = () => {
+        const storageRef = storage.ref();
+        const fileRef = storageRef.child(image.image_file.name);
+        fileRef.put(image.image_file).then(() => {
+          console.log('File uploaded successfully!');
+          fileRef.getDownloadURL().then((url) => {
+            console.log("저장경로 확인 : " + url);
+            setImage(prevState => ({ ...prevState, image_url: url }));
+          });
+        });
+      };
 
-    return(
-        <>
-        {/* <Main/> */}
-        <Wrap>
-            <Section className="section">
-            <div className="board_header">
-                    <div className="boardtitle">
-                        <h2>자유 게시판</h2>  
-                    </div>
-                    <table>
-                        <tr>
-                            <th colSpan={3}>게시물 작성</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select name="category" onChange={onChangerCtg}>
-                                    <option value="" selected>카테고리</option>
-                                    <option value="추천수다">추천수다</option>
-                                    <option value="질문하기">질문하기</option>
-                                    <option value="동행찾기">동행찾기</option>
-                                </select>
-                            </td>
 
-                            <td>
-                                <select name="category" onChange={onChangeregion}>
-                                    <option value="" selected>지역선택</option>
-                                    <option value="서울">서울</option>
-                                    <option value="경기/인천">경기/인천</option>
-                                    <option value="충청">충청</option>
-                                    <option value="강원">강원</option>
-                                    <option value="경상도">경상도</option>
-                                    <option value="전라/제주">전라/제주</option>
-                                </select>
-                            </td>
+      const onClickUpload = () => {
+        handleUploadClick();
+      };
 
-                            <td>
-                                <input className="input_title" 
-                                type='text' 
-                                placeholder='제목을 입력해주세요 :)' 
-                                value={title} 
-                                onChange={onChangeTitle} 
-                                name='title' 
-                                maxLength={40}/>
-                            </td>
-                            <td>
-                            <div className="imguploaderBtn">
-                                <button>
-                                <input type="file" id="file-upload" onChange={previewImage} style={{display: "none"}}/>
-                                <label htmlFor="file-upload">사진 업로드</label>
-                                </button>
-                            </div>
-                            </td>
-                        </tr>
-                    </table> 
-                    <div className="addBoard-wrapper">
-                        {previewUrl && <img src={previewUrl}/>}
+    
+    
+    return (
+    <>
+      <Wrap>
+        <Section className="section">
+          <div className="board_header">
+            <div className="boardtitle">
+              <h2>자유 게시판</h2>
+            </div>
+         
+              <table>
+                <tr>
+                  <th colSpan={3}>게시물 작성</th>
+                </tr>
+                <tr>
+                  <td>
+                    <select name="category" onChange={onChangerCtg}>
+                      <option value={category} selected>
+                        카테고리
+                      </option>
+                      <option value="추천수다">추천수다</option>
+                      <option value="질문하기">질문하기</option>
+                      <option value="동행찾기">동행찾기</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <select name="category" onChange={onChangerRegion}>
+                      <option value={region} selected>
+                        지역선택
+                      </option>
+                      <option value="서울">서울</option>
+                      <option value="경기/인천">경기/인천</option>
+                      <option value="충청">충청</option>
+                      <option value="강원">강원</option>
+                      <option value="경상도">경상도</option>
+                      <option value="전라/제주">전라/제주</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <input
+                      className="input_title"
+                      type="text"
+                      placeholder="제목을 입력해주세요 :)"
+                      value={title}
+                      onChange={onChangeTitle}
+                      name="title"
+                      maxLength={40}
+                    />
+                  </td>
+                  <td>
+                    <div className="imguploaderBtn">
+                      <button>
+                        <input
+                          type="file"
+                          id="file-upload"
+                          onChange={previewImage}
+                          style={{ display: "none" }}
+                        />
+                        <label htmlFor="file-upload">사진 업로드</label>
+                      </button>
                     </div>
-                    </div>
-            </Section>
-        </Wrap>
+                  </td>
+                </tr>
+              </table>
+              <div className="addBoard-wrapper">
+                {/* {previewUrl && <img src={previewUrl} alt="Preview" />}
+                {image.image_url && <img src={image.image_url} alt="Uploaded" />} */}
+                </div>
+          </div>
+        </Section>
+      </Wrap>
     </>
-    )
+  );
 };
+
 export default WriteHeader;

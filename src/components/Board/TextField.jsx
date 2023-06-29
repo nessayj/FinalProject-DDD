@@ -2,7 +2,7 @@ import React from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const TextWrap = styled.div`
@@ -20,19 +20,21 @@ const TextWrap = styled.div`
 
 const TextField = () => {
 
-  const [detailvalue, setDetailvalue] = useState("");
+  const [contents, setContents] = useState("");
 
-  
+  useEffect(() => {
+    console.log("내용:", contents);
+  }, [contents]);
 
 
   return (
     <TextWrap>
         <CKEditor 
         editor={ClassicEditor} 
-        data={detailvalue} 
+        data={contents} 
         onChange={(event, editor) => {
           const data = editor.getData();
-            setDetailvalue(data);
+          setContents(data);
         }}
         config={{
           placeholder: '자유롭게 작성 가능합니다.'

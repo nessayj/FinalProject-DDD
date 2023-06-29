@@ -3,12 +3,11 @@ import { getToken } from "../store"; // token값 받아오기
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const HEADER = {"Content-type" : "application/json"}
 
-
 const LoginApi = {
     login : async(email, password) => {
 
         // token 값 설정
-        const token = getToken();
+        const token = getToken(); 
         // header 추가
         const config = {
             headers : {

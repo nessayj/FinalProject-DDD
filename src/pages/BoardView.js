@@ -180,6 +180,8 @@ const Boardview = () => {
     let boardNo = params.no;
 
 
+
+
      // 게시물 삭제, 수정 팝업
     //  const [modalOpen, setModalOpen] = useState(false); // 모달에 띄워줄 메세지 문구
     //  const [modalOption, setModalOption] = useState('');
@@ -214,6 +216,9 @@ const Boardview = () => {
                 const response = await DDDApi.getBoard(boardNo);
                 const data = response.data;
                 setBoardView(data);
+                console.log(boardNo);
+                console.log(data);
+                console.log(data.email);
             } catch (e) {
                 console.log(e);
             } 
@@ -223,19 +228,31 @@ const Boardview = () => {
 
     // 수정, 삭제는 본인만 가능하도록 노출
     const isLogin = window.localStorage.getItem("isLogin");
-    const getId = window.localStorage.getItem("Id");
+    const getId = window.localStorage.getItem("Id"); // localStorage 저장 정보
 
-
-    const showEditBtn = () => {
-        return isLogin === true && boardView?.author === getId;
-    }
 
     // 로그인 상태 확인
     console.log(isLogin);
 
-    //작성자와 id 일치 여부 확인
-    console.log("boardView?.author:", boardView?.author);
+    // 작성자 정보를 localStorage에 저장
+    window.localStorage.setItem('author', boardView?.author);
+
+    // id와 작성자 정보 비교
+    const author = window.localStorage.getItem('author');
+    const isAuthorMatched = author === getId;
+
+
+
+    //작성자와 id 일치 여부 확인 출력
+    console.log("작성자 정보:", boardView?.author);
     console.log("getId:", getId);
+    console.log("작성자와 Id 일치 여부:", isAuthorMatched);
+
+
+     // 수정, 삭제 버튼 노출 여부 확인
+     const showEditBtn = () => {
+        return isLogin === true && isAuthorMatched;
+    };
 
 
 
@@ -299,6 +316,7 @@ const Boardview = () => {
                     <img src={postimage} alt="기본 이미지" />
                     )}
                 </div>
+
                     <div className="text_area">{boardView?.contents}</div>
                 </Contents>
             </div>

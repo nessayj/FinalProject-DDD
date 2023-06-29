@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import WriteHeader from '../components/Board/WriteHeader';
 import TextField from '../components/Board/TextField';
 import { Link } from 'react-router-dom';
+import DDDApi from '../api/DDDApi';
 
 
 
@@ -62,22 +63,54 @@ const WriteWrap = styled.div`
 
 
 const BoardWrite = () => {
+    const [title, setTitle] = useState("");
+    const [category, setCategory] = useState("");
+    const [region, setRegion] = useState(null);
+    const [image, setImage] = useState(null);
+    const [contents, setContents] = useState("");
 
-    const [save, setSave] = useState();
+    // const getId = localStorage.getItem("Id");
 
-    const onClickSave = (e) => {
-        setSave(e.target.value)
+    const author = localStorage.getItem("Id"); // 아이디 인증없이 작성자 정보로 테스트
+
+    useEffect(() => {
+        if (title.length === 0 || category.length === 0 || contents.length === 0) {
+        
+            return; 
+        }
+          alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+        
+    }, [title, category, contents]);
+
+
+    const onClickSave = async () => {
+
+    const resultNo = await DDDApi.boardWrite(author, category, region, title, image, contents);
+    const linkNo = resultNo.data;
+    console.log("Result Number:", linkNo);
+    if (linkNo) {
+        alert("문의글 작성이 완료되었습니다.");
     }
+};
+  
 
     
     return(
         <WriteWrap>
-            <WriteHeader/>
-            <TextField/>
-            <div className="btn_area">
-                <button className="savebtn" onClick={onClickSave}>저장하기</button>
-                <Link to='/boardList'><button className="cancelbtn">취소하기</button></Link>
-            </div>
+
+            <WriteHeader
+            setTitle={setTitle}
+            setCategory={setCategory}
+            setRegion={setRegion}
+        />
+        <TextField setContent={setContents} />
+        <div className="btn_area">
+            <button className="savebtn" onClick={onClickSave}>등록하기</button>
+            <Link to='/boardList'>
+                <button className="cancelbtn">취소하기</button>
+            </Link>
+        </div>
+
         </WriteWrap>
     )
 };

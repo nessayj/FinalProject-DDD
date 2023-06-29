@@ -153,7 +153,6 @@ const LoginModal = (props) => {
         }
       };
 
-
     const loginFetchDate = async () => {
     console.log('클릭됨');
     try {
@@ -189,6 +188,7 @@ const LoginModal = (props) => {
     const onClickLogin = () => {
     loginFetchDate();
     };
+
     
 
 

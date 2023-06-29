@@ -157,149 +157,104 @@ const RightBox = styled.div`
 `;
 
 const EditInfo = (props) => {
-    
-    const [inputNick, setInputNick] = useState();
-    const [inputName, setInputName] = useState();
-    const [inputTel, setInputTel] = useState();
-    const [inputInstagram, setInputInstagram] = useState();
-    const [inputIntroduce, setInputIntroduce] = useState();
+  const [inputNick, setInputNick] = useState();
+  const [inputName, setInputName] = useState();
+  const [inputTel, setInputTel] = useState();
+  const [inputInst, setInputinst] = useState();
+  const [inputIntro, setInputintro] = useState();
 
-    const [responseData, setResponseData] = useState(null);
+  const [responseData, setResponseData] = useState(null);
 
-    const { memberId } = useParams();
+  const { memberId } = useParams();
 
-    const [nickMessage, setNickMessage] = useState("");
-    const [isNick, setIsNick] = useState("");
+  const [nickMessage, setNickMessage] = useState("");
+  const [isNick, setIsNick] = useState("");
 
   // 회원 정보 모두 가져오기
-    useEffect(() => {
-        const infoFetchDate = async () => {
-        const response = await MyPageApi.info(memberId);
-        //   console.log(response);
-        setResponseData(response.data);
-        //   console.log(responseData.nickname);
-        };
-        infoFetchDate();
-    }, [memberId]);
-
-
-
-    // onChangeHandling
-    const onChangeName = (e) => {
-        const nameCurrent = e.target.value;
-        setInputName(nameCurrent);
+  useEffect(() => {
+    const infoFetchDate = async () => {
+      const response = await MyPageApi.info(memberId);
+      //   console.log(response);
+      setResponseData(response.data);
+      //   console.log(responseData.nickname);
     };
+    infoFetchDate();
+  }, [memberId]);
 
-    const onChangeTel = (e) => {
-        const telCurrent = e.target.value;
-        setInputName(telCurrent);
-    };
+  // onChangeHandling
+  const onChangeName = (e) => {
+    const nameCurrent = e.target.value;
+    setInputName(nameCurrent);
+  };
 
-    // 닉네임 input onChange
-    const onChangeNick = (e) => {
-        const nickCurrent = e.target.value;
-        setInputNick(nickCurrent);
-        nickDuplication(inputNick);
-    };
+  const onChangeTel = (e) => {
+    const telCurrent = e.target.value;
+    setInputTel(telCurrent);
+  };
 
-    // 닉네임 변경 중복 체크
-    const nickDuplication = async (nickname) => {
-        try {
-        const response = await MyPageApi.nicknamedup(nickname);
-        if (response.status === 200) {
-            console.log("닉네임 중복 체크 중");
-            console.log(response.data);
-            if (!response.data) {
-            setNickMessage("해당 닉네임은 이미 사용 중입니다.");
-            setIsNick(false);
-            } else {
-            setNickMessage("사용가능한 닉네입입니다. ");
-            setIsNick(true);
-            }
-        }
-        } catch (e) {
-        console.log(e);
-        }
-    };
+  const onChangeInst = (e) => {
+    const instCurrent = e.target.value;
+    setInputinst(instCurrent);
+  };
 
-    // 닉네임 변경 저장하기
-    const nickSave = async (memberId, inputNick) => {
-        try {
-        const response = await MyPageApi.nickname(memberId, inputNick);
-        console.log(inputNick);
-        if (response.data === true) {
-            console.log("닉네임 변경 완료");
-        }
-        } catch (e) {
-        console.log(e);
-        }
-    };
+  const onChangeIntro = (e) => {
+    const introCurrent = e.target.value;
+    setInputintro(introCurrent);
+  };
 
-    // 이름 변경 저장하기
-    const nameSave = async (memberId, inputName) => {
-        try {
-        const response = await MyPageApi.name(memberId, inputName);
-        console.log(inputName);
-        if (response.data === true) {
-            console.log("이름 변경 완료");
-        }
-        } catch (e) {
-        console.log(e);
-        }
-    };
+  const onChangeNick = (e) => {
+    const nickCurrent = e.target.value;
+    setInputNick(nickCurrent);
+    nickDuplication(memberId, inputNick);
+  };
 
-    // 연락처 변경 저장하기
-    const telSave = async (memberId, inputTel) => {
-        try {
-        const response = await MyPageApi.tel(memberId, inputTel);
-        console.log(inputTel);
-        if (response.data === true) {
-            console.log("연락처 변경 완료");
+  // 닉네임 중복 체크
+  const nickDuplication = async (memberId, nickname) => {
+    try {
+      const response = await MyPageApi.nicknamedup(memberId, nickname);
+      if (response.status === 200) {
+        console.log("닉네임 중복 체크 중");
+        console.log(response.data);
+        if (!response.data) {
+          setNickMessage("해당 닉네임은 이미 사용 중입니다.");
+          setIsNick(false);
+        } else {
+          setNickMessage("사용가능한 닉네입입니다. ");
+          setIsNick(true);
         }
-        } catch (e) {
-        console.log(e);
-        }
-    };
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    const instagramSave = async (memberId, inputInstagram) => {
-        try {
-        const response = await MyPageApi.instagram(memberId, inputInstagram);
-        console.log(inputInstagram);
-        if (response.data === true) {
-            console.log("인스타그램 변경 완료");
-        }
-        } catch (e) {
-        console.log(e);
-        }
-    };
+  // 변경 사항 저장하는 함수
+  const handleSave = async (apiMethod, memberId, inputValue) => {
+    try {
+      const response = await apiMethod(memberId, inputValue);
+      console.log(inputValue);
+      if (response.data === true) {
+        console.log(`${apiMethod}변경 완료`);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    const introduceSave = async (memberId, inputIntroduce) => {
-        try {
-        const response = await MyPageApi.introduce(memberId, inputIntroduce);
-        console.log(inputIntroduce);
-        if (response.data === true) {
-            console.log("소개글 변경 완료");
-        }
-        } catch (e) {
-        console.log(e);
-        }
-    };
-
-    const handleEditbutton = () => {};
+  const handleOnclick = () => {
+    handleSave(MyPageApi.nickname, memberId, inputNick);
+    handleSave(MyPageApi.name, memberId, inputName);
+    handleSave(MyPageApi.tel, memberId, inputTel);
+    handleSave(MyPageApi.instagram, memberId, inputInst);
+    handleSave(MyPageApi.introduce, memberId, inputIntro);
+  };
 
   return (
     <>
       {responseData && (
         <EditBlock>
           <div>{memberId}</div>
-          <button
-            onClick={() => {
-              // nickSave(memberId,inputNick)
-              nameSave(memberId, inputName);
-            }}
-          >
-            nickSave
-          </button>
+          <button onClick={handleOnclick}>Save</button>
           <div className="title">내 정보 수정</div>
           <Edit>
             <LeftBox>
@@ -332,7 +287,12 @@ const EditInfo = (props) => {
               <div className="hint">{nickMessage}</div>
               <p>인스타그램(선택사항)</p>
               <div className="textBox">
-                <input type="text" defaultValue={responseData.instagram} />
+                <input
+                  type="text"
+                  defaultValue={responseData.instagram}
+                  onChange={onChangeInst}
+                  value={inputInst}
+                />
               </div>
             </LeftBox>
             <RightBox>
@@ -347,7 +307,12 @@ const EditInfo = (props) => {
               </div>
               <p>연락처</p>
               <div className="textBox">
-                <input type="tel" defaultValue={responseData.tel} />
+                <input
+                  type="tel"
+                  defaultValue={responseData.tel}
+                  onChange={onChangeTel}
+                  value={inputTel}
+                />
               </div>
             </RightBox>
           </Edit>
@@ -361,6 +326,8 @@ const EditInfo = (props) => {
               rows="5"
               style={{ width: "88%" }}
               defaultValue={responseData.introuduce}
+              onChange={onChangeIntro}
+              value={inputIntro}
             />
           </div>
           <div className="btnBlock">

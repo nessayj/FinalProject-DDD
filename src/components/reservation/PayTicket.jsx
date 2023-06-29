@@ -7,6 +7,7 @@ import Button from "../../util/Button";
 import InputInfo from "./InputInfo";
 import {RiKakaoTalkFill} from "react-icons/ri";
 import { Payment, ProvideAgreement } from "./Agreement";
+import ModalBankingPayment from "./BankingModal";
 
 const PayContainer = styled.div`
     display: flex;
@@ -285,14 +286,12 @@ const PayTicket = ({data}) => {
         setShowInputInfo(true);
     }
 
-
-
     const goToSelectDate = () => {
-        navigate(`/reservation/${data.id}`);
+        navigate(0);
     }
 
     const handleGoToHome = () => {
-        navigate(`/exhibitInfo/${data.id}`);
+        navigate(-1);
     }
 
       // 전체 Wrapper 열리고 닫히게 
@@ -352,6 +351,16 @@ const PayTicket = ({data}) => {
       // 약관동의 불러오기
       const paymentAgreementContent = Payment.contents;
       const provideAgreementContent = ProvideAgreement.contents;
+
+      // 결제 모달창
+      const [modalOpen,setModalOpen] = useState(false);
+      const closeModal =() => {
+        setModalOpen(false);
+      }
+      const handleOpenModal = () => {
+        setModalOpen(true);
+      }
+
 
     return(
         <>
@@ -518,12 +527,17 @@ const PayTicket = ({data}) => {
       <ReservationButtonWrapper>
        <Button onClick={goToInputInfo}>이전 단계</Button>
         {data.paymentMethod === 'kakaoPay' && <Button className="kakaoBtn"><RiKakaoTalkFill/><p>카카오페이</p></Button>}
-        {data.paymentMethod === 'banking' && <Button className="bankingBtn">무통장입금</Button>}
+        {data.paymentMethod === 'banking' && <Button className="bankingBtn" onClick={handleOpenModal}>무통장입금</Button>}
       </ReservationButtonWrapper>
       </RightContainer>
       </div>   
       </div>
       </div>
+      <ModalBankingPayment 
+      exhibitName={data.reservationData.exhibitName}
+      totalPrice={data.totalPrice}
+      open={modalOpen}
+      close={closeModal} />
     </PayContainer>)}
     </>
     );

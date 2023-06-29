@@ -267,12 +267,6 @@ const InputInfo = ({rootData, reservationData, id}) => {
     paymentMethod: paymentMethod 
 }
 
-//   // 예매하기 버튼 클릭 핸들러
-//   const handleReservation = () => {
-//     navigate("/payment", {state: data});
-//   };
-
-
 // 컴포넌트 이동을 위한 변수설정
 const [toPayment, setToPayment] = useState(false);
 const handleReservation = () =>{
@@ -352,17 +346,17 @@ const handleReservation = () =>{
         <MdOutlineKeyboardArrowDown style={{ transform: isExpandedPayment ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
         <div className="container">
-      <DeliveryMethodRadio
-        type="radio"
-        id="onSite"
-        name="deliveryMethod"
-        value="onSite"
-        checked={deliveryMethod === 'onSite'}
-        onChange={handleDeliveryMethodChange}
-      />
+        <DeliveryMethodRadio
+          type="radio"
+          id="onSite"
+          name="deliveryMethod"
+          value="onSite"
+          checked={deliveryMethod === 'onSite'}
+          onChange={handleDeliveryMethodChange}
+        />
       <label htmlFor="onSite">현장수령</label>
       <DeliveryMethodRadio
-        type="radio"
+        type="radio"      
         id="mobileTicket"
         name="deliveryMethod"
         value="mobileTicket"
@@ -375,33 +369,33 @@ const handleReservation = () =>{
       <PaymentMethodWrapper isExpanded={isExpandedDeliever} >
       <div className="wrapperHeader" onClick={handleHeaderClick}>
         <h4>가격 정보</h4>
-        <MdOutlineKeyboardArrowDown style={{ transform: isExpandedDeliever ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
+          <MdOutlineKeyboardArrowDown style={{ transform: isExpandedDeliever ? 'rotate(180deg)' : 'rotate(0deg)' }}/>
         </div>
         <div className="container">
-      <DeliveryMethodRadio
-        type="radio"
-        id="banking"
-        name="payMethod"
-        value="banking"
-        checked={paymentMethod === 'banking'}
-        onChange={handlePaymentMethodChange}
-      />
-      <label htmlFor="banking">무통장입금</label>
-      <DeliveryMethodRadio
-        type="radio"
-        id="kakaoPay"
-        name="payMethod"
-        value="kakaoPay"
-        checked={paymentMethod === 'kakaoPay'}
-        onChange={handlePaymentMethodChange}
-      />
-      <label htmlFor="kakaoPay">카카오페이</label>
+          <DeliveryMethodRadio
+            type="radio"
+            id="banking"
+            name="payMethod"
+            value="banking"
+            checked={paymentMethod === 'banking'}
+            onChange={handlePaymentMethodChange}
+          />
+        <label htmlFor="banking">무통장입금</label>
+          <DeliveryMethodRadio
+            type="radio"
+            id="kakaoPay"
+            name="payMethod"
+            value="kakaoPay"
+            checked={paymentMethod === 'kakaoPay'}
+            onChange={handlePaymentMethodChange}
+          />
+        <label htmlFor="kakaoPay">카카오페이</label>
       </div>
       </PaymentMethodWrapper>
-      <ReservationButtonWrapper>
-        <Button onClick={handleGoBack}>이전 단계</Button>
-        <Button onClick={handleReservation} disabled={isPaymentButtonDisabled}>결제 하기</Button>
-      </ReservationButtonWrapper>
+        <ReservationButtonWrapper>
+          <Button onClick={handleGoBack}>이전 단계</Button>
+          <Button onClick={handleReservation} disabled={isPaymentButtonDisabled}>결제 하기</Button>
+        </ReservationButtonWrapper>
       </RightContainer>
       </div>   
       </div>

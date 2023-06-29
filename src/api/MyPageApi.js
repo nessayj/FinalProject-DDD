@@ -1,7 +1,7 @@
 import axios from "axios";
 import Functions from "../util/Functions";
 
-const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
+const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소 //
 const HEADER = { "Content-type": "application/json" };
 
 const MyPageApi = {

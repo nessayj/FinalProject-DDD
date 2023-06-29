@@ -216,9 +216,7 @@ const Boardview = () => {
                 const response = await DDDApi.getBoard(boardNo);
                 const data = response.data;
                 setBoardView(data);
-                console.log(boardNo);
                 console.log(data);
-                console.log(data.email);
             } catch (e) {
                 console.log(e);
             } 
@@ -226,33 +224,54 @@ const Boardview = () => {
         boardViewLoad();
     }, [boardNo]);
 
-    // 수정, 삭제는 본인만 가능하도록 노출
-    const isLogin = window.localStorage.getItem("isLogin");
-    const getId = window.localStorage.getItem("Id"); // localStorage 저장 정보
+    
+    
 
 
-    // 로그인 상태 확인
-    console.log(isLogin);
 
     // 작성자 정보를 localStorage에 저장
     window.localStorage.setItem('author', boardView?.author);
 
+    // 수정, 삭제는 본인만 가능하도록 노출
+    const isLogin = window.localStorage.getItem("isLogin");
+
     // id와 작성자 정보 비교
-    const author = window.localStorage.getItem('author');
-    const isAuthorMatched = author === getId;
+    const getId = window.localStorage.getItem("memberId"); // localStorage 저장 정보
+    // const isAuthorMatched = boardView.id === getId;
+
+    // const idAsNumber = Number(getId);
+    // console.log(typeof idAsNumber);
+
+    // 로그인한 id와 작성자의 id 비교
+    const isAuthorMatched = String(boardView?.id) === getId; // boardView?.id(숫자타입)를 문자열로 반환
+    console.log(isAuthorMatched);
 
 
+    // 데이터 타입 비교
+    console.log("boardView?.id 타입:", typeof boardView?.id); // number
+    console.log("getId 타입:", typeof getId); // string
+    
+
+
+    console.log("getId:", getId);
+
+    // 로그인 상태 확인
+    console.log(isLogin);
 
     //작성자와 id 일치 여부 확인 출력
     console.log("작성자 정보:", boardView?.author);
     console.log("getId:", getId);
     console.log("작성자와 Id 일치 여부:", isAuthorMatched);
+    console.log(boardView?.email);
+    console.log(boardView?.id);
 
 
      // 수정, 삭제 버튼 노출 여부 확인
-     const showEditBtn = () => {
-        return isLogin === true && isAuthorMatched;
+    const showEditBtn = () => {
+        return isLogin && isAuthorMatched;
     };
+
+    
 
 
 

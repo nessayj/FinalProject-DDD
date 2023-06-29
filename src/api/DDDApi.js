@@ -16,8 +16,9 @@ const DDDApi = {
 
     // 게시글 작성
     boardWrite: async (getId, category, region, title, image, contents ) => {
+        console.log("getId : "+ getId, "category : " + category, "region: " + region, "title: " + title, "image: " + image, "contents: " + contents )
         const postObj = {
-            author: getId,
+            id: getId,
             category: category,
             region: region,
             title: title,

@@ -1,7 +1,11 @@
+import React from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { storage } from "../../util/FireBase";
-
+import { storage } from "../util/FireBase";
+import { Link } from 'react-router-dom';
+import DDDApi from '../api/DDDApi';
 
 
 const Wrap = styled.div`
@@ -124,25 +128,89 @@ const Section = styled.div`
         }
 `;
 
+const TextWrap = styled.div`
+  width: 98%;
+  margin: 0 auto;
+
+  .ck.ck-editor__editable:not(.ck-editor__nested-editable) {min-height: 500px;} // 텍스트 높이 조절
+  .ck-editor__main {padding: 0;}
+`;
+
+const WriteWrap = styled.div`
+  width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+
+    .btn_area {
+        text-align: right;
+        margin-right: .9em;
+ 
+        .savebtn { // 등록 버튼 속성
+                /* display :inline-block; */
+                cursor: pointer;
+                margin-top: 1em;
+                padding: 10px 1.6em;
+                border-radius: 15px;
+                border: none;
+                color: white;
+                background-color: #050E3D;
+                transition: all .1s ease-in;
+                font-weight: 600;
+                font-size: 14px;
+        
+                
+                &:hover {background-color: #5EADF7;
+                    color: #F4F8FF;}
+            }
+            .cancelbtn { // 취소버튼 속성
+                cursor: pointer;
+                margin-top: 1em;
+                padding: 10px 1.6em;
+                border-radius: 15px;
+                border: none;
+                color: white;
+                background-color: #050E3D;
+                transition: all .1s ease-in;
+                font-weight: 600;
+                font-size: 14px;
+
+                &:hover {background-color: #FA6060;
+                    color: #F4F8FF;}
+
+            }
+            button:nth-child(1) {
+                margin-right: 16px;
+            }
+                
+    }
+`;
+
 
 const WriteHeader = () => {
-    // const token = localStorage.getItem("accessToken");
+    const isLogin = window.localStorage.getItem("isLogin");
+    const getId = localStorage.getItem("memberId") 
+    console.log("getId:", getId);
+    console.log(isLogin);
 
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
-    const [region, setRegion] = useState("");
+    const [region, setRegion] = useState(null);
     const [image, setImage] = useState(null);
     const [previewUrl, setPreviewUrl] = useState("");
+    const [contents, setContents] = useState("");
 
-    // const getId = window.localStorage.getItem("Id");
-
+    
     useEffect(() => {
         console.log("입력값:", {
           category: category,
           region: region,
           title: title,
+          image: image,
+          contents: contents  
         });
-      }, [category, region, title]);
+      }, [category, region, title, image, contents]);
 
 
   
@@ -190,6 +258,19 @@ const WriteHeader = () => {
         });
       };
 
+      const onClickSave = async () => {
+        if (title.length === 0 || category.length === 0 || contents === 0) {
+            alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+            return;
+    }
+        const resultNo = await DDDApi.boardWrite(getId, category, region, title, image, contents);
+        const linkNo = resultNo.data;
+        console.log("Result Number:", linkNo);
+        if (linkNo) {
+            alert("문의글 작성이 완료되었습니다.");
+        }
+    };
+
 
       const onClickUpload = () => {
         handleUploadClick();
@@ -205,7 +286,7 @@ const WriteHeader = () => {
             <div className="boardtitle">
               <h2>자유 게시판</h2>
             </div>
-         
+
               <table>
                 <tr>
                   <th colSpan={3}>게시물 작성</th>
@@ -263,11 +344,32 @@ const WriteHeader = () => {
                 </tr>
               </table>
               <div className="addBoard-wrapper">
-                {/* {previewUrl && <img src={previewUrl} alt="Preview" />}
-                {image.image_url && <img src={image.image_url} alt="Uploaded" />} */}
+                {previewUrl && <img src={previewUrl} alt="Preview" />}
+                {/* {image.image_url && <img src={image.image_url} alt="Uploaded" />} */}
                 </div>
           </div>
+          <TextWrap>
+            <CKEditor
+            editor={ClassicEditor}
+            data={contents}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              setContents(data);
+            }}
+            config={{
+              placeholder: '자유롭게 작성 가능합니다.'
+            }}
+            />
+          </TextWrap>
         </Section>
+        <WriteWrap>
+        <div className="btn_area">
+            <button className="savebtn" onClick={onClickSave}>등록하기</button>
+            <Link to='/boardList'>
+                <button className="cancelbtn">취소하기</button>
+            </Link>
+        </div>
+        </WriteWrap>
       </Wrap>
     </>
   );

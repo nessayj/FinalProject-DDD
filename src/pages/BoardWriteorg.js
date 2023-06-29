@@ -69,35 +69,40 @@ const BoardWrite = () => {
     const [image, setImage] = useState(null);
     const [contents, setContents] = useState("");
 
-    // const getId = localStorage.getItem("Id");
+    const isLogin = window.localStorage.getItem("isLogin");
+    const getId = localStorage.getItem("memberId") 
+    console.log("getId:", getId);
 
-    const author = localStorage.getItem("Id"); // 아이디 인증없이 작성자 정보로 테스트
-
-    useEffect(() => {
-        if (title.length === 0 || category.length === 0 || contents.length === 0) {
+    // useEffect(() => {
+    //     if (title.length === 0 || category.length === 0 || contents.length === 0) {
         
-            return; 
-        }
-          alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+    //         return; 
+    //     }
+    //       alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
         
-    }, [title, category, contents]);
+    // }, [title, category, contents]);
 
 
     const onClickSave = async () => {
-
-    const resultNo = await DDDApi.boardWrite(author, category, region, title, image, contents);
-    const linkNo = resultNo.data;
-    console.log("Result Number:", linkNo);
-    if (linkNo) {
-        alert("문의글 작성이 완료되었습니다.");
+        if (title.length === 0 || category.length === 0 || contents === 0) {
+            alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+            return;
     }
-};
+        const resultNo = await DDDApi.boardWrite(getId, category, region, title, image, contents);
+        const linkNo = resultNo.data;
+        console.log("Result Number:", linkNo);
+        if (linkNo) {
+            alert("문의글 작성이 완료되었습니다.");
+        }
+    };
+
+    // 로그인 상태 확인
+    console.log(isLogin);
   
 
     
     return(
         <WriteWrap>
-
             <WriteHeader
             setTitle={setTitle}
             setCategory={setCategory}

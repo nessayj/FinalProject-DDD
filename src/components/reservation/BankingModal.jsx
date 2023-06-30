@@ -95,7 +95,6 @@ const ModalBankingPayment = ({ props }) => {
   const [agreed, setAgreed] = useState(false);
   const [accountNumber, setAccountNumber] = useState('');
   const [paymentDeadline, setPaymentDeadline] = useState('');
-  console.log("모달프롭 ㅣ ", props)
 
   // 은행 선택 핸들러
   const handleBankChange = (e) => {

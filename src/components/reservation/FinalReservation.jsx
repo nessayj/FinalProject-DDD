@@ -6,7 +6,7 @@ import { Container } from "./SelectDate";
 
 
 const FinalReservation = ({props}) => {
-    console.log("예매완료 프롭: ", props)
+
 
     return(
         <>

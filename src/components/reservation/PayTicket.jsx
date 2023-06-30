@@ -400,6 +400,8 @@ const PayTicket = ({data}) => {
           paymentMethod={data.paymentMethod}
         />
       ) : (
+        <>
+        {openBooked ? (<FinalReservation props = {dataForPayReserv}/>) : (
     <PayContainer imgUrl={data.reservationData.imgUrl}>
     <div className="reservationBox">
     <div className="root">
@@ -557,8 +559,9 @@ const PayTicket = ({data}) => {
       </div>
       </div>
       <ModalBankingPayment props = {dataForPayReserv}/>
-      {openBooked && <FinalReservation props = {dataForPayReserv}/>}
     </PayContainer>)}
+    </>
+    )}
     </>
     );
 }

@@ -9,6 +9,7 @@ import {RiKakaoTalkFill} from "react-icons/ri";
 import { Payment, ProvideAgreement } from "./Agreement";
 import ModalBankingPayment from "./BankingModal";
 import FinalReservation from './FinalReservation';
+import dayjs from "dayjs";
 
 const PayContainer = styled.div`
     display: flex;
@@ -98,6 +99,11 @@ const PayContainer = styled.div`
         .calendar-container{
             width: 20rem;
         }
+    }
+    .visitDate{
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: red;
     }
     
 
@@ -296,6 +302,15 @@ const PayTicket = ({data}) => {
         navigate(-1);
     }
 
+
+    // 날짜를 가지고와서 yy년 mm월 dd일로 표시하기위해
+    const formatSelectedDate = (date) => {
+      if (date) {
+        return dayjs(date).format('YYYY년 MM월 DD일');
+      }
+      return '';
+    };
+
       // 전체 Wrapper 열리고 닫히게 
     const [isExpandedInputInfo, setIsExpandedInputInfo] = useState(false);
     const [isExpandedPrice, setIsExpandedPrice] = useState(false);
@@ -376,10 +391,13 @@ const PayTicket = ({data}) => {
         exhibitName: data.reservationData.exhibitName,
         exhibitLocation: data.reservationData.exhibitLocation,
         totalPrice: data.totalPrice,
+        deliveryMethod: data.deliveryMethod,
+        reservationDate: data.selectedDate,
         rootData: data.rootData,
         open: modalOpen,
         close: closeModal,
-        handleToComplete: handleToComplete, 
+        handleToComplete: handleToComplete,
+        handleGoToHome: handleGoToHome 
       }
 
    
@@ -417,6 +435,7 @@ const PayTicket = ({data}) => {
                     <div className="title">{data.reservationData.exhibitName}</div>
                     <div>{data.reservationData.startDate} ~ {data.reservationData.endDate}</div>
                     <div>{data.reservationData.exhibitLocation}</div>
+                    <div className="visitDate">선택한 관람일{data.selectedDate && formatSelectedDate(data.selectedDate)}</div>
                 </div>       
         </div>
         <div className="rightBox">

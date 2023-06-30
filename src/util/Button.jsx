@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Btn =styled.button`
+export const Btn =styled.button`
 background-color: ${props => (!props.disabled ? '#050E3D' : '#b0abab')};
 color :${props => (!props.disabled ? '#ffffff' : '#050E3D')};
 border: none;
@@ -15,6 +15,10 @@ cursor: pointer;
     width: 100%;
     background-color: yellow;
     color: #050E3D;
+}
+
+&.btn {
+    width: 30rem;
 }
 `;
 const Button =  ({onClick, children, disabled, className}) => {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CancelTicket from './CancelTicket';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 
 const Modal = styled.div`
@@ -23,8 +24,8 @@ const Modal = styled.div`
     border: 1px solid #ccc;
 
     .closeBtn{
-        background-color: #ccc;
         /* color: white; */
+        font-size: 1.4rem;
         border-radius: 1rem;
         width: 2rem;
         height: 4rem;
@@ -94,25 +95,34 @@ const Modal = styled.div`
 `;
 
 
-const MobileTicket = ({ resevationData, closeModal, openCancel }) => {
-
+const MobileTicket = ({ reservationData, closeModal, openCancel }) => {
+    
+    // 날짜를 가지고와서 yy년 mm월 dd일로 표시하기위해
+    const formatSelectedDate = (date) => {
+        if (date) {
+        return dayjs(date).format('YYYY년 MM월 DD일');
+        }
+        return '';
+    };
     return (
         <Modal>
             <div className='closeBtn' onClick={closeModal}>&times;</div>
 
             <div className='title'>TICKET</div>
             <div className='exhImg'>
-                <img src={resevationData.imgUrl} alt='exhibition' />
+                <img src={reservationData.imgUrl} alt='exhibition' />
             </div>
             <div className="desc">
-                <span style={{ fontWeight: 'bold' }}> {resevationData.name}</span><br />
-                <span> {resevationData.place}</span><br />
-                <span> {resevationData.startDate}</span><br />
-                <span> {(resevationData.imgUrl).slice(52, 62)}</span><br />
+                <span style={{ fontWeight: 'bold' }}> {reservationData.name}</span><br />
+                <span> {reservationData.place}</span><br />
+                <span>관람일 : </span>
+                <span> {reservationData.visitDate && formatSelectedDate(reservationData.visitDate) }</span><br />
+                {/* 바코드번호 */}
+                <span> {(reservationData.imgUrl).slice(52, 62)}</span><br />
             </div>
             <div className='btnBlock'>
                 <button>
-                    <Link to={`/exhibitInfo/${resevationData.index}`} className='link'>상세정보</Link></button>
+                    <Link to={`/exhibitInfo/${reservationData.index}`} className='link'>상세정보</Link></button>
                 <button onClick={openCancel}>예매취소</button>
             </div>
         </Modal>

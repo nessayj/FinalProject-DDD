@@ -79,6 +79,11 @@ export const Container = styled.div`
             margin-bottom: 10px;
         }
     }
+    .visitDate{
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: red;
+    }
 }
 .rightBox{
     width: 400px;
@@ -146,7 +151,7 @@ const SelectDate =  () => {
         <>
         {exData[0] && 
         <Container  imgUrl ={exData[0].imgUrl}>
-            {goToReservation ? (<InputInfo rootData={rootData} reservationData={exData[0]} id={id}/>) :(
+            {goToReservation ? (<InputInfo rootData={rootData} reservationData={exData[0]} id={id} selectedDate={selectedDate}/>) :(
             <div className="reservationBox">
                 <div className="root">
                 <ImHome/><p onClick={handleCancle}>전시 상세정보 페이지</p>

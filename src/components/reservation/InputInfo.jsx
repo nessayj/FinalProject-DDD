@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Container } from "./SelectDate";
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import PayTicket from "./PayTicket";
+import dayjs from 'dayjs';
 
 const PriceQuantityWrapper = styled.div`
   font-size: 1rem;
@@ -149,15 +150,15 @@ const RightContainer =styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 `;
+
 const DeliveryMethodRadio = styled.input`
   margin: 1rem;
   
 `;
 
 
-const InputInfo = ({rootData, reservationData, id}) => {
+const InputInfo = ({rootData, reservationData, id, selectedDate}) => {
   // 예매 관련 상태 및 함수
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
@@ -214,6 +215,14 @@ const InputInfo = ({rootData, reservationData, id}) => {
     }));
   };
 
+  // 날짜를 가지고와서 yy년 mm월 dd일로 표시하기위해
+  const formatSelectedDate = (date) => {
+    if (date) {
+      return dayjs(date).format('YYYY년 MM월 DD일');
+    }
+    return '';
+  };
+
   // 전체 Wrapper 열리고 닫히게 
   const [isExpandedDeliever, setIsExpandedDeliever] = useState(false);
   const [isExpandedPayment, setIsExpandedPayment] = useState(false);
@@ -267,7 +276,8 @@ const InputInfo = ({rootData, reservationData, id}) => {
     quantity: quantity,
     buyerInfo: buyerInfo,
     deliveryMethod: deliveryMethod,
-    paymentMethod: paymentMethod 
+    paymentMethod: paymentMethod,
+    selectedDate: selectedDate 
 }
 
     // 컴포넌트 이동을 위한 변수설정
@@ -294,11 +304,11 @@ const InputInfo = ({rootData, reservationData, id}) => {
                     <div className="title">{reservationData.exhibitName}</div>
                     <div>{reservationData.startDate} ~ {reservationData.endDate}</div>
                     <div>{reservationData.exhibitLocation}</div>
+                    <div className="visitDate">선택한 관람일 : {selectedDate && formatSelectedDate(selectedDate)}</div>
                 </div>       
         </div>
         <div className="rightBox">
         <RightContainer>
-         
       <BuyerInfoWrapper isExpanded={isExpandedInputInfo} >
         <div className="wrapperHeader" onClick={handleHeaderClickInput}>
         <h4>예매정보입력</h4>

@@ -22,7 +22,7 @@ i18n
             'en-US':['en-US'],
             default:['ko-KR']
         },
-        debug: true,
+        debug: false,
         defaultNs: 'translations',
         ns: 'translations',
         keySeparator: false,

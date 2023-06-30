@@ -42,7 +42,8 @@ const FinalReservation = ({props}) => {
         name: props.exhibitName,
         place: props.exhibitLocation,
         visitDate: props.reservationDate,
-        index: props.id
+        index: props.id,
+        deliveryMethod: props.deliveryMethod
     }
 
 

@@ -394,6 +394,7 @@ const PayTicket = ({data}) => {
         deliveryMethod: data.deliveryMethod,
         reservationDate: data.selectedDate,
         rootData: data.rootData,
+        id: data.id,
         open: modalOpen,
         close: closeModal,
         handleToComplete: handleToComplete,

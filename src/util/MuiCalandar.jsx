@@ -24,13 +24,20 @@ const DateCalendarValue = ({ onDateChange, selectedDate }) => {
     }
     return '';
   };
+  const isPastDate = (date) => {
+    return dayjs(date).isBefore(dayjs(), 'day');
+  };
+
+  const shouldDisableDate = (date) => {
+    return isPastDate(date);
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} locale="ko"> {/* 언어팩 설정 */}
       <CalendarContainer>
         <DemoContainer components={['DateCalendar', 'DateCalendar']}>
           <DemoItem>
-            <DateCalendar value={selectedDate} onChange={onDateChange} />
+            <DateCalendar value={selectedDate} onChange={onDateChange} shouldDisableDate={shouldDisableDate} />
           </DemoItem>
         </DemoContainer>
         <SelectedDateText>선택 날짜: {formatSelectedDate(selectedDate)}</SelectedDateText>

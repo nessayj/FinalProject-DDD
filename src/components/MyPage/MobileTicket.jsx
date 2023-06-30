@@ -100,7 +100,6 @@ const Modal = styled.div`
 
 
 const MobileTicket = ({ reservationData, closeModal, openCancel }) => {
-    console.log("발권타입 : " + reservationData.deliveryMethod);
     // 날짜를 가지고와서 yy년 mm월 dd일로 표시하기위해
     const formatSelectedDate = (date) => {
         if (date) {
@@ -124,7 +123,7 @@ const MobileTicket = ({ reservationData, closeModal, openCancel }) => {
                 {/* 바코드번호 */}
                 <span> {(reservationData.imgUrl).slice(52, 62)}</span>
                 {/* 현장 발권일 때는 현장에서 실물표 교환 후 관람가능하다는 주의 문구 출력 */}
-                {reservationData.deliveryMethod === "onSite" && <p>* 현장발권일경우 관람 전 실물 티켓으로 교환 후 관람가능합니다.</p>}<br />
+                {reservationData.deliveryMethod === "onSite" && <p>* 현장 발권일 경우, 관람 전 실물 티켓으로 교환 후 관람 가능합니다.</p>}<br />
             </div>
             <div className='btnBlock'>
                 <button>

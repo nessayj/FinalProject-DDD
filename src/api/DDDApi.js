@@ -48,6 +48,7 @@ const DDDApi = {
     //     return await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     // },
 
+
     delBoards: async (boardNo) => {
         try {
           const response = await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
@@ -58,11 +59,13 @@ const DDDApi = {
       },
 
 
-
-    // // 자유게시판 검색 목록 출력
-    // searchList: async (keyword) => {
-    //     return await axios.get(DDD_DOMAIN + `board_list/?keyword=${keyword}`);
-    // },
+    // 자유게시판 검색 목록 출력
+    searchListLoad: async (keyword) => {
+        const url = `${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`;
+        console.log(url); // 해당 페이지 url 확인 위해
+        return await axios.get(url, HEADER);
+        // return await axios.get(DDD_DOMAIN + `boardList/searchList?keyword=${keyword}`, HEADER); << 이 코드로 넣으면 죽어도 권한 접근이 안됨ㅠㅠ
+    },
     
 
     // 로그인

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { IoSearch} from "react-icons/io5";
 import DDDApi from "../../api/DDDApi";
@@ -27,46 +27,32 @@ const SearchWrap = styled.div` // 검색창 활성화 안된 부분 일부 위�
         
         
 `;
-const BoardSearch = () => {
+const BoardSearch = ({ onSearch }) => {
 
      // 검색
-    const [searchKeyword, setSearchKeyword] = useState("");
-    const [boardList, setBoardList] = useState([]);
-
+    const [keyword, setKeyword] = useState("");
+   
     const onChangeSearchKeyword = (e) => {
-         setSearchKeyword(e.target.value);
-    }
+        setKeyword(e.target.value);
+    };
 
     const onClickSearch = async () => {
         try {
-            const response = await DDDApi.searchList(searchKeyword);
-            setBoardList(response.data);
-        } catch (e) {
+            const response = await DDDApi.searchListLoad(keyword);
+            const boardList = response.data;
+            onSearch(boardList); // 검색 결과를 부모 컴포넌트로 전달
+            } catch (e) {
             console.log(e);
-        }
-   }
-
+            }
+    };
 
     // 엔터를 눌렀을 때도 검색 되게
-    const onKeyEnterSearch = async(e) => {
-        if(e.key === 'Enter'){
-            onClickSearch();
-            setSearchKeyword(''); // 검색 후 검색창 빈칸으로 만들기
-            console.log(e);
+    const onKeyEnterSearch = (e) => {
+        if (e.key === "Enter") {
+          onClickSearch();
+          setKeyword(""); // 검색 후 검색창 빈칸으로 만들기
         }
-    }
-
-    useEffect (() => {
-        const boardData = async () => {
-            try {
-                const boardListData = await DDDApi.boardList();
-                setBoardList(boardListData.data);
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        boardData();
-    },[]);
+      };
 
  
 
@@ -77,9 +63,8 @@ const BoardSearch = () => {
             placeholder="검색어를 입력하세요" 
             onChange={onChangeSearchKeyword} 
             onKeyDown={onKeyEnterSearch}
-            value={searchKeyword}/>
+            value={keyword}/>
             <div className="icon_container">
-                {/* <IoSearch className="searchicon" onClick={() => {}}/> */}
                 <IoSearch className="searchicon" onClick={onClickSearch}/>
             </div>
         </SearchWrap> 

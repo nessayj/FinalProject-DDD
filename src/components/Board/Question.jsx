@@ -121,6 +121,10 @@ const Question = () => {
 
     const navigate = useNavigate();
 
+    const handleSearch = (boardList) => {
+        setBoardList(boardList); // 검색 결과를 상태로 설정
+    };
+
     //  값을 불러오기위해 선언, 목록보기
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
    
@@ -155,19 +159,29 @@ const Question = () => {
       }, []);
 
 
-    // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
+    // 비로그인 시 작성페이지 접근 제한
     const onClickToWrite = () => {
-        const link = "write/"
-        navigate(link);
-    }
+        const isLogin = window.localStorage.getItem("isLogin");
+        const getId = window.localStorage.getItem("Id");
+        console.log(isLogin);
+        console.log(getId);
+        
+        if (isLogin && getId) {
+            const link = "write/";
+            navigate(link);
+        } else {
+            alert("로그인 완료 시 작성 진행 가능합니다.");
+        }
+    };
 
     
     return (
         <BoardContainer>
-            <BoardSearch/>
+            <BoardSearch onSearch={handleSearch} />
             <Section id="board" className="section">
                 <div className="board_box">
                 <table>
+                    <tbody>
                             <tr>
                                 <th>글번호</th>
                                 <th>카테고리</th>
@@ -181,20 +195,20 @@ const Question = () => {
                                 <td>{boardList.boardNo}</td>
                                 <td>{boardList.category}</td>
                                 <td>
-                                    {/* <Link to={`boardView/${boardList.boardNo}`} // 게시판 상세조회로 이동
-                                    className="boardView_link">{boardList.title}
-                                    </Link> */}
+                                    {/* 게시판 상세조회로 이동 */}
 
-                                    <Link to={`/boardList/boardView/${boardList.boardNo}`} // 게시판 상세조회로 이동
+                                    <Link to={`/boardList/boardView/${boardList.boardNo}`} 
                                     className="boardView_link">{boardList.title}
                                     </Link>
                                 </td>
                                 <td>{boardList.author}</td>
                                 <td>{boardList.views}</td>
+
                                 {/* 작성일자 "yyyy-mm-dd" 형식으로 문자열 반환 */}
                                 <td>{new Date(boardList.writeDate).toISOString().split("T")[0]}</td>
                             </tr>
-                             ))}
+                            ))}
+                        </tbody>
                     </table>
                 </div>
                 <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>

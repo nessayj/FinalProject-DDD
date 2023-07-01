@@ -121,6 +121,11 @@ const Section = styled.div`
 const Recommend = () => {
 
     const navigate = useNavigate();
+    
+    const handleSearch = (boardList) => {
+        setBoardList(boardList); // 검색 결과를 상태로 설정
+    };
+    
 
     //  값을 불러오기위해 선언, 목록보기
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
@@ -156,15 +161,6 @@ const Recommend = () => {
       }, []);
 
 
-    
-        
-    // 글쓰기 버튼 클릭 시 게시판 작성페이지로 이동
-    // const onClickToWrite = () => {
-    //     const link = "write/"
-    //     navigate(link);
-    // }
-    
-
     const onClickToWrite = () => {
         const isLogin = window.localStorage.getItem("isLogin");
         const getId = window.localStorage.getItem("Id");
@@ -181,10 +177,11 @@ const Recommend = () => {
 
     return (
         <BoardContainer>
-            <BoardSearch />
+            <BoardSearch onSearch={handleSearch}/>
             <Section id="board" className="section">
                 <div className="board_box">
                     <table>
+                        <tbody>
                             <tr>
                                 <th>글번호</th>
                                 <th>카테고리</th>
@@ -211,6 +208,7 @@ const Recommend = () => {
                                 <td>{new Date(boardList.writeDate).toISOString().split("T")[0]}</td>
                             </tr>
                              ))}
+                        </tbody>     
                     </table>
                 </div>
                 <PageNation pageCount={pageCount} onPageChange={handlePageClick}/>

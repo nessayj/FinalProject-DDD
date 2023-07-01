@@ -9,7 +9,7 @@ const DDDApi = {
         return await axios.get(`${DDD_DOMAIN}/boardList/${category}`, HEADER);
     },
 
-    // // 특정 게시판 번호의 게시물 상세 조회
+    // 특정 게시판 번호의 게시물 상세 조회
     getBoard: async(boardNo) => {
         return await axios.get(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     },
@@ -29,23 +29,35 @@ const DDDApi = {
     },
 
     // 게시글 수정
+//     editBoards: async (boardNo, freeBoardDto) => {
+//         return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
+// },
+
     editBoards: async (boardNo, freeBoardDto) => {
-        return await axios.put(`${DDD_DOMAIN}/boardList/${boardNo}`);
+        try {
+        const response = await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
+        return response.data;
+        } catch (error) {
+        throw error;
+        }
     },
 
 
-    // // 게시글 수정
-    // boardEdit: async(freeBoard_No, category, region, title, image, contents) => {
-    //     const editObj = {
-    //         freeBoard_No: freeBoard_No,
-    //         boardCtg : category,
-    //         boardregion : region, 
-    //         title: title,
-    //         boardImg : image,
-    //         boardContents : contents
-    //     };
-    //     return await axios.post(DDD_DOMAIN + "/board_edit", editObj);
+    // 게시글 삭제
+    // delBoards: async (boardNo) => {
+    //     return await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     // },
+
+    delBoards: async (boardNo) => {
+        try {
+          const response = await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
+          return response.data;
+        } catch (error) {
+          throw error;
+        }
+      },
+
+
 
     // // 자유게시판 검색 목록 출력
     // searchList: async (keyword) => {

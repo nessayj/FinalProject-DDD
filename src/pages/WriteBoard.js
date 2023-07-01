@@ -9,13 +9,57 @@ import DDDApi from '../api/DDDApi';
 
 
 const Wrap = styled.div`
-    width: 75em; // 1200px
-    /* height: 100vh; */
+    width: 75em;
+    height: 100%;
     margin: 0 auto;
-    /* border: 1px solid black; */
-    display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .btn_area {
+        text-align: right;
+        margin-right: .9em;
+ 
+        .savebtn { // 등록 버튼 속성
+                /* display :inline-block; */
+                cursor: pointer;
+                margin-top: 1em;
+                padding: 10px 1.6em;
+                border-radius: 15px;
+                border: none;
+                color: white;
+                background-color: #050E3D;
+                transition: all .1s ease-in;
+                font-weight: 600;
+                font-size: 14px;
+        
+                
+                &:hover {background-color: #5EADF7;
+                    color: #F4F8FF;}
+            }
+            .cancelbtn { // 취소버튼 속성
+                cursor: pointer;
+                margin-top: 1em;
+                padding: 10px 1.6em;
+                border-radius: 15px;
+                border: none;
+                color: white;
+                background-color: #050E3D;
+                transition: all .1s ease-in;
+                font-weight: 600;
+                font-size: 14px;
+
+                &:hover {background-color: #FA6060;
+                    color: #F4F8FF;}
+
+            }
+            button:nth-child(1) {
+                margin-right: 16px;
+            }
+                
+    }
 `;
+
+
 
 const Section = styled.div`
     width: 1140px;
@@ -113,6 +157,16 @@ const Section = styled.div`
             
 
             button {
+                /* font-size: 14px;
+                cursor: pointer;
+                border-radius: 10px;
+                border: none;
+                color: white;
+                background-color: #050E3D;
+                transition: all .1s ease-in;
+                font-weight: bold;
+                float: left;
+                padding: .5em 1.3em; */
                 font-size: 14px;
                 cursor: pointer;
                 border-radius: 10px;
@@ -123,72 +177,34 @@ const Section = styled.div`
                 font-weight: bold;
                 float: left;
                 padding: .5em 1.3em;
+                margin-bottom: .5em;
+
                 &:hover {background-color: #5EADF7; color: #F4F8FF;}
                 }
         }
 `;
 
 const TextWrap = styled.div`
-  width: 40%;
+  width: 95%;
   margin: 0 auto;
+  margin-bottom:20px;
 
-  .ck.ck-editor__editable:not(.ck-editor__nested-editable) {min-height: 500px;} // 텍스트 높이 조절
+  .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+    min-height: 500px;} // 텍스트 높이 조절
   .ck-editor__main {padding: 0px;}
 `;
 
-const WriteWrap = styled.div`
-  width: 1200px;
-    height: 100%;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: center;
+// const WriteWrap = styled.div`
+//   width: 1200px;
+//     height: 100%;
+//     margin: 0 auto;
+//     align-items: center;
+//     justify-content: center;
 
-    .btn_area {
-        text-align: right;
-        margin-right: .9em;
- 
-        .savebtn { // 등록 버튼 속성
-                /* display :inline-block; */
-                cursor: pointer;
-                margin-top: 1em;
-                padding: 10px 1.6em;
-                border-radius: 15px;
-                border: none;
-                color: white;
-                background-color: #050E3D;
-                transition: all .1s ease-in;
-                font-weight: 600;
-                font-size: 14px;
-        
-                
-                &:hover {background-color: #5EADF7;
-                    color: #F4F8FF;}
-            }
-            .cancelbtn { // 취소버튼 속성
-                cursor: pointer;
-                margin-top: 1em;
-                padding: 10px 1.6em;
-                border-radius: 15px;
-                border: none;
-                color: white;
-                background-color: #050E3D;
-                transition: all .1s ease-in;
-                font-weight: 600;
-                font-size: 14px;
-
-                &:hover {background-color: #FA6060;
-                    color: #F4F8FF;}
-
-            }
-            button:nth-child(1) {
-                margin-right: 16px;
-            }
-                
-    }
-`;
+// `;
 
 
-const WriteHeader = () => {
+const WriteBoard = () => {
     const isLogin = window.localStorage.getItem("isLogin");
     const getId = localStorage.getItem("memberId") 
     console.log("getId:", getId);
@@ -265,30 +281,45 @@ const WriteHeader = () => {
     //     });
     //   };
 
-    // 이미지 업로드 및 내용 입력값 등록 함수
-    const onClickSave = async () => {
-      if (title.length === 0 || category.length === 0 || contents === 0) {
-        alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+
+    // 이미지 업로드 함수
+  const onClickSave = async () => {
+    if (title.length === 0 || category.length === 0 || contents === 0) {
+      alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
       return;
     }
-    const storageRef = storage.ref();
-    const fileRef = storageRef.child(image.image_file.name);
-
+    
+    let imageUrl = ""; // 이미지 URL 초기값
+    
+    if (image && image.image_file) {
+      // 이미지가 선택된 경우에만 업로드 로직 수행
+      const storageRef = storage.ref();
+      const fileRef = storageRef.child(image.image_file.name);
+  
       try {
         // 이미지 업로드
-      await fileRef.put(image.image_file);
-      const imageUrl = await fileRef.getDownloadURL();
-
+        await fileRef.put(image.image_file);
+        imageUrl = await fileRef.getDownloadURL();
+      } catch (error) {
+        console.log(error);
+        alert("이미지 업로드 중 오류가 발생했습니다.");
+        return;
+      }
+    }
+  
+    try {
       const resultNo = await DDDApi.boardWrite(
         getId,
         category,
         region,
         title,
-        imageUrl, // 업로드된 이미지의 다운로드 URL을 전달
+        imageUrl,
         contents
       );
+      
       const linkNo = resultNo.data;
       console.log("Result Number:", linkNo);
+      
       if (linkNo) {
         alert("문의글 작성이 완료되었습니다.");
       }
@@ -297,17 +328,17 @@ const WriteHeader = () => {
       alert("문의글 작성 중 오류가 발생했습니다.");
     }
   };
+  
 
     return (
-    <>
       <Wrap>
         <Section className="section">
           <div className="board_header">
             <div className="boardtitle">
               <h2>자유 게시판</h2>
             </div>
-
               <table>
+                <tbody>
                 <tr>
                   <th colSpan={3}>게시물 작성</th>
                 </tr>
@@ -325,9 +356,7 @@ const WriteHeader = () => {
 
                   <td>
                     <select name="category" onChange={onChangerRegion}>
-                      <option value={region} selected>
-                        지역선택
-                      </option>
+                      <option value={region} selected>지역선택</option>
                       <option value="서울">서울</option>
                       <option value="경기/인천">경기/인천</option>
                       <option value="충청">충청</option>
@@ -345,8 +374,7 @@ const WriteHeader = () => {
                       value={title}
                       onChange={onChangeTitle}
                       name="title"
-                      maxLength={40}
-                    />
+                      maxLength={40}/>
                   </td>
                   <td>
                     <div className="imguploaderBtn">
@@ -355,13 +383,13 @@ const WriteHeader = () => {
                           type="file"
                           id="file-upload"
                           onChange={previewImage}
-                          style={{ display: "none" }}
-                        />
+                          style={{ display: "none" }}/>
                         <label htmlFor="file-upload">사진 업로드</label>
                       </button>
                     </div>
                   </td>
                 </tr>
+                </tbody>
               </table>
 
               {/* 이미지 미리보기 및 업로드 */}
@@ -370,6 +398,8 @@ const WriteHeader = () => {
                 {image.image_url && <img src={image.image_url} alt="Uploaded" />} 
                 </div>
           </div>
+
+          </Section>
           
           <TextWrap>
             <CKEditor
@@ -384,20 +414,15 @@ const WriteHeader = () => {
             }}
             />
           </TextWrap>
-        </Section>
-
-        <WriteWrap>
+        
         <div className="btn_area">
             <button className="savebtn" onClick={onClickSave}>등록하기</button>
             <Link to='/boardList'>
                 <button className="cancelbtn">취소하기</button>
             </Link>
         </div>
-        </WriteWrap>
-
       </Wrap>
-    </>
   );
 };
 
-export default WriteHeader;
+export default WriteBoard;

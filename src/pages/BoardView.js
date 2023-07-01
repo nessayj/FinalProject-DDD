@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -105,6 +105,7 @@ const Section = styled.div`
         }
     }
 
+
     .authorinfo {
         display: flex;
         align-items: center;
@@ -170,38 +171,26 @@ const Contents = styled.div`
     .text_area {
         margin: 12px;
     }
+
 `;
 
 
 
-const Boardview = () => {
+const BoardView = () => {
     const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴
-    let params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
+    const params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
     let boardNo = params.no;
+    const navigate = useNavigate();
 
+    
 
-
-
-     // 게시물 삭제, 수정 팝업
+    // 게시물 삭제, 수정 팝업(마지막에 넣을 예정)
     //  const [modalOpen, setModalOpen] = useState(false); // 모달에 띄워줄 메세지 문구
     //  const [modalOption, setModalOption] = useState('');
-    const [comment, setComment] = useState(""); // 모달창 안내 문구
 
     //  const closeModal = () => {
     //     setModalOpen(false);
     // };
-
-
-    const onClickEdit = () => {
-        // setModalOpen(true);
-        // setModalOption('수정');
-        setComment("수정하시겠습니까?");
-    }
-    const onClickDelete = () => {
-        // setModalOpen(true);
-        // setModalOption('삭제');
-        setComment("삭제하시겠습니까?");
-    }
 
     // const [commentList, setCommentList] = useState([]); // 댓글
 
@@ -224,8 +213,40 @@ const Boardview = () => {
         boardViewLoad();
     }, [boardNo]);
 
-    
-    
+    const deleteBoard = async () => {
+        try {
+          const confirmed = window.confirm('게시글을 삭제하시겠습니까?');
+          if (!confirmed) {
+            return;
+          }
+
+          const response = await DDDApi.delBoards(boardNo);
+          console.log(response.data);
+          
+          navigate('/'); // 삭제 후 메인 이동
+        } catch (error) {
+          console.error(error);
+        
+          if (error.response) {
+            // 서버로부터 오는 응답 에러 처리
+            console.log("error.response.data 내용 : " + error.response.data);
+            console.log("error.response.status 내용 : " + error.response.status);
+            console.log("error.response.headers 내용 : " + error.response.headers);
+          } else if (error.request) {
+            // 요청이 이루어졌으나 응답을 받지 못한 경우
+            console.log(error.request);
+          } else {
+            // 오류를 발생시킨 요청 설정을 처리하는 중에 오류가 발생한 경우
+            console.log('Error', error.message);
+          }
+          console.log(error.config);
+        }
+      };
+      
+      const onClickDelete = () => {
+        deleteBoard();
+      };
+
 
 
 
@@ -262,7 +283,7 @@ const Boardview = () => {
     console.log("작성자 정보:", boardView?.author);
     console.log("getId:", getId);
     console.log("작성자와 Id 일치 여부:", isAuthorMatched);
-    console.log(boardView?.email);
+    // console.log(boardView?.email);
     console.log(boardView?.id);
 
 
@@ -271,9 +292,19 @@ const Boardview = () => {
         return isLogin && isAuthorMatched;
     };
 
+
+    // 수정하기 버튼 이동을 위한 추가사항
+    const [showModal, setShowModal] = useState(false);
+    const [comment, setComment] = useState("");
+
     
 
-
+    const onClickEdit = () => {
+        // setModalOpen(true);
+        // setModalOption('수정');
+        setComment("수정하시겠습니까?");
+    }
+    
 
     return(
         <ViewWrap>
@@ -307,14 +338,16 @@ const Boardview = () => {
                     <MenuItem value={boardView?.region}>{boardView?.region}</MenuItem>
                     </Select>
                 </FormControl>
+
                 {showEditBtn() ? (
                 <div className="editBtn">
-                    <button className="upBtn" onClick={onClickEdit}>수정하기</button>
+                    <Link to={`/boardList/boardView/${boardNo}/editBoard`} className="upBtn" onClick={onClickEdit}>수정하기</Link>
                     <button className="delBtn" onClick={onClickDelete}>삭제하기</button>
                 </div>
                 ) : null}
-
                 </div>
+
+
                 <TitleView>{boardView?.title}</TitleView> 
                 
                 <div className="authorinfo">
@@ -346,4 +379,4 @@ const Boardview = () => {
         </ViewWrap>
     )
 };
-export default Boardview;
+export default BoardView;

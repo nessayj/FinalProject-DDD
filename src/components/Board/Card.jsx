@@ -192,7 +192,7 @@ const Card = () => {
         <CardContainer> 
             {currentPageData.map((data, index) => (
                 <div className="container" key={index}>
-                <Link to={`/boardView/${data.boardNo}`} className="boardView_link" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to={`/boardList/boardView/${data.boardNo}`} className="boardView_link" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="img_area">
                     <img src={data.image} alt="CardImage" className="cardimage" />
                 </div>

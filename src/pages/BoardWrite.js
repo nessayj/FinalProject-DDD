@@ -71,7 +71,7 @@ const BoardWrite = () => {
 
     // const getId = localStorage.getItem("Id");
 
-    const author = localStorage.getItem("Id"); // 아이디 인증없이 작성자 정보로 테스트
+    const author = localStorage.getItem("Id");
 
     useEffect(() => {
         if (title.length === 0 || category.length === 0 || contents.length === 0) {

@@ -181,7 +181,11 @@ const Question = () => {
                                 <td>{boardList.boardNo}</td>
                                 <td>{boardList.category}</td>
                                 <td>
-                                    <Link to={`/boardView/${boardList.boardNo}`} // 게시판 상새조회로 이동
+                                    {/* <Link to={`boardView/${boardList.boardNo}`} // 게시판 상세조회로 이동
+                                    className="boardView_link">{boardList.title}
+                                    </Link> */}
+
+                                    <Link to={`/boardList/boardView/${boardList.boardNo}`} // 게시판 상세조회로 이동
                                     className="boardView_link">{boardList.title}
                                     </Link>
                                 </td>

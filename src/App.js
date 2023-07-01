@@ -8,12 +8,11 @@ import ReservationPage from './pages/ReservationPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MyPage from './pages/MyPage';
 import BoardList from './pages/BoardList';
-// import BoardWrite from './pages/BoardWrite';
-import Boardview from './pages/BoardView';
-import BoardEdit from './pages/BoardEdit';
+import BoardView from './pages/BoardView';
 import AdminMain from './components/admin/AdminMain';
 import PopupModal from './components/Login/PopupModal';
 import WriteBoard from './pages/WriteBoard';
+import EditBoard from './pages/EditBoard';
 
 function App() {
   return (
@@ -26,9 +25,9 @@ function App() {
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
         <Route path="/boardList" element={<BoardList/>}/>
-        <Route path="/boardView/:no" element={<Boardview/>}/>
         <Route path="/boardList/write" element={<WriteBoard/>}/>
-        <Route path="/boardEdit" element={<BoardEdit/>}></Route>
+        <Route path="/boardList/boardView/:no" element={<BoardView/>}/>
+        <Route path="/boardList/boardView/:no/editBoard" element={<EditBoard/>}/>
         <Route path="/mypage/:memberId" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
       </Routes>

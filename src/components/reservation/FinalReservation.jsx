@@ -4,6 +4,7 @@ import  Button from "../../util/Button";
 import { ImHome } from "react-icons/im";
 // import { Container } from "./SelectDate";
 import MobileTicket from "../MyPage/MobileTicket";
+import dayjs from "dayjs";
 
 const FinalContainer = styled.div`
   .bodyContainer{
@@ -36,6 +37,9 @@ const FinalReservation = ({props}) => {
         setShowTicket(false);
     }
 
+    // YYMMDD 형태로 전달
+    const visitDateDigits = dayjs(props.reservationData).format('YYMMDD');
+
     // Ticket에 예매정보전달
     const rData = {
         imgUrl: props.imgUrl,
@@ -43,8 +47,10 @@ const FinalReservation = ({props}) => {
         place: props.exhibitLocation,
         visitDate: props.reservationDate,
         index: props.id,
-        deliveryMethod: props.deliveryMethod
+        deliveryMethod: props.deliveryMethod,
+        barcodeNo: visitDateDigits
     }
+    
 
 
     return(

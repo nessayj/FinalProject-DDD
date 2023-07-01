@@ -398,10 +398,8 @@ const PayTicket = ({data}) => {
         open: modalOpen,
         close: closeModal,
         handleToComplete: handleToComplete,
-        handleGoToHome: handleGoToHome 
+        handleGoToHome: handleGoToHome,
       }
-
-   
 
 
     return(

@@ -4,11 +4,12 @@ import CancelTicket from './CancelTicket';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import TicketBarcode from '../reservation/Barcode';
 
 
 const Modal = styled.div`
     width: 20vw;
-    height: 64vh;
+    height: 80vh;
     min-width: 500px;
     min-height: 700px;
     /* height: 70vh; */
@@ -26,23 +27,23 @@ const Modal = styled.div`
     .closeBtn{
         /* color: white; */
         font-size: 1.4rem;
-        border-radius: 1rem;
+        /* border-radius: 1rem; */
         width: 2rem;
         height: 4rem;
-        padding-bottom: .2rem;
+        /* padding-bottom: .2rem; */
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
         /* left: 44%; */
-        top: 2%;
+        top: 0;
         cursor: pointer;
     }
 
     .title{
-        font-size: 3rem;
+        font-size: 2rem;
         /* background-color: red; */
-        padding: 1.5rem 0 ;
+        padding-bottom: 0.5rem;
     }
     .exhImg{
         width: 50%;
@@ -58,27 +59,25 @@ const Modal = styled.div`
     }
     .desc{
         text-align: center;
-        padding: 1rem;
+        padding: 0.5rem;
         span{
-            /* background-color: red; */
-            line-height: 2rem;
+            line-height: 1.8rem;
         }
-        p{
+        p{  
+            margin-top: 0;
             font-size: 0.5rem;
             color: red;
         }
 
     }
     .btnBlock{
-            height: 30%;
             width: 90%;
             display: flex;
             justify-content: center;
-            /* background-color: red; */
 
             button{
                 width: 22%;
-                height: 2.3rem;
+                height: 2rem;
                 border-radius: 3rem;
                 margin : 0rem .5rem;
                 background-color: #5EADF7 ;
@@ -107,6 +106,7 @@ const MobileTicket = ({ reservationData, closeModal, openCancel }) => {
         }
         return '';
     };
+
     return (
         <Modal>
             <div className='closeBtn' onClick={closeModal}>&times;</div>
@@ -120,9 +120,9 @@ const MobileTicket = ({ reservationData, closeModal, openCancel }) => {
                 <span> {reservationData.place}</span><br />
                 <span>관람일 : </span>
                 <span> {reservationData.visitDate && formatSelectedDate(reservationData.visitDate) }</span><br />
-                {/* 바코드번호 */}
-                <span> {(reservationData.imgUrl).slice(52, 62)}</span>
-                {/* 현장 발권일 때는 현장에서 실물표 교환 후 관람가능하다는 주의 문구 출력 */}
+                {/* 바코드 출력 */}
+                <span><TicketBarcode visitDate = {reservationData.barcodeNo} id ={reservationData.index}/></span>
+                {/* 현장 발권일 때는 주의 문구 출력 */}
                 {reservationData.deliveryMethod === "onSite" && <p>* 현장 발권일 경우, 관람 전 실물 티켓으로 교환 후 관람 가능합니다.</p>}<br />
             </div>
             <div className='btnBlock'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko'; // 한글 언어팩
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -24,6 +24,8 @@ const DateCalendarValue = ({ onDateChange, selectedDate }) => {
     }
     return '';
   };
+  
+  // 지난 날짜 disable만들기위해
   const isPastDate = (date) => {
     return dayjs(date).isBefore(dayjs(), 'day');
   };

@@ -29,34 +29,16 @@ const DDDApi = {
     },
 
     // 게시글 수정
-//     editBoards: async (boardNo, freeBoardDto) => {
-//         return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
-// },
-
     editBoards: async (boardNo, freeBoardDto) => {
-        try {
-        const response = await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
-        return response.data;
-        } catch (error) {
-        throw error;
-        }
+        return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
     },
 
 
     // 게시글 삭제
-    // delBoards: async (boardNo) => {
-    //     return await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
-    // },
-
-
     delBoards: async (boardNo) => {
-        try {
-          const response = await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
-          return response.data;
-        } catch (error) {
-          throw error;
-        }
-      },
+        return await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
+    },
+
 
 
     // 자유게시판 검색 목록 출력

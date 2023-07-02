@@ -221,7 +221,7 @@ const BoardView = () => {
           }
 
           const response = await DDDApi.delBoards(boardNo);
-          console.log(response.data);
+          console.log(response);
           
           navigate('/'); // 삭제 후 메인 이동
         } catch (error) {
@@ -362,10 +362,20 @@ const BoardView = () => {
             
                 <Contents>
                     <div className="image_area">
-                    {boardView?.image ? (
+                    {/* {boardView?.image ? (
                     <img src={boardView.image} alt="업로드 이미지" />
                     ) : (
                     <img src={postimage} alt="기본 이미지" />
+                    )} */}
+
+                    {boardView && (
+                    <div className="image_area">
+                        {boardView.image ? (
+                        <img src={boardView.image} alt="업로드 이미지" />
+                        ) : (
+                        <img src={postimage} alt="기본 이미지" />
+                        )}
+                    </div>
                     )}
                 </div>
 

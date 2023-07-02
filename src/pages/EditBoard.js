@@ -225,8 +225,11 @@ const EditBoard = () => {
             setCategory(data.category);
             setRegion(data.region);
             setTitle(data.title);
-            setPreviewUrl(data.image.image_url); // 미리보기 추가
-            // setImage(data.image);
+            if (data.image && data.image.image_url) {
+                setPreviewUrl(data.image.image_url); // 미리보기 추가
+            }
+            // setPreviewUrl(data.image.image_url); // 미리보기 추가
+            
             setContents(data.contents);
             
             // 데이터 잘 연동되는지 보기
@@ -247,9 +250,10 @@ const EditBoard = () => {
                 region,
                 title,
                 contents
+                
             };
 
-            // 이미지 파일이 null이면 해당 프로퍼티를 삭제
+            // 이미지 파일이 null이 아닌 경우에만 업로드 로직 수행
             if (image.image_file !== null) {
                 const storageRef = storage.ref();
                 const fileRef = storageRef.child(image.image_file.name);
@@ -261,30 +265,43 @@ const EditBoard = () => {
                 const imageUrl = await fileRef.getDownloadURL();
 
 
-                 // 업로드된 이미지의 URL을 updateBoard에 추가
-                updateBoard.image = {
-                    image_file: image.image_file.name,
-                    image_url: imageUrl
-                };
-                }
+
+            //      // 업로드된 이미지의 URL을 updateBoard에 추가
+            //     updateBoard.image = {
+            //         image_file: image.image_file.name,
+            //         image_url: imageUrl
+            //     };
+            // }
+
+            // 이미지가 선택된 경우 updateBoard.image를 객체로 생성
+            updateBoard.image = imageUrl ? { image_file: image.image_file.name, image_url: imageUrl } : null;
+            }
+
+            
+
 
             const response = await DDDApi.editBoards(boardNo, updateBoard);
 
-            if (response.data === '게시글 수정에 성공했습니다:)') {
-                navigate(`/boardList/boardView/${boardNo}`);
-              } else {
-                console.log('게시글 수정에 실패했습니다.ㅠㅠ');
-              }
-            } catch (error) {
-              console.log("에러메시지 :" + error);
-              console.log(typeof category);
-              console.log(typeof region);
-              console.log(typeof title);
-              console.log(typeof contents);
-              console.log(image);
-              console.log(error.response);
-            }
-        };
+            if (response.status === 200) {
+                // 성공적인 응답 처리
+                if (response.data === '게시글 수정에 성공했습니다:)') {
+                    navigate(`/boardList/boardView/${boardNo}`);
+                } else {
+                    console.log('게시글 수정에 실패했습니다.ㅠㅠ');
+                    }
+                } else {
+                    console.log('게시글 수정 중 오류가 발생했습니다.', response.statusText);
+                    }
+                } catch (error) {
+                console.log("게시글 수정 중 오류가 발생했습니다." + error);
+                console.log(typeof category);
+                console.log(typeof region);
+                console.log(typeof title);
+                console.log(typeof contents);
+                console.log(image);
+                console.log(error.response);
+                }
+            };
     
 
     // 게시판 카테고리 선택 
@@ -386,16 +403,18 @@ const EditBoard = () => {
                         <img src ={boardEdit.image.image_url} alt="Upload" />
                     )} */}
 
-                    {boardEdit?.image ? (
-                    <img src={boardEdit.image.image_url} alt="업로드 이미지" />
+
+                    {boardEdit && boardEdit.image && boardEdit.image.image_url ? (
+                        <img src={boardEdit.image.image_url} alt="업로드 이미지" />
                     ) : (
-                    <img src={postimage} alt="기본 이미지" />
+                        boardEdit && (
+                        <img src={postimage} alt="기본 이미지" />
+                        )
                     )}
                 </div>
-          </div>
-          
-            </Section>        
 
+          </div>
+            </Section>        
             <TextWrap>
             <CKEditor 
             editor={ClassicEditor} 

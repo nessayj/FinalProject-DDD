@@ -86,37 +86,60 @@ const CardItem = styled.div`
 
     height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    /* flex-direction: row; */
+    /* justify-content: center; */
+    /* align-items: center; */
 
     .textBox{
-        /* background-color: orange; */
+        background-color: #F2F2F2;
         width: 80%;
-        height: 70%;
-        border-radius: 1rem;
+        height: 40%;
+        border-radius: 1.5rem;
         padding: 1rem;
         font-size: .8rem;
         resize: none;
         border: 1px solid #eee;
         outline: none;
         margin: auto 0;
-
+        border-bottom-right-radius: 0;
     }
+    .textBox:focus{
+            background-color: #F4F8FF;
+        }
     .writeBox{
         /* background-color: aliceblue; */
         align-items: center;
         justify-content: center;
         border-radius: 1rem;
         height: 2rem;
-
-        
     }
+    .test{
+        /* background-color: red; */
+        .icon{
+            position: relative;
+            top: 66%;
+            left: -50%;
+            /* background-color: blue; */
+            width: 2.5rem;
+            height: 2.5rem;
+            background-size: cover;
+            img{
+                height: 100%;
+                width: 100%;
+                border-radius: 2rem;
+            }
+        }
+
+    }
+
   }
 `;
 
 
 const MyDiaryModal = () => {
+    
+    const iconUrl = "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800"
+
     const countDiary = exhibitionData.length;
     const countCheck = () => {
       for (let key in commentAboutCount) {
@@ -167,12 +190,13 @@ const MyDiaryModal = () => {
                     </div>
                     <div className="comment">
                         <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
-
+{/* 
                         <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
                         <Button className="buttnBox" onClick={() => handleWriteState(index)}>
                             {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
                         </Button>
-                        </Tooltip>
+                        </Tooltip> */}
+                        <div className='test'> <div className='icon'> <img src={iconUrl} alt="" /></div></div>
                     </div>
 
                 </CardItem>

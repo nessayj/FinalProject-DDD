@@ -224,7 +224,7 @@ const BoardView = () => {
           const response = await DDDApi.delBoards(boardNo);
           console.log(response);
           
-          navigate('/'); // 삭제 후 메인 이동
+          navigate('/boardList'); // 삭제 후 게시판 메인 이동
         } catch (error) {
           console.error(error);
         

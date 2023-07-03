@@ -4,7 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { storage } from "../util/FireBase";
-import { Link } from 'react-router-dom';
+import { Link, navigate, useNavigate } from 'react-router-dom';
 import DDDApi from '../api/DDDApi';
 
 
@@ -210,6 +210,7 @@ const WriteBoard = () => {
     console.log("getId:", getId);
     console.log(isLogin);
 
+    const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [region, setRegion] = useState(null);
@@ -322,6 +323,7 @@ const WriteBoard = () => {
       
       if (linkNo) {
         alert("문의글 작성이 완료되었습니다.");
+        navigate('/boardList');
       }
     } catch (error) {
       console.log(error);

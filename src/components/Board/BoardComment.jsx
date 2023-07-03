@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import profile from "./../../resources/라이언프로필.png"
 import DDDApi from "../../api/DDDApi";
 

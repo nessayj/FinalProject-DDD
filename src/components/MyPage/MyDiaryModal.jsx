@@ -83,7 +83,7 @@ const CardItem = styled.div`
         }
   }
 
-  .comment {
+  .commentBox {
     /* background-color: brown; */
     width: 50%;
     min-width: 280px;
@@ -97,7 +97,7 @@ const CardItem = styled.div`
         background-color: #F2F2F2;
         width: 80%;
         height: 40%;
-        border-radius: 1.5rem;
+        border-radius: 1rem;
         padding: 1rem;
         font-size: .8rem;
         resize: none;
@@ -140,11 +140,15 @@ const CardItem = styled.div`
 
 
 const MyDiaryModal = () => {
-    const { showPage, setShowPage } =useStore;
+    const iconUrl = "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800"
+
     const memberId = Functions.getMemberId();
     const [myDiaryData, setMyDiaryData] = useState([]);
     const [countDiary, setCountDiary] = useState();
-    const [comment, setComment] = useState('');
+    const [mention, setMention] = useState('');
+    const [ratingStar, setRatingStar ] = useState();
+    const [inputComment, setInputComment] = useState();
+
 
     const countCheck = () => {
       for (let key in commentAboutCount) {
@@ -155,12 +159,46 @@ const MyDiaryModal = () => {
     };
 
 
+    // useEffect(() => {
+    //     const infoFetchDate = async () => {
+    //       const response = await DiaryApi.info(memberId);
+    //       const newMyDiaryData = response.data.map(item => ({
+    //         ...item,
+    //         rateStar: item.rateStar || ratingStar,
+    //         comment: item.comment || inputComment,
+    //       }));
+    //       setMyDiaryData(newMyDiaryData);
+    //       console.log(newMyDiaryData)
+    //     };
+    //     infoFetchDate();
+    //   }, [memberId]);
+
+    // console.log(myDiaryData)
+    // useEffect(() => {
+    //     const infoFetchDate = async () => {
+    //         const response = await DiaryApi.info(memberId);
+    //         const newMyDiaryData = response.data;
+
+    //         setMyDiaryData(newMyDiaryData);
+    //         console.log(newMyDiaryData)
+    //         // setDiaryInfo(myDiaryData)
+    //         setInputComment(response.data)
+
+
+    //     };
+    //     infoFetchDate();
+    // }, [memberId]);
     console.log(myDiaryData)
     useEffect(() => {
         const infoFetchDate = async () => {
             const response = await DiaryApi.info(memberId);
-            const newMyDiaryData = response.data;
+            const newMyDiaryData = response.data;            
             setMyDiaryData(newMyDiaryData);
+            console.log(newMyDiaryData)
+            // setDiaryInfo(myDiaryData)
+            setInputComment(response.data)
+
+
         };
         infoFetchDate();
     }, [memberId]);
@@ -168,30 +206,19 @@ const MyDiaryModal = () => {
     useEffect(() => {
         setCountDiary(myDiaryData.length);
         countCheck();
-        setComment(countCheck());
+        setMention(countCheck());
     }, [myDiaryData]);
 
+    const onChangeText = (e) => {
+        setInputComment(e.target.value)
+    }
 
-
-    const [writeState, setWriteState] = useState(Array(exhibitionData.length).fill(true));
-
-    const handleWriteState = (index) => {
-    setWriteState((prevWriteState) => {
-        const newWriteState = [...prevWriteState];
-        newWriteState[index] = !newWriteState[index];
-        return newWriteState;
-    });
-    };
-    // console.log(myDiaryData)
-
-    const iconUrl = "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800"
-    
     return (
         <>
         { myDiaryData && (
             <Wrap>
             <div className='count'>{countDiary}</div>
-            <div className='desc'>{comment}</div>
+            <div className='desc'>{mention}</div>
 
             <InfiniteScroll
             dataLength={myDiaryData.length}
@@ -200,7 +227,6 @@ const MyDiaryModal = () => {
             // loader={<h4>Loading...</h4>}
             style={{width:'100%', minWidth:'600px', margin:'0'}}
         >
-            {    console.log(myDiaryData)}
                 
                 {
                 myDiaryData.map((item, index) => (
@@ -210,20 +236,34 @@ const MyDiaryModal = () => {
                         </div>
                         <div className='exhibitionDesc'>
                             <div className='title'>{item.exhibitions.exhibitName}</div>   
-                            <div className='date'>{item.exhibitions.startDate}</div>   
+                            <div className='date'> { (item.regDate).slice(0, 10)}</div>   
+
                             <Stack spacing={1} className='rateStar'>
-                            <Rating name="half-rating" precision={0.5} value={item.rateStar}/>
+
+                            <Rating
+                                name="half-rating"
+                                precision={0.5}
+                                // defaultValue={item.rateStar}
+                                // onChange={(event, value) => {
+                                //     setRatingStar(value);
+                                // }}
+                                // onChange={handleRateStar(myDiaryData, index)}
+                                value={ratingStar} // ratingStar 상태값으로 value를 설정
+                            />
                             </Stack>
                         </div>
-                        <div className="comment">
-                            <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
-                            {/* 
-                                <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
-                                <Button className="buttnBox" onClick={() => handleWriteState(index)}>
-                                    {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
-                                </Button>
-                                </Tooltip> 
-                            */}
+                        <div className="commentBox">                            
+
+                            
+                            <textarea className='textBox' name="" id="" cols="20" rows="8" 
+                            // value={item.comment ? item.comment : inputComment}
+                            onChange={onChangeText}
+                            value={inputComment}
+                            // onChange={onChangeComment}
+
+                             />
+
+
                             <div className='test'> <div className='icon'> <img src={iconUrl} alt="" /></div></div>
                         </div>
 
@@ -239,3 +279,23 @@ const MyDiaryModal = () => {
   };
   
   export default MyDiaryModal;
+
+{/* 
+    <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
+    <Button className="buttnBox" onClick={() => handleWriteState(index)}>
+        {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
+    </Button>
+    </Tooltip> 
+*/}
+
+
+    // const [writeState, setWriteState] = useState(Array(exhibitionData.length).fill(true));
+
+    // const handleWriteState = (index) => {
+    // setWriteState((prevWriteState) => {
+    //     const newWriteState = [...prevWriteState];
+    //     newWriteState[index] = !newWriteState[index];
+    //     return newWriteState;
+    // });
+    // };
+    // console.log(myDiaryData)

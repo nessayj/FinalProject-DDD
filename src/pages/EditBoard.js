@@ -225,6 +225,7 @@ const EditBoard = () => {
             setCategory(data.category);
             setRegion(data.region);
             setTitle(data.title);
+            
             if (data.image && data.image.image_url) {
                 setPreviewUrl(data.image.image_url); // 미리보기 추가
             }
@@ -287,6 +288,7 @@ const EditBoard = () => {
                 if (response.data === '게시글 수정에 성공했습니다:)') {
                     navigate(`/boardList/boardView/${boardNo}`);
                 } else {
+                    navigate(`/boardList/boardView/${boardNo}`);
                     console.log('게시글 수정에 실패했습니다.ㅠㅠ');
                     }
                 } else {
@@ -324,17 +326,38 @@ const EditBoard = () => {
         e.preventDefault();
 
     const fileReader = new FileReader();
+    
+
+    //   fileReader.onload = () => {
+    //     setPreviewUrl(fileReader.result);
+    //     setImage({
+    //       image_file: e.target.files[0],
+    //       previewUrl: fileReader.result,
+    //     });
+    //   };
+    // };
+
+    fileReader.onload = () => {
+        setPreviewUrl(fileReader.result);
+        setImage(prevState => ({
+          ...prevState,
+          image_file: e.target.files[0],
+          image_url: fileReader.result,
+        }));
+    };
+
       if (e.target.files[0]) {
         fileReader.readAsDataURL(e.target.files[0]);
       }
-      fileReader.onload = () => {
-        setPreviewUrl(fileReader.result);
-        setImage({
-          image_file: e.target.files[0],
-          previewUrl: fileReader.result,
-        });
-      };
     };
+
+
+    useEffect(() => { // 추가사항
+        if (boardEdit && boardEdit.image && boardEdit.image.image_url) {
+            setPreviewUrl(boardEdit.image.image_url);
+        }
+        }, [boardEdit]);
+    
 
 
 

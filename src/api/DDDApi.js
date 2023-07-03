@@ -48,7 +48,27 @@ const DDDApi = {
         return await axios.get(url, HEADER);
         // return await axios.get(DDD_DOMAIN + `boardList/searchList?keyword=${keyword}`, HEADER); << 이 코드로 넣으면 죽어도 권한 접근이 안됨ㅠㅠ
     },
+
+    // 댓글 작성
+    commentWrite: async (comment, getId, boardNo) => {
+        const commentObj = {
+            comment: comment,
+            getId: getId,
+            boardNo: boardNo
+        }
+        return await axios.post(DDD_DOMAIN + "/comments/commentWrite", commentObj, HEADER);
+    },
     
+    // 댓글 작성(api로 호출 후 응답 받기 위해 재설정)
+    // commentWrite: async (boardCommentDto) => {
+    //     try {
+    //       const response = await axios.post(DDD_DOMAIN + "/comments/commentWrite", boardCommentDto, HEADER);
+    //       return response.data;
+    //     } catch (error) {
+    //       throw new Error('Failed to write comment');
+    //     }
+    //   },
+
 
     // 로그인
     login : async(email, password) => {

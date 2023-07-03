@@ -181,6 +181,7 @@ const BoardView = () => {
     const params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
     let boardNo = params.no;
     const navigate = useNavigate();
+    const [boardCommentDto, setBoardCommentDto] = useState({});
 
     
 
@@ -382,9 +383,16 @@ const BoardView = () => {
                     <div className="text_area">{boardView?.contents}</div>
                 </Contents>
             </div>
-
+            
+            {/* 댓글 구간 */}
             <div className="comment_title"><h2>Comment</h2></div>
-            <BoardComment/>
+            <BoardComment
+                // postComment={postComment}
+                // handleEnterKeyPress={handleEnterKeyPress}
+                // handleButtonClick={handleButtonClick}
+                // handleInputChange={handleInputChange}
+                boardNo={boardNo}
+            />
             </Section>
         </ViewWrap>
     )

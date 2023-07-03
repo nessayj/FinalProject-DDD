@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import profile from "./../../resources/라이언프로필.png"
+import DDDApi from "../../api/DDDApi";
 
 const Wrapper = styled.div`
     /* padding : 0 !important;*/
@@ -86,67 +87,104 @@ const Wrapper = styled.div`
   }
 `;
 
-const BoardComment = () => {
-    const [input, setInput] = useState(""); // 댓글 입력값
-    const [comment, setComment] = useState([]); // 댓글 입력 배열값
+const BoardComment = ({boardNo}) => {
 
-    const postEnter = (e) => { // 엔터쳤을 경우
-        if(e.code === 'Enter' && input.length> 0) {
-            const currentDate = new Date();
-            const enterCopy = [...comment];
-            enterCopy.unshift({ text: input, user: "댓글러", date: currentDate } ); // 날짜 추가
-            setComment(enterCopy);
-            setInput("");
-        }
+  
+  const getId = window.localStorage.getItem("memberId");
+  const [comment, setComment] = useState(""); // 댓글 목록 상태 관리(입력 배열값)
+  
+  // const postComment = async () => {
+  //   try {
+  //     // 새로운 댓글을 작성하는 API 호출
+  //     await DDDApi.post(boardCommentDto);
+
+  //     // 댓글 작성 후 댓글 목록을 다시 가져옴
+  //     const response = await DDDApi.commentWrite();
+  //     setComment(response.data);
+
+  //     // 입력 초기화
+  //     setBoardCommentDto({ content: "" });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+
+  // useEffect(() => {
+  //   const fetchComments = async () => {
+  //     try {
+  //       // 댓글 목록을 가져옴
+  //       const response = await DDDApi.commentWrite(boardCommentDto);
+  //       console.log("fetchComments response : ", response)
+  //       setComment(response.data);
+  //     } catch (error) {
+  //       console.error("오류내용 : ", error);
+  //     }
+  //   };
+
+  //   fetchComments();
+  // }, [boardCommentDto]);
+
+  const postComment = async () => {
+      
+      // 새로운 댓글을 작성하는 API 호출
+      const response = await DDDApi.commentWrite(comment, getId, boardNo);
+      console.log("성공내용 : " + response.data);
+
+  };
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      postComment();
     }
+  };
 
-    const postClick = () => { // 클릭했을 경우
-        if(input.length > 0) {
-            const currentDate = new Date();
-            const clickCopy = [...comment];
-            clickCopy.unshift({ text: input, user: "댓글러", date: currentDate }); // 날짜 추가
-            setComment(clickCopy);
-            setInput("");
-            console.log(clickCopy);
-        }
-    }
+  const handleButtonClick = () => {
+    postComment();
+  };
 
+  const handleInputChange = (e) => {
+    setComment(e.target.value);
+  };
 
 
     return (
         <Wrapper>
           <div className="commentbox">
             <img src={profile} alt="프로필 이미지" />
-            <div className="user">댓글러</div>
+            <div className="user">{getId}</div>
             <div className="input-wrapper">
               <input
                 type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={postEnter} // Enter 키 이벤트 처리
+                value={comment}
+                onChange={handleInputChange}
+                onKeyPress={handleEnterKeyPress} // Enter 키 이벤트 처리
                 placeholder="댓글을 입력하세요"
               />
-              <button onClick={postClick}>전송</button>
+              <button onClick={handleButtonClick}>전송</button>
             </div>
           </div>
     
           {/* 배열의 값들을 map으로 반복하여 보여줌 */}
-          {comment.map((e, index) => (
+          {/*comment.map((e, index) => (
           <div key={index}>
           <div className="commentbox">
             <img src={profile} alt="프로필 이미지" />
             
             <div className="userinfo">
-                <div className="user">{e.user}</div>
-                <div className="writedate">{e.date.toLocaleDateString()}</div>
+                <div className="user">{e.id}</div>
+                <div className="writedate">
+                  {/* {e.date.toLocaleDateString()} */}
+                  {/*new Date(e.writeDate).toLocaleDateString()}
+                  </div>
             </div>
             
             <div className="textinfo">
-                <div className="outputtext" style={{fontSize:".9em"}}>{e.text}</div>
+                <div className="outputtext" style={{fontSize:".9em"}}>{e.content}</div>
             </div>
           </div>
         </div>
-      ))}
+          ))*/}
     </Wrapper>
       );
     };

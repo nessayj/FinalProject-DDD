@@ -209,9 +209,14 @@ const MyDiaryModal = () => {
         setMention(countCheck());
     }, [myDiaryData]);
 
+    
+
     const onChangeText = (e) => {
         setInputComment(e.target.value)
     }
+
+    
+
 
     return (
         <>
@@ -258,7 +263,7 @@ const MyDiaryModal = () => {
                             <textarea className='textBox' name="" id="" cols="20" rows="8" 
                             // value={item.comment ? item.comment : inputComment}
                             onChange={onChangeText}
-                            value={inputComment}
+                            value={inputComment[index] ? inputComment[index].comment : ""}
                             // onChange={onChangeComment}
 
                              />

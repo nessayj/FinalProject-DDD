@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import exhibitionData from '../exhibition/exhibitionData';
 import { commentAboutCount } from './Data'
@@ -8,6 +8,9 @@ import { SlPencil, SlCloudUpload } from "react-icons/sl";
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { DiaryApi } from '../../api/MyPageApi';
+import Functions from '../../util/Functions';
+import { useStore } from 'zustand';
 
 // ====== data 확인하기 =====
 const Wrap = styled.div`
@@ -49,6 +52,7 @@ const CardItem = styled.div`
         object-fit: cover;
         object-position: top;
         border: 1px solid #bbb;
+        margin-left: 20px;
 
     }
   }
@@ -56,11 +60,11 @@ const CardItem = styled.div`
   .exhibitionDesc {
     /* background-color: blue; */
     width: 30%;
-    min-width: 200px;
+    min-width: 140px;
     height: 100%;
     flex-shrink: 1;
     display: flex;
-    padding-left: 1rem;
+    padding: 0 1rem;
     flex-direction: column;
     justify-content: center;
         .title{
@@ -82,8 +86,7 @@ const CardItem = styled.div`
   .comment {
     /* background-color: brown; */
     width: 50%;
-    min-width: 200px;
-
+    min-width: 280px;
     height: 100%;
     display: flex;
     /* flex-direction: row; */
@@ -137,10 +140,12 @@ const CardItem = styled.div`
 
 
 const MyDiaryModal = () => {
-    
-    const iconUrl = "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800"
+    const { showPage, setShowPage } =useStore;
+    const memberId = Functions.getMemberId();
+    const [myDiaryData, setMyDiaryData] = useState([]);
+    const [countDiary, setCountDiary] = useState();
+    const [comment, setComment] = useState('');
 
-    const countDiary = exhibitionData.length;
     const countCheck = () => {
       for (let key in commentAboutCount) {
         if (countDiary < key) {
@@ -148,8 +153,24 @@ const MyDiaryModal = () => {
         }
       }
     };
-  
-    const comment = countCheck();
+
+
+    console.log(myDiaryData)
+    useEffect(() => {
+        const infoFetchDate = async () => {
+            const response = await DiaryApi.info(memberId);
+            const newMyDiaryData = response.data;
+            setMyDiaryData(newMyDiaryData);
+        };
+        infoFetchDate();
+    }, [memberId]);
+
+    useEffect(() => {
+        setCountDiary(myDiaryData.length);
+        countCheck();
+        setComment(countCheck());
+    }, [myDiaryData]);
+
 
 
     const [writeState, setWriteState] = useState(Array(exhibitionData.length).fill(true));
@@ -161,51 +182,59 @@ const MyDiaryModal = () => {
         return newWriteState;
     });
     };
+    // console.log(myDiaryData)
+
+    const iconUrl = "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800"
     
     return (
-      <Wrap>
-        <div className='count'>{countDiary}</div>
-        <div className='desc'>{comment}</div>
+        <>
+        { myDiaryData && (
+            <Wrap>
+            <div className='count'>{countDiary}</div>
+            <div className='desc'>{comment}</div>
 
-        <InfiniteScroll
-        dataLength={exhibitionData.length}
-        // next={exhibitionData}
-        hasMore={true}
-        loader={<h4>Loading...</h4>}
-        style={{width:'100%', minWidth:'600px', margin:'0'}}
-      >
-             
-            {
-            exhibitionData.map((ticket, index) => (
-                <CardItem key={index}>
-                    <div className='exhibitionImage'>
-                        <img src={ticket.imgUrl} alt='exhibition'/>
-                    </div>
-                    <div className='exhibitionDesc'>
-                        <div className='title'>{ticket.name}</div>   
-                        <div className='date'>{ticket.startDate}</div>   
-                        <Stack spacing={1} className='rateStar'>
-                        <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-                        </Stack>
-                    </div>
-                    <div className="comment">
-                        <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
-{/* 
-                        <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
-                        <Button className="buttnBox" onClick={() => handleWriteState(index)}>
-                            {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
-                        </Button>
-                        </Tooltip> */}
-                        <div className='test'> <div className='icon'> <img src={iconUrl} alt="" /></div></div>
-                    </div>
+            <InfiniteScroll
+            dataLength={myDiaryData.length}
+            // next={exhibitionData}
+            hasMore={true}
+            // loader={<h4>Loading...</h4>}
+            style={{width:'100%', minWidth:'600px', margin:'0'}}
+        >
+            {    console.log(myDiaryData)}
+                
+                {
+                myDiaryData.map((item, index) => (
+                    <CardItem key={index}>
+                        <div className='exhibitionImage'>
+                            <img src={item.exhibitions.imgUrl} alt='exhibition'/>
+                        </div>
+                        <div className='exhibitionDesc'>
+                            <div className='title'>{item.exhibitions.exhibitName}</div>   
+                            <div className='date'>{item.exhibitions.startDate}</div>   
+                            <Stack spacing={1} className='rateStar'>
+                            <Rating name="half-rating" precision={0.5} value={item.rateStar}/>
+                            </Stack>
+                        </div>
+                        <div className="comment">
+                            <textarea className='textBox' name="" id="" cols="20" rows="8" readOnly={writeState[index]} />
+                            {/* 
+                                <Tooltip title={writeState[index] ? "글쓰기" : "저장"} arrow className="writeBox">
+                                <Button className="buttnBox" onClick={() => handleWriteState(index)}>
+                                    {writeState[index] ? <SlPencil className='writeBtn' /> : <SlCloudUpload className='writeBtn' />}
+                                </Button>
+                                </Tooltip> 
+                            */}
+                            <div className='test'> <div className='icon'> <img src={iconUrl} alt="" /></div></div>
+                        </div>
 
-                </CardItem>
-                ))
-            }
-      </InfiniteScroll>
+                    </CardItem>
+                    ))
+                }
+        </InfiniteScroll>
 
-       
-      </Wrap>
+        
+        </Wrap>)}
+      </>
     );
   };
   

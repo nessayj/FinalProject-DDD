@@ -4,7 +4,7 @@ import Diary from "./Diary";
 import Thumnail from './Thumnail.jsx';
 import NaviBox from './NaviBox.jsx';
 import { useParams } from 'react-router-dom';
-import MyPageApi from '../../api/MyPageApi.js';
+import {MyPageApi} from '../../api/MyPageApi.js';
 import useStore from '../../store';
 
 const Container = styled.div`

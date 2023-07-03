@@ -3,7 +3,7 @@ import Thumnail from "./Thumnail";
 import styled from "styled-components";
 import { SlPencil, SlCloudUpload } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-import MyPageApi from "../../api/MyPageApi";
+import {MyPageApi} from "../../api/MyPageApi";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useStore from "../../store";

@@ -4,6 +4,9 @@ const KH_DOMAIN = "http://localhost:8111"
 
 // 이 프로젝트 전역에서 두루 쓰이는 함수를 모아놓았습니다.
 const Functions = {
+    getMemberId : () => {
+      return window.localStorage.getItem("memberId")
+    },
     //accessToken 세터
     setAccessToken : (accessToken) => {
         window.localStorage.setItem("accessToken", accessToken);

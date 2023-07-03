@@ -158,45 +158,16 @@ const MyDiaryModal = () => {
       }
     };
 
-
-    // useEffect(() => {
-    //     const infoFetchDate = async () => {
-    //       const response = await DiaryApi.info(memberId);
-    //       const newMyDiaryData = response.data.map(item => ({
-    //         ...item,
-    //         rateStar: item.rateStar || ratingStar,
-    //         comment: item.comment || inputComment,
-    //       }));
-    //       setMyDiaryData(newMyDiaryData);
-    //       console.log(newMyDiaryData)
-    //     };
-    //     infoFetchDate();
-    //   }, [memberId]);
-
     // console.log(myDiaryData)
-    // useEffect(() => {
-    //     const infoFetchDate = async () => {
-    //         const response = await DiaryApi.info(memberId);
-    //         const newMyDiaryData = response.data;
-
-    //         setMyDiaryData(newMyDiaryData);
-    //         console.log(newMyDiaryData)
-    //         // setDiaryInfo(myDiaryData)
-    //         setInputComment(response.data)
-
-
-    //     };
-    //     infoFetchDate();
-    // }, [memberId]);
-    console.log(myDiaryData)
     useEffect(() => {
         const infoFetchDate = async () => {
             const response = await DiaryApi.info(memberId);
             const newMyDiaryData = response.data;            
             setMyDiaryData(newMyDiaryData);
             console.log(newMyDiaryData)
-            // setDiaryInfo(myDiaryData)
+            // inputComment에 데이터를 일단 전부 다 담음.
             setInputComment(response.data)
+            setRatingStar(response.data)
 
 
         };
@@ -207,16 +178,14 @@ const MyDiaryModal = () => {
         setCountDiary(myDiaryData.length);
         countCheck();
         setMention(countCheck());
+
     }, [myDiaryData]);
 
     
-
+    // 담긴 데이터는 e.target.value로 inputComment를 업데이트 
     const onChangeText = (e) => {
         setInputComment(e.target.value)
     }
-
-    
-
 
     return (
         <>
@@ -234,6 +203,7 @@ const MyDiaryModal = () => {
         >
                 
                 {
+
                 myDiaryData.map((item, index) => (
                     <CardItem key={index}>
                         <div className='exhibitionImage'>
@@ -242,34 +212,36 @@ const MyDiaryModal = () => {
                         <div className='exhibitionDesc'>
                             <div className='title'>{item.exhibitions.exhibitName}</div>   
                             <div className='date'> { (item.regDate).slice(0, 10)}</div>   
-
                             <Stack spacing={1} className='rateStar'>
+                                <Rating
+                                    name={`half-rating-${index}`} //index로 배열별 이름 받음
+                                    precision={0.5}
+                                    // defaultValue={item.rateStar}
+                                    onChange={(event, value) => {
+                                    // 새로운 배열을 생성하여서 모든 ratingStar을 저장
+                                    const newRatingStar = [...ratingStar];
+                                    // new value값을 ratingStar에 저장
+                                    newRatingStar[index].rateStar = value;
+                                    // 덮어쓰기
+                                    setRatingStar(newRatingStar);
+                                    }}
+                                    value={ratingStar[index]?.rateStar} // Use the rateStar value of the item at the current index
+                                />
+                                </Stack>
 
-                            <Rating
-                                name="half-rating"
-                                precision={0.5}
-                                // defaultValue={item.rateStar}
-                                // onChange={(event, value) => {
-                                //     setRatingStar(value);
-                                // }}
-                                // onChange={handleRateStar(myDiaryData, index)}
-                                value={ratingStar} // ratingStar 상태값으로 value를 설정
-                            />
-                            </Stack>
                         </div>
                         <div className="commentBox">                            
 
                             
                             <textarea className='textBox' name="" id="" cols="20" rows="8" 
-                            // value={item.comment ? item.comment : inputComment}
                             onChange={onChangeText}
-                            value={inputComment[index] ? inputComment[index].comment : ""}
-                            // onChange={onChangeComment}
-
+                            value={inputComment[index]?.comment}
                              />
+                             
 
 
-                            <div className='test'> <div className='icon'> <img src={iconUrl} alt="" /></div></div>
+
+                            <div className='test'><div className='icon' > <img src={iconUrl} alt="" /></div></div>
                         </div>
 
                     </CardItem>

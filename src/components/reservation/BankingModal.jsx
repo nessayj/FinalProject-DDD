@@ -26,7 +26,7 @@ const ModalStyle = styled.div`
     animation: modal-bg-show 0.8s;
   }
     section {
-        width: 80%;
+        width: 50%;
         height: 26rem;
         box-sizing: border-box;
         margin: 0 auto;

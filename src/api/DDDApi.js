@@ -91,6 +91,15 @@ const DDDApi = {
         return await axios.get(DDD_DOMAIN + `/exhibitions/${exhibitNo}`);
     },
 
+    // 예매완료
+    bookTicket: async(id, exhibitNo) => {
+        const booking = {
+            id: id,
+            exhibinNo: exhibitNo
+        };
+        return await axios.post(DDD_DOMAIN + "/booking/newTicket", booking);
+    }
+
 };
 
 export default DDDApi;

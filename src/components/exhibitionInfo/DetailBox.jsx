@@ -14,7 +14,7 @@ const Container = styled.div`
         transform: translateX(-50%);
         background-image: url(${props => props.imgUrl});
         background-repeat: no-repeat;
-        background-size:cover;
+        background-size: cover;
        
     }
  .name {

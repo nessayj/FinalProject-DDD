@@ -7,16 +7,11 @@ import MobileTicket from "../MyPage/MobileTicket";
 import dayjs from "dayjs";
 
 const FinalContainer = styled.div`
-  .bodyContainer{
+  .body{
+    display: flex;
     flex-direction: column;
   }
 
-  .reservationBox{
-    width: 100%;
-  }
-  .rightBox{
-    width: 20rem;
-  }
 `;
 
 
@@ -64,22 +59,22 @@ const FinalReservation = ({props}) => {
                 <p onClick={() => showAlert('예매완료 후 에는 해당페이지로 이동이 불가합니다.')}>{props.rootData[2]}</p>
                 <p>{props.rootData[3]}</p>
                 </div>
-                <div className="bodyContainer">
-               <div className="infoBox">
-               <div className="imgBox"/>
+                <div className="body">
+              <div className="infoBox">
+              <div className="imgBox"/>
                 <div className="textBox">
                     <div className="title">{props.exhibitName}</div>
                     <div>{props.exhibitLocation}</div>
                 </div>
-               </div>
-               <div className="rightBox">
-               <div className="btnContainer">
-               {props.deliveryMethod === "mobileTicket" && <Button className="btn" onClick={clickToTicket}>모바일티켓</Button>}
-               {props.deliveryMethod === "onSite" && <Button className="btn" onClick={clickToTicket}>현장발권용티켓</Button>}
-               <Button className="btn" >예매확인</Button>
-               </div>
-               </div>
-               </div>
+              </div>
+            <div className="rightBox">
+              <div className="btnContainer">
+              {props.deliveryMethod === "mobileTicket" && <Button className="btn" onClick={clickToTicket}>모바일티켓</Button>}
+              {props.deliveryMethod === "onSite" && <Button className="btn" onClick={clickToTicket}>현장발권용티켓</Button>}
+              <Button className="btn" >예매확인</Button>
+              </div>
+              </div>
+              </div>
             </div>
         </FinalContainer>
         {showTicket && (

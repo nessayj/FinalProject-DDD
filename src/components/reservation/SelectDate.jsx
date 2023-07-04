@@ -62,7 +62,7 @@ export const Container = styled.div`
         position: relative;
         background-image: url(${props => props.imgUrl});
         background-repeat: no-repeat;
-        background-size:cover;
+        background-size: contain;
        
     }
     .textBox{

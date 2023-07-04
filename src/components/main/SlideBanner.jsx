@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { DisplayData } from './DisplayData';
 import { useTranslation } from 'react-i18next';
+import DDDApi from '../../api/DDDApi';
 
 
 const SlideContainer = styled.div`
@@ -30,10 +30,11 @@ const SlideContainer = styled.div`
     justify-content: center;
     flex-direction: column;
   }
+
   .RollDiv > div > a > img {
-    margin-left: 1rem;
     width: 15rem;
     height: 20rem;
+    margin: 0 1rem;
   }
 
   .RollDiv > div > a > p {
@@ -50,18 +51,18 @@ const SlideContainer = styled.div`
     }
   }
 `;
-
 const RollDiv = () => {
-  const {t} = useTranslation();
-  const [anchors, setAnchors] = useState(DisplayData);
+  const { t } = useTranslation();
+  const [exhibitionList, setExhibitionList] = useState([]);
+  console.log("anchors" + exhibitionList[0]?.imgUrl);
 
   const intervalRef = useRef(null);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
-      setAnchors((prevAnchors) => {
-        const updatedAnchors = [...prevAnchors, ...prevAnchors];
-        return updatedAnchors;
+      setExhibitionList((prevList) => {
+        const updatedList = [...prevList.slice(1), prevList[0]];
+        return updatedList;
       });
     }, 10000);
 
@@ -70,25 +71,50 @@ const RollDiv = () => {
     };
   }, []);
 
+  // 전시리스트 불러오기
+  useEffect(() => {
+    const exhibitions = async () => {
+      try {
+        const exhibitListData = await DDDApi.exhibitionList();
+        setExhibitionList(exhibitListData.data);
+        console.log("전시리스트 + ", exhibitListData.data);
+        console.log("첫번째 리스트" + exhibitListData.data[0]?.imgUrl);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    exhibitions();
+  }, []);
+
   return (
-    
     <SlideContainer>
-      <div className='title'>
+      <div className="title">
         <h2>{t('추천전시')}</h2>
       </div>
       <div className="RollDiv">
         <div>
-        {anchors.map((anchor, index) => (
-            <a key={index} href={anchor.href}>
-                <img src={anchor.imgUrl} alt="" />
-                <p>{anchor.name}</p>
+          {exhibitionList.map((exhibition, index) => (
+            <a key={exhibition.exhibitNo} href={exhibition.href}>
+              <img src={exhibition.imgUrl} alt="전시사진" />
+              {exhibition.exhibitName.length > 15 ? (
+      <p>
+        {exhibition.exhibitName.slice(0, 15)}
+        <br />
+        {exhibition.exhibitName.slice(15)}
+      </p>
+    ) : (
+      <p>
+        {exhibition.exhibitName}
+        {exhibition.exhibitName.length < 15 && <br />}
+        &nbsp;
+      </p>
+    )}
             </a>
-        ))}
+          ))}
         </div>
       </div>
     </SlideContainer>
-    
   );
-}
+};
 
 export default RollDiv;

@@ -10,6 +10,7 @@ import { Payment, ProvideAgreement } from "./Agreement";
 import ModalBankingPayment from "./BankingModal";
 import FinalReservation from './FinalReservation';
 import dayjs from "dayjs";
+import DDDApi from "../../api/DDDApi";
 
 const PayContainer = styled.div`
     display: flex;
@@ -283,7 +284,6 @@ const PolicyCheckbox = ({ label, checked, onChange }) => {
   };
   
 
-
 const PayTicket = ({data}) => {
     const navigate = useNavigate();
 
@@ -385,6 +385,8 @@ const PayTicket = ({data}) => {
         setOpenBooked(true);
       }
 
+
+
       // 결제 모달창과 예매완료페이지에 값 전달
       const dataForPayReserv = {
         imgUrl: data.reservationData.imgUrl,
@@ -400,6 +402,8 @@ const PayTicket = ({data}) => {
         handleToComplete: handleToComplete,
         handleGoToHome: handleGoToHome,
       }
+
+
 
 
     return(

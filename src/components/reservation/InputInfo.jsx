@@ -7,6 +7,7 @@ import { Container } from "./SelectDate";
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import PayTicket from "./PayTicket";
 import dayjs from 'dayjs';
+import DDDApi from "../../api/DDDApi";
 
 const PriceQuantityWrapper = styled.div`
   font-size: 1rem;
@@ -159,6 +160,11 @@ const DeliveryMethodRadio = styled.input`
 
 
 const InputInfo = ({rootData, reservationData, id, selectedDate}) => {
+  const getId = window.localStorage.getItem("memberId");
+  
+  const [bookedNo, setBookedNo] = useState('');
+  window.localStorage.setItem("bookedNo", bookedNo);
+  
   // 예매 관련 상태 및 함수
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
@@ -282,9 +288,19 @@ const InputInfo = ({rootData, reservationData, id, selectedDate}) => {
 
     // 컴포넌트 이동을 위한 변수설정
     const [toPayment, setToPayment] = useState(false);
-    const handleReservation = () =>{
-        setToPayment(true);
-    }
+    const handleReservation = async () => {
+      const exhibitNo = reservationData.exhibitNo;
+      const bookedName = buyerInfo.name;
+      const bookedEmail = buyerInfo.email;
+      const bookedContact = buyerInfo.contact;
+      const result = await DDDApi.bookTicket(
+        getId, exhibitNo, selectedDate, bookedName, 
+        bookedEmail, bookedContact, deliveryMethod);
+      const resultNo = result.data;
+      setBookedNo(resultNo);
+      setToPayment(true);
+    } 
+
 
   return (
     <>

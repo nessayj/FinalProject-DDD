@@ -91,11 +91,20 @@ const DDDApi = {
         return await axios.get(DDD_DOMAIN + `/exhibitions/${exhibitNo}`);
     },
 
-    // 예매완료
-    bookTicket: async(id, exhibitNo) => {
+    // 예매정보저장
+    bookTicket: async(getId, exhibitNo, selectedDate,
+        bookedName, bookedContact, bookedEmail, deliveryMethod) => {
+            console.log("선택한날짜 : " + selectedDate);
+            console.log("번호 " + exhibitNo, " 아이디 " + getId, ", 방문날짜 " + selectedDate, ", 예매자: " + bookedName, ", 전번 " + bookedContact , ", 이메일 " + bookedEmail
+        +", 수령방법 : " + deliveryMethod);
         const booking = {
-            id: id,
-            exhibinNo: exhibitNo
+            id: getId,
+            exhibitNo: exhibitNo,
+            visitDate: selectedDate,
+            bookedName: bookedName,
+            bookedEmail: bookedEmail,
+            bookedTel: bookedContact,
+            getTicket: deliveryMethod
         };
         return await axios.post(DDD_DOMAIN + "/booking/newTicket", booking);
     }

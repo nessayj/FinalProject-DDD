@@ -286,6 +286,8 @@ const PolicyCheckbox = ({ label, checked, onChange }) => {
 
 const PayTicket = ({data}) => {
     const navigate = useNavigate();
+    const getId = window.localStorage.getItem("memberId");
+    const bookingId = window.localStorage.getItem("bookedNo");
 
     // InputInfo로 돌아가기위해 
     const [showInputInfo, setShowInputInfo] = useState(false);
@@ -379,10 +381,16 @@ const PayTicket = ({data}) => {
       }
       // 확인버튼을 누르면 예매페이지로이동
       const [openBooked, setOpenBooked] = useState(false);
-      const handleToComplete = () => {
+      const handleToComplete = async () => {
+        const totalPrice = data.price;
+        const ticketCnt = data.quantity;
+        const result = await DDDApi.bankingPayment(getId, bookingId, totalPrice, ticketCnt);
+        const isOk = result.data;
+        if(isOk){
         setModalOpen(false);
         setShowInputInfo(false);
         setOpenBooked(true);
+        }
       }
 
 
@@ -401,6 +409,17 @@ const PayTicket = ({data}) => {
         close: closeModal,
         handleToComplete: handleToComplete,
         handleGoToHome: handleGoToHome,
+      }
+
+      const openToKakaoPay = async() => {
+        const exhibitNo = data.reservationData.exhibitNo;
+        const ticketCnt = data.quantity;
+        const totalPrice = data.totalPrice;
+        const result = await DDDApi.kakaopayReady(getId, exhibitNo, ticketCnt, totalPrice, bookingId);
+        const payUrl = result.data.next_redirect_pc_url;
+        console.log("결제요청 url" + payUrl);
+        // 새로운 창에서 페이지 열기
+        window.open(payUrl, "_blank");
       }
 
 
@@ -574,7 +593,7 @@ const PayTicket = ({data}) => {
       <ReservationButtonWrapper>
         <Button onClick={goToInputInfo}>이전 단계</Button>
         {(data.paymentMethod === 'kakaoPay' || data.paymentMethod === 'banking') && data.totalPrice === 0 && <Button className="bankinBtn" disabled={!agreeCancel || !agreePersonal} onClick={handleToComplete}>예매완료</Button>}
-        {data.paymentMethod === 'kakaoPay' && data.totalPrice !== 0 && <Button className="kakaoBtn" disabled={!agreeCancel || !agreePersonal}><RiKakaoTalkFill/><p>카카오페이</p></Button>}
+        {data.paymentMethod === 'kakaoPay' && data.totalPrice !== 0 && <Button className="kakaoBtn" disabled={!agreeCancel || !agreePersonal} onClick={openToKakaoPay}><RiKakaoTalkFill/><p>카카오페이</p></Button>}
         {data.paymentMethod === 'banking'  && data.totalPrice !== 0  && <Button className="bankingBtn" onClick={handleOpenModal} disabled={!agreeCancel || !agreePersonal}>무통장입금</Button>}
       </ReservationButtonWrapper>
       </RightContainer>

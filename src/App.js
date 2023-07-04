@@ -13,6 +13,7 @@ import AdminMain from './components/admin/AdminMain';
 import PopupModal from './components/Login/PopupModal';
 import WriteBoard from './pages/WriteBoard';
 import EditBoard from './pages/EditBoard';
+import FinalReservation from './components/reservation/FinalReservation';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
+        <Route path="/booked" element={<FinalReservation/>}/>
         <Route path="/boardList" element={<BoardList/>}/>
         <Route path="/boardList/write" element={<WriteBoard/>}/>
         <Route path="/boardList/boardView/:no" element={<BoardView/>}/>

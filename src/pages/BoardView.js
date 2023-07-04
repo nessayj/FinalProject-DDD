@@ -9,6 +9,7 @@ import profile from "./../resources/프로필.png";
 import postimage from "./../resources/게시판기본이미지.gif";
 import BoardComment from "../components/Board/BoardComment";
 import DDDApi from "../api/DDDApi";
+import { MyPageApi } from "../api/MyPageApi";
 
 
 const ViewWrap = styled.div`
@@ -182,7 +183,7 @@ const Wrapper = styled.div`
     border-radius: 12px;
     padding: 15px 18px;
     margin-top: 20px;
-    min-height: 200px;
+    min-height: 100px;
 
     .commentbox {
       display: flex;
@@ -278,7 +279,8 @@ const BoardView = () => {
     const params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
     let boardNo = params.no;
     const navigate = useNavigate();
-    const [commentList, setCommentList] = useState([]); // 댓글(추가 **)
+    const [commentList, setCommentList] = useState([]); // 댓글용 추가
+    const [nickname, setNickname] = useState(); // 닉네임용 추가
 
 
     
@@ -293,6 +295,7 @@ const BoardView = () => {
 
     // const [commentList, setCommentList] = useState([]); // 댓글
 
+
     // 작성일자(연도-월-일)로 추출
     const formattedDate = boardView?.writeDate.substring(0, 10);
     
@@ -303,12 +306,18 @@ const BoardView = () => {
             try {
                 // 게시물 내용 불러오기
                 const response = await DDDApi.getBoard(boardNo);
-                const data = response.data;
-                setBoardView(data); // 기존의 게시물 정보 설정
+                if(response.status === 200) {
+                    const data = response.data;
+                    setBoardView(data); // 기존의 게시물 정보 설정
 
-                // // 댓글 내용 불러오기
-                const commentData = data.comments;
-                setCommentList(commentData);
+                    // // 댓글 내용 불러오기
+                    const commentData = data.comments;
+                    setCommentList(commentData);
+                    const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
+                    setNickname(rsp.data.nickname);
+
+                }
+                
               
             } catch (e) {
                 console.log(e);
@@ -364,9 +373,6 @@ const BoardView = () => {
     // id와 작성자 정보 비교
     const getId = window.localStorage.getItem("memberId"); // localStorage 저장 정보
     // const isAuthorMatched = boardView.id === getId;
-
-    // const idAsNumber = Number(getId);
-    // console.log(typeof idAsNumber);
 
     // 로그인한 id와 작성자의 id 비교
     const isAuthorMatched = String(boardView?.id) === getId; // boardView?.id(숫자타입)를 문자열로 반환
@@ -472,15 +478,9 @@ const BoardView = () => {
                     <div className="views">조회수 : {boardView?.views}</div>
                 </div>
             
-                {/* 게시글 내용 구간 */}    
+                {/* 게시글 내용(이미지+텍스트) 구간 */}    
                 <Contents>
                     <div className="image_area">
-                    {/* {boardView?.image ? (
-                    <img src={boardView.image} alt="업로드 이미지" />
-                    ) : (
-                    <img src={postimage} alt="기본 이미지" />
-                    )} */}
-
                     {boardView && (
                     <div className="image_area">
                         {boardView.image ? (
@@ -496,17 +496,11 @@ const BoardView = () => {
                 </Contents>
             </div>
 
-            
             {/* 댓글 구간 */}
-            
             <div className="comment_title"><h2>Comment</h2></div>
 
-            <BoardComment
-                boardNo={boardNo}
-                getId = {getId}
-                setCommentList = {setCommentList}
-                commentList = {commentList}
-            />
+            
+            {/* 댓글 데이터가 있을 경우에만 컨테이너 보이게 조정 */}
             {boardView?.comments && boardView.comments.length > 0 && (
             <Wrapper>
             {/* 댓글 목록 값 배열로 순회 */}
@@ -514,8 +508,8 @@ const BoardView = () => {
             <div key={index} className="comment">
 
             <div className="commentbox">
-                {/* <img src={comment.profileImg} alt="프로필 이미지" />  */}
-                <img src={profile} alt="프로필 이미지" />
+                <img src={comment.profileImg} alt="프로필 이미지" /> 
+                {/* <img src={profile} alt="프로필 이미지" /> */}
                 <div className="userinfo">
                     <div className="user">{comment.nickname}</div>
                     <div className="writedate">
@@ -528,9 +522,15 @@ const BoardView = () => {
                 </div>
             </div>
             </div>
-            ))}   
+            ))}
             </Wrapper>
             )}
+            <BoardComment
+                boardNo={boardNo}
+                nickname = {nickname}
+                setCommentList = {setCommentList}
+                commentList = {commentList}
+            />
             </Section>
         </ViewWrap>
     )

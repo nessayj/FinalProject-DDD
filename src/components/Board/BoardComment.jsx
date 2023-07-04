@@ -89,9 +89,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const BoardComment = ({ boardNo }) => {
+const BoardComment = ({ boardNo, nickname }) => {
 
-  
   const getId = window.localStorage.getItem("memberId");
   const isLogin = window.localStorage.getItem("isLogin");
   const [comment, setComment] = useState(""); // 댓글 목록 상태 관리(입력 배열값)
@@ -113,6 +112,7 @@ const BoardComment = ({ boardNo }) => {
 
   const handleButtonClick = () => {
     postComment();
+    alert('댓글 작성이 완료되었습니다 :)');
   };
 
   const handleInputChange = (e) => {
@@ -131,7 +131,7 @@ const BoardComment = ({ boardNo }) => {
         <Wrapper>
           <div className="commentbox">
             <img src={profile} alt="프로필 이미지" />
-            <div className="user">{getId}</div>
+            <div className="user">{nickname}</div>
             <div className="input-wrapper">
               <input
                 type="text"

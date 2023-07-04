@@ -111,7 +111,7 @@ const Card = () => {
 
     const navigate = useNavigate();
     const [selectedRegion, setSelectedRegion] = useState("");
-//   const [filterRegion, setFilterRegion] = useState([]);
+    const [filterRegion, setFilterRegion] = useState([]);
 
     const [boardList, setBoardList] = useState([]); // boardList 불러오기
 
@@ -125,17 +125,18 @@ const Card = () => {
     };
 
     const offset = currentPage * ITEMS_PAGE; // 현재 페이지에서 보여줄 아이템의 시작 인덱스
-    const currentPageData = boardList.slice(offset, offset + ITEMS_PAGE);
-    const pageCount = Math.ceil(boardList.length / ITEMS_PAGE); // 전체 페이지수
+    const currentPageData = filterRegion.slice(offset, offset + ITEMS_PAGE);
+    const pageCount = Math.ceil(filterRegion.length / ITEMS_PAGE); // 전체 페이지수
 
 
-
+    // 동행찾기 게시글 정보 받기(** 자역별 필터정보로 수정 ** )
     useEffect(() => {
         const fetchData = async () => {
           try {
             const category = '동행찾기'; // 조회할 카테고리 이름 지정
             const response = await DDDApi.getFreeBoardsByCategory(category);
             setBoardList(response.data);
+            setFilterRegion(response.data); // 지역별 필터링 추가
             console.log(response.data);
           } catch (error) {
             console.log(error);
@@ -148,25 +149,21 @@ const Card = () => {
     
     
     
-    //   const handleRegionChange = (event) => {
-    //     const selectedRegion = event.target.value;
-    //     setSelectedRegion(selectedRegion);
+      const handleRegionChange = (event) => {
+        const selectedRegion = event.target.value;
+        setSelectedRegion(selectedRegion);
       
-    //     console.log(selectedRegion);
+        console.log(selectedRegion);
       
-    //     // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
-    //     const filteredData = boardList.filter((item) => {
-    //       return selectedRegion ? item.region === selectedRegion : true;
-    //     });
+        // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
+        const filteredData = boardList.filter((item) => {
+          return selectedRegion ? item.region === selectedRegion : true;
+        });
       
-    //     setFilterRegion(filteredData);
-    //   };
+        setFilterRegion(filteredData);
+      };
        
 
-
-
-
-    
 
     
 
@@ -179,15 +176,16 @@ const Card = () => {
 
     return(
         <>
-        {/* <SelectBox value={selectedRegion} onChange={handleRegionChange}> */}
-        <SelectBox value={selectedRegion}>
+        <SelectBox value={selectedRegion} onChange={handleRegionChange}>
             <option value="">전체</option>
             <option value="서울">서울</option>
-            <option value="경기/인천">경기/인천</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
             <option value="충청">충청</option>
             <option value="강원">강원</option>
             <option value="경상도">경상도</option>
-            <option value="전라/제주">전라/제주</option>
+            <option value="전라도">전라도</option>
+            <option value="제주">제주</option>
         </SelectBox>
         <CardContainer> 
             {currentPageData.map((data, index) => (

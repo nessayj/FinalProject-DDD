@@ -4,7 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { storage } from "../util/FireBase";
-import { Link, navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DDDApi from '../api/DDDApi';
 
 
@@ -360,11 +360,13 @@ const WriteBoard = () => {
                     <select name="category" onChange={onChangerRegion}>
                       <option value={region} selected>지역선택</option>
                       <option value="서울">서울</option>
-                      <option value="경기/인천">경기/인천</option>
+                      <option value="경기">경기</option>
+                      <option value="인천">인천</option>
                       <option value="충청">충청</option>
                       <option value="강원">강원</option>
                       <option value="경상도">경상도</option>
-                      <option value="전라/제주">전라/제주</option>
+                      <option value="전라도">전라도</option>
+                      <option value="제주">제주</option>
                     </select>
                   </td>
 

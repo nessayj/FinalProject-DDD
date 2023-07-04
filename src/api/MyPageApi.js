@@ -67,6 +67,26 @@ const DiaryApi = {
         console.log("error입니다. ");
         }
     },
+
+
+    save : async(memberId, exhibitNo, ratingStarValue, inputComment) => {
+        ratingStarValue = parseFloat(ratingStarValue);
+
+        try{
+            const diaryCheck = {
+                memberId : memberId,
+                exhibitionNo : exhibitNo,
+                comment : inputComment,
+                rateStar : ratingStarValue
+            }
+            console.log(ratingStarValue)
+            return await axios.post(DDD_DOMAIN +  `/mypage/${memberId}/diary/${exhibitNo}`, diaryCheck)
+
+        } catch (error) {
+            console.log("error입니다. ");
+            
+        }
+    }, 
 }
 
 export {MyPageApi, DiaryApi};

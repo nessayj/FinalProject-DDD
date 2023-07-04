@@ -7,6 +7,9 @@ const Functions = {
     getMemberId : () => {
       return window.localStorage.getItem("memberId")
     },
+    getLoginStatus : () => {
+      return window.localStorage.getItem("isLogin")
+    },
     //accessToken 세터
     setAccessToken : (accessToken) => {
         window.localStorage.setItem("accessToken", accessToken);

@@ -146,8 +146,9 @@ const MyDiaryModal = () => {
     const [myDiaryData, setMyDiaryData] = useState([]);
     const [countDiary, setCountDiary] = useState();
     const [mention, setMention] = useState('');
-    const [ratingStar, setRatingStar ] = useState();
-    const [inputComment, setInputComment] = useState();
+    const [inputComment, setInputComment] = useState([]);
+    const [ratingStar, setRatingStar ] = useState([]);
+    
 
 
     const countCheck = () => {
@@ -166,9 +167,14 @@ const MyDiaryModal = () => {
             setMyDiaryData(newMyDiaryData);
             console.log(newMyDiaryData)
             // inputComment에 데이터를 일단 전부 다 담음.
-            setInputComment(response.data)
-            setRatingStar(response.data)
+            const comments = newMyDiaryData.map(item => item.comment);
+            setInputComment(comments);
+            console.log(inputComment)
 
+            const stars = newMyDiaryData.map(item => item.rateStar);
+
+            setRatingStar(stars);
+            console.log(ratingStar)
 
         };
         infoFetchDate();
@@ -183,8 +189,20 @@ const MyDiaryModal = () => {
 
     
     // 담긴 데이터는 e.target.value로 inputComment를 업데이트 
-    const onChangeText = (e) => {
-        setInputComment(e.target.value)
+    const onChangeText = (e, index) => {
+        let updatedComments = [...inputComment];
+        updatedComments[index] = e.target.value;
+        setInputComment(updatedComments);
+    }
+    const onChangeStar = (e, index) => {
+        const newRatingStar = [...ratingStar];
+        console.log(newRatingStar)
+        console.log('처음 복사한 배열 ' + newRatingStar.rateStar)
+        newRatingStar[index] = e.target.value;
+        console.log('타겟 밸류'  + newRatingStar)
+
+        setRatingStar(newRatingStar);
+        console.log('마지막 저장값 ' + ratingStar)
     }
 
     return (
@@ -213,35 +231,45 @@ const MyDiaryModal = () => {
                             <div className='title'>{item.exhibitions.exhibitName}</div>   
                             <div className='date'> { (item.regDate).slice(0, 10)}</div>   
                             <Stack spacing={1} className='rateStar'>
-                                <Rating
-                                    name={`half-rating-${index}`} //index로 배열별 이름 받음
-                                    precision={0.5}
-                                    // defaultValue={item.rateStar}
-                                    onChange={(event, value) => {
-                                    // 새로운 배열을 생성하여서 모든 ratingStar을 저장
-                                    const newRatingStar = [...ratingStar];
-                                    // new value값을 ratingStar에 저장
-                                    newRatingStar[index].rateStar = value;
-                                    // 덮어쓰기
-                                    setRatingStar(newRatingStar);
-                                    }}
-                                    value={ratingStar[index]?.rateStar} // Use the rateStar value of the item at the current index
-                                />
-                                </Stack>
+                            <Rating
+                                name={`half-rating-${index}`}
+                                precision={0.5}
+                                onChange={(e)=>onChangeStar(e, index)}
+                                value={ratingStar[index]}
+                            />
+                            </Stack>
 
                         </div>
                         <div className="commentBox">                            
 
-                            
-                            <textarea className='textBox' name="" id="" cols="20" rows="8" 
-                            onChange={onChangeText}
-                            value={inputComment[index]?.comment}
-                             />
-                             
+                        <textarea
+                                className='textBox'
+                                name="" id="" cols="20" rows="8" 
+                                onChange={(e) => onChangeText(e, index)}
+                                value={inputComment[index]}
+                            />
 
 
 
-                            <div className='test'><div className='icon' > <img src={iconUrl} alt="" /></div></div>
+                            <div className='test'>
+                                <div className='icon' 
+                                onClick={() => {
+                                    (async () => {
+                                        const response = await DiaryApi.save(
+                                            Functions.getMemberId(),
+                                            item.exhibitions.exhibitNo,
+                                            ratingStar[index],
+                                            inputComment[index],
+                                        );
+                                        if (response.status === 200) {
+                                            console.log("Diary successfully saved!");
+                                        } else {
+                                            console.error("Failed to save diary");
+                                        }
+                                    })();
+                                }}>
+                                <img src={iconUrl} alt="" /></div>
+                            </div>
                         </div>
 
                     </CardItem>

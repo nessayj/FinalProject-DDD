@@ -174,14 +174,112 @@ const Contents = styled.div`
 
 `;
 
+const Wrapper = styled.div`
+    width: 92%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 15px 18px;
+    margin-top: 20px;
+    min-height: 200px;
+
+    .commentbox {
+      display: flex;
+      align-items: center;
+      background-color: #F4F8FF;
+      flex-direction: row;
+      border-radius: 20px;
+      margin: 1rem;
+      padding: 1em;
+        
+        
+        img {
+            width: 4em;
+            height: 4em;
+            border-radius: 50%;
+            margin-left: .3em;
+            object-fit: cover;
+        }
+
+        .user {
+            font-size: 13px;
+        }  
+        
+
+        .userinfo { // 수정사항
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-left: .7em;
+
+            }
+            .user, .writedate {
+                margin-bottom: .2em;
+                /* margin-left: .7em; */
+            }
+        }  
+        
+
+        .writedate {
+            font-size:1px;
+            margin-top: .2em;
+            margin-left: .6em;
+       }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            flex-grow: 1;
+            margin: 12px;
+      
+          input {
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 0.5em;
+            flex-grow: 1;
+            min-width: 0;
+          }
+      
+          button {
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+          }
+        }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+
+    .textinfo {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        width: 83%;
+        margin: 12px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding:7px; 
+        color : #6d6767;
+    }
+`;
+
 
 
 const BoardView = () => {
-    const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴
+    const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴(게시판목록)
     const params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
     let boardNo = params.no;
     const navigate = useNavigate();
-    const [boardCommentDto, setBoardCommentDto] = useState({});
+    const [commentList, setCommentList] = useState([]); // 댓글(추가 **)
+
 
     
 
@@ -197,6 +295,7 @@ const BoardView = () => {
 
     // 작성일자(연도-월-일)로 추출
     const formattedDate = boardView?.writeDate.substring(0, 10);
+    
 
        // 본문 불러오기
        useEffect(() => {
@@ -205,14 +304,19 @@ const BoardView = () => {
                 // 게시물 내용 불러오기
                 const response = await DDDApi.getBoard(boardNo);
                 const data = response.data;
-                setBoardView(data);
-                console.log(data);
+                setBoardView(data); // 기존의 게시물 정보 설정
+
+                // // 댓글 내용 불러오기
+                const commentData = data.comments;
+                setCommentList(commentData);
+              
             } catch (e) {
                 console.log(e);
             } 
         };
         boardViewLoad();
     }, [boardNo]);
+
 
     const deleteBoard = async () => {
         try {
@@ -305,6 +409,8 @@ const BoardView = () => {
         // setModalOption('수정');
         setComment("수정하시겠습니까?");
     }
+
+    
     
 
     return(
@@ -313,6 +419,7 @@ const BoardView = () => {
             <div className="board_header">
                 <div className="boardtitle"><h2>자유 게시판</h2></div> 
                 
+                {/* 게시판 카테고리 */}
                 <div className="sub_category">
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-readonly-label">카테고리</InputLabel>
@@ -327,6 +434,7 @@ const BoardView = () => {
                     </Select>
                 </FormControl>
 
+                {/* 지역 카테고리 */}
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-readonly-label">지역선택</InputLabel>
                     <Select
@@ -340,6 +448,7 @@ const BoardView = () => {
                     </Select>
                 </FormControl>
 
+                {/* 수정 및 삭제 버튼 */}
                 {showEditBtn() ? (
                 <div className="editBtn">
                     <Link to={`/boardList/boardView/${boardNo}/editBoard`} className="upBtn" onClick={onClickEdit}>수정하기</Link>
@@ -348,19 +457,22 @@ const BoardView = () => {
                 ) : null}
                 </div>
 
-
+                {/* 제목 구간 */}    
                 <TitleView>{boardView?.title}</TitleView> 
                 
+                {/* 작성자 정보 구간 */} 
                 <div className="authorinfo">
                     <img src={profile} alt="프로필 이미지" />
                     <div className="author">{boardView?.author}</div>
                 </div>
                 
+                {/* 작성일 및 조회수 구간 */}
                 <div className="dateview">
                     <div className="write_date">작성일 : {formattedDate}</div>
                     <div className="views">조회수 : {boardView?.views}</div>
                 </div>
             
+                {/* 게시글 내용 구간 */}    
                 <Contents>
                     <div className="image_area">
                     {/* {boardView?.image ? (
@@ -383,16 +495,42 @@ const BoardView = () => {
                     <div className="text_area">{boardView?.contents}</div>
                 </Contents>
             </div>
+
             
             {/* 댓글 구간 */}
+            
             <div className="comment_title"><h2>Comment</h2></div>
+
             <BoardComment
-                // postComment={postComment}
-                // handleEnterKeyPress={handleEnterKeyPress}
-                // handleButtonClick={handleButtonClick}
-                // handleInputChange={handleInputChange}
                 boardNo={boardNo}
+                getId = {getId}
+                setCommentList = {setCommentList}
+                commentList = {commentList}
             />
+            {boardView?.comments && boardView.comments.length > 0 && (
+            <Wrapper>
+            {/* 댓글 목록 값 배열로 순회 */}
+            {boardView?.comments && boardView.comments.map((comment, index) => (
+            <div key={index} className="comment">
+
+            <div className="commentbox">
+                {/* <img src={comment.profileImg} alt="프로필 이미지" />  */}
+                <img src={profile} alt="프로필 이미지" />
+                <div className="userinfo">
+                    <div className="user">{comment.nickname}</div>
+                    <div className="writedate">
+                        {new Date(comment.writeDate).toLocaleDateString()}
+                    </div>
+                </div>
+
+                <div className="textinfo">
+                    <div className="outputtext">{comment.content}</div>
+                </div>
+            </div>
+            </div>
+            ))}   
+            </Wrapper>
+            )}
             </Section>
         </ViewWrap>
     )

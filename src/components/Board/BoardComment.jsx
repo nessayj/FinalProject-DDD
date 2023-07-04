@@ -2,17 +2,19 @@ import styled from "styled-components";
 import { useState } from "react";
 import profile from "./../../resources/라이언프로필.png"
 import DDDApi from "../../api/DDDApi";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
     /* padding : 0 !important;*/
     width: 92%;
+    min-height: 50%;
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 12px;
     padding: 15px 18px;
     margin-top: 20px;
-    min-height: 200px;
+    
 
     .commentbox {
       display: flex;
@@ -87,44 +89,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const BoardComment = ({boardNo}) => {
+const BoardComment = ({ boardNo }) => {
 
   
   const getId = window.localStorage.getItem("memberId");
+  const isLogin = window.localStorage.getItem("isLogin");
   const [comment, setComment] = useState(""); // 댓글 목록 상태 관리(입력 배열값)
+  const navigate = useNavigate();
   
-  // const postComment = async () => {
-  //   try {
-  //     // 새로운 댓글을 작성하는 API 호출
-  //     await DDDApi.post(boardCommentDto);
-
-  //     // 댓글 작성 후 댓글 목록을 다시 가져옴
-  //     const response = await DDDApi.commentWrite();
-  //     setComment(response.data);
-
-  //     // 입력 초기화
-  //     setBoardCommentDto({ content: "" });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-
-  // useEffect(() => {
-  //   const fetchComments = async () => {
-  //     try {
-  //       // 댓글 목록을 가져옴
-  //       const response = await DDDApi.commentWrite(boardCommentDto);
-  //       console.log("fetchComments response : ", response)
-  //       setComment(response.data);
-  //     } catch (error) {
-  //       console.error("오류내용 : ", error);
-  //     }
-  //   };
-
-  //   fetchComments();
-  // }, [boardCommentDto]);
-
   const postComment = async () => {
       
       // 새로운 댓글을 작성하는 API 호출
@@ -147,6 +119,13 @@ const BoardComment = ({boardNo}) => {
     setComment(e.target.value);
   };
 
+  const handleInputClick = () => {
+    if (!isLogin) {
+      alert('로그인 후 작성이 가능합니다');
+      navigate('/login')
+  }
+}
+
 
     return (
         <Wrapper>
@@ -158,33 +137,13 @@ const BoardComment = ({boardNo}) => {
                 type="text"
                 value={comment}
                 onChange={handleInputChange}
+                onClick={handleInputClick} // 로그인 시 진입하도록 추가
                 onKeyPress={handleEnterKeyPress} // Enter 키 이벤트 처리
                 placeholder="댓글을 입력하세요"
               />
               <button onClick={handleButtonClick}>전송</button>
             </div>
           </div>
-    
-          {/* 배열의 값들을 map으로 반복하여 보여줌 */}
-          {/*comment.map((e, index) => (
-          <div key={index}>
-          <div className="commentbox">
-            <img src={profile} alt="프로필 이미지" />
-            
-            <div className="userinfo">
-                <div className="user">{e.id}</div>
-                <div className="writedate">
-                  {/* {e.date.toLocaleDateString()} */}
-                  {/*new Date(e.writeDate).toLocaleDateString()}
-                  </div>
-            </div>
-            
-            <div className="textinfo">
-                <div className="outputtext" style={{fontSize:".9em"}}>{e.content}</div>
-            </div>
-          </div>
-        </div>
-          ))*/}
     </Wrapper>
       );
     };

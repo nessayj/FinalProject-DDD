@@ -9,7 +9,7 @@ const DDDApi = {
         return await axios.get(`${DDD_DOMAIN}/boardList/${category}`, HEADER);
     },
 
-    // 특정 게시판 번호의 게시물 상세 조회
+    // 특정 게시판 번호의 게시물 상세 조회(+댓글 포함)
     getBoard: async(boardNo) => {
         return await axios.get(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     },
@@ -29,8 +29,8 @@ const DDDApi = {
     },
 
     // 게시글 수정
-    editBoards: async (boardNo, freeBoardDto) => {
-        return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, freeBoardDto, HEADER);
+    editBoards: async (boardNo, updateBoard) => {
+        return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, updateBoard, HEADER);
     },
 
 
@@ -46,7 +46,7 @@ const DDDApi = {
         const url = `${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`;
         console.log(url); // 해당 페이지 url 확인 위해
         return await axios.get(url, HEADER);
-        // return await axios.get(DDD_DOMAIN + `boardList/searchList?keyword=${keyword}`, HEADER); << 이 코드로 넣으면 죽어도 권한 접근이 안됨ㅠㅠ
+        // return await axios.get(DDD_DOMAIN + `/boardList/searchList?keyword=${keyword}`, HEADER); 
     },
 
     // 댓글 작성
@@ -58,16 +58,11 @@ const DDDApi = {
         }
         return await axios.post(DDD_DOMAIN + "/comments/commentWrite", commentObj, HEADER);
     },
-    
-    // 댓글 작성(api로 호출 후 응답 받기 위해 재설정)
-    // commentWrite: async (boardCommentDto) => {
-    //     try {
-    //       const response = await axios.post(DDD_DOMAIN + "/comments/commentWrite", boardCommentDto, HEADER);
-    //       return response.data;
-    //     } catch (error) {
-    //       throw new Error('Failed to write comment');
-    //     }
-    //   },
+
+    // 댓글 삭제 
+    commentDelete : async (commentNo) => {
+        return await axios.delete(`${DDD_DOMAIN}/comments/commentDelete/${commentNo}`, HEADER); 
+    },
 
 
     // 로그인

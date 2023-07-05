@@ -130,7 +130,8 @@ const BoardComment = ({ boardNo, nickname }) => {
     return (
         <Wrapper>
           <div className="commentbox">
-            <img src={profile} alt="프로필 이미지" />
+            {/* <img src={profile} alt="프로필 이미지" /> */}
+            <img src={profile} alt="댓글 프로필 이미지" />
             <div className="user">{nickname}</div>
             <div className="input-wrapper">
               <input

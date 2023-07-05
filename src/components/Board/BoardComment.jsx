@@ -50,6 +50,8 @@ const Wrapper = styled.div`
             margin-left: auto;
             flex-grow: 1;
             margin: 12px;
+            /* margin-right: 1em;  */
+
       
           input {
             padding: 0.5em;
@@ -60,31 +62,26 @@ const Wrapper = styled.div`
             min-width: 0;
           }
       
+          
+        }
+        .sendComment {
+    
           button {
-            padding: 0.5em 1em;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-          }
+              padding: 0.5em 1em;
+              border: none;
+              border-radius: 5px;
+              background-color: #333;
+              color: white;
+              display: inline-block;
+              cursor: pointer;
+              margin-left: 1em; 
+            }
         }
 
     @media (max-width: 600px) {
       flex-direction: column;
     }
 
-    .textinfo {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        width: 83%;
-        margin: 12px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding:7px; 
-        color : #6d6767;
-    }
 
   }
 `;
@@ -104,6 +101,7 @@ const BoardComment = ({ boardNo, nickname }) => {
 
   };
 
+
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       postComment();
@@ -113,6 +111,7 @@ const BoardComment = ({ boardNo, nickname }) => {
   const handleButtonClick = () => {
     postComment();
     alert('댓글 작성이 완료되었습니다 :)');
+    window.location.reload(); // 현재 페이지 새로고침
   };
 
   const handleInputChange = (e) => {
@@ -132,7 +131,9 @@ const BoardComment = ({ boardNo, nickname }) => {
           <div className="commentbox">
             {/* <img src={profile} alt="프로필 이미지" /> */}
             <img src={profile} alt="댓글 프로필 이미지" />
-            <div className="user">{nickname}</div>
+            
+              <div className="user">{nickname}</div>
+            
             <div className="input-wrapper">
               <input
                 type="text"
@@ -140,9 +141,11 @@ const BoardComment = ({ boardNo, nickname }) => {
                 onChange={handleInputChange}
                 onClick={handleInputClick} // 로그인 시 진입하도록 추가
                 onKeyPress={handleEnterKeyPress} // Enter 키 이벤트 처리
-                placeholder="댓글을 입력하세요"
+                placeholder="댓글은 로그인이 필요한 서비스입니다."
               />
-              <button onClick={handleButtonClick}>전송</button>
+              <div className="sendComment">
+                <button onClick={handleButtonClick}>전송</button>
+              </div>
             </div>
           </div>
     </Wrapper>

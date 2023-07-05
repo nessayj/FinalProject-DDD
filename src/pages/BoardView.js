@@ -5,12 +5,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import profile from "./../resources/프로필.png";
 import postimage from "./../resources/게시판기본이미지.gif";
 import BoardComment from "../components/Board/BoardComment";
 import DDDApi from "../api/DDDApi";
 import { MyPageApi } from "../api/MyPageApi";
-import { TiDelete } from 'react-icons/ti';
 
 
 const ViewWrap = styled.div`
@@ -193,11 +191,7 @@ const Wrapper = styled.div`
       flex-direction: row;
       border-radius: 20px;
       margin: 1rem;
-      padding: 1em;
-
-      position: relative;
-      
-        
+      padding: 1em;        
         
         img {
             width: 4em;
@@ -233,32 +227,6 @@ const Wrapper = styled.div`
             margin-left: .6em;
        }
 
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-            flex-grow: 1;
-            margin: 12px;
-      
-          input {
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 0.5em;
-            flex-grow: 1;
-            min-width: 0;
-          }
-      
-          button {
-            padding: 0.5em 1em;
-            border: none;
-            border-radius: 5px;
-            background-color: #333;
-            color: white;
-            cursor: pointer;
-          }
-        }
-
     @media (max-width: 600px) {
       flex-direction: column;
     }
@@ -287,7 +255,9 @@ const Wrapper = styled.div`
             background-color: #333;
             color: white;
             cursor: pointer;
-        
+            display: inline-block; /* 가로로 배치되도록 설정 */
+            white-space: nowrap; /* 글자 줄바꿈 방지 */
+            margin-left: 0.5em; /* 버튼 사이 간격 조정 */
             
           } 
         }
@@ -301,7 +271,7 @@ const BoardView = () => {
     let boardNo = params.no;
     const navigate = useNavigate();
     const [commentList, setCommentList] = useState([]); // 댓글용 추가
-    const [nickname, setNickname] = useState(); // 닉네임용 추가
+    const [nickname, setNickname] = useState(""); // 닉네임 초기값 수정
 
 
     
@@ -314,15 +284,13 @@ const BoardView = () => {
     //     setModalOpen(false);
     // };
 
-    // const [commentList, setCommentList] = useState([]); // 댓글
-
 
     // 작성일자(연도-월-일)로 추출
     const formattedDate = boardView?.writeDate.substring(0, 10);
     
 
-       // 본문 불러오기
-       useEffect(() => {
+    // 본문 불러오기
+    useEffect(() => {
         const boardViewLoad = async () => {
             try {
                 // 게시물 내용 불러오기
@@ -338,7 +306,6 @@ const BoardView = () => {
                     setNickname(rsp.data.nickname);
 
                 }
-                
               
             } catch (e) {
                 console.log(e);
@@ -348,6 +315,10 @@ const BoardView = () => {
     }, [boardNo]);
 
 
+
+
+
+    // 게시글 삭제
     const deleteBoard = async () => {
         try {
           const confirmed = window.confirm('게시글을 삭제하시겠습니까?');
@@ -437,9 +408,28 @@ const BoardView = () => {
         setComment("수정하시겠습니까?");
     }
 
-    const DeleteComment = () => {
-        setComment("삭제하시겠습니까?");
-    }
+
+        // 댓글 삭제 함수
+        const deleteComment = async (commentNo) => {
+            try {
+                const confirmed = window.confirm("댓글 삭제 시 내용은 저장되지 않습니다. 정말로 삭제하시겠습니까?");
+                if (!confirmed) {
+                    return; // 삭제 취소
+                }
+                
+                const response = await DDDApi.commentDelete(commentNo); 
+                if (response.status === 200) {
+                    const updatedBoard = { ...boardView }; // 기존의 게시물 정보 복사
+                    updatedBoard.comments = updatedBoard.comments.filter((comment) => comment.commentNo !== commentNo); // 삭제된 댓글 제외
+                    setBoardView(updatedBoard); // 업데이트된 게시물 정보(기존)
+                    const updatedCommentList = commentList.filter((comment) => comment.commentNo !== commentNo); // 삭제된 댓글 제외
+                    setCommentList(updatedCommentList); // 댓글 목록 업데이트
+                }
+                } catch (error) {
+                console.log(error);
+                }
+            };
+            
     
 
     return(
@@ -545,22 +535,22 @@ const BoardView = () => {
                 </div>
                 
                 <div className="deleteComment">
-                {/* 로그인한 사용자와 댓글 작성자가 같은 경우에만 삭제 버튼을 보여줌 */}
-                {getId === comment.id &&
-                    <button onClick={() => DeleteComment(comment.commentNo)}>삭제</button>
-                }
+                {/*로그인한 사용자와 댓글 작성자의 닉넴이 같은 경우에만 삭제 버튼을 보여줌*/}
+                {nickname === comment.nickname && (
+                    <button onClick={() => deleteComment(comment.commentNo)}>삭제</button>
+                )}
                 </div>
             </div>
             </div>
             ))}
             </Wrapper>
             )}
+
             <BoardComment
                 boardNo={boardNo}
                 nickname = {nickname}
                 setCommentList = {setCommentList}
-                commentList = {commentList}
-            />
+                commentList = {commentList}/>
             </Section>
         </ViewWrap>
     )

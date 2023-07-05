@@ -10,6 +10,7 @@ import postimage from "./../resources/게시판기본이미지.gif";
 import BoardComment from "../components/Board/BoardComment";
 import DDDApi from "../api/DDDApi";
 import { MyPageApi } from "../api/MyPageApi";
+import { TiDelete } from 'react-icons/ti';
 
 
 const ViewWrap = styled.div`
@@ -193,6 +194,9 @@ const Wrapper = styled.div`
       border-radius: 20px;
       margin: 1rem;
       padding: 1em;
+
+      position: relative;
+      
         
         
         img {
@@ -270,6 +274,23 @@ const Wrapper = styled.div`
         padding:7px; 
         color : #6d6767;
     }
+    .deleteComment {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+       
+
+        button {
+            padding: .5em .8em;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        
+            
+          } 
+        }
 `;
 
 
@@ -416,7 +437,9 @@ const BoardView = () => {
         setComment("수정하시겠습니까?");
     }
 
-    
+    const DeleteComment = () => {
+        setComment("삭제하시겠습니까?");
+    }
     
 
     return(
@@ -468,7 +491,7 @@ const BoardView = () => {
                 
                 {/* 작성자 정보 구간 */} 
                 <div className="authorinfo">
-                    <img src={profile} alt="프로필 이미지" />
+                    <img src={boardView?.profileImg} alt="프로필 이미지" />
                     <div className="author">{boardView?.author}</div>
                 </div>
                 
@@ -519,6 +542,13 @@ const BoardView = () => {
 
                 <div className="textinfo">
                     <div className="outputtext">{comment.content}</div>
+                </div>
+                
+                <div className="deleteComment">
+                {/* 로그인한 사용자와 댓글 작성자가 같은 경우에만 삭제 버튼을 보여줌 */}
+                {getId === comment.id &&
+                    <button onClick={() => DeleteComment(comment.commentNo)}>삭제</button>
+                }
                 </div>
             </div>
             </div>

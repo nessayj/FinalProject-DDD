@@ -287,33 +287,40 @@ const BoardView = () => {
 
     // 작성일자(연도-월-일)로 추출
     const formattedDate = boardView?.writeDate.substring(0, 10);
+
+
+        // 본문 불러오기
+        useEffect(() => {
+            const boardViewLoad = async () => {
+                try {
+                    // 게시물 내용 불러오기
+                    const response = await DDDApi.getBoard(boardNo);
+                    if(response.status === 200) {
+                        const data = response.data;
+                        setBoardView(data); // 기존의 게시물 정보 설정
     
+                        // // 댓글 내용 불러오기
+                        const commentData = data.comments;
+                        setCommentList(commentData);
+                        const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
+                        setNickname(rsp.data.nickname);
 
-    // 본문 불러오기
-    useEffect(() => {
-        const boardViewLoad = async () => {
-            try {
-                // 게시물 내용 불러오기
-                const response = await DDDApi.getBoard(boardNo);
-                if(response.status === 200) {
-                    const data = response.data;
-                    setBoardView(data); // 기존의 게시물 정보 설정
-
-                    // // 댓글 내용 불러오기
-                    const commentData = data.comments;
-                    setCommentList(commentData);
-                    const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
-                    setNickname(rsp.data.nickname);
-
-                }
-              
-            } catch (e) {
-                console.log(e);
-            } 
-        };
-        boardViewLoad();
-    }, [boardNo]);
-
+       
+                        if (boardView && boardView.views != null) {
+                            setBoardView(prevState => ({
+                                ...prevState,
+                                views: prevState.views + 1
+                            }));
+                        }
+    
+                    }
+                  
+                } catch (e) {
+                    console.log(e);
+                } 
+            };
+            boardViewLoad();
+        }, [boardNo]);
 
 
 
@@ -486,11 +493,13 @@ const BoardView = () => {
                 </div>
                 
                 {/* 작성일 및 조회수 구간 */}
+                {boardView && (
                 <div className="dateview">
                     <div className="write_date">작성일 : {formattedDate}</div>
                     <div className="views">조회수 : {boardView?.views}</div>
                 </div>
-            
+                )}
+
                 {/* 게시글 내용(이미지+텍스트) 구간 */}    
                 <Contents>
                     <div className="image_area">

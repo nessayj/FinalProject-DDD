@@ -293,7 +293,6 @@ const PayTicket = ({data}) => {
     const [showInputInfo, setShowInputInfo] = useState(false);
     const goToInputInfo = () => {
         setShowInputInfo(true);
-        setOpenBooked(false);
     }
 
     const goToSelectDate = () => {
@@ -379,6 +378,7 @@ const PayTicket = ({data}) => {
       const handleOpenModal = () => {
         setModalOpen(true);
       }
+
       // 확인버튼을 누르면 예매페이지로이동
       const [openBooked, setOpenBooked] = useState(false);
       const handleToComplete = async () => {
@@ -420,6 +420,7 @@ const PayTicket = ({data}) => {
         console.log("결제요청 url" + payUrl);
         // 새로운 창에서 페이지 열기
         window.open(payUrl, "_blank");
+        setOpenBooked(true);
       }
 
 

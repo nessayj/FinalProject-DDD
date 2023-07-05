@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profile from "./../../resources/프로필.png";
 import styled from "styled-components";
 import Rating from '@mui/material/Rating';
@@ -6,10 +6,6 @@ import Stack from '@mui/material/Stack';
 import DDDApi from "../../api/DDDApi";
 import AlertModal from "../../util/Alert";
 
-const reviewData = [
-    {id : "kan04152",rating:5,text :"진짜 너무 좋았습니다.",imgUrl : "",booking: true, like :0},
-    {id : "kan04153",rating:5,text :"진짜 너무 좋았습니다.",imgUrl : "",booking: false ,like :3}
-]
 
 const Container = styled.div`
     display: flex;
@@ -83,6 +79,7 @@ const Review = styled.div`
 const ExhibitionReview = ({data}) => {
     const getId = window.localStorage.getItem("memberId");
     const isLogin = window.localStorage.getItem("isLogin");
+    const exhibitNo = data.exhibitNo;
 
     // 별점
     const [stars, setStars] = useState(0);
@@ -97,9 +94,8 @@ const ExhibitionReview = ({data}) => {
     // 확인 모달
     const [openModal, setOpenModal] = useState(false);
 
-    // 백엔드 연결
+    // 한줄평작성
     const handleToComment = async() =>{
-        const exhibitNo = data.exhibitNo;
         const result = await DDDApi.writeExhibitComment(getId, exhibitNo, stars, comment);
         const isOk = result.data;
         if(isOk) {
@@ -111,6 +107,20 @@ const ExhibitionReview = ({data}) => {
               }, 500); // 0.8초 후에 모달을 닫음
             }
     }
+
+    // 한줄평리스트
+    const [commentList, setCommentList] = useState([]);
+    useEffect(() => {
+        const comments = async() => {
+            try{
+                const commentsList = await DDDApi.commentList(exhibitNo);
+                setCommentList(commentsList.data);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        comments();
+    }, []);
 
 
 
@@ -140,17 +150,17 @@ const ExhibitionReview = ({data}) => {
             </div>
         </div>
         <div className="review">
-                {reviewData.map((e,index) => (
-                    <Review key={index}>
-                     <img src={profile} alt="프로필" />
+                {commentList.map((e) => (
+                    <Review key={e.commentNo}>
+                    <img src={e.memberPic} alt="프로필" />
                     <div>
                     <div className="memberInfo">
-                    <div>{e.id}</div>
-                    <div>{e.rating}</div>                      
-                    <div>{e.booking? "예매자":null}</div>
+                    <div>{e.memberName}</div>
+                    <div>별 점 : {e.starRates}</div>                      
+                    {/* <div>{e.booking? "예매자":null}</div> */}
                     </div>
-                    <div>{e.text}</div>
-                    <div>{e.like}</div>
+                    <div>{e.comment}</div>
+                    {/* <div>{e.like}</div> */}
                     </div>  
                     </Review>
                 ))}

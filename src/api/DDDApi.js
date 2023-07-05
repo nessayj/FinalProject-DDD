@@ -116,21 +116,8 @@ const DDDApi = {
 
     // 전시상세 한줄평
     writeExhibitComment: async(getId, exhibitNo, stars, comment) => {
-        
-        console.log("자료들 잘 넘어가고잇어요? : " + getId + exhibitNo + stars + comment);
-        const data = {
-            id: getId,
-            exhibitNo: exhibitNo,
-            starRates: stars,
-            comment: comment
-        };
-        return await axios.post(DDD_DOMAIN + "/exhibitComment/write", data);
+        return await axios.post(DDD_DOMAIN + `/exhibitComment/write?id=${getId}&exhibitNo=${exhibitNo}&starRates=${stars}&comment=${comment}`);
     }
-
-
-
-
-
 
 
 };

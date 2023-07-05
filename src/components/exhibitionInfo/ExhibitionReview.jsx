@@ -84,14 +84,11 @@ const ExhibitionReview = ({data}) => {
     const getId = window.localStorage.getItem("memberId");
     const isLogin = window.localStorage.getItem("isLogin");
 
-    console.log("전시번호 : " + data.exhibitNo);
     // 별점
     const [stars, setStars] = useState(0);
-    console.log("별점 점수 : " + stars);
 
     // 한줄평
     const [comment, setComment] = useState("");
-    console.log("코멘트 : " + comment);
     const handleCommentChange = (e) => {
         const newComment = e.target.value;
         setComment(newComment);
@@ -103,12 +100,16 @@ const ExhibitionReview = ({data}) => {
     // 백엔드 연결
     const handleToComment = async() =>{
         const exhibitNo = data.exhibitNo;
-        console.log("넘어가는 전시번호 : " + exhibitNo);
         const result = await DDDApi.writeExhibitComment(getId, exhibitNo, stars, comment);
         const isOk = result.data;
         if(isOk) {
             setOpenModal(true);
-        }
+            setTimeout(() => {
+                setComment(""); // 한줄평 내용 초기화
+                setOpenModal(false);
+                setStars(0); // 별점 초기화
+              }, 500); // 0.8초 후에 모달을 닫음
+            }
     }
 
 
@@ -131,7 +132,8 @@ const ExhibitionReview = ({data}) => {
             </div>
             <div className="textBox"> 
             <input 
-            type="text" 
+            type="text"
+            value={comment} 
             placeholder="한줄평을 남겨보세요!" 
             onChange={handleCommentChange}/>
             <button onClick={handleToComment} disabled={!isLogin}>입력</button>

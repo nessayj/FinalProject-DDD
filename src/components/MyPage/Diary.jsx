@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { SlArrowRight } from "react-icons/sl";
 import useStore from "../../store";
-import Draggable from 'react-draggable'; 
 
 const DiaryBox = styled.div`
   width: 100%;
@@ -52,34 +51,22 @@ const DiaryImage = styled.div`
     display: none; 
   }
 `;
+const NothingBlock = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+/* background-color: red; */
+img{
+  width: auto;
+  height: 6rem;
+  margin-bottom: 1rem;
+}
 
-// const DiaryImage = styled.div`
-//   background-color: blue;
-//   width: auto;  // 자동 너비 설정
-//   height: 100%;  // 높이를 부모의 100%로 설정
-//   padding: 1rem 0 1rem 1rem;
-//   display: flex;
-//   align-items: center;
-//   overflow-x: auto;  // 가로 스크롤 설정
-//   overflow-y: hidden;
-//   white-space: nowrap;  // 모든 요소를 한 줄로 표시
-//   .testBox{
-//     background-color: orange;
-//     width: 100px;
-//     height: 100px;
-//     .image22 {
-//       min-width: 100px;
-//       object-fit: cover;
-//       object-position: top;
-//       border: 1px solid #bbb;
-//       margin-left: 20px;
-//       background-color: red;
-//     }
-//   }       
-//   /* ::-webkit-scrollbar {
-//     display: none; 
-//   } */
-// `;
+  
+`;
+
 const Diary = () => {
   const { setShowPage, myDiaryData  } = useStore();
   console.log(myDiaryData)
@@ -108,6 +95,8 @@ const Diary = () => {
     };
   }, []);
 
+  const chorong = "https://mblogthumb-phinf.pstatic.net/20121029_83/cho823300_13514752090280QztN_JPEG/naver_com_20121029_104128.jpg?type=w2"
+
   
   return (
     <>
@@ -116,15 +105,20 @@ const Diary = () => {
           className="title"> 다이어리 </p>
                   
 
-            <DiaryImage ref={diaryImageRef}           onClick={() => { setShowPage("다이어리");
-          }}>
-              {
-                myDiaryData.map((item, index) => (
+            <DiaryImage ref={diaryImageRef} onClick={() => { setShowPage("다이어리");}}>
+              { myDiaryData.length > 1 ?
+                ( myDiaryData.map((item, index) => (
                   <div className="textBox" key={index}>
                     {/* <div className="image22"> {item.diaryId}</div> */}
                     <img src={item.exhibitions.imgUrl} alt="exhibition" className="image" />
                   </div>
-                ))
+                ))) :
+                (
+                  <NothingBlock> 
+                    <img src={chorong} alt="" /> 
+                    <div>다녀온 전시회를 평가해주세요!😉</div>
+                  </NothingBlock>
+                )
               }
             </DiaryImage>
       </DiaryBox>

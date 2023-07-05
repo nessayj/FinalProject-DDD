@@ -10,7 +10,7 @@ import MyReservation from "./MyReservation";
 import MyDiary from "./MyDiary";
 import useStore from "../../store";
 import Functions from "../../util/Functions";
-import { MyPageApi } from "../../api/MyPageApi";
+import { MyPageApi, DiaryApi } from "../../api/MyPageApi";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -42,16 +42,27 @@ const Modal = styled.div`
 const MyPageBG = () => {
   let memberId = Functions.getMemberId();
 
-  const { showPage, memberData, setMemberData } = useStore();
+  const { showPage, memberData, setMemberData, myDiaryData, setMyDiaryData } =
+    useStore();
 
   useEffect(() => {
-    const infoFetchDate = async () => {
+    const memberFetchDate = async () => {
       const response = await MyPageApi.info(memberId);
       console.log(response);
       setMemberData(response.data);
-    //   console.log(memberData);
+      //   console.log(memberData);
     };
-    infoFetchDate();
+    memberFetchDate();
+  }, [memberId]);
+
+  useEffect(() => {
+    const diaryFetchDate = async () => {
+      const response = await DiaryApi.info(memberId);
+      const newMyDiaryData = response.data;
+      setMyDiaryData(newMyDiaryData);
+      console.log(newMyDiaryData);
+    };
+    diaryFetchDate();
   }, [memberId]);
 
   return (
@@ -62,7 +73,7 @@ const MyPageBG = () => {
             <>
               <Thumnail />
               <SNSBox />
-              <Introduce memberData={memberData}/>
+              <Introduce />
             </>
           )}
           {showPage === "다이어리" && (

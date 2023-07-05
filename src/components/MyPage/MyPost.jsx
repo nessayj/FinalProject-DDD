@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {dummy_post, dummy_reply} from './Data'
+import useStore from '../../store';
 
 
 
@@ -72,11 +73,14 @@ const Table = styled.table`
 
 
 const Introduce = (props) => {
+
     const slicedPosts = dummy_post.slice(0, 5);
     const slicedReplies = dummy_reply.slice(0, 5);
+
     return (
         <>
             <PostWrap>
+                
                 <div className='title' >내 게시물</div>
                 <div className='moreBox'>
                     <span>내가 쓴 글</span>

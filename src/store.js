@@ -6,9 +6,10 @@ const useStore = create((set) => ({
     setShowPage : (page) => set({showPage : page}),
 
     memberData : [],
-    setMemberData : (data) => set((state) => ({memberData : data}))
+    setMemberData : (data) => set((state) => ({memberData : data})),
 
-
+    myDiaryData : [],
+    setMyDiaryData :(data) => set((state) => ({myDiaryData : data})),
 
 
 }));

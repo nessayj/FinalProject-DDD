@@ -48,8 +48,10 @@ const TextBox = styled.div`
 `;
 
 const Introduce = () => {
-  const { setShowPage, memberData } = useStore();
+  const { setShowPage, memberData, myDiaryData } = useStore();
   const { memberId } = useParams();
+  console.log(myDiaryData)
+  console.log(memberData)
 
   return (
     <>

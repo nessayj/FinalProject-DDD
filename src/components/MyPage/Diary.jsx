@@ -40,7 +40,7 @@ const DiaryBox =styled.div`
 `;
 
 const DiaryImage = styled.div`
-/* background-color: red; */
+background-color: red;
 width: calc(100% - 4rem);
 height: calc(100% - 5.6rem);
 padding: 2rem;

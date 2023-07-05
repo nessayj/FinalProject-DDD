@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { SlArrowRight } from "react-icons/sl";
-import exhibitionData from "../exhibition/exhibitionData";
-import { Link } from "react-router-dom";
 import useStore from "../../store";
 import Draggable from 'react-draggable'; 
 
@@ -12,6 +10,9 @@ const DiaryBox = styled.div`
   /* background-color: red; */
   display: flex;
   flex-direction: column;
+  position: relative;
+  /* overflow: hidden; */
+
   .title {
     display: block;
     align-items: left;
@@ -20,83 +21,111 @@ const DiaryBox = styled.div`
     font-weight: bold;
     cursor: pointer;
   }
-  button {
-    /* position: absolute;
-        top: 67%; */
-    right: 10%;
-    margin: 0.8rem;
-    width: 2rem;
-    height: 2rem;
-    min-width: 35px;
-    min-height: 35px;
-    border-radius: 2rem;
-    text-align: center;
-    font-size: 0.8rem;
-    background-color: #eee;
-    border: 1px solid #aaa;
-    color: #444;
-    cursor: pointer;
-    .handle{
-        width: 500px;
-        height: 100px;
-    }
-  }
 `;
 
 const DiaryImage = styled.div`
-  background-color: blue;
-  width: calc(100% - 1rem);
-  height: calc(100% - 2.6rem);
-  padding: 1rem 0 1rem 1rem;
+  /* background-color: blue; */
+  width: auto;  // 자동 너비 설정
+  height: 100%;  // 높이를 부모의 100%로 설정
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
-  /* .imageContain{
-    width: 200%;
-    height: 100%;
-    background-color: blue;
-    display: flex;
-    overflow: hidden;
-    .testBox {
-        min-width: 8rem;
-        min-height: 2rem;
-        background-color: orange;
-        margin-right: 1rem;
+  overflow-x: auto;  // 가로 스크롤 설정
+  overflow-y: hidden;
+  white-space: nowrap;  // 모든 요소를 한 줄로 표시
+  padding-left: 2rem;
+  cursor: pointer;
+
+  .textBox{
+
+    /* min-width: 140px; */
+
+    /* height: 200px; */
+    margin-right: 1rem;
+    img{
+      width: 8rem;
+    height: 11rem;
+      border: 1px solid #f2f2f2;
+
     }
-
-  } */
-
+  }
+  ::-webkit-scrollbar {
+    display: none; 
+  }
 `;
+
+// const DiaryImage = styled.div`
+//   background-color: blue;
+//   width: auto;  // 자동 너비 설정
+//   height: 100%;  // 높이를 부모의 100%로 설정
+//   padding: 1rem 0 1rem 1rem;
+//   display: flex;
+//   align-items: center;
+//   overflow-x: auto;  // 가로 스크롤 설정
+//   overflow-y: hidden;
+//   white-space: nowrap;  // 모든 요소를 한 줄로 표시
+//   .testBox{
+//     background-color: orange;
+//     width: 100px;
+//     height: 100px;
+//     .image22 {
+//       min-width: 100px;
+//       object-fit: cover;
+//       object-position: top;
+//       border: 1px solid #bbb;
+//       margin-left: 20px;
+//       background-color: red;
+//     }
+//   }       
+//   /* ::-webkit-scrollbar {
+//     display: none; 
+//   } */
+// `;
 const Diary = () => {
   const { setShowPage, myDiaryData  } = useStore();
   console.log(myDiaryData)
 
+  function scrollHorizontally(e) {
+    e.preventDefault();
+    this.scrollLeft += (e.deltaY + e.deltaX) * 0.4;
+  }
   
 
+  const diaryImageRef = useRef();
+
+  useEffect(() => {
+    const scrollElement = diaryImageRef.current;
+
+    if (scrollElement) {
+      scrollElement.addEventListener('wheel', scrollHorizontally);
+
+    }
+
+    return () => {
+      if (scrollElement) {
+        scrollElement.removeEventListener('wheel', scrollHorizontally);
+
+      }
+    };
+  }, []);
+
+  
   return (
     <>
       <DiaryBox>
         <p
-          className="title"
-          onClick={() => {
-            setShowPage("다이어리");
-          }}> 다이어리 </p>
+          className="title"> 다이어리 </p>
                   
 
-            <DiaryImage>
-            <Draggable
-                axis="x"
-                handle=".handle"
-                defaultPosition={{x: 0, y: 0}}
-                position={null}
-                grid={[25, 25]}
-                scale={1}
-                bounds="parent"
-        >
-            <div className="handle">
-                <div>Drag from here</div>
-            </div>
-        </Draggable>
+            <DiaryImage ref={diaryImageRef}           onClick={() => { setShowPage("다이어리");
+          }}>
+              {
+                myDiaryData.map((item, index) => (
+                  <div className="textBox" key={index}>
+                    {/* <div className="image22"> {item.diaryId}</div> */}
+                    <img src={item.exhibitions.imgUrl} alt="exhibition" className="image" />
+                  </div>
+                ))
+              }
             </DiaryImage>
       </DiaryBox>
     </>

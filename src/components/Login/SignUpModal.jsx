@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import LoginApi from "../../api/LoginApi";
+import Backdrop from '@mui/material/Backdrop';
 
 const Container = styled.div`
     position: absolute;
@@ -374,8 +375,10 @@ const onClickSignup = () => {
       
     signupFetchDate();
   };
-
-
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
     return(
         <Container>
@@ -441,6 +444,11 @@ const onClickSignup = () => {
                         style={isEmail && isPwd && isConPw && isName && isTel ?  null : { backgroundColor: '#ddd'}  }
                         disabled={!isEmail || !isPwd || !isConPw || !isName || !isTel}
                     onClick={onClickSignup}>회원가입</button>
+                          <Backdrop
+                                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                                open={open}
+                                onClick={handleClose}
+                            ></Backdrop>
                     <button onClick={props.showLogin}>돌아가기</button>
                 </div>
             </Modal>

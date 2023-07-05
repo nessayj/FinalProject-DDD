@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import profile from "./../../resources/프로필.png";
 import styled from "styled-components";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+
 const reviewData = [
     {id : "kan04152",rating:5,text :"진짜 너무 좋았습니다.",imgUrl : "",booking: true, like :0},
     {id : "kan04153",rating:5,text :"진짜 너무 좋았습니다.",imgUrl : "",booking: false ,like :3}
@@ -9,11 +12,14 @@ const reviewData = [
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     .reviewBox {
-        width: 90%;
+        width: 50%;
         margin: 1em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
        .rating{
         width: 350px;
         display: flex;
@@ -28,6 +34,7 @@ const Container = styled.div`
         input{
             width: 300px;
             height: 30px;
+            border-radius: 0.3rem;
             
         }
         button {
@@ -35,9 +42,11 @@ const Container = styled.div`
             padding:0;
             width: 50px;
             border: none;
+            border-radius: .5rem;
             background-color:#050E3D;
             color:  white;
             font-size: 1rem;
+            font-weight: bold;
             height: 35px;
         }
         &>*{
@@ -70,15 +79,41 @@ const Review = styled.div`
 `;
 
 const ExhibitionReview = ({data}) => {
+    
+    // 별점
+    const [stars, setStars] = useState(0);
+    console.log("별점 점수 : " + stars);
+
+    // 한줄평
+    const [comment, setComment] = useState("");
+    console.log("코멘트 : " + comment);
+    const handleCommentChange = (e) => {
+        const newComment = e.target.value;
+        setComment(newComment);
+      };
+
 
 
     return(
 
         <Container>
         <div className="reviewBox">
-            <div className="rating">★★★★★</div>
+            <div className="rating">
+            <Stack spacing={1}>
+              <Rating 
+              name="half-rating"
+              value={stars}
+              onChange={(e, newValue) => {
+                setStars(newValue);
+              }} 
+              precision={0.5} />
+            </Stack>
+            </div>
             <div className="textBox"> 
-            <input type="text" placeholder="이 전시에 대한 후기를 남겨주세요" />
+            <input 
+            type="text" 
+            placeholder="한줄평을 남겨보세요!" 
+            onChange={handleCommentChange}/>
             <button>입력</button>
             </div>
         </div>

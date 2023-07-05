@@ -6,36 +6,59 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
     padding: 2rem;
     .textBox{
-        width: 90%;
+        width: 100%;
             &>*{
                 margin-top: 1rem;
                 }
     }
     .title {
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: bold;
+        
+    }
+    .period{
+            font-size: 1rem;
+            font-weight: bold;
+            color: #585656;
+        }
+    .price {
+        font-size: 1rem;
+        color: #585656;
     }
     img{
         width: 90%;
     }
+    .imgBox{
+        text-align: center;
+    }
 `;
 const ExhibitionDetails = ({data}) => {
 
+    // 날짜형식 바꾸기
+    
+    const formatDate = (dateStr) => {
+        const year = dateStr.toString().substring(0, 4);
+        const month = dateStr.toString().substring(4, 6);
+        const day = dateStr.toString().substring(6, 8);
+        return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+      };
+    
 
     return(
         <>
         {data &&
         <Container>
         <div className="textBox">
-        <div className="title">전시 상세 설명</div>
-        <div>전시장: {data.exhibitLocation} </div>
-        <div>전시 기간 : {data.startDate} ~ {data.endDate}</div>
-        <div>가격 정보 : {data.exhibitPrice} </div>
+        <div className="title">전시시간 정보</div>
+        <div className="period">{formatDate(data.startDate)} ~ {formatDate(data.endDate)}</div>
+        <div className="price">{data.exhibitPrice} </div>
         </div>
+        <div className="imgBox">
         <img src={data.imgUrl} alt="상세정보" />
+        </div>
+        
         </Container>
         }
         </>

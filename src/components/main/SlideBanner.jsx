@@ -93,22 +93,22 @@ const RollDiv = () => {
       </div>
       <div className="RollDiv">
         <div>
-          {exhibitionList.map((exhibition, index) => (
+          {exhibitionList.map((exhibition) => (
             <a key={exhibition.exhibitNo} href={exhibition.href}>
               <img src={exhibition.imgUrl} alt="전시사진" />
               {exhibition.exhibitName.length > 15 ? (
-      <p>
-        {exhibition.exhibitName.slice(0, 15)}
-        <br />
-        {exhibition.exhibitName.slice(15)}
-      </p>
-    ) : (
-      <p>
-        {exhibition.exhibitName}
-        {exhibition.exhibitName.length < 15 && <br />}
-        &nbsp;
-      </p>
-    )}
+            <p>
+              {exhibition.exhibitName.slice(0, 15)}
+              <br />
+              {exhibition.exhibitName.slice(15)}
+            </p>
+              ) : (
+            <p>
+            {exhibition.exhibitName}
+            {exhibition.exhibitName.length < 15 && <br />}
+            &nbsp;
+          </p>
+          )}
             </a>
           ))}
         </div>

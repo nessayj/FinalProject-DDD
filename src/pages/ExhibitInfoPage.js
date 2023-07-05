@@ -6,8 +6,11 @@ import DetailBox from "../components/exhibitionInfo/DetailBox";
 import ComentBox from "../components/exhibitionInfo/ComentBox";
 import Section from "../components/exhibitionInfo/Section";
 import DDDApi from "../api/DDDApi";
-const Container = styled.div`
+import Header from "../components/header/Header";
 
+
+const Container = styled.div`
+    margin-top: 10rem;
     .header { 
         width: 100%;
         height: 170px;
@@ -40,6 +43,14 @@ const Container = styled.div`
       width: 768px;
     }
   `;
+
+  const HeaderStyle = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  `;
+
 const ExhibitInfoPage = () => {
 
    //클릭한 정보id가져오기 (전시번호 가지고오기)
@@ -70,6 +81,9 @@ const ExhibitInfoPage = () => {
   
     return(
       <Container>
+      <HeaderStyle>
+      <Header/>
+      </HeaderStyle>
        <div className="InfoBox"><DetailBox data ={exData[0]}/></div>
        <div className="coment"><ComentBox/></div>
         <div className="category">

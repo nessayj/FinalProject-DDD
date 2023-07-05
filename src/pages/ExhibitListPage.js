@@ -10,8 +10,10 @@ import { useEffect } from "react";
 import InfoModal from "../components/exhibition/InfoModal";
 import ClickInfoBox from "../components/exhibition/ClickInfoBox";
 import DDDApi from "../api/DDDApi";
-const Container = styled.div`
+import Header from "../components/header/Header";
 
+const Container = styled.div`
+    margin-top: 10rem;
     .header { 
         width: 100%;
         height: 170px;
@@ -63,6 +65,13 @@ const Container = styled.div`
   }
 
 `;
+const HeaderStyle = styled.div`
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+`;
+
 
 
 
@@ -157,7 +166,12 @@ const ExhibitListPage = () => {
    
   }
     return(
+      <>
+      <HeaderStyle>
+      <Header/>
+      </HeaderStyle>
         <Container>
+          
         <div className="apiBox">
             <Carousel data={exhibitionList}/>
         </div>
@@ -182,6 +196,7 @@ const ExhibitListPage = () => {
         </div>
         <InfoModal open={modalOpen} close={closeModal}> <ClickInfoBox data={selectEx}/></InfoModal>
         </Container>
+        </>
     );
 }
 

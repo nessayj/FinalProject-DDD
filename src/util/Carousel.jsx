@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import styled from "styled-components";
 import Button from "./Button";
 import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md"
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -104,6 +105,8 @@ const SliderContainer = styled.div`
 `
 
 const Carousel = ({data}) => {
+    const navigate = useNavigate();
+
     const settings = {
         infinite: true,
         speed: 500,
@@ -113,6 +116,11 @@ const Carousel = ({data}) => {
         prevArrow: <PrevArrow><MdKeyboardArrowLeft/></PrevArrow>,
         nextArrow: <NextArrow><MdKeyboardArrowRight/></NextArrow>
       };
+
+      const handleDetailClick = (exhibitNo) => {
+        navigate(`/exhibitInfo/${exhibitNo}`);
+      };
+      
       return (
         <div>
           <Slider {...settings}>
@@ -124,7 +132,7 @@ const Carousel = ({data}) => {
                 <div className="date">{e.startDate} ~ {e.endDate}</div>
                 <div className="location">{e.exhibitLocation}</div>
                 <div className="btn">
-                <Button onClick={()=>console.log(e.name+ "홈페이지 이동 이벤트 발생")}>HOMEPAGE</Button>
+                <Button onClick={()=>handleDetailClick(e.exhibitNo)}>상세보기</Button>
                   </div>
                 </Container>
             ))}

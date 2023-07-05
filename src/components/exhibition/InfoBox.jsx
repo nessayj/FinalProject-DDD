@@ -2,7 +2,7 @@ import React from "react";
 import styled,{css} from "styled-components";
 const Container = styled.div`
     width: 250px;
-    height: 320px;
+    height: 400px;
     border: 1px solid #eee;
     border-radius: 5px;
     padding: 10px;
@@ -14,25 +14,31 @@ const Container = styled.div`
     .imgBox{
         overflow: hidden;
         width: 200px;
-        height: 300px;
+        height: 320px;
         position: relative;
         background-image: url(${props => props.imgUrl});
         background-repeat: no-repeat;
-        background-size:contain;
-       
+        background-size: cover;
+        margin-bottom: 1rem;
     }
     .textBox{
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
+        height: 100px;
         .title{
-            margin-top: 10px;
+            height: 50px;
             font-size: 1rem;
             font-weight: bold;
         }
         &>*{
-            margin-bottom: 10px;
+            margin-bottom: 0.3rem;
+        }
+        .location{
+            font-size: 0.8rem;
+        }
+        .date{
+            font-size: 0.9rem;
         }
     }
 
@@ -55,8 +61,7 @@ const Container = styled.div`
         position: relative;
         background-image: url(${props => props.imgUrl});
         background-repeat: no-repeat;
-        background-size:cover;
-       
+        background-size: contain;
     }
     .textBox{
         display: inline-block;
@@ -99,9 +104,23 @@ const InfoBox = ({data,selectedOption,onClick}) => {
         <div className="imgBox" >
         </div>
         <div className="textBox">
-            <div className="title">{data.exhibitName}</div>
-            <div>{data.startDate} ~ {data.endDate}</div>
-            <div>{data.exhibitLocation}</div>
+            <div className="title">
+            {data.exhibitName.length > 19 ? (
+            <p>
+              {data.exhibitName.slice(0, 20)}
+              <br />
+              {data.exhibitName.slice(20)}
+            </p>
+              ) : (
+            <p>
+            {data.exhibitName}
+            {data.exhibitName.length < 10 && <br />}
+            &nbsp;
+          </p>
+          )}
+            </div>
+            <div className="date">{data.startDate} ~ {data.endDate}</div>
+            <div className="location">{data.exhibitLocation}</div>
         </div>
         </Container>
     );

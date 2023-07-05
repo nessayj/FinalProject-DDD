@@ -9,9 +9,10 @@ const Container = styled.div`
     padding: 2rem;
     .textBox{
         width: 90%;
+        text-align: center;
         &>*{
-                margin-top: 1rem;
-                }
+            margin-top: 1rem;
+            }
     }
     .title {
         font-size: 2em;
@@ -33,16 +34,13 @@ const Container = styled.div`
 const {kakao} = window;
 
 const ExhibitionLocation = ({data}) => {
-    console.log("x-position : " + data.locationY, "y-position : " + data.locationX);
-    console.log(typeof data.locationX);
-console.log(typeof data.locationY);
-
     useEffect(() => {
     // 지도를 담을 영역의 DOM 레퍼런스
     const container = document.getElementById('map');
     const options = {
         center: new kakao.maps.LatLng(data.locationY, data.locationX), // 지도 중심좌표
-        level: 3
+        // 지도의 레벨(확대, 축소 정도 ->  숫자가 커질수록 해당중심부에서 넓게 보여짐)
+        level: 5
     };
     // 지도 생성 및 객체 리턴
     const map = new kakao.maps.Map(container, options);
@@ -66,9 +64,9 @@ console.log(typeof data.locationY);
         <div className="map" id="map">
         </div>
         <div className="textBox">
-        <div>주소 : {data.exhibitAddr}</div>
-        <div>전화번호 : {data.phoneNo}</div>
-        <div>홈페이지: <a href={data.placeUrl} target="_blank" rel="noopener noreferrer">{data.placeUrl}</a></div>
+        <div>{data.exhibitAddr}</div>
+        <div>{data.phoneNo}</div>
+        <div><a href={data.placeUrl} target="_blank" rel="noopener noreferrer">{data.placeUrl}</a></div>
         </div>
         </Container>
         }

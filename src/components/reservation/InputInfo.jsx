@@ -200,8 +200,10 @@ const InputInfo = ({rootData, reservationData, id, selectedDate}) => {
   };
 
   const handleIncrease = () => {
+    if(quantity <4) {
     setQuantity(quantity + 1);
     setTotalPrice(price * (quantity+1));
+    }
   };
   // 수령방법
   const handleDeliveryMethodChange = (e) => {

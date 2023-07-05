@@ -55,7 +55,7 @@ const Container = styled.div`
       font-size: 1.5rem;
     }
     .date{
-      font-size : 1rem;
+      font-size : 0.8rem;
     }
     .imgBox {
         display: none;
@@ -76,10 +76,25 @@ const ImgBox = styled.div`
 `;
 
 const DetailBox = ({data}) => {
+    const isLogin = window.localStorage.getItem("isLogin");
     const navigate = useNavigate();
     const handleClick = (data) => {
-        navigate(`/reservation/${data.exhibitNo}`)
-    }
+      if (isLogin) {
+        navigate(`/reservation/${data.exhibitNo}`);
+      } else {
+        alert('로그인 후 이용 가능합니다.');
+        navigate("/login");
+      }
+    };
+
+    // 날짜형식 바꾸기
+    
+    const formatDate = (dateStr) => {
+      const year = dateStr.toString().substring(0, 4);
+      const month = dateStr.toString().substring(4, 6);
+      const day = dateStr.toString().substring(6, 8);
+      return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일`;
+    };
 
     return(
         <>
@@ -88,7 +103,7 @@ const DetailBox = ({data}) => {
             <ImgBox imgUrl ={data.imgUrl}/>
             <div className="imgBox" />
             <div className="name">{data.exhibitName}</div>
-            <div className="date">{data.startDate} ~ {data.endDate}</div>
+            <div className="date">{formatDate(data.startDate)} ~ {formatDate(data.endDate)}</div>
             <div className="location">{data.exhibitLocation}</div>
             <div className="btn">
             <Button onClick={()=>handleClick(data)}>예약하기</Button>

@@ -3,6 +3,8 @@ import profile from "./../../resources/프로필.png";
 import styled from "styled-components";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import DDDApi from "../../api/DDDApi";
+import AlertModal from "../../util/Alert";
 
 const reviewData = [
     {id : "kan04152",rating:5,text :"진짜 너무 좋았습니다.",imgUrl : "",booking: true, like :0},
@@ -79,7 +81,10 @@ const Review = styled.div`
 `;
 
 const ExhibitionReview = ({data}) => {
-    
+    const getId = window.localStorage.getItem("memberId");
+    const isLogin = window.localStorage.getItem("isLogin");
+
+    console.log("전시번호 : " + data.exhibitNo);
     // 별점
     const [stars, setStars] = useState(0);
     console.log("별점 점수 : " + stars);
@@ -90,13 +95,28 @@ const ExhibitionReview = ({data}) => {
     const handleCommentChange = (e) => {
         const newComment = e.target.value;
         setComment(newComment);
-      };
+    };
+
+    // 확인 모달
+    const [openModal, setOpenModal] = useState(false);
+
+    // 백엔드 연결
+    const handleToComment = async() =>{
+        const exhibitNo = data.exhibitNo;
+        console.log("넘어가는 전시번호 : " + exhibitNo);
+        const result = await DDDApi.writeExhibitComment(getId, exhibitNo, stars, comment);
+        const isOk = result.data;
+        if(isOk) {
+            setOpenModal(true);
+        }
+    }
 
 
 
     return(
 
         <Container>
+           {openModal && <AlertModal/>} 
         <div className="reviewBox">
             <div className="rating">
             <Stack spacing={1}>
@@ -114,7 +134,7 @@ const ExhibitionReview = ({data}) => {
             type="text" 
             placeholder="한줄평을 남겨보세요!" 
             onChange={handleCommentChange}/>
-            <button>입력</button>
+            <button onClick={handleToComment} disabled={!isLogin}>입력</button>
             </div>
         </div>
         <div className="review">

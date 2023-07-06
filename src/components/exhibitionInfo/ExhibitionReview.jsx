@@ -72,7 +72,7 @@ const Review = styled.div`
     }
     .memberInfo{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
     }
 `;
 
@@ -155,8 +155,8 @@ const ExhibitionReview = ({data}) => {
                     <img src={e.memberPic} alt="프로필" />
                     <div>
                     <div className="memberInfo">
-                    <div>{e.memberName}</div>
-                    <div>별 점 : {e.starRates}</div>                      
+                    <Rating name="read-only" value={e.starRates} readOnly />         
+                    <div>{e.memberName}</div>        
                     {/* <div>{e.booking? "예매자":null}</div> */}
                     </div>
                     <div>{e.comment}</div>

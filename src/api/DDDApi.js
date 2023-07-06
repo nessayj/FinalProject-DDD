@@ -65,6 +65,11 @@ const DDDApi = {
         return await axios.delete(`${DDD_DOMAIN}/comments/commentDelete/${commentNo}`, HEADER); 
     },
 
+    // 마이페이지 내 게시글 조회
+    getBoardsByMember: async (memberId) => {
+        return await axios.get(`${DDD_DOMAIN}/boardList/members/${memberId}/boards`, HEADER);
+    }, 
+
 
     // 로그인
     login : async(email, password) => {

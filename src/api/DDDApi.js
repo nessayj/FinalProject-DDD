@@ -6,6 +6,7 @@ const DDDApi = {
 
     // 자유게시판 카테고리별 리스트 조회 
     getFreeBoardsByCategory : async (category) => {
+        // return await axios.get(`boardList/${category}`, HEADER);
         return await axios.get(`${DDD_DOMAIN}/boardList/${category}`, HEADER);
     },
 
@@ -25,7 +26,7 @@ const DDDApi = {
             image: imageUrl,
             contents: contents
         };
-        return await axios.post(DDD_DOMAIN + "/boardList/write", postObj, HEADER);
+        return await axios.post( DDD_DOMAIN + "/boardList/write", postObj , HEADER);
     },
 
     // 게시글 수정
@@ -73,11 +74,12 @@ const DDDApi = {
             email : email,
             password : password
         };
-        return await axios.post(DDD_DOMAIN + "/login/login", loginCheck, HEADER);
+        return await axios.post( DDD_DOMAIN + "/login/login", loginCheck, HEADER);
     },
     
     // 전시 리스트 출력
     exhibitionList : async() => {
+        // return await axios.get(DDD_DOMAIN + "/exhibitions/dbList");
         return await axios.get(DDD_DOMAIN + "/exhibitions/dbList");
     }, 
     

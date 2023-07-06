@@ -111,7 +111,7 @@ const BoardComment = ({ boardNo, nickname }) => {
   const handleButtonClick = () => {
     postComment();
     alert('댓글 작성이 완료되었습니다 :)');
-    window.location.reload(); // 현재 페이지 새로고침
+    // window.location.reload(); // 현재 페이지 새로고침
   };
 
   const handleInputChange = (e) => {

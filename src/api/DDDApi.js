@@ -69,6 +69,11 @@ const DDDApi = {
     getBoardsByMember: async (memberId) => {
         return await axios.get(`${DDD_DOMAIN}/boardList/members/${memberId}/boards`, HEADER);
     }, 
+    
+    // 마이페이지 내 댓글 조회
+    commentLoad: async (memberId) => {
+        return await axios.get(`${DDD_DOMAIN}/comments/members/${memberId}/comments`, HEADER);
+    },
 
 
     // 로그인

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Thumnail from "./Thumnail";
 import Introduce from "./Introduce";
@@ -40,7 +40,6 @@ const Modal = styled.div`
 `;
 
 const MyPageBG = () => {
-  const [posts, setPosts] = useState([]);
   let memberId = Functions.getMemberId();
 
   const { showPage, memberData, setMemberData, myDiaryData, setMyDiaryData } =
@@ -97,8 +96,7 @@ const MyPageBG = () => {
               <NaviBox />
               <MyPost
               memberId={memberId}
-              posts={posts}
-              setPosts={setPosts}/>
+              />
             </>
           )}
           {showPage === "내정보수정" && (

@@ -189,122 +189,159 @@ const TextWrap = styled.div`
 
 
 const EditBoard = () => {
-    const getId = localStorage.getItem("memberId");
     const navigate = useNavigate();
     const params = useParams();  // url에서 boardNo를 가져오기 위해 uesParams() 사용
     const boardNo = params.no;
 
-    // const getId = window.localStorage.getItem("memberId"); // 로그인한 아이디로 가져오기
-
-    const [boardEdit, setBoardEdit] = useState(null); 
-    
     // 수정할 데이터들
+    const [boardEdit, setBoardEdit] = useState(""); 
     const [category, setCategory] = useState("");
     const [region, setRegion] = useState("");
     const [title, setTitle] = useState("");
-    // const [image, setImage] = useState("");
-    // const [previewUrl, setPreviewUrl] =useState("");
     const [contents, setContents] = useState("");
+    const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
+    const [image, setImage] = useState(null);
 
-    // ** 수정 부분 ** 
-    // 이미지 업로드 초기값 설정
-    const [image, setImage] = useState({ // 이미지 추가부분
-        image_file: null,
-        image_url: null
-      });
-      const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
-      
 
-    // 게시글 상세페이지 본문 불러오기
+    // 게시글 상세페이지 본문 불러오기(조회)
     useEffect(() => {
-    const boardView = async () => {
-        try {
-            const response = await DDDApi.getBoard(boardNo);
-            const data = response.data;
-            setBoardEdit(data);
-            setCategory(data.category);
-            setRegion(data.region);
-            setTitle(data.title);
-            
-            if (data.image && data.image.image_url) {
-                setPreviewUrl(data.image.image_url); // 미리보기 추가
-            }
-            // setPreviewUrl(data.image.image_url); // 미리보기 추가
-            
-            setContents(data.contents);
-            
-            // 데이터 잘 연동되는지 보기
-            console.log(data);
-        } catch (e) {
-            console.log(e);
-        } 
-    };
-
-    boardView();
-}, [boardNo]);
-
+        const boardView = async () => {
+            try {
+                const response = await DDDApi.getBoard(boardNo);
+                setBoardEdit(response.data);
+                setCategory(response.data.category);
+                setRegion(response.data.region);
+                setTitle(response.data.title);
+                setPreviewUrl(response.data.imageUrl);
+                setContents(response.data.contents);
+                
+                // 데이터 잘 연동되는지 보기
+                console.log(response.data);
+            } catch (e) {
+                console.log(e);
+            } 
+        };
     
-    const onClickUpdate = async() => {
-        try {
-            const updateBoard = {
-                category,
-                region,
-                title,
-                contents
-                
-            };
+        boardView();
+    }, [boardNo]);
 
-            // 이미지 파일이 null이 아닌 경우에만 업로드 로직 수행
-            if (image.image_file !== null) {
-                const storageRef = storage.ref();
-                const fileRef = storageRef.child(image.image_file.name);
-
-
-                
-                 // 이미지 업로드
-                await fileRef.put(image.image_file);
-                const imageUrl = await fileRef.getDownloadURL();
-
-
-
-            //      // 업로드된 이미지의 URL을 updateBoard에 추가
-            //     updateBoard.image = {
-            //         image_file: image.image_file.name,
-            //         image_url: imageUrl
-            //     };
-            // }
-
-            // 이미지가 선택된 경우 updateBoard.image를 객체로 생성
-            updateBoard.image = imageUrl ? { image_file: image.image_file.name, image_url: imageUrl } : null;
-            }
-
-            
-
-
-            const response = await DDDApi.editBoards(boardNo, updateBoard);
-
-            if (response.status === 200) {
-                // 성공적인 응답 처리
-                if (response.data === '게시글 수정에 성공했습니다:)') {
-                    navigate(`/boardList/boardView/${boardNo}`);
-                } else {
-                    navigate(`/boardList/boardView/${boardNo}`);
-                    console.log('게시글 수정에 실패했습니다.ㅠㅠ');
-                    }
-                } else {
-                    console.log('게시글 수정 중 오류가 발생했습니다.', response.statusText);
-                    }
-                } catch (error) {
-                console.log("게시글 수정 중 오류가 발생했습니다." + error);
-                console.log(typeof category);
-                console.log(typeof region);
-                console.log(typeof title);
-                console.log(typeof contents);
-                console.log(image);
-                console.log(error.response);
+    // 이미지 미리보기 용 상태 변수
+    const previewImage = (e) => {
+        e.preventDefault();
+        const fileReader = new FileReader();
+        // if (e.target.file[0]) {
+            if (e.target.file && e.target.files.length > 0) { // 이미지를 선택하지 않았을 때
+                fileReader.readAsDataURL(e.target.files[0]);
+                fileReader.onload = () => {
+                    setPreviewUrl(fileReader.result);
+                    setImage({
+                      image_file: e.target.files[0],
+                      previewUrl: fileReader.result
+                    });
+                  };
                 }
-            };
-    
+              };
+
+//     if (e.target.files[0]) {
+//         fileReader.readAsDataURL(e.target.files[0]);
+//       } else {
+//         setPreviewUrl("");
+//         setImage((prevState) => ({
+//           ...prevState,
+//           image_file: null,
+//           image_url: null
+//         }));
+//       }
+//   };
+
+    // 조회된 상태에서 수정 후 값 저장
+    const onClickUpdate = async() => {
+        
+        if (title.length === 0 || category.length === 0 || contents === 0) {
+            alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+        
+        } else {
+            // 이미지가 선택된 경우에만 업로드 로직 수행
+            let imageUrl = previewUrl;
+            if (image && image.image_file) {
+            const storageRef = storage.ref();
+            const fileRef = storageRef.child(image.image_file.name);
+            
+            try {
+                await fileRef.put(image.image_file.name);
+                // let url = await fileRef.getDownloadURL();
+                imageUrl = await fileRef.getDownloadURL();
+                console.log("파일경로확인" + imageUrl);
+            } catch (error) { // 추가 부분
+            console.log("이미지 업로드 중 오류가 발생했습니다.", error);
+            }
+        }
+
+                // 수정할 데이터 추가
+                const updateBoard = {
+                    title: title,
+                    category: category,
+                    region: region,
+                    contents: contents,
+                    image: imageUrl,
+                };
+
+                try {
+                    const response = await DDDApi.editBoards(boardNo, updateBoard);
+                    if (response.status === 200) {
+                      if (response.data === "게시글 수정에 성공했습니다:)") {
+                        navigate(`/boardList/boardView/${boardNo}`);
+                      } else {
+                        navigate(`/boardList/boardView/${boardNo}`);
+                        console.log("게시글 수정에 실패했습니다.ㅠㅠ");
+                      }
+                    } else {
+                      console.log("게시글 수정 중 오류가 발생했습니다.", response.statusText);
+                    }
+                  } catch (error) {
+                    console.log("게시글 수정 중 오류가 발생했습니다.", error);
+                    console.log(typeof category);
+                    console.log(typeof region);
+                    console.log(typeof title);
+                    console.log(typeof contents);
+                    console.log(image);
+                    console.log(error.response);
+                  }
+                }
+              };
+
+        //         const response = await DDDApi.editBoards(boardNo, updateBoard);
+        //         if (response.status === 200) {
+        //             // 성공적인 응답 처리
+        //             if (response.data === '게시글 수정에 성공했습니다:)') {
+        //                 navigate(`/boardList/boardView/${boardNo}`);
+        //             } else {
+        //                 navigate(`/boardList/boardView/${boardNo}`);
+        //                 console.log('게시글 수정에 실패했습니다.ㅠㅠ');
+        //                 }
+        //             } else {
+        //                 console.log('게시글 수정 중 오류가 발생했습니다.', response.statusText);
+        //                 }
+        //             } catch (error) {
+        //             console.log("게시글 수정 중 오류가 발생했습니다." + error);
+        //             console.log(typeof category);
+        //             console.log(typeof region);
+        //             console.log(typeof title);
+        //             console.log(typeof contents);
+        //             console.log(image);
+        //             console.log(error.response);
+        //             }
+        //         }
+        //     }
+        // };
+
+
+                
+            
+    // 이미지가 선택된 경우 updateBoard.image를 객체로 생성
+    // updateBoard.image = imageUrl ? { image_file: image.image_file.name, image_url: imageUrl } : null;
+    // }
+
 
     // 게시판 카테고리 선택 
     const onChangerCtg = (e) => {
@@ -321,142 +358,125 @@ const EditBoard = () => {
         setTitle(e.target.value);
     }
 
-    // 이미지 미리보기
-    const previewImage = (e) => {
-        e.preventDefault();
+    // 수정 취소하기(뒤로가기)
+    const onClickBack = () => {
+        navigate(-1);
+    }
 
-    const fileReader = new FileReader();
+    // 이미지 삭제 함수
+    const deleteImage = () => {
+        setPreviewUrl(""); // 이미지 미리보기 초기화
+        setImage(null); // 이미지 상태 초기화
+    };
+
     
-
-    //   fileReader.onload = () => {
-    //     setPreviewUrl(fileReader.result);
-    //     setImage({
-    //       image_file: e.target.files[0],
-    //       previewUrl: fileReader.result,
-    //     });
-    //   };
-    // };
-
-    fileReader.onload = () => {
-        setPreviewUrl(fileReader.result);
-        setImage(prevState => ({
-          ...prevState,
-          image_file: e.target.files[0],
-          image_url: fileReader.result,
-        }));
-    };
-
-      if (e.target.files[0]) {
-        fileReader.readAsDataURL(e.target.files[0]);
-      }
-    };
-
-
-    useEffect(() => { // 추가사항
-        if (boardEdit && boardEdit.image && boardEdit.image.image_url) {
-            setPreviewUrl(boardEdit.image.image_url);
-        }
-        }, [boardEdit]);
+    
     
 
 
+        // const handleImageUpload = (urls) => {
+        //     const imgUrl = urls;
+        //     setPost((prevPost) => ({ ...prevPost, imgUrl }));
+        //     setPreviewImgUrl(urls.split(","));
+        // };
 
-    return(
+    return (
         <EditWrap>
             <Section className="section">
             <div className="board_header">
-                    <div className="boardtitle">
-                        <h2>자유 게시판</h2>  
-                    </div>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <th colSpan={4}>게시물 수정</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <select name="category" value={category} onChange={onChangerCtg}>
-                                    <option value="">카테고리</option>
-                                    <option value="추천수다">추천수다</option>
-                                    <option value="질문하기">질문하기</option>
-                                    <option value="동행찾기">동행찾기</option>
-                                </select>
-                            </td>
+                <div className="boardtitle">
+                <h2>자유 게시판</h2>
+                </div>
+                <table>
+                <tbody>
+                    <tr>
+                        <th colSpan={4}>게시물 수정</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="category" value={category} onChange={onChangerCtg}>
+                            <option value="">카테고리</option>
+                            <option value="추천수다">추천수다</option>
+                            <option value="질문하기">질문하기</option>
+                            <option value="동행찾기">동행찾기</option>
+                            </select>
+                        </td>
 
-                            <td>
-                                <select name="category" value={region} onChange={onChangeregion}>
-                                    <option value="">지역선택</option>
-                                    <option value="서울">서울</option>
-                                    <option value="경기/인천">경기/인천</option>
-                                    <option value="충청">충청</option>
-                                    <option value="강원">강원</option>
-                                    <option value="경상도">경상도</option>
-                                    <option value="전라/제주">전라/제주</option>
-                                </select>
-                            </td>
-
-                            <td>
-                                <input className="input_title" 
-                                type='text' 
-                                placeholder='제목을 입력해주세요 :)' 
-                                value={title}
-                                onChange={onChangeTitle} 
-                                name="title" 
-                                maxLength={40}/>
-                            </td>
-                            <td>
-                                <div className="imguploaderBtn">
-                                    <button>
-                                    <input type="file" 
-                                    id="file-upload" 
-                                    onChange={previewImage} 
-                                    style={{display: "none"}}/>
-                                    <label htmlFor="file-upload">사진 업로드</label>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table> 
-
+                        <td>
+                            <select name="category" value={region} onChange={onChangeregion}>
+                            <option value="">지역선택</option>
+                            <option value="서울">서울</option>
+                            <option value="경기">경기</option>
+                            <option value="인천">인천</option>
+                            <option value="충청">충청</option>
+                            <option value="강원">강원</option>
+                            <option value="경상도">경상도</option>
+                            <option value="전라도">전라도</option>
+                            <option value="제주">제주</option>
+                            </select>
+                        </td>
+        
+                        <td>
+                            <input
+                            className="input_title"
+                            type="text"
+                            placeholder="제목을 입력해주세요 :)"
+                            value={title}
+                            onChange={onChangeTitle}
+                            name="title"
+                            maxLength={40}
+                            />
+                        </td>
+        
+                        <td>
+                            <div className="imguploaderBtn">
+                            <button>
+                                <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }} />
+                                <label htmlFor="file-upload">사진 업로드</label>
+                            </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+        
                 {/* 이미지 미리보기 및 업로드 */}
                 <div className="addBoard-wrapper">
-                    {/* {previewUrl && <img src={previewUrl} alt="Preview" />}
-                    {!previewUrl &&  boardEdit && boardEdit.image && (
-                        <img src ={boardEdit.image.image_url} alt="Upload" />
-                    )} */}
-
-
-                    {boardEdit && boardEdit.image && boardEdit.image.image_url ? (
-                        <img src={boardEdit.image.image_url} alt="업로드 이미지" />
-                    ) : (
-                        boardEdit && (
-                        <img src={postimage} alt="기본 이미지" />
-                        )
+                    {previewUrl && <img src={previewUrl} alt="Preview" />}
+                    {!previewUrl && boardEdit && boardEdit.imageUrl && (
+                    <img src={boardEdit.imageUrl} alt="Upload" />
                     )}
+                    {image && image.previewUrl && (
+                    <img src={image.previewUrl} alt="Uploaded" />
+                    )}
+                    </div>
                 </div>
-
-          </div>
-            </Section>        
+            </Section>
             <TextWrap>
-            <CKEditor 
-            editor={ClassicEditor} 
-            data={contents} 
-            onChange={(event, editor) => {
-                const data = editor.getData();
-                setContents(data);
-            }}
-            config={{
-            placeholder: '자유롭게 작성 가능합니다.'
-            }}
-            />
+                <CKEditor
+                    editor={ClassicEditor}
+                    data={contents}
+                    onChange={(event, editor) => {
+                    const data = editor.getData();
+                    setContents(data);
+                    }}
+                    config={{
+                    placeholder: '자유롭게 작성 가능합니다.',
+                    }}
+                />
             </TextWrap>
-
+        
             <div className="btn_area">
-                <button className="editbtn" onClick={onClickUpdate}>수정하기</button>
-                <Link to={`/boardList`}><button className="backbtn">취소하기</button></Link>
-                </div>
+            <button className="editbtn" onClick={onClickUpdate}>수정하기</button>
+            {boardEdit && boardEdit.image && ( // 추가사항 ** 
+                <button className="backbtn" onClick={deleteImage}>이미지 삭제</button>
+            )}
+            <button className="backbtn" onClick={onClickBack}>취소하기</button>
+            {/* <Link to="/boardList"><button className="backbtn" onClick={onClickBack}>취소하기</button></Link> */}
+            </div>
         </EditWrap>
-    );
-}
+    )
+};
+
 export default EditBoard;
+    

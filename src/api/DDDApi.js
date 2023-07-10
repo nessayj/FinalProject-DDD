@@ -1,3 +1,4 @@
+import { AutoFixOffSharp } from "@mui/icons-material";
 import axios from "axios";
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const HEADER = {"Content-type" : "application/json"}
@@ -43,12 +44,19 @@ const DDDApi = {
 
 
     // 자유게시판 검색 목록 출력
+    // searchListLoad: async (keyword) => {
+    //     const url = `${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`;
+    //     console.log(url); // 해당 페이지 url 확인 위해
+    //     return await axios.get(url, HEADER);
+    //     // return await axios.get(DDD_DOMAIN + `/boardList/searchList?keyword=${keyword}`, HEADER); 
+    // },
+
+    // 자유게시판 검색 목록 출력(2차 수정)
     searchListLoad: async (keyword) => {
-        const url = `${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`;
-        console.log(url); // 해당 페이지 url 확인 위해
-        return await axios.get(url, HEADER);
-        // return await axios.get(DDD_DOMAIN + `/boardList/searchList?keyword=${keyword}`, HEADER); 
+        return await axios.get(`${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`, HEADER);
     },
+
+
 
     // 댓글 작성
     commentWrite: async (comment, getId, boardNo) => {

@@ -20,7 +20,7 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       background-color: #F4F8FF;
-      flex-direction: row;
+      /* flex-direction: row; */
       border-radius: 20px;
       margin: 1rem;
       padding: 1em;
@@ -35,8 +35,8 @@ const Wrapper = styled.div`
         }
 
         .user {
-            font-size: 13px;
-            margin-left: .5em;
+          font-size: 13px;
+          margin-left: .5em;
         }  
         
         .writedate {
@@ -46,8 +46,9 @@ const Wrapper = styled.div`
 
         .input-wrapper {
             display: flex;
+            flex-direction: row; 
             align-items: center;
-            margin-left: auto;
+            margin-left: auto; 
             flex-grow: 1;
             margin: 12px;
             /* margin-right: 1em;  */
@@ -64,7 +65,9 @@ const Wrapper = styled.div`
       
           
         }
-        .sendComment {
+        .sendComment { 
+          display: flex;
+
     
           button {
               padding: 0.5em 1em;
@@ -131,8 +134,8 @@ const BoardComment = ({ boardNo, nickname }) => {
           <div className="commentbox">
             {/* <img src={profile} alt="프로필 이미지" /> */}
             <img src={profile} alt="댓글 프로필 이미지" />
-            
-              <div className="user">{nickname}</div>
+
+            <div className="user">{nickname}</div>
             
             <div className="input-wrapper">
               <input

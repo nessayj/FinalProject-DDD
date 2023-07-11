@@ -13,7 +13,7 @@ import AdminMain from './components/admin/AdminMain';
 import PopupModal from './components/Login/PopupModal';
 import WriteBoard from './pages/WriteBoard';
 import EditBoard from './pages/EditBoard';
-
+import VerifyEmail from './components/Login/VerifyEmail';
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
         <Route path="/boardList/boardView/:no/editBoard" element={<EditBoard/>}/>
         <Route path="/mypage/:memberId" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
+        <Route path="/login/check-email-token" element={<VerifyEmail/>}/>
       </Routes>
       </Router>
   );

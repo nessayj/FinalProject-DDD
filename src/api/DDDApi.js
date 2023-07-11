@@ -30,9 +30,22 @@ const DDDApi = {
         return await axios.post( DDD_DOMAIN + "/boardList/write", postObj , HEADER);
     },
 
+    // // 게시글 수정 1차 작업
+    // editBoards: async (boardNo, updateBoard) => {
+    //     return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, updateBoard, HEADER);
+    // },
+
     // 게시글 수정
-    editBoards: async (boardNo, updateBoard) => {
-        return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, updateBoard, HEADER);
+    editBoards: async (boardNo, category, region, title, contents, imageUrl) => {
+        const editObj = {
+            boardNo: boardNo,
+            category: category,
+            region: region,
+            title: title,
+            contents: contents,
+            image: imageUrl
+        };
+        return await axios.post(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, editObj, HEADER);
     },
 
 

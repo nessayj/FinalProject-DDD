@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import DDDApi from '../api/DDDApi';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import postimage from "../resources/게시판기본이미지.gif";
 import { storage } from '../util/FireBase';
 
 
@@ -200,7 +198,7 @@ const EditBoard = () => {
     const [title, setTitle] = useState("");
     const [contents, setContents] = useState("");
     const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
-    const [image, setImage] = useState(null);
+    const [originImg, setOriginImg] = useState(null);
 
 
     // 게시글 상세페이지 본문 불러오기(조회)
@@ -212,25 +210,36 @@ const EditBoard = () => {
                 setCategory(response.data.category);
                 setRegion(response.data.region);
                 setTitle(response.data.title);
-                setPreviewUrl(response.data.imageUrl);
+                // setPreviewUrl(response.data.imageUrl);
                 setContents(response.data.contents);
-                
-                // 데이터 잘 연동되는지 보기
-                console.log(response.data);
-            } catch (e) {
-                console.log(e);
-            } 
-        };
-    
-        boardView();
-    }, [boardNo]);
+            if (response.data.imageUrl) {
+                setOriginImg(response.data.imageUrl); // 이미지 변경 안할 시 기존 연동된 이미지 유지 ** 
+                if(response.data.imageUrl.includes(",")) {
+                    setPreviewUrl(response.data.imageUrl.split(","));
+                } else {
+                setPreviewUrl(response.data.imageUrl);
+            }
+        }
+            
+            // 데이터 잘 연동되는지 보기
+            console.log(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    boardView();
+}, [boardNo]);
+
+
 
     // 이미지 미리보기 용 상태 변수
+    const [image, setImage] = useState(null);
+
     const previewImage = (e) => {
         e.preventDefault();
         const fileReader = new FileReader();
-        // if (e.target.file[0]) {
-            if (e.target.file && e.target.files.length > 0) { // 이미지를 선택하지 않았을 때
+        if (e.target.files && e.target.files.length > 0) { // 이미지를 선택하지 않았을 때
                 fileReader.readAsDataURL(e.target.files[0]);
                 fileReader.onload = () => {
                     setPreviewUrl(fileReader.result);
@@ -238,83 +247,85 @@ const EditBoard = () => {
                       image_file: e.target.files[0],
                       previewUrl: fileReader.result
                     });
-                  };
-                }
-              };
-
-//     if (e.target.files[0]) {
-//         fileReader.readAsDataURL(e.target.files[0]);
-//       } else {
-//         setPreviewUrl("");
-//         setImage((prevState) => ({
-//           ...prevState,
-//           image_file: null,
-//           image_url: null
-//         }));
-//       }
-//   };
+                };
+            }
+        };
 
     // 조회된 상태에서 수정 후 값 저장
-    const onClickUpdate = async() => {
-        
-        if (title.length === 0 || category.length === 0 || contents === 0) {
-            alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
-        
+    const onClickUpdate = async () => {
+        // if (title.length === 0 || category.length === 0 || contents === "") {
+        if (title === boardEdit.title && contents === boardEdit.contents) { //제목 or 내용 무조건 수정하도록 조건식 적용
+          alert("제목 또는 내용을 수정해 주세요.");
         } else {
-            // 이미지가 선택된 경우에만 업로드 로직 수행
-            let imageUrl = previewUrl;
-            if (image && image.image_file) {
+          let imageUrl = previewUrl;
+          if (image && image.image_file) {
             const storageRef = storage.ref();
             const fileRef = storageRef.child(image.image_file.name);
-            
             try {
-                await fileRef.put(image.image_file.name);
-                // let url = await fileRef.getDownloadURL();
-                imageUrl = await fileRef.getDownloadURL();
-                console.log("파일경로확인" + imageUrl);
-            } catch (error) { // 추가 부분
-            console.log("이미지 업로드 중 오류가 발생했습니다.", error);
+              await fileRef.put(image.image_file);
+              let url = await fileRef.getDownloadURL();
+              console.log("파일경로확인", url);
+              if (!url) {
+                url = previewUrl;
+                console.log("프리뷰사진그대로 들어오는지", url);
+              }
+              imageUrl = url;
+            } catch (error) {
+              console.log("게시글 수정 중 오류가 발생했습니다." + error);
+              console.log(typeof category);
+              console.log(typeof region);
+              console.log(typeof title);
+              console.log(typeof contents);
+              console.log(image);
+              console.log(error.response);
             }
+          }
+      
+          try {
+            const response = await DDDApi.editBoards(boardNo, category, region, title, contents, imageUrl);
+      
+            if (response.status === 200) {
+              if (response.data) {
+                alert("게시글 수정이 완료되었습니다.");
+                navigate(`/boardList/boardView/${boardNo}`);
+              } else {
+                alert("게시글 수정에 실패했습니다.ㅠㅠ");
+              }
+            } 
+          } catch (error) {
+            console.log("게시글 수정 중 오류가 발생했습니다." + error);
+          }
         }
+      };
 
-                // 수정할 데이터 추가
-                const updateBoard = {
-                    title: title,
-                    category: category,
-                    region: region,
-                    contents: contents,
-                    image: imageUrl,
-                };
+        
+        // if (title.length === 0 || category.length === 0 || contents === 0) {
+        //     alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
+        
+        // } else {
+        //     // 이미지가 선택된 경우에만 업로드 로직 수행
+        //     let imageUrl = previewUrl;
+        //     if (image && image.image_file) {
+        //     const storageRef = storage.ref();
+        //     const fileRef = storageRef.child(image.image_file.name);
+            
+        //     try {
+        //         await fileRef.put(image.image_file);
+        //         let url = await fileRef.getDownloadURL();
+        //         console.log("파일경로확인" + url);
+        //         if(!url) {
+        //             url = previewUrl;
+        //             console.log("프리뷰사진그대로 들어오는지 " + url);
+        //         }
+        //         imageUrl = url;
 
-                try {
-                    const response = await DDDApi.editBoards(boardNo, updateBoard);
-                    if (response.status === 200) {
-                      if (response.data === "게시글 수정에 성공했습니다:)") {
-                        navigate(`/boardList/boardView/${boardNo}`);
-                      } else {
-                        navigate(`/boardList/boardView/${boardNo}`);
-                        console.log("게시글 수정에 실패했습니다.ㅠㅠ");
-                      }
-                    } else {
-                      console.log("게시글 수정 중 오류가 발생했습니다.", response.statusText);
-                    }
-                  } catch (error) {
-                    console.log("게시글 수정 중 오류가 발생했습니다.", error);
-                    console.log(typeof category);
-                    console.log(typeof region);
-                    console.log(typeof title);
-                    console.log(typeof contents);
-                    console.log(image);
-                    console.log(error.response);
-                  }
-                }
-              };
 
-        //         const response = await DDDApi.editBoards(boardNo, updateBoard);
+        //         const response = await DDDApi.editBoards(boardNo, category, region, title, contents, imageUrl);
         //         if (response.status === 200) {
         //             // 성공적인 응답 처리
         //             if (response.data === '게시글 수정에 성공했습니다:)') {
         //                 navigate(`/boardList/boardView/${boardNo}`);
+        //                 alert("게시글 수정이 완료되었습니다.");
         //             } else {
         //                 navigate(`/boardList/boardView/${boardNo}`);
         //                 console.log('게시글 수정에 실패했습니다.ㅠㅠ');
@@ -335,13 +346,8 @@ const EditBoard = () => {
         //     }
         // };
 
-
-                
-            
-    // 이미지가 선택된 경우 updateBoard.image를 객체로 생성
-    // updateBoard.image = imageUrl ? { image_file: image.image_file.name, image_url: imageUrl } : null;
-    // }
-
+        
+        
 
     // 게시판 카테고리 선택 
     const onChangerCtg = (e) => {
@@ -363,22 +369,7 @@ const EditBoard = () => {
         navigate(-1);
     }
 
-    // 이미지 삭제 함수
-    const deleteImage = () => {
-        setPreviewUrl(""); // 이미지 미리보기 초기화
-        setImage(null); // 이미지 상태 초기화
-    };
 
-    
-    
-    
-
-
-        // const handleImageUpload = (urls) => {
-        //     const imgUrl = urls;
-        //     setPost((prevPost) => ({ ...prevPost, imgUrl }));
-        //     setPreviewImgUrl(urls.split(","));
-        // };
 
     return (
         <EditWrap>
@@ -442,15 +433,16 @@ const EditBoard = () => {
         
                 {/* 이미지 미리보기 및 업로드 */}
                 <div className="addBoard-wrapper">
-                    {previewUrl && <img src={previewUrl} alt="Preview" />}
-                    {!previewUrl && boardEdit && boardEdit.imageUrl && (
-                    <img src={boardEdit.imageUrl} alt="Upload" />
-                    )}
-                    {image && image.previewUrl && (
-                    <img src={image.previewUrl} alt="Uploaded" />
-                    )}
-                    </div>
+                    {/* {previewUrl && <img src={previewUrl} alt="Preview" />} 제외 */} 
+
+                    {previewUrl && !image?.previewUrl && <img src={previewUrl} alt="Preview" />}
+                    {!previewUrl && boardEdit && boardEdit.image && (
+                    <img src={boardEdit.image} alt="Upload" />
+                )}
+                    {/* {image && image.previewUrl && <img src={image.previewUrl} alt="Uploaded" />} 제외 */}
+                    {image?.previewUrl && <img src={image.previewUrl} alt="Uploaded" />}
                 </div>
+            </div>
             </Section>
             <TextWrap>
                 <CKEditor
@@ -458,21 +450,13 @@ const EditBoard = () => {
                     data={contents}
                     onChange={(event, editor) => {
                     const data = editor.getData();
-                    setContents(data);
-                    }}
-                    config={{
-                    placeholder: '자유롭게 작성 가능합니다.',
-                    }}
-                />
+                    setContents(data);}}
+                    config={{placeholder: '자유롭게 작성 가능합니다.',}}/>
             </TextWrap>
         
             <div className="btn_area">
             <button className="editbtn" onClick={onClickUpdate}>수정하기</button>
-            {boardEdit && boardEdit.image && ( // 추가사항 ** 
-                <button className="backbtn" onClick={deleteImage}>이미지 삭제</button>
-            )}
             <button className="backbtn" onClick={onClickBack}>취소하기</button>
-            {/* <Link to="/boardList"><button className="backbtn" onClick={onClickBack}>취소하기</button></Link> */}
             </div>
         </EditWrap>
     )

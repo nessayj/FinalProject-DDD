@@ -5,7 +5,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import profile from "./../resources/기본프로필.png"; // 추가 ** 
 import postimage from "./../resources/게시판기본이미지.gif";
 import BoardComment from "../components/Board/BoardComment";
 import DDDApi from "../api/DDDApi";
@@ -288,7 +287,7 @@ const BoardView = () => {
     const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴(게시판목록)
     const [commentList, setCommentList] = useState([]); // 댓글용 추가
     const [nickname, setNickname] = useState(""); // 닉네임 초기값 수정
-
+    const [test, setTest] = useState(""); // 기본 이미지 불러오기용
 
     
 
@@ -365,6 +364,7 @@ const BoardView = () => {
                     setCommentList(commentData);
                     const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
                     setNickname(rsp.data.nickname);
+                    setTest(rsp.data.profileImg); // 기본프로필 이미지 불러오기
 
     
                     if (boardView && boardView.views != null) {
@@ -520,11 +520,13 @@ const BoardView = () => {
                 {/* 작성자 정보 구간 */} 
                 {boardView && (
                 <div className="authorinfo">
-                    {boardView?.profileImg ? (
+                    {/* {boardView?.profileImg ? (
                     <img src={boardView?.profileImg} alt="프로필 이미지" />
                     ) : (
                     <img src={profile} alt="기본 이미지" />        
-                    )}
+                    )} */}
+                    {/*기본 프로필 이미지*/}
+                    <img src={test} alt="프로필"/> 
                     <div className="author">{boardView?.author}</div>
                 </div>
                 )}
@@ -539,7 +541,6 @@ const BoardView = () => {
 
                 {/* 게시글 내용(이미지+텍스트) 구간 */}    
                 <Contents>
-                    {/* <div className="image_area"> */}
                     {boardView && (
                     <div className="image_area">
                         {boardView.image ? (
@@ -549,7 +550,6 @@ const BoardView = () => {
                         )}
                     </div>
                     )}
-                {/* </div> */}
                     <div className="text_area">{boardView?.contents}</div>
                 </Contents>
             </div>

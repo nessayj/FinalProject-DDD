@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     min-height: 50%;
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
+    border: 1px solid #8a8a8a;
     border-radius: 12px;
     padding: 15px 18px;
     margin-top: 20px;
@@ -56,7 +56,7 @@ const Wrapper = styled.div`
       
           input {
             padding: 0.5em;
-            border: 1px solid #ccc;
+            border: 1px solid #8a8a8a;
             border-radius: 5px;
             margin-right: 0.5em;
             flex-grow: 1;

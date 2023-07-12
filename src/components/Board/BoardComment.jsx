@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import profile from "./../../resources/라이언프로필.png"
 import DDDApi from "../../api/DDDApi";
 import { useNavigate } from "react-router-dom";
+import BoardAlert from "../../util/BoardAlert";
 
 const Wrapper = styled.div`
-    /* padding : 0 !important;*/
     width: 92%;
     min-height: 50%;
     display: flex;
@@ -35,8 +35,8 @@ const Wrapper = styled.div`
         }
 
         .user {
-          font-size: 13px;
-          margin-left: .5em;
+          font-size: .8em;
+
         }  
         
         .writedate {
@@ -89,32 +89,60 @@ const Wrapper = styled.div`
   }
 `;
 
-const BoardComment = ({ boardNo, nickname }) => {
+const BoardComment = ({ boardNo, nickname, test,commentList, setCommentList, regComment, setRegComment }) => {
 
   const getId = window.localStorage.getItem("memberId");
   const isLogin = window.localStorage.getItem("isLogin");
   const [comment, setComment] = useState(""); // 댓글 목록 상태 관리(입력 배열값)
+  const [sendModal, setSendModal] = useState(false); // 전송 모달용 표시
   const navigate = useNavigate();
   
+  // 댓글 작성 함수
   const postComment = async () => {
-      
-      // 새로운 댓글을 작성하는 API 호출
+    try {
       const response = await DDDApi.commentWrite(comment, getId, boardNo);
       console.log("성공내용 : " + response.data);
+  
+      if (response.status === 200) {
+      // 댓글 등록 후 commentList 업데이트
+      setRegComment(true); // 댓글 업데이트 함수 호출
+      console.log("regComment");
+      setSendModal(true);
+      setComment("") // 댓글 입력값 초기화
 
+      // 게시글 및 댓글 내용 다시 불러오기
+      // boardViewLoad(); 
+      
+      setTimeout(() => {
+        setSendModal(false);
+      }, 2000);
+    }
+  } catch (error) {
+        console.log(error);
+    }
   };
 
+  useEffect(() => {
+    if (regComment) {
+      setRegComment(false); // 상태 초기화
+    }
+  }, [regComment]);
+
+
+
+
+    
 
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       postComment();
+      setSendModal(true);
     }
   };
 
   const handleButtonClick = () => {
     postComment();
-    alert('댓글 작성이 완료되었습니다 :)');
-    // window.location.reload(); // 현재 페이지 새로고침
+    setSendModal(true);
   };
 
   const handleInputChange = (e) => {
@@ -125,16 +153,15 @@ const BoardComment = ({ boardNo, nickname }) => {
     if (!isLogin) {
       alert('로그인 후 작성이 가능합니다');
       navigate('/login')
+    }
   }
-}
 
 
     return (
         <Wrapper>
+          {sendModal && <BoardAlert message="등록이 완료되었습니다." />}
           <div className="commentbox">
-            {/* <img src={profile} alt="프로필 이미지" /> */}
             <img src={profile} alt="댓글 프로필 이미지" />
-
             <div className="user">{nickname}</div>
             
             <div className="input-wrapper">
@@ -151,7 +178,7 @@ const BoardComment = ({ boardNo, nickname }) => {
               </div>
             </div>
           </div>
-    </Wrapper>
+        </Wrapper>
       );
     };
 

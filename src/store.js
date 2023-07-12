@@ -11,6 +11,14 @@ const useStore = create((set) => ({
     myDiaryData : [],
     setMyDiaryData :(data) => set((state) => ({myDiaryData : data})),
 
+    stealExhibition : [],
+    setStealExhibition : (data) => set((state) => ({stealExhibition : data})),
+
+    ratings: {},
+    setRating: (index, rating) => set(state => ({ ratings: { ...state.ratings, [index]: rating }})),
+    
+    comments: {},
+    setComment: (index, comment) => set(state => ({ comments: { ...state.comments, [index]: comment }})),
 
 }));
 

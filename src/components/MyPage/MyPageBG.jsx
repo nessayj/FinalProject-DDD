@@ -11,6 +11,9 @@ import MyDiary from "./MyDiary";
 import useStore from "../../store";
 import Functions from "../../util/Functions";
 import { MyPageApi, DiaryApi } from "../../api/MyPageApi";
+import EditThumnail from "./EditThumnail";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -40,59 +43,63 @@ const Modal = styled.div`
 `;
 
 const MyPageBG = () => {
-  let memberId = Functions.getMemberId();
+  // let memberId = Functions.getMemberId();
+  const { memberId } = useParams();
 
-  const { showPage, memberData, setMemberData, myDiaryData, setMyDiaryData } =
-    useStore();
+  const { memberData, showPage, setMemberData,  setMyDiaryData, myDiaryData} = useStore();
+  // const [ myDiaryData,  ] = useState();
 
   useEffect(() => {
     const memberFetchDate = async () => {
       const response = await MyPageApi.info(memberId);
       console.log(response);
       setMemberData(response.data);
-      //   console.log(memberData);
+      console.log('함수안에있음 콘솔 : ' + memberData)
     };
     memberFetchDate();
-  }, [memberId]);
+  }, [showPage, memberId]);
 
   useEffect(() => {
     const diaryFetchDate = async () => {
       const response = await DiaryApi.info(memberId);
       const newMyDiaryData = response.data;
       setMyDiaryData(newMyDiaryData);
-      console.log(newMyDiaryData);
+      // console.log(newMyDiaryData);
     };
     diaryFetchDate();
-  }, [memberId]);
+  }, [showPage, memberId]);
+
+  console.log('밖에있는 콘솔 : ' + memberData)
+  console.log('밖에있는 콘솔 : ' + myDiaryData)
 
   return (
     <>
       <Container style={showPage === "다이어리" ? { height: "auto" } : null}>
         <Modal>
-          {showPage === "마이페이지" && (
+          {showPage === "마이페이지" &&  (
             <>
-              <Thumnail />
+              {memberData && <Thumnail memberData={memberData}/>}
               <SNSBox />
-              <Introduce />
+              {memberData && <Introduce memberData={memberData} myDiaryData={myDiaryData}/>} 
             </>
           )}
           {showPage === "다이어리" && (
             <>
-              <Thumnail />
+              {memberData && <Thumnail memberData={memberData}/>}
               <NaviBox />
               <MyDiary />
             </>
           )}
           {showPage === "예약관리" && (
             <>
-              <Thumnail />
+              {memberData && <Thumnail memberData={memberData}/>}
               <NaviBox />
               <MyReservation />
             </>
           )}
           {showPage === "내게시물" && (
             <>
-              <Thumnail />
+              {memberData && <Thumnail memberData={memberData}/>}
               <NaviBox />
               <MyPost
               memberId={memberId}
@@ -101,13 +108,15 @@ const MyPageBG = () => {
           )}
           {showPage === "내정보수정" && (
             <>
-              <Thumnail />
+              {memberData && <EditThumnail memberData={memberData}/>}
               <NaviBox />
               <EditMemberMain />
             </>
           )}
         </Modal>
       </Container>
+
+      
     </>
   );
 };

@@ -51,7 +51,7 @@ const Login = () => {
 
     useEffect(() => {
     if (isLogin) {
-        navigate(`/mypage/${memberId}`);
+        navigate(`/api/mypage/${memberId}`);
     }
     }, [isLogin, navigate]);
 

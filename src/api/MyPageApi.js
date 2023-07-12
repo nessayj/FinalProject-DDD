@@ -76,7 +76,7 @@ const DiaryApi = {
     info: async (memberId) => {
         try {
         Functions.setAuthorizationHeader(); // 헤더에 토큰을 넣는 함수
-        return await axios.get(`${DDD_DOMAIN}/mypage/${memberId}/diary`); // 요청 리턴
+        return await axios.get(`${DDD_DOMAIN}/api/mypage/${memberId}/diary`); // 요청 리턴
         } catch (error) {
         console.log("error입니다. ");
         }

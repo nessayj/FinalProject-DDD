@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import LoginApi from "../../api/LoginApi";
 import Backdrop from '@mui/material/Backdrop';
+import { useEffect } from "react";
 
 const Container = styled.div`
     position: absolute;
@@ -273,7 +274,7 @@ const SignUpModal = (props) => {
         } else {
             setPwdMessage("올바른 형식 입니다.");
             setIsPwd(true);
-            console.log(`isPwd값 : ${isPwd} `)
+            // console.log(`isPwd값 : ${isPwd} `)
         }
     }
     // 비밀번호 확인 체크 
@@ -349,10 +350,8 @@ const SignUpModal = (props) => {
     //     }
     //     return false;
     // };
-
     
-const onClickSignup = () => {
-    const signupFetchDate = async () => {
+    const onClickSignup = async () => {
         console.log('클릭됨');
         try {
           const response = await LoginApi.signup(
@@ -363,18 +362,30 @@ const onClickSignup = () => {
             inputTel,
             inputIns
           );
+          
           console.log('리스폰 데이터', response);
           if (response.status === 200) {
             console.log('회원가입이 되었습니다.');
-            props.showPopup()
+    
+            // // Send confirmation email
+            // try {
+            //   const emailRsp = await LoginApi.emailSend(inputEmail);
+            //   console.log(emailRsp);
+            //   if(emailRsp.data) 
+            //   console.log('이메일 발송 완료');
+            // } catch (e) {
+            //   console.log(e)
+            // }
+    
+            props.showPopup();
           }
         } catch (e) {
           console.log(e);
         }
-      };
-      
-    signupFetchDate();
-  };
+    };
+    
+
+
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);

@@ -9,20 +9,14 @@ import PopupModal from "../components/Login/PopupModal";
 import MyPageBG from "../components/MyPage/MyPageBG";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import useStore from "../store";
 
 const Container = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: white;
 `;
-const BlackBG = styled.div`
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: .6;
-`;
+
 
 const Login = () => {
     // isLogin 상태 가져오기
@@ -70,7 +64,7 @@ const Login = () => {
                 <div>
                     <Container>
                         <BGItmes/>
-                        <BlackBG/>
+                        {/* <BlackBG/> */}
                     </Container>
                     {showLogin === 0 && <LoginModal showPw={handleLoginModal1} showAgree={handleLoginModal2} />}
                     {showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0} />}

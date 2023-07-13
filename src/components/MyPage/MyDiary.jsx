@@ -178,7 +178,7 @@ const MyDiary = () => {
 
   // console.log(myDiaryData)
   useEffect(() => {
-    const infoFetchDate = async () => {
+    const infoFetchData = async () => {
       const response = await DiaryApi.info(memberId);
       const newMyDiaryData = response.data;
       setMyDiaryData(newMyDiaryData);
@@ -193,7 +193,7 @@ const MyDiary = () => {
       setRatingStar(stars);
       console.log(ratingStar);
     };
-    infoFetchDate();
+    infoFetchData();
   }, [memberId]);
 
   useEffect(() => {

@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import { storage } from "../util/FireBase";
 import { Link, useNavigate } from 'react-router-dom';
 import DDDApi from '../api/DDDApi';
+import ConfirmModal from '../util/ConfirmModal';
+import { FcOk } from 'react-icons/fc'; 
+
 
 
 const Wrap = styled.div`
@@ -157,16 +160,6 @@ const Section = styled.div`
             
 
             button {
-                /* font-size: 14px;
-                cursor: pointer;
-                border-radius: 10px;
-                border: none;
-                color: white;
-                background-color: #050E3D;
-                transition: all .1s ease-in;
-                font-weight: bold;
-                float: left;
-                padding: .5em 1.3em; */
                 font-size: 14px;
                 cursor: pointer;
                 border-radius: 10px;
@@ -203,6 +196,14 @@ const TextWrap = styled.div`
 
 // `;
 
+const ModalBodyStyle = styled.div`
+.warn{
+    font-size: 0.8rem;
+    color: red;
+    line-height: 1.2;
+}
+`;
+
 
 const WriteBoard = () => {
     const isLogin = window.localStorage.getItem("isLogin");
@@ -217,10 +218,16 @@ const WriteBoard = () => {
     
      
     // 이미지 업로드 초기값 설정
+    // const [image, setImage] = useState({ // 이미지 추가부분
+    //   image_file: null,
+    //   image_url: null
+    // });
+
     const [image, setImage] = useState({ // 이미지 추가부분
       image_file: null,
       image_url: null
     });
+
     const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
     const [contents, setContents] = useState("");
 
@@ -290,7 +297,7 @@ const WriteBoard = () => {
       return;
     }
     
-    let imageUrl = "/default-profile.png"; // 이미지 URL 초기값
+    let imageUrl = "https://firebasestorage.googleapis.com/v0/b/real-final-project-ddd.appspot.com/o/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84.png?alt=media&token=7d664c18-037d-4e60-9415-32f26fb0d430"; // 이미지 URL 초기값
     
     if (image && image.image_file) {
       // 이미지가 선택된 경우에만 업로드 로직 수행
@@ -322,7 +329,8 @@ const WriteBoard = () => {
       console.log("Result Number:", linkNo);
       
       if (linkNo) {
-        alert("문의글 작성이 완료되었습니다.");
+        // alert("문의글 작성이 완료되었습니다.");
+        setOpenModal(true);  // 모달창 열기
         navigate('/boardList');
       }
     } catch (error) {
@@ -330,6 +338,30 @@ const WriteBoard = () => {
       alert("문의글 작성 중 오류가 발생했습니다.");
     }
   };
+
+  // 작성완료 모달
+  const [openModal, setOpenModal] = useState(false);
+
+
+  const props ={
+    title: "게시글작성",
+    body: (
+    <ModalBodyStyle>
+        작성한 게시물이 등록되었습니다. <br />
+        <div className="checkBox">
+        {/* <label>
+            <input type="checkbox" onChange={handleCheckChange} />
+        </label> */}
+        </div>
+    </ModalBodyStyle>
+    ),
+    button: [
+    <button onClick={onClickSave}>확인</button>
+    ],
+    icon: <FcOk/>
+  }
+
+
   
 
     return (
@@ -400,6 +432,12 @@ const WriteBoard = () => {
               <div className="addBoard-wrapper">
                 {previewUrl && <img src={previewUrl} alt="Preview" />}
                 {image.image_url && <img src={image.image_url} alt="Uploaded" />} 
+
+                {/* {image.image_url ? (
+                  <img src={image.image_url} alt="Uploaded" />
+                ) : (
+                  <img src="/default-image.png" alt="Default" />
+                )} */}
                 </div>
           </div>
 
@@ -425,6 +463,7 @@ const WriteBoard = () => {
                 <button className="cancelbtn">취소하기</button>
             </Link>
         </div>
+        {openModal && <ConfirmModal props={props}/>}
       </Wrap>
   );
 };

@@ -7,7 +7,7 @@ import ForgotPwModal from "../components/Login/ForgotPwModal";
 import Agreement from "../components/Login/Agreement";
 import PopupModal from "../components/Login/PopupModal";
 import MyPageBG from "../components/MyPage/MyPageBG";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import useStore from "../store";
 
@@ -48,19 +48,22 @@ const Login = () => {
       };
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-    if (isLogin) {
-        navigate(`/api/mypage/${memberId}`);
-    }
-    }, [isLogin, navigate]);
+    if (isLogin && !location.pathname.startsWith(`/login/`)) {
+        navigate(`/api/mypage/${memberId}`); // 마이페이지가 아니면 마이페이지 이동 // 뒤로가기 누르면 로그인으로 이동 // 
+    }else if (isLogin && location.pathname.startsWith(`/login`)) 
+        navigate('/') 
+
+}, [isLogin, navigate]);
 
 
 
     return(
         <>
 
-            {!isLogin && (
+            {/* {!isLogin && ( */}
                 <div>
                     <Container>
                         <BGItmes/>
@@ -72,8 +75,7 @@ const Login = () => {
                     {showLogin === 3 && <SignUpModal showLogin={handleLoginModal0} showPopup={handleLoginModal4} />}
                     {showLogin === 4 && <PopupModal showLogin={handleLoginModal0} />}
                 </div>
-            )
-            }
+            {/* )} */}
 
         </>
     )

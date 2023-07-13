@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import LoginApi from "../../api/LoginApi";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../store";
+import { MyPageApi } from "../../api/MyPageApi";
 
 const Container = styled.div`
   position: absolute;
@@ -121,7 +123,7 @@ const Modal = styled.div`
 `;
 
 const LoginModal = (props) => {
-  window.localStorage.setItem("accessToken", "");
+  const { profileImg, setProfileImg } = useStore();
 
   const naviagte = useNavigate("");
 
@@ -149,17 +151,20 @@ const LoginModal = (props) => {
         const accessToken = response.data.accessToken;
         const memberId = response.data.memberId;
 
+        const memberInfoResponse = await MyPageApi.info(memberId);
+        setProfileImg(memberInfoResponse.data.profileImg)
+        // console.log(profileImg)
         // localStorage에 email, token 저장
-        window.localStorage.setItem("storageEmail", email);
-        window.localStorage.setItem("accessToken", accessToken);
+        // window.localStorage.setItem("storageEmail", email);
+        // window.localStorage.setItem("accessToken", accessToken);
         window.localStorage.setItem("memberId", memberId);
         // console.log(window.localStorage.getItem('accessToken'));
-        window.localStorage.getItem('storageEmail')
-        console.log('데이터로 받은 멤버아이디' + window.localStorage.getItem('storageEmail'))
-        console.log('데이터로 받은 멤버아이디' + memberId)
+        // window.localStorage.getItem('storageEmail')
+        // console.log('데이터로 받은 멤버아이디' + window.localStorage.getItem('storageEmail'))
+        // console.log('데이터로 받은 멤버아이디' + memberId)
         //console.log("getitem으로 받은 멤버아이디" + window.localStorage.getItem("memberId"));
 
-        if (response.status === 200) {
+        if (response.status === 200 && setProfileImg) {
                 naviagte("/");
                 // 로그인 시, isLogin true 반환
                 window.localStorage.setItem("isLogin", true);

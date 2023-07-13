@@ -6,7 +6,8 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import profileImage from '../../resources/기본프로필.png';
 import { DiaryApi } from '../../api/MyPageApi';
-import { debounce } from 'lodash';
+import Backdrop from '@mui/material/Backdrop';
+import AlertModal from '../../util/Alert';
 
 const Container = styled.div`
     width: 100%;
@@ -30,7 +31,7 @@ const Container = styled.div`
 `;
 const CardItem = styled.div`
     width: 240px;
-    height: 340px;  
+    height: 360px;  
     /* width: 300px;
     height: 400px;   */
     background-color: white;
@@ -56,10 +57,12 @@ const CardItem = styled.div`
         padding: 1rem;
         .title{
             font-size: 0.8rem;
-            width: 90%;
+            width: 70%;
+            height: 2rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            /* background-color: aliceblue; */
+            /* background-color: red; */
+            
         }
         .rateStar{
             margin-bottom: 0.6rem;
@@ -153,29 +156,6 @@ const RateDiary = () => {
         infoFetchDate();
       }, []);
 
-
-
-    //   const onChangeText = (e, index) => {
-    //     let updatedComments = [...inputComment];
-    //     updatedComments[index] = e.target.value;
-    //     setInputComment(updatedComments);
-    //   };
-
-    //   const onChangeStar = (e, index) => {
-    //     const newRatingStar = [...ratingStar];
-    //     console.log(newRatingStar);
-    //     console.log("처음 복사한 배열 " + newRatingStar.rateStar);
-    //     newRatingStar[index] = e.target.value;
-    //     console.log("타겟 밸류" + newRatingStar);
-    
-    //     setRatingStar(newRatingStar);
-    //     console.log("마지막 저장값 " + ratingStar);
-    //   };
-
-    //   const diaryByExhibitNo = myDiaryData.reduce((acc, diary) => {
-    //     acc[diary.exhibitions.exhibitNo] = diary;
-    //     return acc;
-    //   }, {});
     
 // ratingStar와 inputComment 상태 정의
 const [ratingStar, setRatingStar] = useState(Array(stealExhibition.length).fill(0));
@@ -203,7 +183,16 @@ const diaryByExhibitNo = myDiaryData.reduce((acc, diary) => {
 
   // `stealExhibition`에서 `myDiaryData.exhibitions.exhibitNo`와 일치하는 항목을 제거
 const filteredExhibition = stealExhibition.filter(item => !diaryByExhibitNo.hasOwnProperty(item.exhibitNo));
-console.log(diaryByExhibitNo)
+
+  // backdrop openState
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+    setTimeout(handleClose, 1000)
+  };
 
 
     return (
@@ -241,6 +230,7 @@ console.log(diaryByExhibitNo)
                                 inputComment[index]
                               );
                               if (response.status === 200) {
+                                handleOpen();
                                 console.log("Diary successfully saved!");
                               } else {
                                 console.error("Failed to save diary");
@@ -254,6 +244,18 @@ console.log(diaryByExhibitNo)
                 );
                 })}
             </div>
+            <Backdrop
+            sx={{
+                backgroundColor: 'transparent', // 배경색을 투명으로 설정
+                color: '#fff',
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                top: 0, // 팝업을 상단에 위치
+            }}
+            open={open}
+            onClick={handleClose}
+            >
+                <AlertModal />
+            </Backdrop>
         </Container>
         </>
     );

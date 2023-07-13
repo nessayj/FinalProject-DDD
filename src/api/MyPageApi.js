@@ -8,7 +8,7 @@ const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const updateProfileField = async (memberId, fieldName, fieldValue) => {
     try {
       Functions.setAuthorizationHeader(); // 헤더에 토큰을 넣는 함수
-      return await axios.post(`${DDD_DOMAIN}/mypage/${memberId}/${fieldName}`, {
+      return await axios.post(`${DDD_DOMAIN}/api/mypage/${memberId}/${fieldName}`, {
         id: memberId,
         ...fieldValue
       });
@@ -36,7 +36,7 @@ const MyPageApi = {
         const nicknamedupCheck = {
         nickname: inputNick,
         }
-        return await axios.post( `${DDD_DOMAIN}/mypage/${memberId}/nicknamedup`, nicknamedupCheck);
+        return await axios.post( `${DDD_DOMAIN}/api/mypage/${memberId}/nicknamedup`, nicknamedupCheck);
     },
 
     // 닉네임 변경
@@ -94,13 +94,27 @@ const DiaryApi = {
                 rateStar : ratingStarValue
             }
             console.log(ratingStarValue)
-            return await axios.post(`${DDD_DOMAIN}/mypage/${memberId}/diary/${exhibitNo}`, diaryCheck)
+            return await axios.post(`${DDD_DOMAIN}/api/mypage/${memberId}/diary/${exhibitNo}`, diaryCheck)
 
         } catch (error) {
             console.log("error입니다. ");
             
         }
     }, 
+
+    delete : async(memberId, exhibitNo) => {
+        try{
+            const deleteCheck = {
+                memberId : memberId,
+                exhibitionNo : exhibitNo,
+            }
+            return await axios.post(`${DDD_DOMAIN}/api/mypage/${memberId}/diary/${exhibitNo}/delete`, deleteCheck)
+
+        } catch (error) {
+            console.log("error입니다. ");
+            
+        }
+    }
 }
 
 export {MyPageApi, DiaryApi};

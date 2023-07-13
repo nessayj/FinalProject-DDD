@@ -9,6 +9,9 @@ import { DiaryApi } from "../../api/MyPageApi";
 import Functions from "../../util/Functions";
 import Backdrop from "@mui/material/Backdrop";
 import AlertModal from "../../util/Alert";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import { useParams } from "react-router-dom";
 
 // ====== data 확인하기 =====
 
@@ -128,9 +131,15 @@ const CardItem = styled.div`
     }
     .test {
       /* background-color: red; */
+      .deletIconBox{
+        /* background-color: blue; */
+        position: relative;
+        top: 2%;
+        left: 0%;
+      }
       .icon {
         position: relative;
-        top: 66%;
+        top: 45%;
         left: -50%;
         /* background-color: blue; */
         width: 2.5rem;
@@ -151,7 +160,8 @@ const MyDiary = () => {
   const iconUrl =
     "https://mblogthumb-phinf.pstatic.net/MjAyMTA0MDJfMTcx/MDAxNjE3MzQ3NzMzOTUz.Kg3bldcTe5OAoi3I-vBycTDxifu54mD9r3p-j7BNgKgg.Qunwt7JDPPe2v5HCeIlR55TtLn1HtVDhflu3wgLdY5Mg.JPEG.se413496/FB%EF%BC%BFIMG%EF%BC%BF1601135114387.jpg?type=w800";
 
-  const memberId = Functions.getMemberId();
+  // const memberId = Functions.getMemberId();
+  const {memberId} = useParams();
   const [myDiaryData, setMyDiaryData] = useState([]);
   const [countDiary, setCountDiary] = useState();
   const [mention, setMention] = useState("");
@@ -209,6 +219,8 @@ const MyDiary = () => {
     console.log("마지막 저장값 " + ratingStar);
   };
 
+
+  // backdrop openState
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -263,6 +275,24 @@ const MyDiary = () => {
                   />
 
                   <div className="test">
+                    <Tooltip title="Delete">
+                      <IconButton className="deletIconBox" onClick={()=>{
+                          (async () => {
+                            const response = await DiaryApi.delete(
+                              memberId,
+                              item.exhibitions.exhibitNo,
+                            );
+                            if (response.status === 200) {
+                              handleOpen();
+                              console.log("Diary successfully saved!");
+                            } else {
+                              console.error("Failed to save diary");
+                            }
+                          })();
+                       }}>
+                        <DeleteIcon fontSize='small' />
+                      </IconButton>
+                    </Tooltip>
                     <div
                       className="icon"
                       onClick={() => {
@@ -281,13 +311,14 @@ const MyDiary = () => {
                         })();
                       }}
                     >
+
                       <Tooltip title="저장" arrow placement="top-end">
                         <img src={iconUrl} alt="profile icon" onClick={handleOpen} />
 
                       </Tooltip>
                       <Backdrop
                         sx={{
-                            backgroundColor: 'transparent', // 배경색을 녹색으로 설정
+                            backgroundColor: 'transparent', // 배경색을 투명으로 설정
                             color: '#fff',
                             zIndex: (theme) => theme.zIndex.drawer + 1,
                             top: 0, // 팝업을 상단에 위치

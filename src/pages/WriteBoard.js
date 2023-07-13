@@ -350,9 +350,9 @@ const WriteBoard = () => {
                       <option value={category} selected>
                         카테고리
                       </option>
-                      <option value="추천수다">추천수다</option>
-                      <option value="질문하기">질문하기</option>
-                      <option value="동행찾기">동행찾기</option>
+                      <option value="Recommend">추천수다</option>
+                      <option value="Question">질문하기</option>
+                      <option value="DDDmate">동행찾기</option>
                     </select>
                   </td>
 

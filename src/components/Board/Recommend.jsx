@@ -155,9 +155,11 @@ const Recommend = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const category = '추천수다'; // 조회할 카테고리 이름 지정
+            const category = 'Recommend'; // 조회할 카테고리 이름 지정
             const response = await DDDApi.getFreeBoardsByCategory(category);
-            setBoardList(response.data);
+            const filteredData = response.data.filter(boardList => boardList.category === category); 
+            // setBoardList(response.data);
+            setBoardList(filteredData);
             console.log(response.data);
           } catch (error) {
             console.log(error);
@@ -213,7 +215,8 @@ const Recommend = () => {
                   currentPageData.map((boardList) => (
                     <tr key={boardList.boardNo}>
                       <td>{boardList.boardNo}</td>
-                      <td>{boardList.category}</td>
+                      <td>{boardList.category === 'Recommend' ? '추천수다' : boardList.category}</td>
+                      {/* <td>{boardList.category}</td> */}
                       <td>
                         <Link
                           to={`/boardList/boardView/${boardList.boardNo}`}

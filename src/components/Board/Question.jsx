@@ -153,9 +153,11 @@ const Question = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const category = '질문하기'; // 조회할 카테고리 이름 지정
+            const category = 'Question'; // 조회할 카테고리 이름 지정
             const response = await DDDApi.getFreeBoardsByCategory(category);
-            setBoardList(response.data);
+            const filteredData = response.data.filter(boardList => boardList.category === category); 
+            // setBoardList(response.data);
+            setBoardList(filteredData);
             console.log(response.data);
           } catch (error) {
             console.log(error);
@@ -164,7 +166,7 @@ const Question = () => {
     
         fetchData();
       }, []);
-
+      
 
     // 비로그인 시 작성페이지 접근 제한
     const onClickToWrite = () => {
@@ -211,7 +213,8 @@ const Question = () => {
                   currentPageData.map((boardList) => (
                     <tr key={boardList.boardNo}>
                       <td>{boardList.boardNo}</td>
-                      <td>{boardList.category}</td>
+                      <td>{boardList.category === 'Question' ? '질문하기' : boardList.category}</td>
+                      {/* <td>{boardList.category}</td> */}
                       <td>
                         <Link
                           to={`/boardList/boardView/${boardList.boardNo}`}

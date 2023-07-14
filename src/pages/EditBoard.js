@@ -5,6 +5,9 @@ import DDDApi from '../api/DDDApi';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { storage } from '../util/FireBase';
+import ConfirmModal from "../util/ConfirmModal";
+import { FcEditImage } from "react-icons/fc";
+import { Backdrop } from "@mui/material";
 
 
 const EditWrap = styled.div`
@@ -135,42 +138,41 @@ const Section = styled.div`
             justify-content: center;
             width: 100%;
         }
-        .imgcontainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 12px;
-        }
+    .imgcontainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 12px;
+    }
 
-        img {
-            width: 50%; /* 이미지의 최대 가로 너비를 설정 */
-            height: 50%; /* 이미지의 최대 세로 높이를 설정 */
-            /* object-fit: cover; */
-            /* align-self: flex-start; */
-        }
+    img {
+        width: 50%; /* 이미지의 최대 가로 너비를 설정 */
+        height: 50%; /* 이미지의 최대 세로 높이를 설정 */
+        /* object-fit: cover; */
+        /* align-self: flex-start; */
+    }
 
-        .imguploaderBtn {
+    .imguploaderBtn {
 
-            button {
-                font-size: 14px;
-                cursor: pointer;
-                border-radius: 10px;
-                border: none;
-                color: white;
-                background-color: #050E3D;
-                transition: all .1s ease-in;
-                font-weight: bold;
-                float: left;
-                padding: .5em 1.3em;
-                margin-bottom: .5em;
+        button {
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            color: white;
+            background-color: #050E3D;
+            transition: all .1s ease-in;
+            font-weight: bold;
+            float: left;
+            padding: .5em 1.3em;
+            margin-bottom: .5em;
 
-                &:hover {background-color: #5EADF7; color: #F4F8FF;}
-                }
-        }
+            &:hover {background-color: #5EADF7; color: #F4F8FF;}
+            }
+    }
     
-
-
 `;
+
 
 const TextWrap = styled.div`
     width: 95%;
@@ -183,6 +185,17 @@ const TextWrap = styled.div`
 
   .ck-editor__main {padding: 0;}
 `;
+
+const ModalBodyStyle = styled.div`
+    .success{
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #2B5EC2;
+        line-height: 1.2;
+    }
+`;
+
+
 
 
 
@@ -286,8 +299,7 @@ const EditBoard = () => {
       
             if (response.status === 200) {
               if (response.data) {
-                alert("게시글 수정이 완료되었습니다.");
-                navigate(`/boardList/boardView/${boardNo}`);
+                setShowModal(true);
               } else {
                 alert("게시글 수정에 실패했습니다.ㅠㅠ");
               }
@@ -297,54 +309,6 @@ const EditBoard = () => {
           }
         }
       };
-
-        
-        // if (title.length === 0 || category.length === 0 || contents === 0) {
-        //     alert("제목, 카테고리, 내용을 모두 입력해 주세요.");
-        
-        // } else {
-        //     // 이미지가 선택된 경우에만 업로드 로직 수행
-        //     let imageUrl = previewUrl;
-        //     if (image && image.image_file) {
-        //     const storageRef = storage.ref();
-        //     const fileRef = storageRef.child(image.image_file.name);
-            
-        //     try {
-        //         await fileRef.put(image.image_file);
-        //         let url = await fileRef.getDownloadURL();
-        //         console.log("파일경로확인" + url);
-        //         if(!url) {
-        //             url = previewUrl;
-        //             console.log("프리뷰사진그대로 들어오는지 " + url);
-        //         }
-        //         imageUrl = url;
-
-
-        //         const response = await DDDApi.editBoards(boardNo, category, region, title, contents, imageUrl);
-        //         if (response.status === 200) {
-        //             // 성공적인 응답 처리
-        //             if (response.data === '게시글 수정에 성공했습니다:)') {
-        //                 navigate(`/boardList/boardView/${boardNo}`);
-        //                 alert("게시글 수정이 완료되었습니다.");
-        //             } else {
-        //                 navigate(`/boardList/boardView/${boardNo}`);
-        //                 console.log('게시글 수정에 실패했습니다.ㅠㅠ');
-        //                 }
-        //             } else {
-        //                 console.log('게시글 수정 중 오류가 발생했습니다.', response.statusText);
-        //                 }
-        //             } catch (error) {
-        //             console.log("게시글 수정 중 오류가 발생했습니다." + error);
-        //             console.log(typeof category);
-        //             console.log(typeof region);
-        //             console.log(typeof title);
-        //             console.log(typeof contents);
-        //             console.log(image);
-        //             console.log(error.response);
-        //             }
-        //         }
-        //     }
-        // };
 
         
         
@@ -369,9 +333,36 @@ const EditBoard = () => {
         navigate(-1);
     }
 
+    const editConfirmClick = () => {
+        setShowModal(false);
+        navigate(`/boardList/boardView/${boardNo}`)
+    }
+
+    // 게시글 수정용 모달 & 함수
+    const [showModal, setShowModal] = useState(false);
+
+    const editProps  ={
+        title: "게시글 수정",
+        body: (
+        <ModalBodyStyle>
+            작성하신 게시글로 수정하시겠습니까?  <br />
+            <div className="success">
+                최종 작성하신 내용으로 등록됩니다. <br/>
+            </div>
+        </ModalBodyStyle>
+        ),
+        button: [
+        // <button style = {{ backgroundColor : '#2B5EC2' }} onClick={()=> onClickUpdate(boardNo)}>확인</button>,
+        <button style = {{ backgroundColor : '#2B5EC2' }} onClick={editConfirmClick}>확인</button>,
+        <button style = {{ backgroundColor : '#2B5EC2' }} onClick={()=> setShowModal(false)}>취소</button>
+        ],
+        icon: <FcEditImage/>
+        }
+
 
 
     return (
+        <>
         <EditWrap>
             <Section className="section">
             <div className="board_header">
@@ -459,6 +450,21 @@ const EditBoard = () => {
             <button className="backbtn" onClick={onClickBack}>취소하기</button>
             </div>
         </EditWrap>
+
+        <Backdrop
+            sx={{
+                backgroundColor: 'rgb(0,0,0,0.5)', // 배경색을 투명
+                opacity:'0.5',
+                color: 'black',
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                top: 0, // 팝업을 상단에 위치
+            }}
+            open={showModal}
+            onClick={()=>{setShowModal(false) }}
+            >
+            {showModal && <ConfirmModal props={editProps}/>}
+        </Backdrop>
+        </>
     )
 };
 

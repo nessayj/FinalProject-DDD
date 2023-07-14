@@ -100,8 +100,8 @@ const SelectBox = styled.select`
     }
 
     @media (max-width: 768px) {
-    margin-right: 8em;
-    
+        margin-left: 10em;
+        /* margin-right: 8em; */
     }
  `; 
 
@@ -137,8 +137,10 @@ const Card = () => {
             const response = await DDDApi.getFreeBoardsByCategory(category);
             const filteredData = response.data.filter(boardList => boardList.category === category); 
             // setBoardList(response.data);
+            // setFilterRegion(response.data); // 지역별 필터링 추가
             setBoardList(filteredData);
-            console.log(response.data);
+            setFilterRegion(filteredData); // 지역별 필터링 추가
+            console.log(filteredData);
           } catch (error) {
             console.log(error);
           }

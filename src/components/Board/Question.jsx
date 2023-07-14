@@ -112,6 +112,10 @@ const Section = styled.div`
             font-weight: bold;
         }
     }
+
+    @media (max-width: 768px) {
+    width: 768px;
+  }
 `;
 
 

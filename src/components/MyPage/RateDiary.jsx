@@ -15,30 +15,50 @@ const Container = styled.div`
     /* background-color: aqua; */
     display: flex;
     justify-content: center;
+    @media (max-width: 768px) {
+
+    }
     .wrap{
         /* background-color: blue; */
         padding: 2rem;
         width: 70%;
-        min-width: 980px;
+        min-width: 250px;
         height: 100%;
         display: grid;
         grid-template-columns: repeat(4, 1fr); // 3개의 카드 아이템을 행으로 정렬
+        /* grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); */
+
         grid-gap: 4rem 2rem; // 카드 아이템들 사이의 간격
         justify-items: center; // 아이템들을 행 방향으로 중앙에 위치시킴
+       
+       
+      @media (max-width: 1280px) {
+      grid-gap: 4rem 1rem; // 카드 아이템들 사이의 간격.
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      /* width: 20%; */
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+    }
+
     
+
         
 }
 `;
 const CardItem = styled.div`
     width: 240px;
     height: 360px;  
-    /* width: 300px;
-    height: 400px;   */
+    /* width: 240px;
+    height: 360px;   */
+
     background-color: white;
     position: relative;
     border-radius: 0.8rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+
 
     img{
         width: 100%;
@@ -50,7 +70,7 @@ const CardItem = styled.div`
     }
     .desc{
         /* background-color: orange; */
-        width: 100%;
+        width: 85%;
         height: 40%;
         position: absolute;
         top: 60%;
@@ -106,16 +126,17 @@ const CardItem = styled.div`
                 margin-left: 0.5rem;
                 
             }
-    }
+      }
 
-}
+  }
 
-}
-&:hover{
-    box-shadow: 0 3px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.22);
-       
-}
+  }
+  &:hover{
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.22);
+        
+  }
 `;
+
 const BlackBG = styled.div`
     width: 100%;
     height: 60%;
@@ -162,27 +183,34 @@ const [ratingStar, setRatingStar] = useState(Array(stealExhibition.length).fill(
 const [inputComment, setInputComment] = useState(Array(stealExhibition.length).fill(""));
 
 // 별점 변경 핸들러
-const onChangeStar = (e, index) => {
+const onChangeStar = (e, exhibitNo) => {
+    // stealExhibition의 데이터중 exhibitNo와 입력중인 exhibitNo가 같은 index를 찾음.
+    const index = stealExhibition.findIndex((diary) => diary.exhibitNo === exhibitNo);
+  
+    // 일치하는 diary가 없는 경우 아무런 동작도 하지 않습니다.
+    if (index === -1) {
+      return;
+    }
   const newRatingStar = [...ratingStar];
   newRatingStar[index] = Number(e.target.value); // 숫자로 변환
   setRatingStar(newRatingStar);
 };
 
 // 텍스트 변경 핸들러
-const onChangeText = ((e, index) => {
-    const newComments = [...inputComment];
-    newComments[index] = e.target.value;
-    setInputComment(newComments);
-  }); 
-
-// exhibitNo를 키로 하는 myDiaryData 객체 변환
-const diaryByExhibitNo = myDiaryData.reduce((acc, diary) => {
-    acc[diary.exhibitions.exhibitNo] = diary;
-    return acc;
-  }, {});
-
-  // `stealExhibition`에서 `myDiaryData.exhibitions.exhibitNo`와 일치하는 항목을 제거
-const filteredExhibition = stealExhibition.filter(item => !diaryByExhibitNo.hasOwnProperty(item.exhibitNo));
+const onChangeText = ((e, exhibitNo) => {
+  // stealExhibition의 데이터중 exhibitNo와 입력중인 exhibitNo가 같은 index를 찾음.
+  const index = stealExhibition.findIndex((diary) => diary.exhibitNo === exhibitNo);
+  
+  // 일치하는 diary가 없는 경우 아무런 동작도 하지 않습니다.
+  if (index === -1) {
+    return;
+  }
+  
+  // 일치하는 diary의 comment를 업데이트합니다.
+  const newComments = [...inputComment];
+  newComments[index] = e.target.value;
+  setInputComment(newComments);
+});
 
   // backdrop openState
   const [open, setOpen] = React.useState(false);
@@ -201,9 +229,9 @@ const filteredExhibition = stealExhibition.filter(item => !diaryByExhibitNo.hasO
         <>
  <Container>
             <div className="wrap">
-           {filteredExhibition.map((item, index) => {
+           {stealExhibition.map((item, index) => {
                 return (
-                    <CardItem key={index}>
+                    <CardItem key={item.exhibitNo}>
                     <BlackBG/>
                     <img src={item.imgUrl} alt="" />
                     <div className="desc">
@@ -212,12 +240,12 @@ const filteredExhibition = stealExhibition.filter(item => !diaryByExhibitNo.hasO
                         <Rating
                             precision={0.5}
                             value={ratingStar[index]}
-                            onChange={(e) => onChangeStar(e, index)}
+                            onChange={(e) => onChangeStar(e, item.exhibitNo)}
                         />
                         </Stack>
                         <div className='textBox'>
                         <textarea className='comment' name="" id="" cols="18" rows="2" 
-                            onChange={(e) => onChangeText(e, index)} 
+                            onChange={(e) => onChangeText(e, item.exhibitNo)} 
                             value={inputComment[index]}
                         />
                         <div className="saveIcon" 

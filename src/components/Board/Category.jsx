@@ -42,10 +42,10 @@ const Category = styled.div`
     ${props => 
         props.active && css`
         font-weight: 600;
-        border-bottom: 2px solid #22bbcf;
-        color: #22b8cf;
+        border-bottom: 2px solid #5EADF7;
+        color: #5EADF7;
         &:hover {
-            color: #3bc9db;
+            color: #55aafa;
         }
     `}
 

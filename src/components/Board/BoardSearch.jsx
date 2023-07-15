@@ -1,29 +1,48 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { IoSearch} from "react-icons/io5";
 import DDDApi from "../../api/DDDApi";
 
 const SearchWrap = styled.div` // 검색창 활성화 안된 부분 일부 위치 수정
-        display: flex;
-        width: 12em; 
-        height: 30px; 
-        padding: 0 5px; 
-        border: solid 2px #ddd; 
-        background-color: white;
-        margin: .7em 1em;
-        margin-left: auto;
-        border-radius: 5px;
-        cursor: pointer;
-            
-        input {width: 160px; height: 26px; border: 0px; outline: none; margin-right: 10px;}
+
+    display: flex;
+    width: 12em; 
+    height: 30px; 
+    padding: 0 5px; 
+    border: solid 2px #ddd; 
+    background-color: white;
+    margin: .7em 1em;
+    margin-left: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.3s ease; // 테두리 색상 변화에 부드러운 전환 효과
+
+    :hover {
+            border-color: black; // 호버 했을 때의 테두리 색상
+        }
+
+    @media (max-width: 768px) {
+        margin : 0 auto;
+        margin-left: 34em;
+    }
         
-        .icon_container {
-           
-            .searchicon {
-                color: #ccc;
-                margin-top: 6px;
-           }
-    }        
+    input {
+        width: 160px; 
+        height: 26px; 
+        border: 0px; 
+        outline: none; 
+        margin-right: 10px; 
+    }
+    
+    .icon_container {
+    
+        
+        .searchicon {
+            color: #8c8787;
+            margin-top: 6px;
+        }
+    }
+  
 `;
 
 

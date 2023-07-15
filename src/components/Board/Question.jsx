@@ -30,20 +30,6 @@ const Section = styled.div`
             color:  inherit;
             text-decoration: none;
         }
-        button {
-            font-size: 16px;
-            font-weight: 400;
-            float: right;
-            padding: 8px 35px;
-            border-radius: 10px;
-            background-color: #135CD2;
-            color: white;
-            border: none;
-            transition: all .1s ease-in;
-             cursor: pointer;
-
-            &:hover{background-color:  #a1f7d9; color: #135CD2;}
-        }
     }
 
     table {
@@ -76,6 +62,15 @@ const Section = styled.div`
             text-overflow: ellipsis; 
             white-space: nowrap;
         }
+
+        // 미디어쿼리 적용 시 작성자 이후 부터 안보이도록 설정
+        @media (max-width: 768px) {
+          td:nth-child(5), th:nth-child(5), td:last-child, th:last-child {
+            display: none;
+          }
+        }
+
+
         th:first-child, td:first-child {border-left: none; width: 70px;} // 글번호(열)
         td:first-child, td:nth-child(5), td:last-child { letter-spacing: -1px;}
         th:nth-child(2), td:nth-child(2) {width: 70px; letter-spacing: -.4px;} // 카테고리(열) 
@@ -94,6 +89,7 @@ const Section = styled.div`
             color:#FC5C7D;
         }
     }
+    
     .writebtn {
         display: flex;
         margin-bottom: 1em 0em ;
@@ -114,7 +110,8 @@ const Section = styled.div`
     }
 
     @media (max-width: 768px) {
-    width: 768px;
+      width: 768px;
+      min-width: 400px;
   }
 `;
 

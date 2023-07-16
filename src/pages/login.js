@@ -7,7 +7,7 @@ import ForgotPwModal from "../components/Login/ForgotPwModal";
 import Agreement from "../components/Login/Agreement";
 import PopupModal from "../components/Login/PopupModal";
 import MyPageBG from "../components/MyPage/MyPageBG";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import useStore from "../store";
 
@@ -22,6 +22,7 @@ const Login = () => {
     // isLogin 상태 가져오기
     const isLogin = window.localStorage.getItem('isLogin')
     const memberId = window.localStorage.getItem('memberId')
+    // const { memberId } = useParams();
 
     // showLogin이 1, 2, 3으로 변할 때 각자 modal창 보여줌
     const [showLogin, setShowLogin] = useState(0);
@@ -50,14 +51,9 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    useEffect(() => {
-    if (isLogin && !location.pathname.startsWith(`/login/`)) {
-        navigate(`/api/mypage/${memberId}`); // 마이페이지가 아니면 마이페이지 이동 // 뒤로가기 누르면 로그인으로 이동 // 
-    }else if (isLogin && location.pathname.startsWith(`/login`)) 
-        navigate('/') 
 
-}, [isLogin, navigate]);
-
+    const LoginState = window.localStorage.getItem('isLogin')
+    console.log(LoginState)
 
 
     return(
@@ -67,7 +63,6 @@ const Login = () => {
                 <div>
                     <Container>
                         <BGItmes/>
-                        {/* <BlackBG/> */}
                     </Container>
                     {showLogin === 0 && <LoginModal showPw={handleLoginModal1} showAgree={handleLoginModal2} />}
                     {showLogin === 1 && <ForgotPwModal showLogin={handleLoginModal0} />}

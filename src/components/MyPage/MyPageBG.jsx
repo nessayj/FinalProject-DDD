@@ -26,7 +26,7 @@ const Container = styled.div`
 `;
 const Modal = styled.div`
   width: 55vw;
-  min-width: 600px;
+  /* min-width: 600px; */
   max-width: 900px;
   height: auto;
   min-height: 1024px;
@@ -44,7 +44,6 @@ const Modal = styled.div`
     width: 100%;
     height: auto;
     border-radius: 0;
-    
   }
 `;
 
@@ -80,50 +79,52 @@ const MyPageBG = () => {
 
   return (
     <>
-      <Container style={showPage === "다이어리" ? { height: "auto" } : null}>
-        <Modal>
-          {showPage === "마이페이지" &&  (
-            <>
-              {memberData && <Thumnail memberData={memberData}/>}
-              <SNSBox />
-              {memberData && <Introduce memberData={memberData} myDiaryData={myDiaryData}/>} 
-            </>
-          )}
-          {showPage === "다이어리" && (
-            <>
-              {memberData && <Thumnail memberData={memberData}/>}
-              <NaviBox />
-              <MyDiary />
-            </>
-          )}
-          {showPage === "예약관리" && (
-            <>
-              {memberData && <Thumnail memberData={memberData}/>}
-              <NaviBox />
-              <MyReservation />
-            </>
-          )}
-          {showPage === "내게시물" && (
-            <>
-              {memberData && <Thumnail memberData={memberData}/>}
-              <NaviBox />
-              <MyPost
-              memberId={memberId}
-              />
-            </>
-          )}
-          {showPage === "내정보수정" && (
-            <>
-              {memberData && <EditThumnail memberData={memberData}/>}
-              <NaviBox />
-              <EditMemberMain />
-            </>
-          )}
-        </Modal>
-      </Container>
-
-      
-    </>
+    { memberData && myDiaryData &&
+    (
+          <Container style={showPage === "다이어리" ? { height: "auto" } : null}>
+            <Modal>
+              {showPage === "마이페이지" &&  (
+                <>
+                  {memberData && <Thumnail memberData={memberData}/>}
+                  <SNSBox />
+                  {memberData && <Introduce memberData={memberData} myDiaryData={myDiaryData}/>} 
+                </>
+              )}
+              {showPage === "다이어리" && (
+                <>
+                  {memberData && <Thumnail memberData={memberData}/>}
+                  <NaviBox />
+                  <MyDiary />
+                </>
+              )}
+              {showPage === "예약관리" && (
+                <>
+                  {memberData && <Thumnail memberData={memberData}/>}
+                  <NaviBox />
+                  <MyReservation />
+                </>
+              )}
+              {showPage === "내게시물" && (
+                <>
+                  {memberData && <Thumnail memberData={memberData}/>}
+                  <NaviBox />
+                  <MyPost
+                  memberId={memberId}
+                  />
+                </>
+              )}
+              {showPage === "내정보수정" && (
+                <>
+                  {memberData && <EditThumnail memberData={memberData}/>}
+                  <NaviBox />
+                  <EditMemberMain />
+                </>
+              )}
+            </Modal>
+          </Container>)
+    }
+          
+        </>
   );
 };
 

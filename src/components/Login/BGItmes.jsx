@@ -3,6 +3,15 @@ import styled, { keyframes } from "styled-components";
 import {ImageUrl1, ImageUrl2, ImageUrl3 } from "./imageURL";
 import Marquee from "react-fast-marquee";
 
+const Container = styled.div`
+position: absolute;
+top: 0%;
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+    
+`;
+
 const ItemWrap = styled.div`
     overflow: hidden;
     min-width: 1400px;
@@ -90,7 +99,7 @@ const Item = styled.div`
 
 const BGItmes = () => {
     return(
-        <>
+        <Container>
         <ItemWrap>
             <Marquee direction="up" speed={15} className="marqueeStyle">
             {
@@ -151,7 +160,7 @@ const BGItmes = () => {
             </Marquee>
         </ItemWrap>
             <BlackBG/>
-</>
+</Container>
     )
 }
 

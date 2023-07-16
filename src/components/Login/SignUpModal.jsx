@@ -10,13 +10,14 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
+    overflow: hidden;
     /* background-color: aqua; */
     
 
 `;
 const Modal = styled.div`
     width: 40vw;
-    min-width: 600px;
+    /* min-width: 600px; */
     height: 70vh;
     background-color: white;
     position: absolute;
@@ -29,6 +30,18 @@ const Modal = styled.div`
     flex-direction: column;
     align-items: center;
     background-color: white;
+    @media (max-width: 1440px) {
+    width: 50%;
+      }
+  @media (max-width: 1024px) {
+    width: 60%;
+      } 
+  @media (max-width: 720px) {
+    width: 100%;
+    position: relative;
+    transform: translate3d(-50%, -50%, 0);
+      }
+
 
         .title{
             font-size: 1.5rem;
@@ -44,9 +57,12 @@ const Modal = styled.div`
         }
 
         .inputBlock{
-            width: 90%;
-            /* background-color: aqua; */
-            padding-left: 3vw;
+            width: 100%;
+            /* background-color: blue; */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* gap: 1rem; */
+
             p{
                 text-align: left;
                 /* margin-left: 7%; */
@@ -80,7 +96,7 @@ const Modal = styled.div`
             }
             .regCheckBox{
                 /* background-color: red; */
-                width: 10%;
+                width: 2rem;
                 height: 100%;
                 margin: 0, 1px;
                 justify-content: center;
@@ -91,7 +107,7 @@ const Modal = styled.div`
                 display: flex;
                 height: 2rem;
                 background-color: #F2F2F2;
-                width: 80%;
+                width: 100%;
                 justify-content: space-around;
                 border-radius: .3rem;
             }
@@ -126,27 +142,27 @@ const Modal = styled.div`
             font-size: .3rem;
             text-align:center;
             display: flex;
-            width: 80%;
+            width: 100%;
             justify-content: right;
             height: 1rem;
 
         }
 `;
 const LeftBox = styled.div`
-    width: 50%;
-    height: calc(50%-2rem);
-    /* background-color: aqua; */
-    padding-top: 2rem;
-    min-width: 300px;
-`;
-const RightBox = styled.div`
-    width: 50%;
-    height: calc(80%-2rem);
-    /* background-color: red; */
-    padding-top: 2rem;
-    min-width: 300px;
 
+    width: 100%;
+    padding: 2rem;
+    padding-left: 3rem;
+
+    /* background-color: aqua; */
+    .item{
+        width: 80%;
+        height: auto;
+        /* background-color: red; */
+
+    }
 `;
+
 const True = styled.div`
     width: 1.3rem;
     height: 1.3rem;
@@ -398,57 +414,75 @@ const SignUpModal = (props) => {
                 <div className="wrap">
                     <LeftBox>
                         <div className="inputBlock">
+                         <div className="item">
                             <p>이메일</p>
                             <div className="textBox">
                                 <input type="text" placeholder="Email@:DDD.com" value={inputEmail} onChange={onChangeEmail}/>
                                 <div className="regCheckBox">{isEmail ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
-                            </div>
+                            </div> 
                             <div className="hint">{emailMessage}</div>
-                            <p>패스워드</p>
+                         </div>
+                         <div className="item">
+                         <p>이름</p>
+                        <div className="textBox">
+                            <input type="text" placeholder="이름을 입력해주세요" value={inputName} onChange={onChangeName}/>
+                            <div className="regCheckBox">{isName ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                        </div>
+                        <div className="hint">{nameMessage}</div>
+
+
+                         </div>
+                         <div className="item">
+
+                         <p>패스워드</p>
                             <div className="textBox">
                                 <input type="password" placeholder="Password" value={inputPwd} onChange={onChangePwd}/>
-                                <div className="regCheckBox">{isPwd ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                                    <div className="regCheckBox">{isPwd ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
                             </div>
                             <div className="hint">{pwdMessage}</div>
-                            <p>패스워드 확인</p>
+
+                         </div>
+                         <div className="item">
+                         <p>패스워드 확인</p>
                             <div className="textBox">
                                 <input type="password" placeholder="Password" value={inputConPw} onChange={onChangeConPw}/>
                                 <div className="regCheckBox">{isConPw ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
                             </div>
                             <div className="hint">{conPwMessage}</div>
-                            <p>닉네임</p>
+
+                         </div>
+                         <div className="item">
+                         <p>닉네임</p>
                             <div className="textBox">
                                 <input type="text" placeholder="닉네임을 입력해주세요" value={inputNick} onChange={onChangeNick}/>
                                 <div className="regCheckBox">{isNick ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
                             </div>
                             <div className="hint">{nickMessage}</div>
+
+                         </div>
+                         <div className="item">
+                         <p>연락처</p>
+                        <div className="textBox">
+                            <input type="tel" placeholder="연락처를 입력해주세요" value={inputTel} onChange={onChangeTel}/>
+                            <div className="regCheckBox">{isTel ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
+                        </div>
+                        <div className="hint">{telMessage}</div>
+
+                         </div>
+                         <div className="item">
+                         <p>instagram <span style={{fontWeight:'400'}}>(선택사항)</span> </p>
+                        <div className="textBox">
+                            <input type="text" placeholder="instagram ID" value={inputIns} 
+                            onChange={onChangeIns}
+                            />
+                            <div className="regCheckBox"></div> 
+                        </div>
+                        <div className="hint">{insMessage}</div>
+                         </div>
                         </div>
 
                     </LeftBox>
-                    <RightBox>
-                        <div className="inputBlock">
-                            <p>이름</p>
-                            <div className="textBox">
-                                <input type="text" placeholder="이름을 입력해주세요" value={inputName} onChange={onChangeName}/>
-                                <div className="regCheckBox">{isName ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
-                            </div>
-                            <div className="hint">{nameMessage}</div>
-                            <p>연락처</p>
-                            <div className="textBox">
-                                <input type="tel" placeholder="연락처를 입력해주세요" value={inputTel} onChange={onChangeTel}/>
-                                <div className="regCheckBox">{isTel ? <True> <span>&#10003;</span>  </True> : <False> <span>X</span> </False>}</div> 
-                            </div>
-                            <div className="hint">{telMessage}</div>
-                            <p>instagram <span style={{fontWeight:'400'}}>(선택사항)</span> </p>
-                            <div className="textBox">
-                                <input type="text" placeholder="instagram ID" value={inputIns} 
-                                onChange={onChangeIns}
-                                />
-                                <div className="regCheckBox"></div> 
-                            </div>
-                            <div className="hint">{insMessage}</div>
-                        </div>
-                    </RightBox>
+                    
                 </div>
                 <div className="btnBlock">
                     <button 

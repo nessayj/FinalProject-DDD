@@ -151,7 +151,17 @@ const Section = styled.div`
     }
 
     .comment_title {
+        display: flex;
+        flex-direction: row;
         margin-top : 1em;
+
+        h2, .comment_List {
+            margin-left: 1em;
+            margin-bottom:2px;
+        }
+        .comment_List {
+            margin-top: 1.6em;
+        }
     }
 
     @media (max-width: 768px) {
@@ -562,7 +572,10 @@ const deleteBoard = async (boardNo) => {
             </div>
 
             {/* 댓글 구간 */}
-            <div className="comment_title"><h2>Comment</h2></div>
+            <div className="comment_title">
+                <h2>Comment</h2>
+                <div className="comment_List">총 <span style={{ fontWeight: 'bold' }}>{boardView?.comments?.length || 0}개</span>의 댓글</div>   
+            </div>
 
             {/* 댓글 데이터가 있을 경우에만 컨테이너 보이게 조정 */}
             {boardView?.comments && boardView.comments.length > 0 && (

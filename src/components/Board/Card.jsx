@@ -51,7 +51,7 @@ const CardContainer = styled.div`
         font-weight: bold;
     }
     
-    .viewarea, .replyarea {
+    .viewarea, .commentarea {
         margin-left: .2em; // 아이콘과 숫자 사이 여백
         margin-top: .2em; // 아이콘 옆 숫자 위치
         font-size: 1em;
@@ -71,7 +71,7 @@ const CardContainer = styled.div`
     }
     .writebtn {
         display: flex;
-        margin-bottom: 1em 0em ;
+        margin-bottom: 1em;
     
         button {
             margin: -1em 1em ;
@@ -136,8 +136,6 @@ const Card = () => {
             const category = 'DDDmate'; // 조회할 카테고리 이름 지정
             const response = await DDDApi.getFreeBoardsByCategory(category);
             const filteredData = response.data.filter(boardList => boardList.category === category); 
-            // setBoardList(response.data);
-            // setFilterRegion(response.data); // 지역별 필터링 추가
             setBoardList(filteredData);
             setFilterRegion(filteredData); // 지역별 필터링 추가
             console.log(filteredData);
@@ -182,7 +180,7 @@ const Card = () => {
             navigate(link);
         } else {
             alert("로그인 완료 시 작성 진행 가능합니다.");
-            navigate('/login'); // 로그인 화면으로 이동 ** 추가
+            navigate('/login'); 
         }
     };
    
@@ -219,8 +217,8 @@ const Card = () => {
                 <div className="icon-container">
                     <IoMdEye className="icon" style={{color:'#686565'}} /> 
                     <div className="viewarea">{data.views}</div>
-                    <IoChatbubbleEllipses className="icon" style={{color:'#2468ee'}} />
-                    {data.reply && <div className="replyarea">{data.reply}</div>} 
+                    <IoChatbubbleEllipses className="icon" style={{color:'#55aafa'}} />
+                    {data.commentCount && <div className="commentarea">{data.commentCount}</div>} 
                 </div>
                 </Link>
             </div>

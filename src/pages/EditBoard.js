@@ -166,7 +166,7 @@ const Section = styled.div`
             background-color: #050E3D;
             transition: all .1s ease-in;
             font-weight: bold;
-            float: left;
+            /* float: left; */
             padding: .5em .8em;
             /* margin-bottom: .5em; 수정사항 */
 

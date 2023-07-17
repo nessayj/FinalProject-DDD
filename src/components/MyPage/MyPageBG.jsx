@@ -20,6 +20,7 @@ const Container = styled.div`
   /* background-color: aqua; */
   position: relative;
   top: 0%;
+  padding: 0%;
   height: 100%;
   justify-content: center;
   display: flex;
@@ -27,7 +28,7 @@ const Container = styled.div`
 const Modal = styled.div`
   width: 55vw;
   /* min-width: 600px; */
-  max-width: 900px;
+  /* max-width: 900px; */
   height: auto;
   min-height: 1024px;
   background-color: white;
@@ -41,10 +42,13 @@ const Modal = styled.div`
   /* align-items: center; */
   border: 0.5px solid #bbb;
   @media (max-width : 768px) {
-    width: 100%;
+    width: calc(100%);
     height: auto;
     border-radius: 0;
+    /* background-color: red; */
+
   }
+
 `;
 
 const MyPageBG = () => {

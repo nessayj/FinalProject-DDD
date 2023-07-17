@@ -39,14 +39,9 @@ const IconBox = styled.div`
             width: 100%;
             height: 100%;
             border-radius: inherit;
+            border: 1px solid #c2c2c2;
         }
     }
-    /* .ticket-icon:hover, .navi:hover, .login-icon:hover{
-        background-color: #f4f8ff;
-        height: 2.4rem;
-        width: 2.4rem;
-    } */
-
 
     @media (max-width: 768px) {
         .ticket-icon,
@@ -66,32 +61,102 @@ const LoginIconBox = styled.div`
   justify-content: center;
   margin: 0.3rem 0.8rem 0 0.3rem;
   /* background-color: red; */
+  width: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 
-  .logout {
+
+  .loginToggle {
+	// layout
+    position: relative;
+    top: -50%;
+    right: 200%;
+    width: 9.0rem;
+    height: 6rem;
     margin-top: 1rem;
     display: none;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.6rem;
-    font-weight: bold;
-    background-color: #5eadf7;
-    text-align: center;
-    cursor: pointer;
-  }
+        
+	// looks
+	background-color: #fff;
+	padding: 1rem;
+    padding-right: 0rem;
+	font-size: 0.55rem;
+	border-radius: 0.3rem;
+    box-shadow:	0 0.125rem 0.5rem rgba(0, 0, 0, .3), 0 0.0625rem 0.125rem rgba(0, 0, 0, .2);
+}
 
-  &:hover .logout {
+.loginToggle::before {
+	// layout
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	bottom: 100%;
+	right: 3.8rem; // offset should move with padding of parent
+	border: .3rem solid transparent;
+	border-top: none;
+
+	// looks
+	border-bottom-color: #fff;
+	filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+} 
+  &:hover .loginToggle{
     display: block;
   }
+    .toggleBlock{
+        /* background-color: blue; */
+        width: 100%;
+        height: 2.4rem;
+        display: flex;
+        flex-direction: row;
+        cursor: pointer;
+
+    }  
+    .infoBox{
+        /* background-color: aqua; */
+        width: 5rem;
+        height: auto;
+        padding-left: 0.8rem;
+        .nickname{
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .editInfo{
+            width: 3.5rem;
+            height: 1rem;
+            background-color: black;
+            margin-top: 0.3rem;
+            border-radius: 2rem;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .infoBoxBtn{
+    margin-top: 0.5rem;
+    cursor: pointer;
+    padding: 0.2rem;
+    padding-right: 0;
+}
+
+.infoBoxBtn:hover {
+    background-color: #050E3D;
+    color: white;
+}
+    }
+
 `;
 
 
 
 const Icons = () => {
-    const { profileImg } = useStore();
+    const { setShowPage, memberData } = useStore();
     const loginState = window.localStorage.getItem("isLogin")
     const memberId = Functions.getMemberId();
     // console.log(profileImg)
     // console.log(loginState)
+    // console.log(memberData)
 
     const navigate = useNavigate();
 
@@ -103,11 +168,18 @@ const Icons = () => {
 
 
     const removeLocalstorage = () =>{
+        console.log('로그아웃 클릭')
         localStorage.removeItem("isLogin");
         localStorage.removeItem("storageEmail");
         localStorage.removeItem("memberId");
         localStorage.removeItem("accessToken");
         navigate('/')
+    }
+
+    const goToMypage = () => {
+        
+        setShowPage('마이페이지')
+        navigate(`/api/mypage/${memberId}`)
     }
 
 
@@ -121,17 +193,24 @@ const Icons = () => {
 
         <LoginIconBox>
             <div className="login-icon" onClick={onClickToLogin}>
-                    {loginState ?  (<img src={profileImg} alt="😫" />) : (<BsPersonCircle/>)}
-                    {/* {loginState ?
-                    (<img src="https://firebasestorage.googleapis.com/v0/b/real-final-project-ddd.appspot.com/o/%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84.png?alt=media&token=7d664c18-037d-4e60-9415-32f26fb0d430" alt="😫" />) :
-                    (<FcDecision/>)} */}
+                    {loginState ?  (<img src={memberData.profileImg} alt="😫" />) : (<BsPersonCircle/>)}
 
+            </div>
+
+            {loginState ? ( <div className="loginToggle">
+                <div className="toggleBlock">
+                    <div className="login-icon" onClick={onClickToLogin} >
+                        <img src={memberData.profileImg} alt="😫" />
+                    </div>
+
+                    <div className="infoBox">
+                        <div className="nickname"  onClick={goToMypage}>{memberData.nickname}</div>
+                        <div className="infoBoxBtn"   onClick={goToMypage}>마이 페이지</div>
+                        <div className="infoBoxBtn">내 쪽지함</div>
+                        <div className="infoBoxBtn" onClick={removeLocalstorage}>로그아웃</div>
+                    </div>
                 </div>
-
-                    { loginState ?
-                    <div className="logout" onClick={removeLocalstorage}>
-                        {/* <FcDecision/> */}
-                        로그아웃 </div> : null}
+            </div>) : null}
         </LoginIconBox>
 
 

@@ -8,6 +8,7 @@ const Wrap = styled.div`
     width: 100%;
     height: 100vh;
     margin: 0 auto;
+    /* background-color: aqua; */
     
 
     .boardtitle {
@@ -45,8 +46,6 @@ const Wrap = styled.div`
         }
 
         @media (max-width: 768px) {
-            width: 768px;
-            min-width: 400px;
     }
 
 `;
@@ -81,4 +80,3 @@ const BoardList = () => {
 };
 
 export default BoardList;
-

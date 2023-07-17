@@ -11,18 +11,18 @@ import { Backdrop } from "@mui/material";
 import { FcCloseUpMode } from 'react-icons/fc';
 
 const Wrap = styled.div`
-    width: 70%;
+    /* width: 70%; */
+    width: 82vw;
     height: 100%;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
+    /* border: 1px solid red; */
 
     .btn_area {
-        text-align: right;
+        text-align: center;
  
         .savebtn { // 등록 버튼 속성
-
-            /* display :inline-block; */
             margin-top: 1em;
             padding: 10px 1.6em;
             border-radius: 15px;
@@ -56,29 +56,29 @@ const Wrap = styled.div`
             }
             button:nth-child(1) {
                 margin-right: 16px;
-            }
-                
+            }               
     }
 
-    @media (max-width: 800px) {
-      max-width: 800px;
+    @media (max-width: 768px) {
+      width: 100vw;
+      /* border: 1px solid blue; */
     }
 `;
 
 
 
 const Section = styled.div`
-    width: 100%;
-    margin: 0 auto; // 추가
-    justify-content: center; // 추가
+    /* width: 100%; */
+    justify-content: center; 
     position: relative;
     display: flex;
     flex-direction: column;
+  
     
-    div { // 헤더 및 카테고리 박스
+    /* div { // 헤더 및 카테고리 박스
         width: 100%;
-        padding : 1em;
-    }
+        border: 1px solid red;
+    } */
 
     .board_header { // 게시물 작성 영역    
         h2 {
@@ -90,11 +90,18 @@ const Section = styled.div`
     }
 
     table {
+      width: 80vw;
+      margin: 0 auto;
       border-collapse: collapse; 
-      width: 100%;
       background-color: #4555AE;
       border-bottom: solid 1px #4555AE;
       text-align: center;
+      /* border: 1px solid green; */
+
+
+      @media (max-width: 768px) {
+        width: 100vw;
+      }
         
 
         tr:nth-child(2n) td {background-color: #f9f9f9;} // 타이틀 박스 배경색 설정
@@ -128,17 +135,12 @@ const Section = styled.div`
         td:nth-child(3) {width: 70%; text-align: left; padding-left: 20px;} // 제목 카테고리
         
 
-        td:nth-child(4) {text-align: left;}
+        td:nth-child(4) {text-align: center;}
 
-        @media (max-width: 780px) {
+        /* @media (max-width: 768px) {
         td:nth-child(4) { display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        }
+        } */
         
-
-        @media (max-width: 780px) {
-          /* width: 780px; */
-          min-width: 400px;
-        }
   }
 
 
@@ -171,6 +173,14 @@ const Section = styled.div`
         padding: .5em .8em; 
         
         &:hover {background-color: #5EADF7; color: #F4F8FF;}
+        
+        @media (max-width: 768px) {
+          background-color: transparent;
+          color: #050E3D;
+          width: 2rem;
+          margin: 0;
+          padding: 0;
+        }
     }
   } 
 
@@ -197,18 +207,19 @@ const Section = styled.div`
     }
 
     @media (max-width: 768px) {
-      max-width: 780px;
+      width: 100vw;
     }
 `;
 
 const TextWrap = styled.div`
   /* width: 95%; */
-  width: 100%;
+  width: 80vw;
   margin: 0 auto;
   margin-bottom:20px;
   justify-content: center;
   align-items: center;
-  padding : 1em;
+  /* padding : 1em; */
+  margin-top: 1em;
     
 
     .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
@@ -216,7 +227,8 @@ const TextWrap = styled.div`
     .ck-editor__main {padding: 0px;}
 
     @media (max-width: 768px) {
-    max-width: 768px;
+      width: 100%;
+
     }
   
 
@@ -432,10 +444,17 @@ const WriteBoard = () => {
 
                   <td>
                     <div className="imguploaderBtn">
-                      <button>
+                      {window.innerWidth > 768 ? (<button>
                         <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
                         <label htmlFor="file-upload">사진 업로드</label>
-                      </button>
+                      </button>) : (<button>
+                        <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
+                        <label htmlFor="file-upload">사진</label>
+                      </button>)}
+                      {/* <button>
+                        <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
+                        <label htmlFor="file-upload">사진 업로드</label>
+                      </button> */}
                     </div>
                   </td>
                 </tr>

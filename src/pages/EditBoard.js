@@ -12,14 +12,15 @@ import { Backdrop } from "@mui/material";
 
 const EditWrap = styled.div`
     /* width: 75em; */
-    width: 70%;
+    width: 82vw;
     height: 100%;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
+    border: 1px solid red;
 
     .btn_area {
-        text-align: right;
+        text-align: center;
         /* margin-right: .9em; */
  
         .editbtn { // 수정 버튼 속성
@@ -37,7 +38,7 @@ const EditWrap = styled.div`
             &:hover {background-color: #5EADF7;
                 color: #F4F8FF;}
         }
-            .backbtn { // 취소 버튼 속성
+            .backbtn { // 취소버튼 속성
                 margin-top: 1em;
                 padding: 10px 1.6em;
                 border-radius: 15px;
@@ -48,7 +49,6 @@ const EditWrap = styled.div`
                 font-weight: 600;
                 font-size: 14px;
                 cursor: pointer;
-                /* margin-right: 16px;  수정사항 */ 
 
                 &:hover {background-color: #FA6060;
                     color: #F4F8FF;}
@@ -59,48 +59,54 @@ const EditWrap = styled.div`
             }
     }
 
-    @media (max-width: 800px) { // 추가
-      max-width: 800px;
+    @media (max-width: 768px) {
+      width: 100vw;
+      border: 1px solid blue;
     }
 `;
 
 const Section = styled.div`
-    /* width: 1140px; */
-    width: 100%; // 추가
-    margin: 0 auto; // 추가
-    justify-content: center; // 추가
+    /* width: 100%;  */
+    /* margin: 0 auto;  */
+    justify-content: center; 
     position: relative;
-    /* float: center; 수정사항 */
     display: flex;
     flex-direction: column;
 
-    div { // 헤더 및 카테고리 박스
+
+    /* div { // 헤더 및 카테고리 박스
         width: 100%;
-        /* padding: 10px 30px; 수정사항 */
-        padding: 1em; // 추가
-    }
+        border: 1px solid red;
+    } */
+
+
     .board_header { // 게시물 수정 영역    
         h2 {
             font-size: 1.8em;
             margin-top: 30px;
             font-weight: 900;
-            text-align: center; // 추가
+            text-align: center; 
         }
     }
 
     table {
+        width: 80vw;
+        margin: 0 auto;
         border-collapse: collapse; 
-        width: 100%;
         background-color: #4555AE;
         border-bottom: solid 1px #4555AE;
         text-align: center;
+        border: 1px solid green;
+
+        @media (max-width: 768px) {
+         width: 100vw;
+      }
 
         tr:nth-child(2n) td {background-color: #f9f9f9;}
         th {padding: 10px; color: white;}
         td {padding: 10px; background-color: white; border-left: solid 1px #bbb; border-top: solid 1px #ddd;}
         
-        /* td:first-child {border-left: none; width: 115px; 수정사항 */
-        td:first-child {border-left: none; width: 10%; // 추가
+        td:first-child {border-left: none; width: 10%; 
             
             select { // 게시판 카테고리 셀렉박스
                 text-align:center;
@@ -112,8 +118,8 @@ const Section = styled.div`
             }
         }
 
-        /* td:nth-child(2) {width: 100px; text-align: left; padding-left: 20px; 수정사항 */
-        td:nth-child(2) {width: 10%; text-align: center; //추가   
+        /* td:nth-child(2) {width: 100px; text-align: left; padding-left: 20px; */
+        td:nth-child(2) {width: 10%; text-align: center;  
         
             select{ // 지역선택 카테고리 셀렉박스
                 text-align:center; 
@@ -125,21 +131,17 @@ const Section = styled.div`
             }
         }  
         
-        /* td:nth-child(3) {width: 41em; text-align: left; padding-left: 20px; 수정사항 */
+        /* td:nth-child(3) {width: 41em; text-align: left; padding-left: 20px; */
         td:nth-child(3) {width: 70%; text-align: left; padding-left: 20px;}
 
-        td:nth-child(4) {text-align: left;} // 추가
+        td:nth-child(4) {text-align: center;} 
 
-        @media (max-width: 780px) { // 추가
+        /* @media (max-width: 780px) { 
         td:nth-child(4) { display: flex; flex-direction: column; justify-content: center; align-items: center;}
-        }
-
-        @media (max-width: 780px) { // 추가
-            /* width: 780px; */
-            min-width: 400px;
-        }
+        } */
 
     }
+
     .input_title {
         font-size: 1.3rem;
         width: 100%;
@@ -147,7 +149,7 @@ const Section = styled.div`
         outline: none;
         display: block;
         margin-bottom: 30px;
-        padding-left: 15px;
+        /* padding-left: 15px; */
         margin: 0 auto;
         border: none;
         background: none;
@@ -166,11 +168,19 @@ const Section = styled.div`
             background-color: #050E3D;
             transition: all .1s ease-in;
             font-weight: bold;
-            /* float: left; */
             padding: .5em .8em;
             /* margin-bottom: .5em; 수정사항 */
 
             &:hover {background-color: #5EADF7; color: #F4F8FF;}
+
+            @media (max-width: 768px) {
+                background-color: transparent;
+                color: #050E3D;
+                width: 2rem;
+                margin: 0;
+                padding: 0;
+        }
+
             }
         }
 
@@ -196,25 +206,22 @@ const Section = styled.div`
     img {
         width: 40%; 
         height: 40%; 
-        /* object-fit: cover; */
-        /* align-self: flex-start; */
     }
 
-    @media (max-width: 780px) {
-      max-width: 780px;
+    @media (max-width: 768px) {
+        width: 100vw;
     }
     
 `;
 
 
 const TextWrap = styled.div`
-    /* width: 95%; 수정사항*/
-    width: 100%;
+    width: 80vw;
     margin: 0 auto;
     margin-bottom:20px;
-    justify-content: center; // 추가
-    align-items: center; // 추가
-    padding: 1em; // 추가
+    justify-content: center; 
+    align-items: center; 
+    /* padding: 1em;  */
 
   .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
     min-height: 500px;} // 텍스트 높이 조절
@@ -222,7 +229,7 @@ const TextWrap = styled.div`
   .ck-editor__main {padding: 0;}
 
   @media (max-width: 768px) { // 추가
-  max-width: 768px;
+    width: 100%;
   }
 
 `;
@@ -446,10 +453,13 @@ const EditBoard = () => {
         
                         <td>
                             <div className="imguploaderBtn">
-                            <button>
+                                {window.innerWidth > 768 ? (<button>
                                 <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
                                 <label htmlFor="file-upload">사진 업로드</label>
-                            </button>
+                                </button>) : (<button>
+                                    <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
+                                    <label htmlFor="file-upload">사진</label>
+                                </button>)}
                             </div>
                         </td>
                     </tr>

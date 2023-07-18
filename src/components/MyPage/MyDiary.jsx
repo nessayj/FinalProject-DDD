@@ -12,6 +12,7 @@ import AlertModal from "../../util/Alert";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { useParams } from "react-router-dom";
+import Loading from "../../util/Loading";
 
 // ====== data 확인하기 =====
 
@@ -208,6 +209,7 @@ const MyDiary = () => {
   const [mention, setMention] = useState("");
   const [inputComment, setInputComment] = useState([]);
   const [ratingStar, setRatingStar] = useState([]);
+  const [loading, setLoading]= useState(true);
 
   const countCheck = () => {
     for (let key in commentAboutCount) {
@@ -233,6 +235,7 @@ const MyDiary = () => {
 
       setRatingStar(stars);
       console.log(ratingStar);
+        setLoading(false);
     };
     infoFetchData();
   }, [memberId]);
@@ -274,7 +277,8 @@ const MyDiary = () => {
 
   return (
     <>
-      {myDiaryData && (
+      {loading ? <Loading></Loading>
+      : (
         <Wrap>
 
           <div className="count">{countDiary}</div>

@@ -15,6 +15,7 @@ import WriteBoard from './pages/WriteBoard';
 import EditBoard from './pages/EditBoard';
 import VerifyEmail from './components/Login/VerifyEmail';
 import RateDiary from './components/MyPage/RateDiary';
+import Loading from './util/Loading';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/popupModal" element={<PopupModal/>}/>
+        <Route path="/loading" element={<Loading/>}/>
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>

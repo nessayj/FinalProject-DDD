@@ -154,33 +154,47 @@ const RateDiary = () => {
 
     const {stealExhibition} = useStore();
     const [myDiaryData, setMyDiaryData] = useState([]);
+        
+    // ratingStar와 inputComment 상태 정의
+    const [ratingStar, setRatingStar] = useState(Array(stealExhibition.length).fill(0));
+    const [inputComment, setInputComment] = useState(Array(stealExhibition.length).fill(""));
     // console.log(stealExhibition)
     const memberId = Functions.getMemberId();
 
     useEffect(() => {
-        const infoFetchDate = async () => {
-          const response = await DiaryApi.info(memberId);
+      const infoFetchDate = async () => {
+        const response = await DiaryApi.info(memberId);
+    
+        const newMyDiaryData = response.data;
+        setMyDiaryData(newMyDiaryData);
+        console.log(newMyDiaryData); // 작동
+    
+        const newComments = stealExhibition.map((exhibition) => {
+          // Find the diary with the same exhibitNo
+          const diary = newMyDiaryData.find((item) => item.exhibitions.exhibitNo === exhibition.exhibitNo);
+    
+          // If such a diary exists, use its comment. Otherwise, use the existing comment.
+          return diary ? diary.comment : inputComment[stealExhibition.indexOf(exhibition)];
+        });
+    
+        setInputComment(newComments);
+        console.log(newComments);
+    
+        const newStar = stealExhibition.map((exhibition) => {
+          // Find the diary with the same exhibitNo
+          const diary = newMyDiaryData.find((item) => item.exhibitions.exhibitNo === exhibition.exhibitNo);
+    
+          // If such a diary exists, use its comment. Otherwise, use the existing comment.
+          return diary ? diary.rateStar : ratingStar[stealExhibition.indexOf(exhibition)];
+        });
+    
+        setRatingStar(newStar);
+        console.log(newStar);
+      };
+      infoFetchDate();
+    }, []);
+    
 
-          const newMyDiaryData = response.data;
-          setMyDiaryData(newMyDiaryData);
-          console.log(newMyDiaryData);
-          // inputComment에 데이터를 일단 전부 다 담음.
-          const comments = newMyDiaryData.map((item) => item.comment);
-          setInputComment(comments);
-          console.log(inputComment);
-    
-          const stars = newMyDiaryData.map((item) => item.rateStar);
-    
-          setRatingStar(stars);
-          console.log(ratingStar);
-        };
-        infoFetchDate();
-      }, []);
-
-    
-// ratingStar와 inputComment 상태 정의
-const [ratingStar, setRatingStar] = useState(Array(stealExhibition.length).fill(0));
-const [inputComment, setInputComment] = useState(Array(stealExhibition.length).fill(""));
 
 // 별점 변경 핸들러
 const onChangeStar = (e, exhibitNo) => {

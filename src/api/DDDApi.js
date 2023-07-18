@@ -1,4 +1,3 @@
-import { AutoFixOffSharp } from "@mui/icons-material";
 import axios from "axios";
 const DDD_DOMAIN = "http://localhost:8111"; // 백엔드에 대한 주소
 const HEADER = {"Content-type" : "application/json"}
@@ -30,10 +29,18 @@ const DDDApi = {
         return await axios.post( DDD_DOMAIN + "/boardList/write", postObj , HEADER);
     },
 
-    // // 게시글 수정 1차 작업
-    // editBoards: async (boardNo, updateBoard) => {
-    //     return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, updateBoard, HEADER);
-    // },
+    // 이전글 & 다음 게시글 조회 (최종)
+    getPrevAndNextBoard: async (currentBoardNo) => {
+        try {
+          const response = await axios.get(`${DDD_DOMAIN}/boardList/${currentBoardNo}/navigate`, HEADER);
+          console.log(response.data); // 응답 데이터 출력
+          return response; // 응답 반환
+        } catch (error) {
+          console.log(error); // 에러 로그 출력
+          throw error; // 에러 throw
+        }
+    },
+
 
     // 게시글 수정
     editBoards: async (boardNo, category, region, title, contents, imageUrl) => {
@@ -53,16 +60,6 @@ const DDDApi = {
     delBoards: async (boardNo) => {
         return await axios.delete(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     },
-
-
-
-    // 자유게시판 검색 목록 출력
-    // searchListLoad: async (keyword) => {
-    //     const url = `${DDD_DOMAIN}/boardList/searchList?keyword=${keyword}`;
-    //     console.log(url); // 해당 페이지 url 확인 위해
-    //     return await axios.get(url, HEADER);
-    //     // return await axios.get(DDD_DOMAIN + `/boardList/searchList?keyword=${keyword}`, HEADER); 
-    // },
 
     // 자유게시판 검색 목록 출력(2차 수정)
     searchListLoad: async (keyword) => {

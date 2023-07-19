@@ -90,7 +90,8 @@ const Section = styled.div`
     }
 
     table {
-      width: 80vw;
+      /* width: 80vw; */
+      width: 70vw;
       margin: 0 auto;
       border-collapse: collapse; 
       background-color: #4555AE;
@@ -202,8 +203,8 @@ const Section = styled.div`
     }
 
     img {
-        width: 40%; /* 이미지의 최대 가로 너비를 설정 */
-        height: 40%; /* 이미지의 최대 세로 높이를 설정 */
+        width: 40%; // 이미지의 최대 가로 너비를 설정
+        height: 40%; // 이미지의 최대 세로 높이를 설정 */
     }
 
     @media (max-width: 768px) {
@@ -212,8 +213,8 @@ const Section = styled.div`
 `;
 
 const TextWrap = styled.div`
-  /* width: 95%; */
-  width: 80vw;
+  /* width: 80vw; */
+  width: 70vw;
   margin: 0 auto;
   margin-bottom:20px;
   justify-content: center;
@@ -451,10 +452,7 @@ const WriteBoard = () => {
                         <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
                         <label htmlFor="file-upload">사진</label>
                       </button>)}
-                      {/* <button>
-                        <input type="file" id="file-upload" onChange={previewImage} style={{ display: "none" }}/>
-                        <label htmlFor="file-upload">사진 업로드</label>
-                      </button> */}
+
                     </div>
                   </td>
                 </tr>

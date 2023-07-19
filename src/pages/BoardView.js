@@ -14,7 +14,7 @@ import { Backdrop } from "@mui/material";
 
 
 const ViewWrap = styled.div`
-    width: 70%; // 추가
+    width: 70%; 
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -24,8 +24,7 @@ const ViewWrap = styled.div`
 `;
 
 const Section = styled.div`
-    /* width: 75%; */
-    width: 100%; // 추가
+    width: 100%;     
     display: flex;
     flex-direction: column;
     float: center;
@@ -56,35 +55,29 @@ const Section = styled.div`
         align-items: center;
 
         .preBtn, .mainBtn, .nextBtn { // 이전글 버튼
-            padding: .8em 1.4em;
+            padding: .4em .2em;
             border: none;
             border-radius: 10px;
-            background-color: #050e3d;
-            color: white;
+            font-weight: bold;
             cursor: pointer;
-            margin-left: 1.2em; // 추가
+            margin-left: 1em; 
             transition: all .1s ease-in;
             text-decoration: none;
         }
+
     }
 
     @media (max-width: 768px) {
         .listBtn { 
-            margin-right: .1em;
-            background-color: transparent;
+            display: flex;
+            flex-direction: row;
+            margin-right: 0;
         } 
 
         .preBtn, .mainBtn, .nextBtn {
             display: flex;
-            flex-direction: column;
-            /* margin-left: .5em; */
-            padding: .5em, 1em;
-            font-size: .5em;
-            color: black;
-            background: #5eadf7;
-     
-         
-         } 
+            font-size: .7em;
+        } 
     }
 
     .editBtn {
@@ -128,7 +121,6 @@ const Section = styled.div`
     @media (max-width: 768px) {
 
     .editBtn {
-        /* margin-left: auto;  // 오른쪽으로 이동 */
         margin-right: .1rem;
        
 
@@ -146,13 +138,10 @@ const Section = styled.div`
         display: flex;
         font-weight: bold;
         justify-content: flex-end; 
-        /* margin-right : 4.5em; */
         padding-right: 4.5em;
         
 
         .write_date, .views {
-            /* flex:1; */
-            /* text-align: right; */
             margin-left: 1em;
             margin-bottom:2px;
             
@@ -225,7 +214,6 @@ const Contents = styled.div`
     padding: 30px 18px;
     margin-top: 20px;
     height: auto;
-    /* min-height: 400px; */
 
     .image_area {
         display: flex;
@@ -235,8 +223,8 @@ const Contents = styled.div`
     }
 
     img {
-        width: 60%; /* 이미지의 최대 가로 너비를 설정 */
-        height: 50%;
+        width: 50%; /* 이미지의 최대 가로 너비를 설정 */
+        height: auto;
         border-radius: 12px;
         align-items: center;
         justify-content: center;
@@ -254,8 +242,6 @@ const Wrapper = styled.div`
     width: 92%;
     display: flex;
     flex-direction: column;
-    /*align-items: center;
-    justify-content: center;*/
     border: 1px solid #8a8a8a;
     border-radius: 12px;
     padding: 15px 18px;
@@ -293,7 +279,6 @@ const Wrapper = styled.div`
 
     .userinfo {
         display: flex;
-        /* align-items: center; */
         justify-content: space-between;
 
         .profile {
@@ -456,7 +441,7 @@ const BoardView = () => {
         console.log(prevAndNextData); // 상태 업데이트 후 호출됨
     }, [prevAndNextData]);
 
-    
+    // 이전글 보기 함수
     const onClickPrev = () => {
         if (prevAndNextData && prevAndNextData.prev) {
             const prevBoardNo = prevAndNextData.prev.boardNo;
@@ -466,6 +451,7 @@ const BoardView = () => {
         }
     };
 
+    // 다음글 보기 함수
     const onClickNext = () => {
         if (prevAndNextData && prevAndNextData.next) {
             const nextBoardNo = prevAndNextData.next.boardNo;
@@ -576,7 +562,7 @@ const BoardView = () => {
 
                 {/* 게시판 카테고리 */}
                 <div className="sub_category">
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl sx={{ m: 1, minWidth: 110 }}>
                         <InputLabel id="demo-simple-select-readonly-label">카테고리</InputLabel>
                         <Select
                         labelId="demo-simple-select-readonly-label"
@@ -591,7 +577,7 @@ const BoardView = () => {
 
                     {/* 지역 카테고리 추천수다 & 질문하기 선택 시 노출X */}
                     {boardView?.category !== 'Recommend' && boardView?.category !== 'Question' && (
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <FormControl sx={{ m: 0.5, minWidth: 80 }}>
                         <InputLabel id="demo-simple-select-readonly-label">지역선택</InputLabel>
                         <Select
                         labelId="demo-simple-select-readonly-label"
@@ -608,9 +594,9 @@ const BoardView = () => {
 
                     {/* 이전글 / 목록 / 다음글 버튼 추가 */}
                     <div className="listBtn">
-                        <button className="preBtn" onClick={onClickPrev} >이전글</button>
-                        <button className="mainBtn" onClick={onClickMain}>글목록</button>
-                        <button className="nextBtn" onClick={onClickNext}>다음글</button>
+                        <div className="preBtn"  onClick={onClickPrev}>이전글</div>
+                        <div className="mainBtn" onClick={onClickMain}>글목록</div>
+                        <div className="nextBtn" onClick={onClickNext}>다음글</div>
                     </div>
 
                 </div>

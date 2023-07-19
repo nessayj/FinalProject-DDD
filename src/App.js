@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/loading" element={<Loading/>}/>
+        <Route path="/PopupModal" element={<PopupModal/>}/>
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>

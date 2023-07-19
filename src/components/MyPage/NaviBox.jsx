@@ -27,7 +27,7 @@ const Container = styled.div`
   /* background-color: red; */
   @media (max-width:768px) {
     margin: 1rem .2rem;
-    font-size: 0.051rem; 
+    font-size: 10px; 
 
     
   }
@@ -85,8 +85,9 @@ const NaviBox = (props) => {
             
             <div className='icon' onClick={()=>{setShowPage('마이페이지')}}> 마이페이지 </div>
             <div className={`icon ${showPage === '다이어리' ? 'active fColor' : ''}`} onClick={() => { setShowPage('다이어리') }}>다이어리</div>
-            <div className={`icon ${showPage === '예약관리' ? 'active fColor' : ''}`} onClick={() => { setShowPage('예약관리') }}>예약 관리</div>
             <div className={`icon ${showPage === '내게시물' ? 'active fColor' : ''}`} onClick={()=>{setShowPage('내게시물')} }>내 게시물</div>
+            <div className={`icon ${showPage === '예약관리' ? 'active fColor' : ''}`} onClick={() => { setShowPage('예약관리') }}>예약 관리</div>
+            <div className={`icon ${showPage === '내쪽지함' ? 'active fColor' : ''}`} onClick={()=>{setShowPage('내쪽지함')} }>내 쪽지함</div>
             <div className={`icon ${showPage === '내정보수정' ? 'active fColor' : ''}`} onClick={() => { setShowPage('내정보수정') }}>내 정보 수정</div>
 
         </Container>

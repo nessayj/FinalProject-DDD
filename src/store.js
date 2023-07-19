@@ -15,7 +15,10 @@ const useStore = create((set) => ({
     setStealExhibition : (data) => set((state) => ({stealExhibition : data})),
 
     profileImg : {},
-    setProfileImg : (data) => set((state)=> ({profileImg : data}))
+    setProfileImg : (data) => set((state)=> ({profileImg : data})),
+
+    search: "",
+    setSearch: (word) => set({ search: word }),
 
 }));
 

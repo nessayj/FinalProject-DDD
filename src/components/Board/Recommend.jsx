@@ -4,7 +4,6 @@ import styled from "styled-components";
 import BoardSearch from "./BoardSearch";
 import PageNation from "../../util/PageNation";
 import DDDApi from "../../api/DDDApi";
-import { Link } from "react-router-dom";
 
 
 const BoardContainer = styled.div`
@@ -36,17 +35,17 @@ const Section = styled.div`
     .board_box {
         /* margin: 1rem; */
 
-        a {
+        /* a {
             font-size: 1.1rem;
             color: inherit;
-            text-decoration: none; // 제목 링크 시 밑줄 제거
-         }
+            text-decoration: none; 
+         } */
     }
 
     table { 
         width: 65vw;
         margin-bottom: 20px;
-        font-size: 16px;
+        font-size: 1.1em;
         font-weight: lighter;
         border-collapse: collapse; 
         /* width: 100%; */
@@ -204,6 +203,11 @@ const Recommend = () => {
         }
     };
 
+    // 게시글 상세 페이지로 이동
+    const boardDetailClick = (boardNo) => {
+      navigate(`/boardList/boardView/${boardNo}`);
+    };
+
 
     return (
         <BoardContainer>
@@ -230,19 +234,13 @@ const Recommend = () => {
                   </tr>
                 )}
                 {!noResults && // 추가: 검색 결과가 있을 때에만 매핑
-                  currentPageData.map((boardList) => (
+                    currentPageData.map((boardList) => (
                     <tr key={boardList.boardNo}>
                       <td>{boardList.boardNo}</td>
                       <td>{boardList.category === 'Recommend' ? '추천수다' : boardList.category}</td>
                       {/* <td>{boardList.category}</td> */}
-                      <td>
-                        <Link
-                          to={`/boardList/boardView/${boardList.boardNo}`}
-                          className="boardView_link"
-                        >
-                          {boardList.title}
-                        </Link>
-                      </td>
+                      <td onClick={() => boardDetailClick(boardList.boardNo)}>{boardList.title}</td>
+                      {/* <td onClick={() => boardDetailClick}>{boardList.title}</td> */}
                       <td>{boardList.author}</td>
                       <td>{boardList.views}</td>
                       <td>

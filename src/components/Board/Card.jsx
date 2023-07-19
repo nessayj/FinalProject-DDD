@@ -6,7 +6,6 @@ import { IoMdPin, IoMdEye } from "react-icons/io";
 import { useState, useEffect } from "react";
 import PageNation from "../../util/PageNation";
 import DDDApi from "../../api/DDDApi";
-import { Link } from "react-router-dom";
 
 const Wrapper = styled.div` // 동행찾기 게시판 전체 컨테이너 영역
     box-sizing: border-box;
@@ -197,21 +196,19 @@ const Card = () => {
       }, []);
 
 
+    const handleRegionChange = (event) => {
+    const selectedRegion = event.target.value;
+    setSelectedRegion(selectedRegion);
 
+    console.log(selectedRegion);
 
-      const handleRegionChange = (event) => {
-        const selectedRegion = event.target.value;
-        setSelectedRegion(selectedRegion);
+    // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
+    const filteredData = boardList.filter((item) => {
+        return selectedRegion ? item.region === selectedRegion : true;
+    });
 
-        console.log(selectedRegion);
-
-        // 선택된 지역에 해당하는 데이터를 필터링하여 업데이트
-        const filteredData = boardList.filter((item) => {
-          return selectedRegion ? item.region === selectedRegion : true;
-        });
-
-        setFilterRegion(filteredData);
-      };
+    setFilterRegion(filteredData);
+    };
 
 
 
@@ -233,6 +230,11 @@ const Card = () => {
         }
     };
 
+    // 게시글 상세 페이지로 이동
+    const boardDetailClick = (boardNo) => {
+        navigate(`/boardList/boardView/${boardNo}`);
+        };
+
 
 
     return(
@@ -252,10 +254,9 @@ const Card = () => {
             </SelectBox>
         </SelectWrapper>
         <CardContainer>
-            {currentPageData.map((data, index) => (
-                <div className="container" key={index}>
-                <Link to={`/boardList/boardView/${data.boardNo}`} className="boardView_link" style={{ textDecoration: 'none', color: 'inherit' }}>
-
+        {currentPageData.map((data, index) => (
+            <div className="container" key={index} onClick={() => boardDetailClick(data.boardNo)} 
+            style={{ cursor: 'pointer' }}>
                 <div className="img_area">
                     <img src={data.image} alt="CardImage" className="cardimage" />
                 </div>
@@ -275,16 +276,15 @@ const Card = () => {
                     <IoChatbubbleEllipses className="icon" style={{color:'#55aafa'}} />
                     {data.commentCount && <div className="commentarea">{data.commentCount}</div>}
                 </div>
-                </Link>
-            </div>
+            </div> 
         ))}
-      </CardContainer>
-       <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
-            <div className="writebtn">
-                <button onClick={onClickToWrite}>글쓰기</button>
-            </div>
-        </Wrapper>
-        
+    </CardContainer>
+    <PageNation pageCount={pageCount} onPageChange={handlePageClick} />
+    <div className="writebtn">
+        <button onClick={onClickToWrite}>글쓰기</button>
+    </div>
+</Wrapper>
+
     )
 };
 export default Card;

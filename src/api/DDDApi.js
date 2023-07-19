@@ -33,11 +33,11 @@ const DDDApi = {
     getPrevAndNextBoard: async (currentBoardNo) => {
         try {
           const response = await axios.get(`${DDD_DOMAIN}/boardList/${currentBoardNo}/navigate`, HEADER);
-          console.log(response.data); // 응답 데이터 출력
-          return response; // 응답 반환
+          console.log(response.data); 
+          return response; 
         } catch (error) {
-          console.log(error); // 에러 로그 출력
-          throw error; // 에러 throw
+          console.log(error); 
+          throw error; 
         }
     },
 

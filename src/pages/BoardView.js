@@ -14,7 +14,7 @@ import { Backdrop } from "@mui/material";
 
 
 const ViewWrap = styled.div`
-    width: 70%; 
+    width: 100%; 
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -24,11 +24,12 @@ const ViewWrap = styled.div`
 `;
 
 const Section = styled.div`
-    width: 100%;     
+    width: 70%;     
     display: flex;
     flex-direction: column;
     float: center;
     position: relative;
+    background-color: aqua;
 
     .board_header {
         h2 {
@@ -47,7 +48,7 @@ const Section = styled.div`
         margin-right: 30px;
     }
 
-    .listBtn {
+    /* .listBtn {
         margin-left: auto;  // 오른쪽으로 이동
         margin-right: 2.1em;
         display: flex;
@@ -65,9 +66,9 @@ const Section = styled.div`
             text-decoration: none;
         }
 
-    }
+    } */
 
-    @media (max-width: 768px) {
+    /* @media (max-width: 768px) {
         .listBtn { 
             display: flex;
             flex-direction: row;
@@ -78,7 +79,7 @@ const Section = styled.div`
             display: flex;
             font-size: .7em;
         } 
-    }
+    } */
 
     .editBtn {
         margin-left: auto;  // 오른쪽으로 이동
@@ -192,7 +193,37 @@ const Section = styled.div`
     }
 
     @media (max-width: 768px) {
-        width: 768px;
+        width: 100vw;
+    }
+`;
+
+const ListMenu = styled.div`
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: flex-end; 
+    margin-right: 4.5em;
+    /* align-items: center; */
+
+    .preBtn, .mainBtn, .nextBtn {
+        /* padding: .4em .2em; */
+        /* border: none; */
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 1em; 
+        transition: all .1s ease-in;
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: row;
+        margin-right: 0;
+
+        .preBtn, .mainBtn, .nextBtn {
+            /* display: flex; */
+            font-size: .7em;
+        } 
     }
 `;
 
@@ -581,7 +612,7 @@ const BoardView = () => {
 
                 {/* 게시판 카테고리 */}
                 <div className="sub_category">
-                    <FormControl sx={{ m: 1, minWidth: 110 }}>
+                    <FormControl sx={{ m: 1, minWidth: 100 }}>
                         <InputLabel id="demo-simple-select-readonly-label">카테고리</InputLabel>
                         <Select
                         labelId="demo-simple-select-readonly-label"
@@ -589,7 +620,8 @@ const BoardView = () => {
                         value={boardView?.category || ''}
                         label="카테고리"
                         inputProps={{ readOnly: true }}
-                        sx={{ height: '2.5em' }}>
+                        sx={{ height: '2.5em' }}
+                        IconComponent={() => null}>
                         <MenuItem value={boardView?.category }>{boardView?.category}</MenuItem>
                         </Select>
                     </FormControl>
@@ -604,21 +636,21 @@ const BoardView = () => {
                         value={boardView?.region || ''}
                         label="지역선택"
                         inputProps={{ readOnly: true }}
-                        sx={{ height: '2.5em' }}>
+                        sx={{ height: '2.5em' }}
+                        IconComponent={() => null}>
                         <MenuItem value={boardView?.region}>{boardView?.region}</MenuItem>
                         </Select>
                     </FormControl>
 
                     )}
-
-                    {/* 이전글 / 목록 / 다음글 버튼 추가 */}
-                    <div className="listBtn">
-                        <div className="preBtn"  onClick={onClickPrev}>이전글</div>
-                        <div className="mainBtn" onClick={onClickMain}>글목록</div>
-                        <div className="nextBtn" onClick={onClickNext}>다음글</div>
-                    </div>
-
                 </div>
+
+                {/* 이전글 / 목록 / 다음글 버튼 추가 */}
+                <ListMenu>
+                    <div className="preBtn"  onClick={onClickPrev}>이전글</div>
+                    <div className="mainBtn" onClick={onClickMain}>글목록</div>
+                    <div className="nextBtn" onClick={onClickNext}>다음글</div>
+                </ListMenu>
 
                 {/* 제목 구간 */}
                 <TitleView>{boardView?.title}</TitleView>

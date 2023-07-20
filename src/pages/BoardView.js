@@ -11,7 +11,7 @@ import { MyPageApi } from "../api/MyPageApi";
 import ConfirmModal from "../util/ConfirmModal";
 import { FcCancel } from "react-icons/fc";
 import { Backdrop } from "@mui/material";
-
+import useStore  from "../store.js";
 
 const ViewWrap = styled.div`
     width: 100%; 
@@ -29,7 +29,7 @@ const Section = styled.div`
     flex-direction: column;
     float: center;
     position: relative;
-    background-color: aqua;
+    /* background-color: aqua; */
 
     .board_header {
         h2 {
@@ -47,39 +47,6 @@ const Section = styled.div`
         margin-bottom: 5px;
         margin-right: 30px;
     }
-
-    /* .listBtn {
-        margin-left: auto;  // 오른쪽으로 이동
-        margin-right: 2.1em;
-        display: flex;
-        flex-direction: row;  // 가로 방향으로 정렬
-        align-items: center;
-
-        .preBtn, .mainBtn, .nextBtn { // 이전글 버튼
-            padding: .4em .2em;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 1em; 
-            transition: all .1s ease-in;
-            text-decoration: none;
-        }
-
-    } */
-
-    /* @media (max-width: 768px) {
-        .listBtn { 
-            display: flex;
-            flex-direction: row;
-            margin-right: 0;
-        } 
-
-        .preBtn, .mainBtn, .nextBtn {
-            display: flex;
-            font-size: .7em;
-        } 
-    } */
 
     .editBtn {
         margin-left: auto;  // 오른쪽으로 이동
@@ -141,6 +108,7 @@ const Section = styled.div`
         justify-content: flex-end; 
         padding-right: 4.5em;
         
+        
 
         .write_date, .views {
             margin-left: 1em;
@@ -199,14 +167,10 @@ const Section = styled.div`
 
 const ListMenu = styled.div`
     display: flex;
-    /* flex-direction: row; */
     justify-content: flex-end; 
     margin-right: 4.5em;
-    /* align-items: center; */
 
     .preBtn, .mainBtn, .nextBtn {
-        /* padding: .4em .2em; */
-        /* border: none; */
         border-radius: 10px;
         font-weight: bold;
         cursor: pointer;
@@ -221,7 +185,6 @@ const ListMenu = styled.div`
         margin-right: 0;
 
         .preBtn, .mainBtn, .nextBtn {
-            /* display: flex; */
             font-size: .7em;
         } 
     }
@@ -276,18 +239,12 @@ const Wrapper = styled.div`
     border: 1px solid #8a8a8a;
     border-radius: 12px;
     padding: 15px 18px;
-    margin-top: 20px;
+    margin-top: 1.2em;
+    margin-bottom: .5em;
     min-height: 50%;
 
-
-
-    .comment {
-        align-items: center;
-        margin-bottom: 5px;
-        margin-right: 30px;
-
         .commentbox {
-            width: 97%;
+            /* width: 97%; */
             display: flex;
             flex-direction: column;
             float: center;
@@ -295,10 +252,8 @@ const Wrapper = styled.div`
             border-radius: 20px;
             padding: 1em;
             margin: 1rem;
-
         }
 
-    }
 
     img {
         width: 2.5em;
@@ -320,18 +275,18 @@ const Wrapper = styled.div`
         .user {
             font-size: .8em;
             margin-top: 1em;
+            margin-left: .4em;
         }
 
     }
 
     .rightmenu {
-        font-size: 14px;
+        font-size: .8em;
         display: flex;
     }
 
     .comment_write {
-        font-size: 13px;
-        margin-right: 1em;
+        margin-right: .7em;
         justify-content: space-between;
         align-items: center;
     }
@@ -345,14 +300,13 @@ const Wrapper = styled.div`
 
 const TextInfo = styled.div`
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 98%;
+    flex-direction: row;
+    align-items: center;
     margin: .3em;
     border: 1px solid #8a8a8a;
     border-radius: 10px;
     padding: 7px;
-    color: #6d6767;
+    color: black;
     font-size: .8em;
 
 `;
@@ -376,6 +330,9 @@ const BoardView = () => {
     const [nickname, setNickname] = useState(""); // 닉네임 초기값 수정
     const [test, setTest] = useState(""); // 기본 이미지 불러오기용
     const [category, setCategory] = useState(null); // 이전글, 다음글 카테고리 설정용
+
+    const {memberData} = useStore(); 
+    console.log(memberData);
 
     // 게시글 작성일자(연도-월-일)로 추출
     const formattedDate = boardView?.writeDate.substring(0, 10);
@@ -742,6 +699,7 @@ const BoardView = () => {
             {/* 댓글 인풋창 */}
             <BoardComment
                 boardNo={boardNo}
+                profile={memberData.profileImg}
                 nickname = {nickname}
                 commentList={commentList}
                 setCommentList={setCommentList}

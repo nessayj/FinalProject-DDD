@@ -61,14 +61,10 @@ const MyPageBG = () => {
   // const [ myDiaryData,  ] = useState();
 
   useEffect(() => {
-    const memberFetchDate = async () => {
-      const response = await MyPageApi.info(memberId);
-      console.log(response);
-      setMemberData(response.data);
-      console.log('함수안에있음 콘솔 : ' + memberData)
-    };
-    memberFetchDate();
-  }, [showPage, memberId]);
+    Functions.fetchMemberDate(memberId, setMemberData, MyPageApi);
+    // console.log(memberData)
+}, [showPage, memberId]);
+
 
   useEffect(() => {
     const diaryFetchDate = async () => {
@@ -95,8 +91,8 @@ const MyPageBG = () => {
 
   return (
     <>
-    <input type="text" value={testInput} onChange={handleTest}/>
-    <button onClick={findMember}>member찾기</button>
+    {/* <input type="text" value={testInput} onChange={handleTest}/>
+    <button onClick={findMember}>member찾기</button> */}
 
     { memberData && myDiaryData &&
     (

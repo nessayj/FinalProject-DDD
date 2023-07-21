@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { MyPageApi } from '../../api/MyPageApi';
 import Functions from '../../util/Functions';
 import AlertModal from '../../util/Alert';
+import { Backdrop } from '@mui/material';
 
 const Container = styled.div`
     width: 60%;
@@ -66,6 +67,13 @@ const Container = styled.div`
         /* background-color: red; */
 
         }
+        .hint{
+                /* background-color: red; */
+                width: 86%;
+                height: 1rem;
+                text-align: right;
+                font-size: .7rem;
+            }
 
         .last-item {
         grid-column: span 2;
@@ -75,13 +83,7 @@ const Container = styled.div`
             flex-direction: column;
             width: 50%;
             float: right;
-            .hint{
-                /* background-color: red; */
-                width: 86%;
-                height: 1rem;
-                text-align: right;
-                font-size: .7rem;
-            }
+          
         }
 
         input{
@@ -227,14 +229,14 @@ const pwdFetchDate = async () => {
                         
                     </div>
                     <div className="item">
-                    <p>새 비밀번호 확인</p>
-                        <input type="password" placeholder="비밀번호를 입력하세요"  onChange={(e) => onChangeConPw(e)} value={inputNewPwdCheck} tabIndex={3}/> 
-                        <div className="hint">{conMessage}</div>
-                    </div>
-                    <div className="item">
                     <p>새 비밀번호</p>
                         <input type="password" placeholder="비밀번호를 입력하세요"  onChange={(e) => onChangePwd(e)} value={inputNewPwd} tabIndex={2}/> 
                         <div className="hint">{errorMessage}</div>
+                    </div>
+                    <div className="item">
+                    <p>새 비밀번호 확인</p>
+                        <input type="password" placeholder="비밀번호를 입력하세요"  onChange={(e) => onChangeConPw(e)} value={inputNewPwdCheck} tabIndex={3}/> 
+                        <div className="hint">{conMessage}</div>
                     </div>
                     <div className="item last-item">
                     <div className="btnBlock">
@@ -242,14 +244,24 @@ const pwdFetchDate = async () => {
                         style={isPwd && pwdCheck ?  null : { backgroundColor: '#ddd'}  }
                         disabled={!isPwd || !pwdCheck }
                     onClick={onClickChange}>변경</button>
-                    {
-                        open && <AlertModal />
-                    }
+
                     <button>돌아가기</button> 
                 </div>
                     </div>
                     
                 </div>
+                <Backdrop
+            sx={{
+                backgroundColor: 'transparent', // 배경색을 투명으로 설정
+                color: '#fff',
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                top: 0, // 팝업을 상단에 위치
+            }}
+            open={open}
+            onClick={handleClose}
+            >
+                <AlertModal />
+            </Backdrop>
 
                 
                 

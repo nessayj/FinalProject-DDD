@@ -43,7 +43,7 @@ const Modal = styled.div`
     transform: translate3d(-50%, -50%, 0);
       } 
   @media (max-width: 680px) {
-    width: 100%;
+    width: 80%;
     position: relative;
     transform: translate3d(-50%, -50%, 0);
       }
@@ -174,8 +174,7 @@ const ForgotPwModal = (props) => {
 
     
 
-        const forgotPwData = async (inputEmail) => {
-            console.log(inputEmail)
+        const forgotPwData = async () => {
             try{
                 const response = await LoginApi.findPassword(inputEmail);
                 if (response.status === 200) {
@@ -183,7 +182,7 @@ const ForgotPwModal = (props) => {
                   console.log('email 전송 완료')
             }
           }catch(e) {
-            console.log(e)
+            console.error(e)
           }
          
         };

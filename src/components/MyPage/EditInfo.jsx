@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import useStore from "../../store";
 import { Backdrop } from "@mui/material";
 import AlertModal from "../../util/Alert";
+import Functions from "../../util/Functions";
 
 const EditBlock = styled.div`
   /* width: calc(70%-1rem); */
@@ -275,7 +276,7 @@ const EditInfo = (props) => {
     handleOpen()
   };
 
-  const { setShowPage } = useStore();
+  const { setShowPage, setMemberData } = useStore();
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -284,6 +285,12 @@ const EditInfo = (props) => {
     setOpen(true);
     setTimeout(handleClose, 1000);
   };
+
+  
+  useEffect(() => {
+    Functions.fetchMemberDate(memberId, setMemberData, MyPageApi);
+    // console.log(memberData)
+}, [memberId, setMemberData]);
 
   return (
     <>

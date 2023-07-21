@@ -10,6 +10,19 @@ const Functions = {
     getLoginStatus : () => {
       return window.localStorage.getItem("isLogin")
     },
+
+
+    fetchMemberDate : async (memberId, setMemberData, MyPageApi) => { 
+      try {
+        const memberInfoResponse = await MyPageApi.info(memberId);
+        setMemberData(memberInfoResponse.data)
+        if (memberInfoResponse.status === 200 && setMemberData){
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
     //accessToken 세터
     setAccessToken : (accessToken) => {
         window.localStorage.setItem("accessToken", accessToken);
@@ -54,17 +67,17 @@ const Functions = {
 
     // 401 에러시 토큰 재발급 함수 실행하는 함수
     handleApiError: async(error) => {
-    //   if (error.response && error.response.status === 401) {
-    //     // 토큰이 만료되었거나 유효하지 않은 경우
-    //     await Functions.tokenRenewal();
-    //   } else {
+      if (error.response && error.response.status === 401) {
+        // 토큰이 만료되었거나 유효하지 않은 경우
+        await Functions.tokenRenewal();
+      } else {
         // 그 외의 오류 처리
         console.error('API 요청 오류:', error);
-        // window.location.href = '/login';
-        // 에러 메시지를 표시하거나 기타 처리를 수행
-    //   }
+      }
     }
 
 }
+
+
 
 export default Functions;

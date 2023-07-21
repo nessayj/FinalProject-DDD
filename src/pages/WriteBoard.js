@@ -17,7 +17,6 @@ const Wrap = styled.div`
     margin: 0 auto;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid red; */
 
     .btn_area {
         text-align: center;
@@ -62,7 +61,6 @@ const Wrap = styled.div`
 
     @media (max-width: 768px) {
       width: 100vw;
-      /* border: 1px solid blue; */
     }
 `;
 
@@ -92,7 +90,6 @@ const Section = styled.div`
       background-color: #4555AE;
       border-bottom: solid 1px #4555AE;
       text-align: center;
-      /* border: 1px solid green; */
 
 
       @media (max-width: 768px) {
@@ -210,7 +207,6 @@ const TextWrap = styled.div`
   margin-bottom:20px;
   justify-content: center;
   align-items: center;
-  /* padding : 1em; */
   margin-top: 1em;
     
 
@@ -418,9 +414,14 @@ const WriteBoard = () => {
                       <option value="인천">인천</option>
                       <option value="충청">충청</option>
                       <option value="강원">강원</option>
-                      <option value="경상도">경상도</option>
-                      <option value="전라도">전라도</option>
+                      <option value="전북">전북</option>
+                      <option value="전남">전남</option>
+                      <option value="광주">광주</option>
+                      <option value="경북">경북</option>
+                      <option value="경남">경남</option>
+                      <option value="부산">부산</option>
                       <option value="제주">제주</option>
+
                     </select>
                   </td>
 

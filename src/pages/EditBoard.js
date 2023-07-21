@@ -238,6 +238,13 @@ const EditBoard = () => {
     const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
     const [originImg, setOriginImg] = useState(null);
 
+    // DB상 카테고리 값이 영어 이므로 한글로 반환하기 위한 매핑 작업 
+    const categoryMapping = {
+        "Recommend": "추천수다",
+        "Question": "질문하기",
+        "DDDmate": "동행찾기"
+    };
+
 
     // 게시글 상세페이지 본문 불러오기(조회)
     useEffect(() => {
@@ -329,8 +336,7 @@ const EditBoard = () => {
         }
       };
 
-        
-        
+    
 
     // 게시판 카테고리 선택 
     const onChangerCtg = (e) => {
@@ -394,7 +400,8 @@ const EditBoard = () => {
                     </tr>
                     <tr>
                         <td>
-                            <select name="category" value={category} onChange={onChangerCtg}>
+                            {/* <select name="category" value={category} onChange={onChangerCtg}> */}
+                            <select name="category" value={categoryMapping[category] || category} onChange={onChangerCtg}> 
                             <option value="">카테고리</option>
                             <option value="추천수다">추천수다</option>
                             <option value="질문하기">질문하기</option>
@@ -410,9 +417,14 @@ const EditBoard = () => {
                             <option value="인천">인천</option>
                             <option value="충청">충청</option>
                             <option value="강원">강원</option>
-                            <option value="경상도">경상도</option>
-                            <option value="전라도">전라도</option>
+                            <option value="전북">전북</option>
+                            <option value="전남">전남</option>
+                            <option value="광주">광주</option>
+                            <option value="경북">경북</option>
+                            <option value="경남">경남</option>
+                            <option value="부산">부산</option>
                             <option value="제주">제주</option>
+                            
                             </select>
                         </td>
         

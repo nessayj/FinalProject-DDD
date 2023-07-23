@@ -328,7 +328,7 @@ const BoardView = () => {
     const [boardView, setBoardView] = useState(null); // URL에서 boardNo를 가져옴(게시판목록)
     const [commentList, setCommentList] = useState([]); // 댓글용 추가
     const [nickname, setNickname] = useState(""); // 닉네임 초기값 수정
-    const [test, setTest] = useState(""); // 기본 이미지 불러오기용
+    // const [test, setTest] = useState(""); // 기본 이미지 불러오기용
     const [category, setCategory] = useState(null); // 이전글, 다음글 카테고리 설정용
 
     const {memberData} = useStore(); 
@@ -380,56 +380,49 @@ const BoardView = () => {
         return isLogin && isAuthorMatched;
     };
 
-    // 업데이트 함수 추가 **
-    const [regComment, setRegComment] = useState(false);
-    const regComm = () => {
-        console.log("댓글 업데이트 함수호출 : ");
-        setRegComment(true);
-    }
-
     const [prevAndNextData, setPrevAndNextData] = useState(null); // 이전글, 다음글 담을 상태변수
 
-
-    // 본문 불러오기
+    // 본문 불러오기 
+    const boardViewLoad = async () => {
+        try {
+        // 게시물 내용 불러오기
+        const response = await DDDApi.getBoard(boardNo);
+        if(response.status === 200) {
+            const data = response.data;
+            setBoardView(data); // 기존의 게시물 정보 설정
+            setCategory(data.category); // 카테고리 정보 설정
+    
+            // 댓글 내용 불러오기
+            const commentData = data.comments;
+            setCommentList(commentData);
+            const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
+            setNickname(rsp.data.nickname);
+            // setTest(rsp.data.profileImg); // 기본프로필 이미지 불러오기
+        }
+        } catch (e) {
+        console.log(e);
+        }
+    };
+    
+    // 조회수 증가 포함 수정 ** 
     useEffect(() => {
-        const boardViewLoad = async () => {
-            try {
-                // 게시물 내용 불러오기
-                const response = await DDDApi.getBoard(boardNo);
-                if(response.status === 200) {
-                    const data = response.data;
-                    setBoardView(data); // 기존의 게시물 정보 설정
-                    setCategory(data.category); // 카테고리 정보 설정
-
-                    // 댓글 내용 불러오기
-                    const commentData = data.comments;
-                    setCommentList(commentData);
-                    const rsp = await MyPageApi.info(getId); // localStorage 상에 닉네임 저장된 api 불러와서 재 렌더링
-                    setNickname(rsp.data.nickname);
-                    setTest(rsp.data.profileImg); // 기본프로필 이미지 불러오기
-
-                    // // 이전글 및 다음글 가져오기 요청 보내기  ** 잠시 제외
-                    // const prevAndNextResponse = await DDDApi.getPrevAndNextBoard(boardNo);
-                    // if (prevAndNextResponse.status === 200) {
-                    //     const prevAndNextData = prevAndNextResponse.data;
-                    //     setPrevAndNextData(prevAndNextData);
-                    // }
-
-                    if (boardView && boardView.views != null) { // 게시글 조회수 구간
-                    // if (data && data.views != null) { // 게시글 조회수 구간    
-                        setBoardView(prevState => ({
-                            ...prevState,
-                            views: prevState.views + 1
-
-                        }));
-                    }
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        };
         boardViewLoad();
-    }, [boardNo, regComment]);
+        const increaseView = async () => {
+        // 조회수 증가 API 호출
+        const increaseViewCountResponse = await DDDApi.increaseViewCount(boardNo);
+    
+        // 조회수 증가 API 호출이 성공했을 때만 게시물 데이터를 다시 불러옴
+        if (increaseViewCountResponse.status === 204) {
+            const updatedBoardResponse = await DDDApi.getBoard(boardNo);
+            if (updatedBoardResponse.status === 200) {
+                setBoardView(updatedBoardResponse.data);
+            }
+        }
+    }
+        increaseView();
+    }, [boardNo]);
+
+
 
     // 이전글 및 다음글 가져오기
     useEffect(() => {
@@ -496,7 +489,7 @@ const BoardView = () => {
         }
     };
 
-
+    // 게시물 삭제 모달 이벤트
     const onClickDelete = () => {
         setShowModal(true);
     };
@@ -624,7 +617,8 @@ const BoardView = () => {
                 {boardView && (
                 <div className="authorinfo">                    
                     {/*기본 프로필 이미지*/}
-                    <img src={test} alt="프로필"/>
+                    {/* <img src={test} alt="프로필"/> */}
+                    <img src={boardView?.profileImg} alt="프로필"/>
                     <div className="author">{boardView?.author}</div>
                 </div>
                 )}
@@ -711,8 +705,8 @@ const BoardView = () => {
                 nickname = {nickname}
                 commentList={commentList}
                 setCommentList={setCommentList}
-                regComment = {regComm}
-                setRegComment={setRegComment}/>
+                onCommentPost={boardViewLoad}/>
+
             </Section>
         </ViewWrap>
 

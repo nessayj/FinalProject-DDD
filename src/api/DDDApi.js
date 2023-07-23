@@ -15,6 +15,12 @@ const DDDApi = {
         return await axios.get(`${DDD_DOMAIN}/boardList/boardView/${boardNo}`, HEADER);
     },
 
+    // 조회수 증가 API 추가 ** 
+    increaseViewCount : async (boardNo) => {
+        return await axios.put(`${DDD_DOMAIN}/boardList/boardView/${boardNo}/views`, HEADER);
+    }, 
+
+
     // 게시글 작성
     boardWrite: async (getId, category, region, title, imageUrl, contents ) => {
         console.log("getId : "+ getId, "category : " + category, "region: " + region, "title: " + title, "image: " + imageUrl, "contents: " + contents )

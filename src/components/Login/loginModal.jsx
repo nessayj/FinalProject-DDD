@@ -191,7 +191,7 @@ const LoginModal = (props) => {
           if(getEmail === 'admin'){
             console.log('admin 입니다. ')
             naviagte("/admin")
-          } else if(!getEmail === 'admin'){
+          } else if(getEmail !== 'admin'){
             naviagte("/");
             // 로그인 시, isLogin true 반환
             window.localStorage.setItem("isLogin", true);

@@ -1,6 +1,7 @@
 import React from "react";
 import MyPageBG from "../components/MyPage/MyPageBG";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/header/Header";
 
 const MyPage = () => {
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ const MyPage = () => {
 
     return(
         <>
+        <Header/>
         {/* <button onClick={removeLocalstorage}>로그아웃</button>
         <button onClick={()=>navigate('/ratediary')}>다이어리 평가 </button> */}
         {/* <button onClick={()=>{navigate('/SearchExhibition')}}>SearchExhibition</button> */}

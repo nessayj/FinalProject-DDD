@@ -21,7 +21,6 @@ const Container = styled.div`
 
 const Login = () => {
     // isLogin 상태 가져오기
-    const isLogin = window.localStorage.getItem('isLogin')
     const memberId = window.localStorage.getItem('memberId')
     // const { memberId } = useParams();
 
@@ -49,8 +48,6 @@ const Login = () => {
         // console.log(showLogin)
       };
 
-    const navigate = useNavigate();
-    const location = useLocation();
 
 
     const LoginState = window.localStorage.getItem('isLogin')

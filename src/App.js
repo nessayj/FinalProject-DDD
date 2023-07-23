@@ -10,12 +10,10 @@ import MyPage from './pages/MyPage';
 import BoardList from './pages/BoardList';
 import BoardView from './pages/BoardView';
 import AdminMain from './components/admin/AdminMain';
-import PopupModal from './components/Login/PopupModal';
 import WriteBoard from './pages/WriteBoard';
 import EditBoard from './pages/EditBoard';
 import VerifyEmail from './components/Login/VerifyEmail';
-import RateDiary from './components/MyPage/RateDiary';
-import SearchExhibition from './components/MyPage/SearchExhibition';
+import RateExhibitions from './pages/RateExhibitions';
 
 function App() {
   return (
@@ -23,7 +21,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Main/>}/>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/SearchExhibition" element={<SearchExhibition/>}/>
         <Route path="/exhibitList" element={<ExhibitListPage/>}/>
         <Route path="/exhibitInfo/:id" element={<ExhibitInfoPage/>}/>
         <Route path="/reservation/:id" element={<ReservationPage/>}/>
@@ -34,7 +31,7 @@ function App() {
         <Route path="/api/mypage/:memberId" element={<MyPage/>}/>
         <Route path="/admin" element={<AdminMain/>}/>
         <Route path="/login/check-email-token" element={<VerifyEmail/>}/>
-        <Route path="/ratediary" element={<RateDiary/>}/>
+        <Route path="/ratediary" element={<RateExhibitions/>}/>
       </Routes>
       </Router>
   );

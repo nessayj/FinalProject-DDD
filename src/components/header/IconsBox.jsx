@@ -163,7 +163,7 @@ const Icons = () => {
 
     const onClickToLogin = () => {
         loginState ?
-         navigate(`/mypage/${memberId}`) : navigate("/login")
+         navigate(`/api/mypage/${memberId}`) : navigate("/login")
     }
     const {t} = useTranslation();
 

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const KH_DOMAIN = "http://localhost:8111"
 
+
 // 이 프로젝트 전역에서 두루 쓰이는 함수를 모아놓았습니다.
 const Functions = {
     getMemberId : () => {
@@ -45,34 +46,52 @@ const Functions = {
     //  헤더에 AccessToken 설정하는 함수
     setAuthorizationHeader : () => {
         const accessToken = Functions.getAccessToken();
-        // console.log('funtions 함수내 엑세스토큰 :  '+ accessToken)
-        // const test1 = axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        // console.log('test1입니다 ' + test1)
+        console.log(`Setting Authorization Header with token: ${accessToken}`);
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        // const test2 = axios.defaults.headers.common['Content-Type'] = 'application/json';
-        // console.log('test2입니다 ' + test2)
         axios.defaults.headers.common['Content-Type'] = 'application/json';
 
       },
 
     // 토큰 재발급 함수
     tokenRenewal: async() => {
-        const token = {
-          refreshToken : Functions.getRefreshToken()
-        }
-        const rsp = await axios.post(KH_DOMAIN + "/auth/token", token)
-        Functions.setAccessToken(rsp.data.accessToken); 
-        Functions.setAuthorizationHeader();
-      },
+        try {
+            // console.log('토큰 재발급 함수의 펑션 리프레시' + Functions.getRefreshToken())  // 정상 출력
+            // console.log('funtions . 첫번째 엑세스토큰' + Functions.getAccessToken())  // 정상 출력
 
-    // 401 에러시 토큰 재발급 함수 실행하는 함수
+            const token = {
+                refreshToken : Functions.getRefreshToken()
+            }
+
+            // console.log(`재발급 함수의 리프레시토큰 ${token.refreshToken.slice(-5)}`) // 재발급 함수의 리프레시토큰 [object Object]
+            
+            const rsp = await axios.post(KH_DOMAIN + "/login/auth/token", token)
+            // console.log(`재발급 함수의 rsp 값 ${rsp}`)
+            Functions.setAccessToken(rsp.data.accessToken); 
+            // console.log('funtions . 두번째 엑세스토큰' + Functions.getAccessToken())  // 정상 출력
+            Functions.setAuthorizationHeader();
+            // console.log(`재발급 함수의 rsp의 엑세스토큰 값 ${rsp.data.accessToken.slice(-5)}`)
+
+        } catch (error) {
+            console.error('토큰 재발급 중 오류 발생:', error);
+            // 에러 처리 로직을 여기에 추가하세요. 예를 들면 사용자에게 에러 메시지를 표시하는 것 등.
+        }
+    },
+
+    
+
     handleApiError: async(error) => {
       if (error.response && error.response.status === 401) {
         // 토큰이 만료되었거나 유효하지 않은 경우
         await Functions.tokenRenewal();
+        // console.log('에러 핸들 리프레시토큰 :.' + Functions.getRefreshToken())
+        // console.log('에러 핸들 엑세스토큰:.' + Functions.getAccessToken())
+        // Functions.setAuthorizationHeader();
+        // console.log('핸들에 펑션 어떻게 ' + Functions.setAuthorizationHeader())
+
       } else {
         // 그 외의 오류 처리
         console.error('API 요청 오류:', error);
+        // window.location.href = '/login';
       }
     }
 

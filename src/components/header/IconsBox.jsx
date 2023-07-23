@@ -163,7 +163,7 @@ const Icons = () => {
 
     const onClickToLogin = () => {
         loginState ?
-         navigate(`/api/mypage/${memberId}`) : navigate("/login")
+         navigate(`/mypage/${memberId}`) : navigate("/login")
     }
     const {t} = useTranslation();
 
@@ -176,6 +176,11 @@ const Icons = () => {
         localStorage.removeItem("accessToken");
         navigate('/')
     }
+
+    const onClickToReservation = () => {
+        setShowPage('예약관리')
+        navigate(`/api/mypage/${memberId}`);
+    };
 
     const goToMypage = () => {
         setShowPage('마이페이지')
@@ -192,7 +197,7 @@ const Icons = () => {
 
         <IconBox>
             <div className="ticket-icon">
-                <HiOutlineTicket/>
+                <HiOutlineTicket onClick={onClickToReservation}/>
             </div>
 
         <LoginIconBox>

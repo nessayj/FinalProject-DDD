@@ -5,6 +5,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import DDDApi from "../../api/DDDApi";
 import AlertModal from "../../util/Alert";
+import Functions from "../../util/Functions";
 
 
 const Container = styled.div`
@@ -114,9 +115,12 @@ const ExhibitionReview = ({data}) => {
         const comments = async() => {
             try{
                 const commentsList = await DDDApi.commentList(exhibitNo);
+                Functions.setAuthorizationHeader(); // 헤더에 토큰을 넣는 함수
                 setCommentList(commentsList.data);
             } catch (e) {
                 console.log(e);
+                await Functions.handleApiError(e);  //
+                return await DDDApi.commentList(exhibitNo);
             }
         };
         comments();

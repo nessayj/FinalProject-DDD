@@ -4,6 +4,7 @@ import LoginApi from "../../api/LoginApi";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../store";
 import { MyPageApi } from "../../api/MyPageApi";
+import Functions from "../../util/Functions";
 
 const Container = styled.div`
   position: absolute;
@@ -170,30 +171,36 @@ const LoginModal = (props) => {
     try {
         const response = await LoginApi.login(email, password);
         const accessToken = response.data.accessToken;
+        const refreshToken = response.data.refreshToken;
         const memberId = response.data.memberId;
 
         const memberInfoResponse = await MyPageApi.info(memberId);
         setProfileImg(memberInfoResponse.data.profileImg)
         setMemberData(memberInfoResponse.data)
-        // console.log(profileImg)
+        
         // localStorage에 email, token 저장
         window.localStorage.setItem("storageEmail", email);
-        // window.localStorage.setItem("accessToken", accessToken);
         window.localStorage.setItem("memberId", memberId);
-        // console.log(window.localStorage.getItem('accessToken'));
+        window.localStorage.setItem("accessToken", accessToken);
+        window.localStorage.setItem("refreshToken", refreshToken);
+        const getEmail = window.localStorage.getItem("storageEmail")
+
         // window.localStorage.getItem('storageEmail')
-        // console.log('데이터로 받은 멤버아이디' + window.localStorage.getItem('storageEmail'))
-        // console.log('데이터로 받은 멤버아이디' + memberId)
-        //console.log("getitem으로 받은 멤버아이디" + window.localStorage.getItem("memberId"));
 
         if (response.status === 200 && setMemberData) {
-                naviagte("/");
-                // 로그인 시, isLogin true 반환
-                window.localStorage.setItem("isLogin", true);
+          if(getEmail === 'admin'){
+            console.log('admin 입니다. ')
+            naviagte("/admin")
+          } else if(!getEmail === 'admin'){
+            naviagte("/");
+            // 로그인 시, isLogin true 반환
+            window.localStorage.setItem("isLogin", true);
+   
             } else {
                 const errorMessage = getErrorMessage(response.status);
                 setErrorMsg(errorMessage);
             }
+          }
     } catch (e) {
       console.log(e);
       setErrorMsg("가입하지 않은 이메일이거나, 잘못된 비밀번호입니다.");
